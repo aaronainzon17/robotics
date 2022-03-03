@@ -24,22 +24,42 @@ class Robot:
         # Robot construction parameters
         #self.R = ??
         #self.L = ??
-        #self. ...
+
+        #Radio de la rueda
+        self.R = Value('d',2.8)        #A lo mejor habria que ver si es 2.9      
+        #Longitud entre ruedas
+        self.L = Value('d',128.0)
+
+        # self.v = Value('d',0.0)
+        # self.w = Value('d',0.0)
+        
+
+        # self.x = Value('d',init_position[0])
+        # self.y = Value('d',init_position[1])
+        # self.th = Value('d',init_position[2])
+        # self.finished = Value('b',1)
 
         ##################################################
         # Motors and sensors setup
 
         # Create an instance of the BrickPi3 class. BP will be the BrickPi3 object.
         #self.BP = brickpi3.BrickPi3()
+        self.BP = brickpi3.BrickPi3()
 
         # Configure sensors, for example a touch sensor.
         #self.BP.set_sensor_type(self.BP.PORT_1, self.BP.SENSOR_TYPE.TOUCH)
+        self.BP.set_sensor_type(self.BP.PORT_1, self.BP.SENSOR_TYPE.TOUCH)
 
         # reset encoder B and C (or all the motors you are using)
         #self.BP.offset_motor_encoder(self.BP.PORT_B,
         #    self.BP.get_motor_encoder(self.BP.PORT_B))
         #self.BP.offset_motor_encoder(self.BP.PORT_C,
         #    self.BP.get_motor_encoder(self.BP.PORT_C))
+        
+        self.BP.offset_motor_encoder(self.BP.PORT_B,
+           self.BP.get_motor_encoder(self.BP.PORT_B))
+        self.BP.offset_motor_encoder(self.BP.PORT_C,
+           self.BP.get_motor_encoder(self.BP.PORT_C))
 
         ##################################################
         # odometry shared memory values
@@ -64,30 +84,57 @@ class Robot:
         print("setting speed to %.2f %.2f" % (v, w))
 
         # compute the speed that should be set in each motor ...
-        im0 = np.array([1/self.r_radio, self.L/2*self.R],
-                                 [1/self.r_radio, -self.L/2*self.R])
+        im0 = np.array([1/self.R, self.L/2*self.R],
+                                 [1/self.R, -self.L/2*self.R])
         im1 = np.array([v,w])
-        inverse_model = np.matmul(im0,im1)
+        inverse_model = np.dot(im0,im1)
         wd = inverse_model[0]  
         wi = inverse_model[1]
 
-        #speedPower = 100
-        #BP.set_motor_power(BP.PORT_B + BP.PORT_C, speedPower)
         speedDPS_right = np.rad2deg(wd)
         speedDPS_left = np.rad2deg(wi)
         
-        #self.BP.set_motor_dps(self.BP.PORT_B, speedDPS_left)
-        #self.BP.set_motor_dps(self.BP.PORT_C, speedDPS_right)
+        self.lock_odometry.acquire()
+        #SC
+        # self.v.value = v
+        # self.w.value = w
+
+        self.BP.set_motor_dps(self.BP.PORT_B, speedDPS_left)
+        self.BP.set_motor_dps(self.BP.PORT_C, speedDPS_right)
+        self.lock_odometry.release()
 
 
     def readSpeed(self):
         """ To be filled"""
+        self.lock_odometry.acquire()
+        #SC
+        try:
+            [encoder1, encoder2] = [self.BP.get_motor_encoder(self.BP.PORT_B), self.BP.get_motor_encoder(self.BP.PORT_C)]
+        except IOError as error:
+            print(error)
+        grados_ruedas = np.array([[np.deg2rad(encoder1)] , [np.deg2rad(encoder2)]])
+        trac = np.array([[self.R.value/2, self.R.value/2],[self.R.value/self.L.value,-self.R.value/self.L.value]])
 
-        return 0,0
+        vel = np.dot(trac,grados_ruedas)
+
+        try:
+            self.BP.offset_motor_encoder(self.BP.PORT_B, self.BP.get_motor_encoder(self.BP.PORT_B)) # reset encoder B
+            self.BP.offset_motor_encoder(self.BP.PORT_C, self.BP.get_motor_encoder(self.BP.PORT_C)) # reset encoder C
+        except IOError as error:
+            print(error)
+        self.lock_odometry.release()
+        return vel[0],vel[1]
 
     def readOdometry(self):
         """ Returns current value of odometry estimation """
-        return self.x.value, self.y.value, self.th.value
+        #return self.x.value, self.y.value, self.th.value
+        self.lock_odometry.acquire()
+        #SC
+        x = self.x.value
+        y = self.y.value
+        th = self.th.value
+        self.lock_odometry.release()
+        return x,y,th
 
     def startOdometry(self):
         """ This starts a new process/thread that will be updating the odometry periodically """
@@ -107,14 +154,15 @@ class Robot:
             # compute updates
             ######## UPDATE FROM HERE with your code (following the suggested scheme) ########
             # MY CODE 
-            if self.w == 0:
+            [realv,realw] = self.readSpeed(self)
+            if realw == 0:
                 # TODO: definir las variables en self o algo por el estilo 
-                d_x = self.P * self.v * np.cos(th)
-                d_y = self.P *  self.v * np.sin(th)
-            elif self.w != 0:
+                d_x = self.P.value * realv * np.cos(self.th.value)
+                d_y = self.P.value *  realv * np.sin(self.th.value)
+            elif realw != 0:
                 # El radio se calcula R = v/w 
-                d_x = (self.v/self.w) * (np.sin(th + self.w + self.P) - np.sin(th))
-                d_y = (self.v/self.w) * (np.cos(th + self.w + self.P) - np.cos(th))
+                d_x = (realv/realw) * (np.sin(self.th.value + realw + self.P.value) - np.sin(self.th.value))
+                d_y = (realv/realw) * (np.cos(self.th.value + realw + self.P.value) - np.cos(self.th.value))
             #END MY CODE 
             ######## UPDATE FROM HERE with your code (following the suggested scheme) ########
             sys.stdout.write("Dummy update of odometry ...., X=  %d, \
@@ -124,16 +172,16 @@ class Robot:
             # update odometry uses values that require mutex
             # (they are declared as value, so lock is implicitly done for atomic operations, BUT =+ is NOT atomic)
 
-            # Operations like += which involve a read and write are not atomic.
-            with self.x.get_lock():
-                self.x.value+=1
+            # # Operations like += which involve a read and write are not atomic.
+            # with self.x.get_lock():
+            #     self.x.value+=1
 
-            # to "lock" a whole set of operations, we can use a "mutex"
-            self.lock_odometry.acquire()
-            #self.x.value+=1
-            self.y.value+=1
-            self.th.value+=1
-            self.lock_odometry.release()
+            # # to "lock" a whole set of operations, we can use a "mutex"
+            # self.lock_odometry.acquire()
+            # #self.x.value+=1
+            # self.y.value+=1
+            # self.th.value+=1
+            # self.lock_odometry.release()
 
             try:
                 # Each of the following BP.get_motor_encoder functions returns the encoder value
@@ -167,4 +215,5 @@ class Robot:
     def stopOdometry(self):
         self.finished.value = True
         #self.BP.reset_all()
+        self.BP.reset_all()
 

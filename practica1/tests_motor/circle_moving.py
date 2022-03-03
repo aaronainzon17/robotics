@@ -21,7 +21,8 @@ try:
     finished = False
     running = False
     while not finished:
-            
+        speedL += adder
+        speedR -= adder
         if speedL >= 60:
             finished = 1 # this is the last iteration
 
