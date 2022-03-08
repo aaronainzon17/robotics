@@ -75,7 +75,7 @@ class Robot:
         #self.lock_odometry.release()
 
         # odometry update period --> UPDATE value!
-        self.P = Value('d',0.3)
+        self.P = 0.03
 
 
 
@@ -159,20 +159,20 @@ class Robot:
             [real_v,real_w] = self.readSpeed()
             
             #if realw == 0: 
-            #    d_x = self.P.value * realv * np.cos(realth) # Duda de si es self.th.value 
-            #    d_y = self.P.value *  realv * np.sin(realth)
+            #    d_x = self.P * realv * np.cos(realth) # Duda de si es self.th.value 
+            #    d_y = self.P *  realv * np.sin(realth)
             #elif realw != 0:
             #    # El radio se calcula R = v/w 
-            #    d_x = (realv/realw) * (np.sin(realth + realw + self.P.value) - np.sin(realth))
-            #    d_y = (realv/realw) * (np.cos(realth + realw + self.P.value) - np.cos(realth))
+            #    d_x = (realv/realw) * (np.sin(realth + realw + self.P) - np.sin(realth))
+            #    d_y = (realv/realw) * (np.cos(realth + realw + self.P) - np.cos(realth))
             
             if real_w == 0: 
-                d_x = (real_v * self.P.value) * np.cos(self.th.value)
-                d_y = (real_v * self.P.value) * np.sin(self.th.value)
+                d_x = (real_v * self.P) * np.cos(self.th.value)
+                d_y = (real_v * self.P) * np.sin(self.th.value)
                 d_th = 0
             elif real_w != 0:
                 # El radio se calcula R = v/w 
-                d_th = real_w * self.P.value 
+                d_th = real_w * self.P 
                 d_s = (real_v/real_w)* d_th 
                 d_x = d_s * np.cos(self.th.value * (d_th/2))
                 d_y = d_s * np.sin(self.th.value * (d_th/2))
@@ -196,7 +196,7 @@ class Robot:
             tEnd = time.clock()
             print('Time elapsed updating odometry:',(tEnd-tIni))
 
-            time.sleep(self.P.value - (tEnd-tIni))
+            time.sleep(self.P - (tEnd-tIni))
 
         #print("Stopping odometry ... X= %d" %(self.x.value))
         #sys.stdout.write("Stopping odometry ... X=  %.2f, \
