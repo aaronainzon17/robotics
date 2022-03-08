@@ -25,9 +25,9 @@ class Robot:
         # Robot construction parameters
         
         #Radio de la rueda
-        self.R = Value('d',28.0)     
+        self.R = Value('d',280.0)     
         #Longitud entre ruedas
-        self.L = Value('d',128.0)
+        self.L = Value('d',1280.0)
         
         self.log = open("log_odometry","w")
         # self.v = Value('d',0.0)
@@ -75,7 +75,7 @@ class Robot:
         #self.lock_odometry.release()
 
         # odometry update period --> UPDATE value!
-        self.P = 0.05
+        self.P = 0.03
 
 
 
@@ -84,9 +84,9 @@ class Robot:
         print("setting speed to %.2f %.2f" % (v, w))
 
         # compute the speed that should be set in each motor ...
-        im0 = np.array([[1/self.R.value, self.L.value/2*self.R.value],[1/self.R.value, (-self.L.value)/(2*self.R.value)]])
+        im0 = np.array([[1/self.R.value, self.L.value/(2*self.R.value)],[1/self.R.value, (-self.L.value)/(2*self.R.value)]])
         im1 = np.array([v,w])
-        inverse_model = np.matmul(im0,im1)
+        inverse_model = np.dot(im0,im1)
         wd = inverse_model[0]  
         wi = inverse_model[1]
         print("Left engine: %.2f" % (wi))
@@ -96,11 +96,9 @@ class Robot:
         
         self.lock_odometry.acquire()
         #SC
-        # self.v.value = v
-        # self.w.value = w
 
-        self.BP.set_motor_dps(self.BP.PORT_B, speedDPS_left)
-        self.BP.set_motor_dps(self.BP.PORT_C, speedDPS_right)
+        self.BP.set_motor_dps(self.BP.PORT_B, speedDPS_right)
+        self.BP.set_motor_dps(self.BP.PORT_C, speedDPS_left)
         self.lock_odometry.release()
 
 
