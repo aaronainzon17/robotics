@@ -78,12 +78,12 @@ class Robot:
 
 
 
-    def setSpeed(self, v,w):
+    def setSpeed(self,v,w):
         """ To be filled - These is all dummy sample code """
         print("setting speed to %.2f %.2f" % (v, w))
 
         # compute the speed that should be set in each motor ...
-        im0 = np.array([1/self.R.value, self.L.value/2*self.R.value],[1/self.R.value, (-self.L.value)/(2*self.R.value)])
+        im0 = np.array([[1/self.R.value, self.L.value/2*self.R.value],[1/self.R.value, (-self.L.value)/(2*self.R.value)]])
         im1 = np.array([v,w])
         inverse_model = np.dot(im0,im1)
         wd = inverse_model[0]  
@@ -154,12 +154,12 @@ class Robot:
                       
             realth = self.th.value + realw * self.P
             if realw == 0: 
-                d_x = self.P.value * realv * np.cos(realth) # Duda de si es self.th.value 
-                d_y = self.P.value *  realv * np.sin(realth)
+                d_x = self.P * realv * np.cos(realth) # Duda de si es self.th.value 
+                d_y = self.P *  realv * np.sin(realth)
             elif realw != 0:
                 # El radio se calcula R = v/w 
-                d_x = (realv/realw) * (np.sin(realth + realw + self.P.value) - np.sin(realth))
-                d_y = (realv/realw) * (np.cos(realth + realw + self.P.value) - np.cos(realth))
+                d_x = (realv/realw) * (np.sin(realth + realw + self.P) - np.sin(realth))
+                d_y = (realv/realw) * (np.cos(realth + realw + self.P) - np.cos(realth))
             
             # # to "lock" a whole set of operations, we can use a "mutex"
             self.lock_odometry.acquire()
