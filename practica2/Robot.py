@@ -98,8 +98,8 @@ class Robot:
         self.lock_odometry.acquire()
         #SC
 
-        self.BP.set_motor_power(self.BP.PORT_B, speedDPS_right)
-        self.BP.set_motor_power(self.BP.PORT_C, speedDPS_left)
+        self.BP.set_motor_dps(self.BP.PORT_B, speedDPS_right)
+        self.BP.set_motor_dps(self.BP.PORT_C, speedDPS_left)
         self.lock_odometry.release()
 
 
