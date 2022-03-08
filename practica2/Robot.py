@@ -75,7 +75,7 @@ class Robot:
         #self.lock_odometry.release()
 
         # odometry update period --> UPDATE value!
-        self.P = 0.03
+        self.P = 0.05
 
 
 
@@ -175,11 +175,14 @@ class Robot:
             # Need to decide when to store a log with the updated odometry ...
             [x,y,th] = self.readOdometry()
             print(x, ',', y , ',', th ,'\n', file=self.log)
+            print('Coords moving:', x, ',', y, ',', np.rad2deg(th))
             #self.log.write(x + ',' + y + ',' + th + '\n')
             ######## UPDATE UNTIL HERE with your code ########
 
 
             tEnd = time.clock()
+            print('Time elapsed updating odometry:',(tEnd-tIni))
+
             time.sleep(self.P - (tEnd-tIni))
 
         #print("Stopping odometry ... X= %d" %(self.x.value))
