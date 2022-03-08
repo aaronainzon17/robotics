@@ -88,19 +88,18 @@ class Robot:
         print("inverse_model", inverse_model)
         wd = inverse_model[0]  
         wi = inverse_model[1]
-        print("Diametro de rueda: %.2f" % (self.R.value))
-        print("Distancia entre ejes: %.2f" % (self.L.value))
-        print("Left engine: %.2f" % (wi))
-        print("Right engine: %.2f" % (wd))
         
         speedDPS_right = np.rad2deg(wd)
         speedDPS_left = np.rad2deg(wi)
         
+        print("Left engine: %.2f" % (speedDPS_left))
+        print("Right engine: %.2f" % (speedDPS_right))
+        
         self.lock_odometry.acquire()
         #SC
 
-        self.BP.set_motor_dps(self.BP.PORT_B, speedDPS_right)
-        self.BP.set_motor_dps(self.BP.PORT_C, speedDPS_left)
+        self.BP.set_motor_power(self.BP.PORT_B, speedDPS_right)
+        self.BP.set_motor_power(self.BP.PORT_C, speedDPS_left)
         self.lock_odometry.release()
 
 
@@ -162,7 +161,8 @@ class Robot:
             tIni = time.clock()
 
             [real_v,real_w] = self.readSpeed()
-            
+            print("real_v", real_v)
+            print("real_w", real_w)
             if real_w == 0: 
                 d_x = (real_v * self.P) * np.cos(self.th.value)
                 d_y = (real_v * self.P) * np.sin(self.th.value)
