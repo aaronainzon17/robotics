@@ -30,6 +30,9 @@ class Robot:
         self.L = Value('d',128)
         
         self.log = open("log_odometry","w")
+
+        self.acum_d = 0
+        self.acum_i = 0
         # self.v = Value('d',0.0)
         # self.w = Value('d',0.0)
 
@@ -109,7 +112,14 @@ class Robot:
             [rightEngine, leftEngine] = [self.BP.get_motor_encoder(self.BP.PORT_B), self.BP.get_motor_encoder(self.BP.PORT_C)]
         except IOError as error:
             print(error)
-        grados_ruedas = np.array([[np.deg2rad(rightEngine)] , [np.deg2rad(leftEngine)]])
+        #Se obtiene lo que ha girado cada rueda en esta iteracion (recorrido hasta ahora - recorrido anterior)
+        deg_right_e = rightEngine - self.acum_d
+        deg_left_e = leftEngine - self.acum_i
+        
+        #Actualizacion del anterior giro acumulado por las ruedas
+        self.acum_d = rightEngine
+        self.acum_i = leftEngine
+        grados_ruedas = np.array([[np.deg2rad(deg_right_e)] , [np.deg2rad(deg_left_e)]])
         #grados_ruedas = np.array([[np.deg2rad(rightEngine)] , [np.deg2rad(leftEngine)]])
         trac = np.array([[self.R.value/2, self.R.value/2],[self.R.value/self.L.value,(-self.R.value)/self.L.value]])
 
@@ -120,6 +130,7 @@ class Robot:
         #    self.BP.offset_motor_encoder(self.BP.PORT_C, self.BP.get_motor_encoder(self.BP.PORT_C)) # reset encoder C
         #except IOError as error:
         #    print(error)
+        
         self.lock_odometry.release()
         return vel[0],vel[1]
 
