@@ -112,8 +112,8 @@ class Robot:
         except IOError as error:
             print(error)
         #Se obtiene lo que ha girado cada rueda en esta iteracion (recorrido hasta ahora - recorrido anterior)
-        deg_right_e = rightEngine - self.acum_d
-        deg_left_e = leftEngine - self.acum_i
+        deg_right_e = (rightEngine - self.acum_d) / self.P
+        deg_left_e = (leftEngine - self.acum_i) / self.P
         
         #Actualizacion del anterior giro acumulado por las ruedas
         self.acum_d = rightEngine
@@ -131,6 +131,7 @@ class Robot:
         #    print(error)
         
         self.lock_odometry.release()
+        #Hay que pasar las medidad que devuelve el encode (en cm) a mm
         return vel[0],vel[1]
 
     def readOdometry(self):
