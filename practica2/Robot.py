@@ -25,9 +25,9 @@ class Robot:
         # Robot construction parameters
         
         #Radio de la rueda
-        self.R = Value('d',280.0)     
+        self.R = Value('d',28.0)     
         #Longitud entre ruedas
-        self.L = Value('d',1280.0)
+        self.L = Value('d',128.0)
         
         self.log = open("log_odometry","w")
         # self.v = Value('d',0.0)
