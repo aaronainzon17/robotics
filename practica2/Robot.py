@@ -5,6 +5,7 @@ from __future__ import division       #                           ''
 
 #import brickpi3 # import the BrickPi3 drivers
 import time     # import the time library for the sleep function
+import brickpi3 # import the BrickPi3 drivers
 import sys
 import numpy as np
 
@@ -22,9 +23,7 @@ class Robot:
 ######## UNCOMMENT and FILL UP all you think is necessary (following the suggested scheme) ########
 
         # Robot construction parameters
-        #self.R = ??
-        #self.L = ??
-
+        
         #Radio de la rueda
         self.R = Value('d',2.8)        #A lo mejor habria que ver si es 2.9      
         #Longitud entre ruedas
@@ -75,7 +74,7 @@ class Robot:
         #self.lock_odometry.release()
 
         # odometry update period --> UPDATE value!
-        self.P = 1.0
+        self.P = 0.1
 
 
 
@@ -142,6 +141,7 @@ class Robot:
         self.p = Process(target=self.updateOdometry, args=()) #additional_params?))
         self.p.start()
         print("PID: ", self.p.pid)
+        self.log = open("log_odometry","w")
 
     # You may want to pass additional shared variables besides the odometry values and stop flag
     def updateOdometry(self): #, additional_params?):
@@ -151,55 +151,29 @@ class Robot:
             # current processor time in a floating point value, in seconds
             tIni = time.clock()
 
-            # compute updates
-            ######## UPDATE FROM HERE with your code (following the suggested scheme) ########
-            # MY CODE 
             [realv,realw] = self.readSpeed(self)
-            if realw == 0:
-                # TODO: definir las variables en self o algo por el estilo 
-                d_x = self.P.value * realv * np.cos(self.th.value)
-                d_y = self.P.value *  realv * np.sin(self.th.value)
+                      
+            realth = self.th + realw * self.P
+            if realw == 0: 
+                d_x = self.P.value * realv * np.cos(realth) # Duda de si es self.th.value 
+                d_y = self.P.value *  realv * np.sin(realth)
             elif realw != 0:
                 # El radio se calcula R = v/w 
-                d_x = (realv/realw) * (np.sin(self.th.value + realw + self.P.value) - np.sin(self.th.value))
-                d_y = (realv/realw) * (np.cos(self.th.value + realw + self.P.value) - np.cos(self.th.value))
-            #END MY CODE 
-            ######## UPDATE FROM HERE with your code (following the suggested scheme) ########
-            sys.stdout.write("Dummy update of odometry ...., X=  %d, \
-                Y=  %d, th=  %d \n" %(self.x.value, self.y.value, self.th.value) )
-            #print("Dummy update of odometry ...., X=  %.2f" %(self.x.value) )
-
-            # update odometry uses values that require mutex
-            # (they are declared as value, so lock is implicitly done for atomic operations, BUT =+ is NOT atomic)
-
-            # # Operations like += which involve a read and write are not atomic.
-            # with self.x.get_lock():
-            #     self.x.value+=1
-
+                d_x = (realv/realw) * (np.sin(realth + realw + self.P.value) - np.sin(realth))
+                d_y = (realv/realw) * (np.cos(realth + realw + self.P.value) - np.cos(realth))
+            
             # # to "lock" a whole set of operations, we can use a "mutex"
-            # self.lock_odometry.acquire()
-            # #self.x.value+=1
-            # self.y.value+=1
-            # self.th.value+=1
-            # self.lock_odometry.release()
-
-            try:
-                # Each of the following BP.get_motor_encoder functions returns the encoder value
-                # (what we want to store).
-                sys.stdout.write("Reading encoder values .... \n")
-                #[encoder1, encoder2] = [self.BP.get_motor_encoder(self.BP.PORT_B),
-                #    self.BP.get_motor_encoder(self.BP.PORT_C)]
-            except IOError as error:
-                #print(error)
-                sys.stdout.write(error)
-
-            #sys.stdout.write("Encoder (%s) increased (in degrees) B: %6d  C: %6d " %
-            #        (type(encoder1), encoder1, encoder2))
-
+            self.lock_odometry.acquire()
+            self.x.value = d_x
+            self.y.value = d_y
+            self.th.value = realth 
+            self.lock_odometry.release()
 
             # save LOG
             # Need to decide when to store a log with the updated odometry ...
-
+            [x,y,th] = self.readOdometry()
+            
+            self.log.write(x, ',', y, ',',th,'\n')
             ######## UPDATE UNTIL HERE with your code ########
 
 
@@ -207,13 +181,13 @@ class Robot:
             time.sleep(self.P - (tEnd-tIni))
 
         #print("Stopping odometry ... X= %d" %(self.x.value))
-        sys.stdout.write("Stopping odometry ... X=  %.2f, \
-                Y=  %.2f, th=  %.2f \n" %(self.x.value, self.y.value, self.th.value))
+        #sys.stdout.write("Stopping odometry ... X=  %.2f, \
+        #        Y=  %.2f, th=  %.2f \n" %(self.x.value, self.y.value, self.th.value))
 
 
     # Stop the odometry thread.
     def stopOdometry(self):
         self.finished.value = True
-        #self.BP.reset_all()
+        
         self.BP.reset_all()
 
