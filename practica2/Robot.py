@@ -115,11 +115,11 @@ class Robot:
 
         vel = np.dot(trac,grados_ruedas)
 
-        try:
-            self.BP.offset_motor_encoder(self.BP.PORT_B, self.BP.get_motor_encoder(self.BP.PORT_B)) # reset encoder B
-            self.BP.offset_motor_encoder(self.BP.PORT_C, self.BP.get_motor_encoder(self.BP.PORT_C)) # reset encoder C
-        except IOError as error:
-            print(error)
+        #try:
+        #    self.BP.offset_motor_encoder(self.BP.PORT_B, self.BP.get_motor_encoder(self.BP.PORT_B)) # reset encoder B
+        #    self.BP.offset_motor_encoder(self.BP.PORT_C, self.BP.get_motor_encoder(self.BP.PORT_C)) # reset encoder C
+        #except IOError as error:
+        #    print(error)
         self.lock_odometry.release()
         return vel[0],vel[1]
 
