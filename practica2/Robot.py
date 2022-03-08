@@ -72,7 +72,7 @@ class Robot:
         #self.lock_odometry.release()
 
         # odometry update period --> UPDATE value!
-        self.P = 0.5
+        self.P = 0.05
 
 
 
@@ -162,14 +162,6 @@ class Robot:
             tIni = time.clock()
 
             [real_v,real_w] = self.readSpeed()
-            
-            #if realw == 0: 
-            #    d_x = self.P * realv * np.cos(realth) # Duda de si es self.th.value 
-            #    d_y = self.P *  realv * np.sin(realth)
-            #elif realw != 0:
-            #    # El radio se calcula R = v/w 
-            #    d_x = (realv/realw) * (np.sin(realth + realw + self.P) - np.sin(realth))
-            #    d_y = (realv/realw) * (np.cos(realth + realw + self.P) - np.cos(realth))
             
             if real_w == 0: 
                 d_x = (real_v * self.P) * np.cos(self.th.value)
