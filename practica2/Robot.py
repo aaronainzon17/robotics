@@ -25,7 +25,7 @@ class Robot:
         # Robot construction parameters
         
         #Radio de la rueda
-        self.R = Value('d',28.0)        #A lo mejor habria que ver si es 2.9      
+        self.R = Value('d',28.0)     
         #Longitud entre ruedas
         self.L = Value('d',128.0)
         
@@ -167,9 +167,9 @@ class Robot:
             
             # # to "lock" a whole set of operations, we can use a "mutex"
             self.lock_odometry.acquire()
-            self.x.value = d_x
-            self.y.value = d_y
-            self.th.value = realth 
+            self.x.value += d_x
+            self.y.value += d_y
+            self.th.value += realth 
             self.lock_odometry.release()
 
             # save LOG
