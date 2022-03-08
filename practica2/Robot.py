@@ -25,7 +25,7 @@ class Robot:
         # Robot construction parameters
         
         #Radio de la rueda
-        self.R = Value('d',2.8)        #A lo mejor habria que ver si es 2.9      
+        self.R = Value('d',28.0)        #A lo mejor habria que ver si es 2.9      
         #Longitud entre ruedas
         self.L = Value('d',128.0)
         
@@ -75,7 +75,7 @@ class Robot:
         #self.lock_odometry.release()
 
         # odometry update period --> UPDATE value!
-        self.P = 0.1
+        self.P = 0.03
 
 
 
