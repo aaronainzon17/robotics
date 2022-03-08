@@ -32,12 +32,6 @@ class Robot:
         self.log = open("log_odometry","w")
         # self.v = Value('d',0.0)
         # self.w = Value('d',0.0)
-        
-
-        # self.x = Value('d',init_position[0])
-        # self.y = Value('d',init_position[1])
-        # self.th = Value('d',init_position[2])
-        # self.finished = Value('b',1)
 
         ##################################################
         # Motors and sensors setup
@@ -75,7 +69,7 @@ class Robot:
         #self.lock_odometry.release()
 
         # odometry update period --> UPDATE value!
-        self.P = 0.03
+        self.P = 0.5
 
 
 
@@ -170,7 +164,7 @@ class Robot:
                 d_x = (real_v * self.P) * np.cos(self.th.value)
                 d_y = (real_v * self.P) * np.sin(self.th.value)
                 d_th = 0
-            elif real_w != 0:
+            else:
                 # El radio se calcula R = v/w 
                 d_th = real_w * self.P 
                 d_s = (real_v/real_w)* d_th 
@@ -190,11 +184,8 @@ class Robot:
             print(x, ',', y , ',', th ,'\n', file=self.log)
             #print('Coords moving:', x, ',', y, ',', np.rad2deg(th))
             #self.log.write(x + ',' + y + ',' + th + '\n')
-            ######## UPDATE UNTIL HERE with your code ########
-
 
             tEnd = time.clock()
-            print('Time elapsed updating odometry:',(tEnd-tIni))
 
             time.sleep(self.P - (tEnd-tIni))
 
