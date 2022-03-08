@@ -83,7 +83,7 @@ class Robot:
         # compute the speed that should be set in each motor ...
         im0 = np.array([[1/self.R.value, self.L.value/(2*self.R.value)],[1/self.R.value, (-self.L.value)/(2*self.R.value)]])
         print("im0",im0)
-        im1 = np.array([v,w])
+        im1 = np.array([v,np.deg2rad(w)])
         inverse_model = np.dot(im0,im1)
         print("inverse_model", inverse_model)
         wd = inverse_model[0]  
