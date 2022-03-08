@@ -199,4 +199,5 @@ class Robot:
         self.finished.value = True
         
         self.BP.reset_all()
+        self.setSpeed(0,0)
 
