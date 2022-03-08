@@ -28,7 +28,8 @@ class Robot:
         self.R = Value('d',2.8)        #A lo mejor habria que ver si es 2.9      
         #Longitud entre ruedas
         self.L = Value('d',128.0)
-
+        
+        self.log = open("log_odometry","w")
         # self.v = Value('d',0.0)
         # self.w = Value('d',0.0)
         
@@ -85,7 +86,7 @@ class Robot:
         # compute the speed that should be set in each motor ...
         im0 = np.array([[1/self.R.value, self.L.value/2*self.R.value],[1/self.R.value, (-self.L.value)/(2*self.R.value)]])
         im1 = np.array([v,w])
-        inverse_model = np.dot(im0,im1)
+        inverse_model = np.matmul(im0,im1)
         wd = inverse_model[0]  
         wi = inverse_model[1]
         print("Left engine: %.2f" % (wi))
@@ -141,7 +142,7 @@ class Robot:
         self.p = Process(target=self.updateOdometry, args=()) #additional_params?))
         self.p.start()
         print("PID: ", self.p.pid)
-        self.log = open("log_odometry","w")
+        #self.log = open("log_odometry","w")
 
     # You may want to pass additional shared variables besides the odometry values and stop flag
     def updateOdometry(self): #, additional_params?):
