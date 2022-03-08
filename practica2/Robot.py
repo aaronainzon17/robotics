@@ -88,7 +88,8 @@ class Robot:
         inverse_model = np.dot(im0,im1)
         wd = inverse_model[0]  
         wi = inverse_model[1]
-
+        print("Left engine: %.2f" % (wi))
+        print("Right engine: %.2f" % (wd))
         speedDPS_right = np.rad2deg(wd)
         speedDPS_left = np.rad2deg(wi)
         
@@ -171,7 +172,7 @@ class Robot:
             # save LOG
             # Need to decide when to store a log with the updated odometry ...
             [x,y,th] = self.readOdometry()
-            print(x + ',' + y + ',' + th + '\n', file=self.log)
+            print(x, ',', y , ',', th ,'\n', file=self.log)
             #self.log.write(x + ',' + y + ',' + th + '\n')
             ######## UPDATE UNTIL HERE with your code ########
 
