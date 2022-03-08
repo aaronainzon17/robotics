@@ -27,7 +27,7 @@ def main(args):
         robot.setSpeed(200,0)
         print("Start : %s" % time.ctime())
         time.sleep(6)
-        robot.setSpeed(0,45)
+        robot.setSpeed(0,np.deg2rad(45))
         time.sleep(2)
         #robot.setSpeed(0,25)
         #time.sleep(3)
