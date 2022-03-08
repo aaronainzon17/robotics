@@ -112,7 +112,7 @@ class Robot:
             [rightEngine, leftEngine] = [self.BP.get_motor_encoder(self.BP.PORT_B), self.BP.get_motor_encoder(self.BP.PORT_C)]
         except IOError as error:
             print(error)
-        grados_ruedas = np.array([[rightEngine] , [leftEngine]])
+        grados_ruedas = np.array([[np.deg2rad(rightEngine)] , [np.deg2rad(leftEngine)]])
         #grados_ruedas = np.array([[np.deg2rad(rightEngine)] , [np.deg2rad(leftEngine)]])
         trac = np.array([[self.R.value/2, self.R.value/2],[self.R.value/self.L.value,(-self.R.value)/self.L.value]])
 
