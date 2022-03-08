@@ -171,8 +171,8 @@ class Robot:
             # save LOG
             # Need to decide when to store a log with the updated odometry ...
             [x,y,th] = self.readOdometry()
-            
-            self.log.write(x + ',' + y + ',' + th + '\n')
+            print(x + ',' + y + ',' + th + '\n', file=self.log)
+            #self.log.write(x + ',' + y + ',' + th + '\n')
             ######## UPDATE UNTIL HERE with your code ########
 
 
