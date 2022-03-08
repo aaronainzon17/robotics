@@ -24,7 +24,7 @@ def main(args):
         # 2. perform trajectory
 
         #RECTANGLE
-        robot.setSpeed(200,0)
+        robot.setSpeed(2000,0)
         print("Start : %s" % time.ctime())
         time.sleep(6)
         #robot.setSpeed(0,25)
