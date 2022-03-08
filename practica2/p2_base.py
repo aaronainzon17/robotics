@@ -24,11 +24,11 @@ def main(args):
         # 2. perform trajectory
 
         #RECTANGLE
-        robot.setSpeed(100,0)
+        robot.setSpeed(200,0)
         print("Start : %s" % time.ctime())
         time.sleep(6)
-        #srobot.setSpeed(0,25)
-        #stime.sleep(3)
+        #robot.setSpeed(0,25)
+        #time.sleep(3)
         print("End : %s" % time.ctime())
         
         robot.lock_odometry.acquire()
