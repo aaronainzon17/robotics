@@ -72,7 +72,7 @@ class Robot:
         #self.lock_odometry.release()
 
         # odometry update period --> UPDATE value!
-        self.P = 0.1
+        self.P = 0.2
 
 
 
