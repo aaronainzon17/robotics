@@ -23,18 +23,29 @@ def main(args):
 
         # 2. perform trajectory
 
-
-        # DUMMY CODE! delete when you have your own
-        robot.setSpeed(1,1)
+        #RECTANGLE
+        robot.setSpeed(0.25,0)
         print("Start : %s" % time.ctime())
         time.sleep(3)
-        print("X value from main tmp %d" % robot.x.value)
+        robot.setSpeed(0,0.25)
         time.sleep(3)
         print("End : %s" % time.ctime())
-
+        
         robot.lock_odometry.acquire()
         print("Odom values at main at the END: %.2f, %.2f, %.2f " % (robot.x.value, robot.y.value, robot.th.value))
         robot.lock_odometry.release()
+        
+        # DUMMY CODE! delete when you have your own
+        #robot.setSpeed(0.25,0)
+        #print("Start : %s" % time.ctime())
+        #time.sleep(3)
+        #print("X value from main tmp %d" % robot.x.value)
+        #time.sleep(3)
+        #print("End : %s" % time.ctime())
+
+        #robot.lock_odometry.acquire()
+        #print("Odom values at main at the END: %.2f, %.2f, %.2f " % (robot.x.value, robot.y.value, robot.th.value))
+        #robot.lock_odometry.release()
 
         # PART 1:
         # robot.setSpeed()
