@@ -25,9 +25,9 @@ class Robot:
         # Robot construction parameters
         
         #Radio de la rueda
-        self.R = Value('d',28.0)     
+        self.R = Value('d',28)     
         #Longitud entre ruedas
-        self.L = Value('d',128.0)
+        self.L = Value('d',128)
         
         self.log = open("log_odometry","w")
         # self.v = Value('d',0.0)
@@ -85,12 +85,17 @@ class Robot:
 
         # compute the speed that should be set in each motor ...
         im0 = np.array([[1/self.R.value, self.L.value/(2*self.R.value)],[1/self.R.value, (-self.L.value)/(2*self.R.value)]])
+        print("im0",im0)
         im1 = np.array([v,w])
         inverse_model = np.dot(im0,im1)
+        print("inverse_model", inverse_model)
         wd = inverse_model[0]  
         wi = inverse_model[1]
+        print("Diametro de rueda: %.2f" % (self.R.value))
+        print("Distancia entre ejes: %.2f" % (self.L.value))
         print("Left engine: %.2f" % (wi))
         print("Right engine: %.2f" % (wd))
+        
         speedDPS_right = np.rad2deg(wd)
         speedDPS_left = np.rad2deg(wi)
         
@@ -183,7 +188,7 @@ class Robot:
             # Need to decide when to store a log with the updated odometry ...
             [x,y,th] = self.readOdometry()
             print(x, ',', y , ',', th ,'\n', file=self.log)
-            print('Coords moving:', x, ',', y, ',', np.rad2deg(th))
+            #print('Coords moving:', x, ',', y, ',', np.rad2deg(th))
             #self.log.write(x + ',' + y + ',' + th + '\n')
             ######## UPDATE UNTIL HERE with your code ########
 
