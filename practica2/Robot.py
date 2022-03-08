@@ -29,7 +29,7 @@ class Robot:
         #Longitud entre ruedas
         self.L = Value('d',128)
         
-        self.log = open("log_odometry","w")
+        self.log = open("log_odometry.log","w")
 
         self.acum_d = 0
         self.acum_i = 0
@@ -47,10 +47,10 @@ class Robot:
         #self.BP.set_sensor_type(self.BP.PORT_1, self.BP.SENSOR_TYPE.TOUCH)
         self.BP.set_sensor_type(self.BP.PORT_1, self.BP.SENSOR_TYPE.TOUCH)
 
-        # reset encoder B and C (or all the motors you are using)
+        # resete encoder B and C (or all the motors you are using)
         #self.BP.offset_motor_encoder(self.BP.PORT_B,
         #    self.BP.get_motor_encoder(self.BP.PORT_B))
-        #self.BP.offset_motor_encoder(self.BP.PORT_C,
+        #self.BP.offset_motor_ncoder(self.BP.PORT_C,
         #    self.BP.get_motor_encoder(self.BP.PORT_C))
         
         self.BP.offset_motor_encoder(self.BP.PORT_B,
@@ -92,9 +92,6 @@ class Robot:
         speedDPS_right = np.rad2deg(wd)
         speedDPS_left = np.rad2deg(wi)
         
-        print("Left engine: %.2f" % (speedDPS_left))
-        print("Right engine: %.2f" % (speedDPS_right))
-        
         self.lock_odometry.acquire()
         #SC
 
@@ -123,15 +120,9 @@ class Robot:
         trac = np.array([[self.R.value/2, self.R.value/2],[self.R.value/self.L.value,(-self.R.value)/self.L.value]])
 
         vel = np.dot(trac,grados_ruedas)
-
-        #try:
-        #    self.BP.offset_motor_encoder(self.BP.PORT_B, self.BP.get_motor_encoder(self.BP.PORT_B)) # reset encoder B
-        #    self.BP.offset_motor_encoder(self.BP.PORT_C, self.BP.get_motor_encoder(self.BP.PORT_C)) # reset encoder C
-        #except IOError as error:
-        #    print(error)
         
         self.lock_odometry.release()
-        #Hay que pasar las medidad que devuelve el encode (en cm) a mm
+        
         return vel[0],vel[1]
 
     def readOdometry(self):
@@ -151,7 +142,7 @@ class Robot:
         self.p = Process(target=self.updateOdometry, args=()) #additional_params?))
         self.p.start()
         print("PID: ", self.p.pid)
-        #self.log = open("log_odometry","w")
+        
 
     # You may want to pass additional shared variables besides the odometry values and stop flag
     def updateOdometry(self): #, additional_params?):
@@ -162,8 +153,7 @@ class Robot:
             tIni = time.clock()
 
             [real_v,real_w] = self.readSpeed()
-            print("real_v", real_v)
-            print("real_w", real_w)
+
             if real_w == 0: 
                 d_x = (real_v * self.P) * np.cos(self.th.value)
                 d_y = (real_v * self.P) * np.sin(self.th.value)
@@ -186,7 +176,7 @@ class Robot:
             # Need to decide when to store a log with the updated odometry ...
             [x,y,th] = self.readOdometry()
             print(x, ',', y , ',', th ,'\n', file=self.log)
-            print('Coords moving:', x, ',', y, ',', np.rad2deg(th))
+            
             #self.log.write(x + ',' + y + ',' + th + '\n')
 
             tEnd = time.clock()
