@@ -27,8 +27,8 @@ def main(args):
         robot.setSpeed(100,0)
         print("Start : %s" % time.ctime())
         time.sleep(6)
-        robot.setSpeed(0,25)
-        time.sleep(3)
+        #srobot.setSpeed(0,25)
+        #stime.sleep(3)
         print("End : %s" % time.ctime())
         
         robot.lock_odometry.acquire()
