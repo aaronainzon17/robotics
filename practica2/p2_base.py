@@ -26,7 +26,7 @@ def main(args):
         #RECTANGLE
         robot.setSpeed(0.25,0)
         print("Start : %s" % time.ctime())
-        time.sleep(3)
+        time.sleep(80)
         robot.setSpeed(0,0.25)
         time.sleep(3)
         print("End : %s" % time.ctime())
