@@ -153,23 +153,32 @@ class Robot:
             # current processor time in a floating point value, in seconds
             tIni = time.clock()
 
-            [realv,realw] = self.readSpeed()
-                      
-            realth = realw * self.P
+            [real_v,real_w] = self.readSpeed()
             
-            if realw == 0: 
-                d_x = self.P * realv * np.cos(realth) # Duda de si es self.th.value 
-                d_y = self.P *  realv * np.sin(realth)
-            elif realw != 0:
+            #if realw == 0: 
+            #    d_x = self.P * realv * np.cos(realth) # Duda de si es self.th.value 
+            #    d_y = self.P *  realv * np.sin(realth)
+            #elif realw != 0:
+            #    # El radio se calcula R = v/w 
+            #    d_x = (realv/realw) * (np.sin(realth + realw + self.P) - np.sin(realth))
+            #    d_y = (realv/realw) * (np.cos(realth + realw + self.P) - np.cos(realth))
+            
+            if real_w == 0: 
+                d_x = (real_v * self.P) * np.cos(self.th.value)
+                d_y = (real_v * self.P) * np.sin(self.th.value)
+                d_th = 0
+            elif real_w != 0:
                 # El radio se calcula R = v/w 
-                d_x = (realv/realw) * (np.sin(realth + realw + self.P) - np.sin(realth))
-                d_y = (realv/realw) * (np.cos(realth + realw + self.P) - np.cos(realth))
-            
+                d_th = real_w * self.P 
+                d_s = (real_v/real_w)* d_th 
+                d_x = d_s * np.cos(self.th.value * (d_th/2))
+                d_y = d_s * np.sin(self.th.value * (d_th/2))
+
             # # to "lock" a whole set of operations, we can use a "mutex"
             self.lock_odometry.acquire()
             self.x.value += d_x
             self.y.value += d_y
-            self.th.value += realth 
+            self.th.value += d_th    
             self.lock_odometry.release()
 
             # save LOG
