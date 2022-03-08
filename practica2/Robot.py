@@ -151,7 +151,7 @@ class Robot:
             # current processor time in a floating point value, in seconds
             tIni = time.clock()
 
-            [realv,realw] = self.readSpeed(self)
+            [realv,realw] = self.readSpeed()
                       
             realth = self.th + realw * self.P
             if realw == 0: 
