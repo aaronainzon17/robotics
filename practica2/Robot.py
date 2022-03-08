@@ -155,7 +155,8 @@ class Robot:
 
             [realv,realw] = self.readSpeed()
                       
-            realth = self.th.value + realw * self.P
+            realth = realw * self.P
+            
             if realw == 0: 
                 d_x = self.P * realv * np.cos(realth) # Duda de si es self.th.value 
                 d_y = self.P *  realv * np.sin(realth)
