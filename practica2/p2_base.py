@@ -63,8 +63,7 @@ def main(args):
         # robot.setSpeed(0, 90)
         # time.sleep(1)
 
-        robot.setSpeed(200, 0)
-        time.sleep(10)
+        ocho(robot, 400)
 
         print("End : %s" % time.ctime())
 
