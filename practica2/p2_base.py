@@ -10,7 +10,7 @@ from Robot import Robot
 
 def dos_puntos(robot, a, d, dist):
     r2 = math.sqrt(dist**2 + (d-a)**2)
-    th = math.acos((dist**2 + r2**2 - (d-a)**2)/(2*dist*r2))
+    th = np.rad2deg(math.acos((dist**2 + r2**2 - (d-a)**2)/(2*dist*r2)))
 
     v = 200
     w = 90
