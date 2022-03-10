@@ -64,7 +64,7 @@ def main(args):
         # time.sleep(1)
 
         robot.setSpeed(200, 0)
-        time.sleep(6)
+        time.sleep(10)
 
         print("End : %s" % time.ctime())
 
