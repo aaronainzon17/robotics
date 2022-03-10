@@ -4,16 +4,45 @@ import argparse
 from tokenize import Double
 import numpy as np
 import time
+import math
 from Robot import Robot
 
 
-def dos_puntos(robot, a, d, r2):
-    a
+def dos_puntos(robot, a, d, dist):
+    r2 = math.sqrt(dist**2 + (d-a)**2)
+    th = math.acos((dist**2 + r2**2 - (d-a)**2)/(2*dist*r2))
+
+    v = 200
+    w = 90
+    w1 = np.rad2deg((float)(v/a))
+    w2 = np.rad2deg((float)(v/d))
+
+    robot.setSpeed(0, w)
+    time.sleep(90/w)
+    robot.setSpeed(v, -w1)
+    time.sleep(90/w1)
+    robot.setSpeed(0, w)
+    time.sleep(th/w)
+    robot.setSpeed(v, 0)
+    time.sleep(r2/v)
+    robot.setSpeed(0, -w)
+    time.sleep(th/w)
+    robot.setSpeed(v, -w2)
+    time.sleep(180/w2)
+    robot.setSpeed(0, -w)
+    time.sleep(th/w)
+    robot.setSpeed(v, 0)
+    time.sleep(r2/v)
+    robot.setSpeed(0, w)
+    time.sleep(th/w)
+    robot.setSpeed(v, -w1)
+    time.sleep(90/w1)
+    robot.setSpeed(0, 0)
 
 
 def ocho(robot, d):
     v = 200
-    w = np.rad2deg((float)(200/d))
+    w = np.rad2deg((float)(v/d))
 
     robot.setSpeed(0, -90)
     time.sleep(1)
@@ -63,7 +92,9 @@ def main(args):
         # robot.setSpeed(0, 90)
         # time.sleep(1)
 
-        ocho(robot, 400)
+        #ocho(robot, 400)
+
+        dos_puntos(robot, 200, 400, 800)
 
         print("End : %s" % time.ctime())
 
