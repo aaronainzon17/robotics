@@ -13,7 +13,7 @@ def dos_puntos(robot, a, d, r2):
 
 def ocho(robot, d):
     v = 200
-    w = np.rad2deg((Double)(200/d))
+    w = np.rad2deg((float)(200/d))
 
     robot.setSpeed(0, -90)
     time.sleep(1)
