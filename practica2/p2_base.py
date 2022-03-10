@@ -21,8 +21,6 @@ def dos_puntos(robot, a, d, dist):
     time.sleep(90/w)
     robot.setSpeed(v, -w1)  # cuarto de circunferencia a la derecha
     time.sleep(90/w1)
-    robot.setSpeed(0, 0)
-    time.sleep(0.5)
     robot.setSpeed(0, w)    # gira th grados a la izquierda
     time.sleep(th/w)
     robot.setSpeed(v, 0)    # avanza r2 mm en linea recta
