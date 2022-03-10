@@ -16,6 +16,8 @@ def dos_puntos(robot, a, d, dist):
     w = 90
     w1 = np.rad2deg((float)(v/a))
     w2 = np.rad2deg((float)(v/d))
+    print(th)
+    print(th/w)
 
     robot.setSpeed(0, w)    # gira 90 grados a la izquierda
     time.sleep(90/w)
