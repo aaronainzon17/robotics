@@ -77,25 +77,25 @@ def main(args):
 
         robot.setSpeed(200, 0)
         time.sleep(4)
-        robot.setSpeed(0, 90)
-        time.sleep(1)
+        robot.setSpeed(0, 60)
+        time.sleep(1.5)
         robot.setSpeed(200, 0)
         time.sleep(2)
-        robot.setSpeed(0, 90)
-        time.sleep(1)
+        robot.setSpeed(0, 60)
+        time.sleep(1.5)
         robot.setSpeed(200, 0)
         time.sleep(4)
-        robot.setSpeed(0, 90)
-        time.sleep(1)
+        robot.setSpeed(0, 60)
+        time.sleep(1.5)
         robot.setSpeed(200, 0)
         time.sleep(2)
-        robot.setSpeed(0, 90)
-        time.sleep(1)
+        robot.setSpeed(0, 60)
+        time.sleep(1.5)
 
         #ocho(robot, 400)
 
         #dos_puntos(robot, 200, 400, 800)
-        
+
         print("End : %s" % time.ctime())
 
         robot.lock_odometry.acquire()
