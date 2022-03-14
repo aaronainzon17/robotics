@@ -3,8 +3,6 @@
 import matplotlib.pyplot as plt
 import sys
 import numpy as np
-import homYloc as h
-import simubot as s
 import dibrobot as d
 
 if len(sys.argv) < 1:
