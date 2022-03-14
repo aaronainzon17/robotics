@@ -29,7 +29,7 @@ class Robot:
         #Longitud entre ruedas
         self.L = Value('d',128)
         
-        self.log = open("log_odometry.log","w")
+        self.log = open("log_odometry.log","a")
 
         self.acum_d = 0
         self.acum_i = 0
@@ -175,7 +175,9 @@ class Robot:
             # save LOG
             # Need to decide when to store a log with the updated odometry ...
             [x,y,th] = self.readOdometry()
-            print(x, ',', y , ',', th ,'\n', file=self.log)
+            
+            coord = str(x) + ',' + str(y) +  ',' + str(th) + '\n'
+            self.log.write(coord)
             
             #self.log.write(x + ',' + y + ',' + th + '\n')
 
