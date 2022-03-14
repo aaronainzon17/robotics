@@ -94,8 +94,8 @@ def main(args):
 
         #ocho(robot, 400)
 
-        dos_puntos(robot, 200, 400, 800)
-
+        #dos_puntos(robot, 200, 400, 800)
+        ocho(robot,400)
         print("End : %s" % time.ctime())
 
         robot.lock_odometry.acquire()
