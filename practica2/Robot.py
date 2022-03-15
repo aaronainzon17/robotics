@@ -8,6 +8,7 @@ import time     # import the time library for the sleep function
 import brickpi3 # import the BrickPi3 drivers
 import sys
 import numpy as np
+import math
 
 # tambien se podria utilizar el paquete de threading
 from multiprocessing import Process, Value, Array, Lock
@@ -72,7 +73,7 @@ class Robot:
         #self.lock_odometry.release()
 
         # odometry update period --> UPDATE value!
-        self.P = 0.1
+        self.P = 0.04
 
 
 
@@ -169,7 +170,8 @@ class Robot:
             self.lock_odometry.acquire()
             self.x.value += d_x
             self.y.value += d_y
-            self.th.value += d_th    
+            self.th.value += d_th 
+            self.th.value = self.normalizar(self.th.value)   
             self.lock_odometry.release()
 
             # save LOG
@@ -197,3 +199,10 @@ class Robot:
         self.BP.reset_all()
         self.setSpeed(0,0)
 
+    def normalizar(self, th):
+        if th > math.pi:
+            th = th - 2 * math.pi
+        elif th < -math.pi:
+            th = th + 2 * math.pi
+        
+        return th
