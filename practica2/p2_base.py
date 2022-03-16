@@ -110,9 +110,9 @@ def main(args):
 
         #rectangulo_time(robot)
 
-        ocho_time(robot, 400)
+        #ocho_time(robot, 400)
 
-        #dos_puntos(robot, 200, 400, 800)
+        dos_puntos_time(robot, 200, 400, 800)
 
         print("End : %s" % time.ctime())
 
