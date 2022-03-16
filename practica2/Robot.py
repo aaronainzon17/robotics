@@ -174,8 +174,8 @@ class Robot:
                 # El radio se calcula R = v/w 
                 d_th = real_w * self.P 
                 d_s = (real_v/real_w)* d_th 
-                d_x = d_s * np.cos(self.th.value * (d_th/2))
-                d_y = d_s * np.sin(self.th.value * (d_th/2))
+                d_x = d_s * np.cos(self.th.value + (d_th/2))
+                d_y = d_s * np.sin(self.th.value + (d_th/2))
 
             # # to "lock" a whole set of operations, we can use a "mutex"
             self.lock_odometry.acquire()
