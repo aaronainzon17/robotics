@@ -143,9 +143,9 @@ def main(args):
         print("Start : %s" % time.ctime())
 
         #rectangulo_time(robot)
-        #rectangulo(robot, 800,400)
+        rectangulo(robot, 800,400)
         #ocho_time(robot, 400)
-        robot.setSpeed(0, 0)
+        #robot.setSpeed(0, 0)
         #dos_puntos_time(robot, 200, 400, 800)
 
         # robot.setSpeed(50,0)
