@@ -7,8 +7,8 @@ import time
 import math
 from Robot import Robot
 
-
-def dos_puntos(robot, a, d, dist):
+"""Trayectoria de dos circulos con tangentes con tiempos"""
+def dos_puntos_time(robot, a, d, dist):
     r2 = math.sqrt(dist**2 + (d-a)**2)
     th = np.rad2deg(math.acos((dist**2 + r2**2 - (d-a)**2)/(2*dist*r2)))
 
@@ -39,8 +39,8 @@ def dos_puntos(robot, a, d, dist):
     time.sleep(90/w1)
     robot.setSpeed(0, 0)
 
-
-def ocho(robot, d):
+"""Trayectoria del ocho definida con tiempos"""
+def ocho_time(robot, d):
     v = 200
     w = np.rad2deg((float)(v/d))
 
@@ -54,6 +54,39 @@ def ocho(robot, d):
     time.sleep(180/w)
     robot.setSpeed(0, 0)
 
+"""Trayectoria del rectangulo definida con tiempos"""
+def rectangulo_time(robot):
+    robot.setSpeed(200, 0)
+    time.sleep(4)
+    robot.setSpeed(0, 60)
+    time.sleep(1.5)
+    robot.setSpeed(200, 0)
+    time.sleep(2)
+    robot.setSpeed(0, 60)
+    time.sleep(1.5)
+    robot.setSpeed(200, 0)
+    time.sleep(4)
+    robot.setSpeed(0, 60)
+    time.sleep(1.5)
+    robot.setSpeed(200, 0)
+    time.sleep(2)
+    robot.setSpeed(0, 60)
+    time.sleep(1.5)
+
+def check_position(robot,x,y,th,pos_err, angular_err):
+        [x_now,y_now,th_now] = robot.readOdometry()
+        reached = 0
+        #if abs(x-x_now) <= pos_err & abs(y-y_now) <= pos_err & abs(th-th_now) <= angular_err: 
+        #    reached = 0 
+        #else: 
+        #    reached = 1
+        while reached == 0:
+            if abs(x-x_now) <= pos_err & abs(y-y_now) <= pos_err & abs(th-th_now) <= angular_err: 
+                reached = 0 
+                [x_now,y_now,th_now] = robot.readOdometry()
+            else: 
+                reached = 1
+                print("Se ha alcanzado el punto:[",x_now,",",y_now,",",th_now,"]")
 
 def main(args):
     try:
@@ -75,22 +108,7 @@ def main(args):
         # RECTANGLE
         print("Start : %s" % time.ctime())
 
-        robot.setSpeed(200, 0)
-        time.sleep(4)
-        robot.setSpeed(0, 60)
-        time.sleep(1.5)
-        robot.setSpeed(200, 0)
-        time.sleep(2)
-        robot.setSpeed(0, 60)
-        time.sleep(1.5)
-        robot.setSpeed(200, 0)
-        time.sleep(4)
-        robot.setSpeed(0, 60)
-        time.sleep(1.5)
-        robot.setSpeed(200, 0)
-        time.sleep(2)
-        robot.setSpeed(0, 60)
-        time.sleep(1.5)
+        rectangulo_time(robot)
 
         #ocho(robot, 400)
 
