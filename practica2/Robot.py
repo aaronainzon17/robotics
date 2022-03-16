@@ -25,17 +25,20 @@ class Robot:
 
         # Robot construction parameters
         
-        #Radio de la rueda
-        self.R = Value('d',28)     
-        #Longitud entre ruedas
-        self.L = Value('d',128)
+        #Radio de la rueda y distncia entre ruedas
+        self.R = 28  
+        self.L = 128
         
+        #Fichero de log
         self.log = open("log_odometry.log","a")
 
+        #Ultimo valor leido de cada motor
         self.acum_d = 0
         self.acum_i = 0
-        # self.v = Value('d',0.0)
-        # self.w = Value('d',0.0)
+        
+        #Velocidades
+        self.v = Value('d',0.0)
+        self.w = Value('d',0.0)
 
         ##################################################
         # Motors and sensors setup
@@ -46,7 +49,7 @@ class Robot:
 
         # Configure sensors, for example a touch sensor.
         #self.BP.set_sensor_type(self.BP.PORT_1, self.BP.SENSOR_TYPE.TOUCH)
-        self.BP.set_sensor_type(self.BP.PORT_1, self.BP.SENSOR_TYPE.TOUCH)
+        #self.BP.set_sensor_type(self.BP.PORT_1, self.BP.SENSOR_TYPE.TOUCH)
 
         # resete encoder B and C (or all the motors you are using)
         #self.BP.offset_motor_encoder(self.BP.PORT_B,
@@ -55,15 +58,16 @@ class Robot:
         #    self.BP.get_motor_encoder(self.BP.PORT_C))
         
         self.BP.offset_motor_encoder(self.BP.PORT_B,
-           self.BP.get_motor_encoder(self.BP.PORT_B))
+           self.BP.get_motor_encoder(self.BP.PORT_B)) # RUEDA DERECHA
         self.BP.offset_motor_encoder(self.BP.PORT_C,
-           self.BP.get_motor_encoder(self.BP.PORT_C))
+           self.BP.get_motor_encoder(self.BP.PORT_C)) #RUEDA IZQUIERDA
 
         ##################################################
+        
         # odometry shared memory values
-        self.x = Value('d',0.0)
-        self.y = Value('d',0.0)
-        self.th = Value('d',0.0)
+        self.x = Value('d',init_position[0])
+        self.y = Value('d',init_position[1])
+        self.th = Value('d',init_position[2])
         self.finished = Value('b',1) # boolean to show if odometry updates are finished
 
         # if we want to block several instructions to be run together, we may want to use an explicit Lock
@@ -82,7 +86,7 @@ class Robot:
         print("setting speed to %.2f %.2f" % (v, w))
 
         # compute the speed that should be set in each motor ...
-        im0 = np.array([[1/self.R.value, self.L.value/(2*self.R.value)],[1/self.R.value, (-self.L.value)/(2*self.R.value)]])
+        im0 = np.array([[1/self.R, self.L/(2*self.R)],[1/self.R, (-self.L)/(2*self.R)]])
         print("im0",im0)
         im1 = np.array([v,np.deg2rad(w)])
         inverse_model = np.dot(im0,im1)
@@ -93,11 +97,14 @@ class Robot:
         speedDPS_right = np.rad2deg(wd)
         speedDPS_left = np.rad2deg(wi)
         
-        self.lock_odometry.acquire()
+        
         #SC
 
         self.BP.set_motor_dps(self.BP.PORT_B, speedDPS_right)
         self.BP.set_motor_dps(self.BP.PORT_C, speedDPS_left)
+        self.lock_odometry.acquire()
+        self.v.value = v
+        self.w.value = np.deg2rad(w)
         self.lock_odometry.release()
 
 
@@ -105,10 +112,10 @@ class Robot:
         """ To be filled"""
         self.lock_odometry.acquire()
         #SC
-        try:
-            [rightEngine, leftEngine] = [self.BP.get_motor_encoder(self.BP.PORT_B), self.BP.get_motor_encoder(self.BP.PORT_C)]
-        except IOError as error:
-            print(error)
+        [rightEngine, leftEngine] = [self.BP.get_motor_encoder(self.BP.PORT_B), 
+                self.BP.get_motor_encoder(self.BP.PORT_C)]
+
+
         #Se obtiene lo que ha girado cada rueda en esta iteracion (recorrido hasta ahora - recorrido anterior)
         deg_right_e = (rightEngine - self.acum_d) / self.P
         deg_left_e = (leftEngine - self.acum_i) / self.P
@@ -118,7 +125,7 @@ class Robot:
         self.acum_i = leftEngine
         grados_ruedas = np.array([[np.deg2rad(deg_right_e)] , [np.deg2rad(deg_left_e)]])
         #grados_ruedas = np.array([[np.deg2rad(rightEngine)] , [np.deg2rad(leftEngine)]])
-        trac = np.array([[self.R.value/2, self.R.value/2],[self.R.value/self.L.value,(-self.R.value)/self.L.value]])
+        trac = np.array([[self.R/2, self.R/2],[self.R/self.L,(-self.R/self.L)]])
 
         vel = np.dot(trac,grados_ruedas)
         
@@ -140,6 +147,10 @@ class Robot:
     def startOdometry(self):
         """ This starts a new process/thread that will be updating the odometry periodically """
         self.finished.value = False
+        self.BP.offset_motor_encoder(self.BP.PORT_B,
+                self.BP.get_motor_encoder(self.BP.PORT_B))  # reset encoder B
+        self.BP.offset_motor_encoder(self.BP.PORT_C,
+                self.BP.get_motor_encoder(self.BP.PORT_C))  # reset encoder C
         self.p = Process(target=self.updateOdometry, args=()) #additional_params?))
         self.p.start()
         print("PID: ", self.p.pid)
