@@ -81,7 +81,10 @@ def check_position(robot,x,y,th,pos_err, angular_err):
         #else: 
         #    reached = 1
         while not reached:
+            print("-------------------------------------------")
             print("quiero llegar a ",x," ", y, " ",th)
+            print("estoy en ",x_now, " " , y_now, " ", th_now)
+            print("-------------------------------------------")
             if x_now > x:
                 print("ERROR: no ha parado y se ha superado el umbral")
                 robot.setSpeed(0,0)
