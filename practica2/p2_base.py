@@ -95,6 +95,34 @@ def check_position(robot,x,y,th,pos_err, angular_err):
             time.sleep(robot.getPeriod())
         robot.setSpeed(0,0)
 
+
+def rectangulo(robot, base, altura): 
+    robot.setSpeed(200, 0)
+    check_position(robot,base, 0, 0, 5, np.deg2rad(5))
+
+    robot.setSpeed(0, 60)
+    check_position(robot, base, 0, np.deg2rad(90), 5, np.deg2rad(5))
+
+    robot.setSpeed(200, 0)
+    check_position(robot,base, altura, np.deg2rad(90), 5, np.deg2rad(5))
+
+    robot.setSpeed(0, 60)
+    check_position(robot,base, altura, np.deg2rad(180), 5, np.deg2rad(5))
+
+    robot.setSpeed(200, 0)
+    check_position(robot,0, altura, np.deg2rad(180), 5, np.deg2rad(5))
+
+    robot.setSpeed(0, 60)
+    check_position(robot,0, altura, np.deg2rad(270), 5, np.deg2rad(5))
+
+    robot.setSpeed(200, 0)
+    check_position(robot,0, 0, np.deg2rad(270), 5, np.deg2rad(5))
+
+    robot.setSpeed(0, 60)
+    check_position(robot,0, 0, np.deg2rad(0), 5, np.deg2rad(5))
+
+    robot.setSpeed(0, 0)
+
 def main(args):
     try:
         if args.radioD < 0:
@@ -116,13 +144,13 @@ def main(args):
         print("Start : %s" % time.ctime())
 
         #rectangulo_time(robot)
-
+        rectangulo(robot, 800,400)
         #ocho_time(robot, 400)
 
         #dos_puntos_time(robot, 200, 400, 800)
 
-        robot.setSpeed(50,0)
-        check_position(robot,200,0,0,5,0.2)
+        # robot.setSpeed(50,0)
+        # check_position(robot,200,0,0,5,0.2)
 
         print("End : %s" % time.ctime())
 
