@@ -217,3 +217,6 @@ class Robot:
             th = th + 2 * math.pi
         
         return th
+
+    def getPeriod(self):
+        return self.P 
