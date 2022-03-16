@@ -119,7 +119,7 @@ def main(args):
 
         #dos_puntos_time(robot, 200, 400, 800)
 
-        robot.setSpeed(0,0)
+        robot.setSpeed(100,0)
         check_position(robot,200,0,0,20,20,0.2)
 
         print("End : %s" % time.ctime())
