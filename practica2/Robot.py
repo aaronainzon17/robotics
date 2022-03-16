@@ -168,10 +168,10 @@ class Robot:
 
             # # to "lock" a whole set of operations, we can use a "mutex"
             self.lock_odometry.acquire()
-            self.x.value += d_x
-            self.y.value += d_y
-            self.th.value += d_th 
-            self.th.value = self.normalizar(self.th.value)   
+            self.x.value = d_x
+            self.y.value = d_y
+            self.th.value = self.normalizar(d_th)#d_th 
+            #self.th.value = self.normalizar(self.th.value)   
             self.lock_odometry.release()
 
             # save LOG
