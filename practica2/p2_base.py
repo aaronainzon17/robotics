@@ -93,7 +93,6 @@ def check_position(robot,x,y,th,pos_err, angular_err):
                 print("La posicion actual es:",x_now,y_now)
 
             time.sleep(robot.getPeriod())
-        robot.setSpeed(0,0)
 
 
 def rectangulo(robot, base, altura): 
