@@ -89,8 +89,8 @@ def check_position(robot,x,y,th,pos_err, angular_err):
                 print("ERROR: no ha parado y se ha superado el umbral")
                 robot.setSpeed(0,0)
                 
-            #if (abs(x-x_now) <= pos_err) and (abs(y-y_now) <= pos_err) and (abs(th-th_now) <= angular_err):
-            if (abs(x-x_now) <= pos_err) or (abs(y-y_now) <= pos_err) or (abs(th-th_now) <= angular_err):  
+            if (abs(x-x_now) <= pos_err) and (abs(y-y_now) <= pos_err) and (abs(th-th_now) <= angular_err):
+            #if (abs(x-x_now) <= pos_err) or (abs(y-y_now) <= pos_err) or (abs(th-th_now) <= angular_err):  
                 reached = True
                 print("Se ha alcanzado el punto:[",x_now,",",y_now,",",th_now,"]")
             else: 
