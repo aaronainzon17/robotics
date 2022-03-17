@@ -73,6 +73,13 @@ def rectangulo_time(robot):
     robot.setSpeed(0, 60)
     time.sleep(1.5)
 
+def normalizar(self, th):
+    if th > math.pi:
+        th = th - 2 * math.pi
+    elif th < -math.pi:
+        th = th + 2 * math.pi
+    return th
+
 def check_position(robot,x,y,th,pos_err, angular_err):
         [x_now,y_now,th_now] = robot.readOdometry()
         reached = False
