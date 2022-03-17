@@ -112,10 +112,10 @@ def rectangulo(robot, base, altura):
     robot.setSpeed(50, 0)
     check_position(robot,base, 0, 0, 30, np.deg2rad(5))
     
-    print("Pasa a lo segundo")
+    
     robot.setSpeed(0, 20)
     check_position(robot, base, 0, normalizar(np.deg2rad(90)), 30, np.deg2rad(5))
-    print("Pasa a lo tercero")
+    
     robot.setSpeed(50, 0)
     check_position(robot,base, altura, normalizar(np.deg2rad(90)), 30, np.deg2rad(5))
 
@@ -135,6 +135,24 @@ def rectangulo(robot, base, altura):
     check_position(robot,0, 0, normalizar(np.deg2rad(0)), 30, np.deg2rad(5))
 
     robot.setSpeed(0, 0)
+
+def ocho(robot,primera_parada_x,primera_parada_y,segunda_parada_x,segunda_parada_y):
+    robot.setSpeed(100, 0.5)
+    check_position(robot,primera_parada_x, primera_parada_y, normalizar(np.deg2rad(180)), 30, np.deg2rad(5))
+    
+    
+    robot.setSpeed(100, -0.5)
+    check_position(robot, segunda_parada_x, segunda_parada_y, 0, 30, np.deg2rad(5))
+    
+    robot.setSpeed(100, -0.5)
+    check_position(robot,primera_parada_x, segunda_parada_y, normalizar(np.deg2rad(180)), 30, np.deg2rad(5))
+
+    robot.setSpeed(100, 0.5)
+    check_position(robot,0, 0, 0, 30, np.deg2rad(5))
+
+    robot.setSpeed(0, 0)
+
+
 
 def main(args):
     try:
@@ -156,8 +174,10 @@ def main(args):
         # RECTANGLE
         print("Start : %s" % time.ctime())
 
-        #rectangulo_time(robot)
-        rectangulo(robot, 800,400)
+        
+        #rectangulo(robot, 800,400)
+        ocho(robot,400,0,800,0)
+
         #ocho_time(robot, 400)
         #robot.setSpeed(0, 0)
         #dos_puntos_time(robot, 200, 400, 800)
