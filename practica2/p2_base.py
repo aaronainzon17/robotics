@@ -73,7 +73,7 @@ def rectangulo_time(robot):
     robot.setSpeed(0, 60)
     time.sleep(1.5)
 
-def normalizar(self, th):
+def normalizar(th):
     if th > math.pi:
         th = th - 2 * math.pi
     elif th < -math.pi:
@@ -114,25 +114,25 @@ def rectangulo(robot, base, altura):
     
     print("Pasa a lo segundo")
     robot.setSpeed(0, 20)
-    check_position(robot, base, 0, np.deg2rad(90), 30, np.deg2rad(5))
+    check_position(robot, base, 0, normalizar(np.deg2rad(90)), 30, np.deg2rad(5))
     print("Pasa a lo tercero")
     robot.setSpeed(50, 0)
-    check_position(robot,base, altura, np.deg2rad(90), 30, np.deg2rad(5))
+    check_position(robot,base, altura, normalizar(np.deg2rad(90)), 30, np.deg2rad(5))
 
     robot.setSpeed(0, 20)
-    check_position(robot,base, altura, np.deg2rad(180), 30, np.deg2rad(5))
+    check_position(robot,base, altura, normalizar(np.deg2rad(180)), 30, np.deg2rad(5))
 
     robot.setSpeed(50, 0)
-    check_position(robot,0, altura, np.deg2rad(180), 30, np.deg2rad(5))
+    check_position(robot,0, altura, normalizar(np.deg2rad(180)), 30, np.deg2rad(5))
 
     robot.setSpeed(0, 20)
-    check_position(robot,0, altura, np.deg2rad(270), 30, np.deg2rad(5))
+    check_position(robot,0, altura, normalizar(np.deg2rad(270)), 30, np.deg2rad(5))
 
     robot.setSpeed(50, 0)
-    check_position(robot,0, 0, np.deg2rad(270), 30, np.deg2rad(5))
+    check_position(robot,0, 0, normalizar(np.deg2rad(270)), 30, np.deg2rad(5))
 
     robot.setSpeed(0, 20)
-    check_position(robot,0, 0, np.deg2rad(0), 30, np.deg2rad(5))
+    check_position(robot,0, 0, normalizar(np.deg2rad(0)), 30, np.deg2rad(5))
 
     robot.setSpeed(0, 0)
 
