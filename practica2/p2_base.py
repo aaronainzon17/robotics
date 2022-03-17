@@ -85,11 +85,11 @@ def check_position(robot,x,y,th,pos_err, angular_err):
             print("quiero llegar a ",x," ", y, " ",th)
             print("estoy en ",x_now, " " , y_now, " ", th_now)
             print("-------------------------------------------")
-            if x_now > x:
-                print("ERROR: no ha parado y se ha superado el umbral")
-                robot.setSpeed(0,0)
+            #if x_now > x:
+                #print("ERROR: no ha parado y se ha superado el umbral")
+                #robot.setSpeed(0,0)
                 
-            if (abs(x-x_now) <= pos_err) and (abs(y-y_now) <= pos_err) and (abs(th-th_now) <= angular_err):
+            if (abs(abs(x)-abs(x_now)) <= pos_err) and (abs(abs(y)-abs(y_now)) <= pos_err) and (abs(abs(th)-abs(th_now)) <= angular_err):
             #if (abs(x-x_now) <= pos_err) or (abs(y-y_now) <= pos_err) or (abs(th-th_now) <= angular_err):  
                 reached = True
                 print("Se ha alcanzado el punto:[",x_now,",",y_now,",",th_now,"]")
@@ -98,32 +98,34 @@ def check_position(robot,x,y,th,pos_err, angular_err):
                 print("La posicion actual es:",x_now,y_now)
 
             time.sleep(robot.getPeriod())
+            
 
 
 def rectangulo(robot, base, altura): 
-    robot.setSpeed(200, 0)
-    check_position(robot,base, 0, 0, 5, np.deg2rad(5))
+    robot.setSpeed(50, 0)
+    check_position(robot,base, 0, 0, 30, np.deg2rad(5))
+    
     print("Pasa a lo segundo")
-    robot.setSpeed(0, 60)
-    check_position(robot, base, 0, np.deg2rad(90), 5, np.deg2rad(5))
+    robot.setSpeed(0, 20)
+    check_position(robot, base, 0, np.deg2rad(90), 30, np.deg2rad(5))
     print("Pasa a lo tercero")
-    robot.setSpeed(200, 0)
-    check_position(robot,base, altura, np.deg2rad(90), 5, np.deg2rad(5))
+    robot.setSpeed(50, 0)
+    check_position(robot,base, altura, np.deg2rad(90), 30, np.deg2rad(5))
 
-    robot.setSpeed(0, 60)
-    check_position(robot,base, altura, np.deg2rad(180), 5, np.deg2rad(5))
+    robot.setSpeed(0, 20)
+    check_position(robot,base, altura, np.deg2rad(180), 30, np.deg2rad(5))
 
-    robot.setSpeed(200, 0)
-    check_position(robot,0, altura, np.deg2rad(180), 5, np.deg2rad(5))
+    robot.setSpeed(50, 0)
+    check_position(robot,0, altura, np.deg2rad(180), 30, np.deg2rad(5))
 
-    robot.setSpeed(0, 60)
-    check_position(robot,0, altura, np.deg2rad(270), 5, np.deg2rad(5))
+    robot.setSpeed(0, 20)
+    check_position(robot,0, altura, np.deg2rad(270), 30, np.deg2rad(5))
 
-    robot.setSpeed(200, 0)
-    check_position(robot,0, 0, np.deg2rad(270), 5, np.deg2rad(5))
+    robot.setSpeed(50, 0)
+    check_position(robot,0, 0, np.deg2rad(270), 30, np.deg2rad(5))
 
-    robot.setSpeed(0, 60)
-    check_position(robot,0, 0, np.deg2rad(0), 5, np.deg2rad(5))
+    robot.setSpeed(0, 20)
+    check_position(robot,0, 0, np.deg2rad(0), 30, np.deg2rad(5))
 
     robot.setSpeed(0, 0)
 
