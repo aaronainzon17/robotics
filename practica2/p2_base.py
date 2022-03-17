@@ -137,17 +137,17 @@ def rectangulo(robot, base, altura):
     robot.setSpeed(0, 0)
 
 def ocho(robot,primera_parada_x,primera_parada_y,segunda_parada_x,segunda_parada_y):
-    robot.setSpeed(100, 0.5)
+    robot.setSpeed(100, 20)
     check_position(robot,primera_parada_x, primera_parada_y, normalizar(np.deg2rad(180)), 30, np.deg2rad(5))
     
     
-    robot.setSpeed(100, -0.5)
+    robot.setSpeed(100, -20)
     check_position(robot, segunda_parada_x, segunda_parada_y, 0, 30, np.deg2rad(5))
     
-    robot.setSpeed(100, -0.5)
+    robot.setSpeed(100, -20)
     check_position(robot,primera_parada_x, segunda_parada_y, normalizar(np.deg2rad(180)), 30, np.deg2rad(5))
 
-    robot.setSpeed(100, 0.5)
+    robot.setSpeed(100, 20)
     check_position(robot,0, 0, 0, 30, np.deg2rad(5))
 
     robot.setSpeed(0, 0)
