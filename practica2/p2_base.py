@@ -106,8 +106,8 @@ def check_position(robot, x, y, th, x_err, y_err, angular_err):
         #print("ERROR: no ha parado y se ha superado el umbral")
         # robot.setSpeed(0,0)
         error_ang = abs(th-th_now)
-        if error_ang > 180: 
-            error_ang = 360 - error_ang
+        if error_ang > math.pi: 
+            error_ang = (2*math.pi) - error_ang
         if (abs(x-x_now) <= x_err) and (abs(y-y_now) <= y_err) and (error_ang <= angular_err):
             # if (abs(x-x_now) <= pos_err) or (abs(y-y_now) <= pos_err) or (abs(th-th_now) <= angular_err):
             reached = True
