@@ -185,7 +185,7 @@ def dos_puntos(robot, a, d, dist):
 
     robot.setSpeed(v1, -w1)  # cuarto de circunferencia a la derecha
     check_position(robot, -a, a, normalizar(np.deg2rad(0)),
-                   3, 3, np.deg2rad(0.5))
+                   25, 25, np.deg2rad(0.5))
 
     robot.setSpeed(0, w)    # gira th grados a la izquierda
     check_position(robot, -a, a, normalizar(np.deg2rad(th)),
@@ -193,7 +193,7 @@ def dos_puntos(robot, a, d, dist):
 
     robot.setSpeed(v, 0)    # avanza r2 mm en linea recta
     check_position(robot, -d, a+dist, normalizar(np.deg2rad(th)),
-                   3, 3, np.Infinity)
+                   25, 25, np.Infinity)
 
     robot.setSpeed(0, -w)   # gira th grados a la derecha
     check_position(robot, -d, a+dist, normalizar(np.deg2rad(0)),
@@ -201,7 +201,7 @@ def dos_puntos(robot, a, d, dist):
 
     robot.setSpeed(v1, -w2)  # media circunferencia a la derecha
     check_position(robot, d, a+dist, normalizar(np.deg2rad(180)),
-                   3, 3, np.deg2rad(0.5))
+                   25, 25, np.deg2rad(0.5))
 
     robot.setSpeed(0, -w)   # gira th grados a la derecha
     check_position(robot, d, a+dist, normalizar(np.deg2rad(180-th)),
@@ -209,7 +209,7 @@ def dos_puntos(robot, a, d, dist):
 
     robot.setSpeed(v, 0)    # avanza r2 mm en linea recta
     check_position(robot, a, a, normalizar(np.deg2rad(180-th)),
-                   3, 3, np.Infinity)
+                   25, 25, np.Infinity)
 
     robot.setSpeed(0, w)    # gira th grados a la izquierda
     check_position(robot, a, a, normalizar(np.deg2rad(180)),
@@ -217,7 +217,7 @@ def dos_puntos(robot, a, d, dist):
 
     robot.setSpeed(v1, -w1)  # cuarto de circunferencia a la derecha
     check_position(robot, 0, 0, normalizar(np.deg2rad(90)),
-                   3, 3, np.deg2rad(0.5))
+                   25, 25, np.deg2rad(0.5))
     robot.setSpeed(0, 0)
 
 
