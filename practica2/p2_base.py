@@ -175,8 +175,8 @@ def main(args):
         print("Start : %s" % time.ctime())
 
         
-        #rectangulo(robot, 800,400)
-        ocho(robot,400,0,800,0)
+        rectangulo(robot, 800,400)
+        #ocho(robot,400,0,800,0)
 
         #ocho_time(robot, 400)
         #robot.setSpeed(0, 0)
