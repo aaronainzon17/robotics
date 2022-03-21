@@ -89,59 +89,67 @@ def normalizar(th):
         th = th + 2 * math.pi
     return th
 
-def check_position(robot,x,y,th,x_err,y_err, angular_err):
-        [x_now,y_now,th_now] = robot.readOdometry()
-        reached = False
-        #if abs(x-x_now) <= pos_err & abs(y-y_now) <= pos_err & abs(th-th_now) <= angular_err: 
-        #    reached = 0 
-        #else: 
-        #    reached = 1
-        while not reached:
-            print("-------------------------------------------")
-            print("quiero llegar a ",x," ", y, " ",th)
-            print("estoy en ",x_now, " " , y_now, " ", th_now)
-            print("-------------------------------------------")
-            #if x_now > x:
-                #print("ERROR: no ha parado y se ha superado el umbral")
-                #robot.setSpeed(0,0)
-               
-            if (abs(abs(x)-abs(x_now)) <= x_err) and (abs(abs(y)-abs(y_now)) <= y_err) and (abs(abs(th)-abs(th_now)) <= angular_err):
-            #if (abs(x-x_now) <= pos_err) or (abs(y-y_now) <= pos_err) or (abs(th-th_now) <= angular_err):  
-                reached = True
-                print("Se ha alcanzado el punto:[",x_now,",",y_now,",",th_now,"]")
-            else: 
-                [x_now,y_now,th_now] = robot.readOdometry()
-                print("La posicion actual es:",x_now,y_now)
 
-            #time.sleep(robot.getPeriod())
-            
+def check_position(robot, x, y, th, x_err, y_err, angular_err):
+    [x_now, y_now, th_now] = robot.readOdometry()
+    reached = False
+    # if abs(x-x_now) <= pos_err & abs(y-y_now) <= pos_err & abs(th-th_now) <= angular_err:
+    #    reached = 0
+    # else:
+    #    reached = 1
+    while not reached:
+        print("-------------------------------------------")
+        print("quiero llegar a ", x, " ", y, " ", th)
+        print("estoy en ", x_now, " ", y_now, " ", th_now)
+        print("-------------------------------------------")
+        # if x_now > x:
+        #print("ERROR: no ha parado y se ha superado el umbral")
+        # robot.setSpeed(0,0)
+
+        if (abs(abs(x)-abs(x_now)) <= x_err) and (abs(abs(y)-abs(y_now)) <= y_err) and (abs(abs(th)-abs(th_now)) <= angular_err):
+            # if (abs(x-x_now) <= pos_err) or (abs(y-y_now) <= pos_err) or (abs(th-th_now) <= angular_err):
+            reached = True
+            print("Se ha alcanzado el punto:[",
+                  x_now, ",", y_now, ",", th_now, "]")
+        else:
+            [x_now, y_now, th_now] = robot.readOdometry()
+            print("La posicion actual es:", x_now, y_now)
+
+        # time.sleep(robot.getPeriod())
 
 
-def rectangulo(robot, base, altura): 
-    
-    robot.setSpeed(150, 0)
-    check_position(robot,base, 0, 0, 3, 3, np.deg2rad(0.3))
-    
-    robot.setSpeed(0, 45)
-    check_position(robot, base, 0, normalizar(np.deg2rad(90)), 50, 3, np.deg2rad(0.5))
-    
-    robot.setSpeed(150, 0)
-    check_position(robot,base, altura, normalizar(np.deg2rad(90)), 80, 8, np.deg2rad(0.8))
-
-    robot.setSpeed(0, 45)
-    check_position(robot,base, altura, normalizar(np.deg2rad(180)),100, 100, np.deg2rad(0.3))
+def rectangulo(robot, base, altura):
 
     robot.setSpeed(150, 0)
-    check_position(robot,0, altura, normalizar(np.deg2rad(180)), 100, 25, np.deg2rad(90))   #tercera recta
+    check_position(robot, base, 0, 0, 3, 3, np.deg2rad(0.3))
 
     robot.setSpeed(0, 45)
-    check_position(robot,0, altura, normalizar(np.deg2rad(270)), 100, 100, np.deg2rad(2))
+    check_position(robot, base, 0, normalizar(
+        np.deg2rad(90)), 50, 3, np.deg2rad(0.5))
 
     robot.setSpeed(150, 0)
-    check_position(robot,0, 0, normalizar(np.deg2rad(270)), 30, 100, np.deg2rad(90))
+    check_position(robot, base, altura, normalizar(
+        np.deg2rad(90)), 80, 8, np.deg2rad(0.8))
 
     robot.setSpeed(0, 45)
-    check_position(robot,0, 0, normalizar(np.deg2rad(0)), 100, 100, np.deg2rad(4))
+    check_position(robot, base, altura, normalizar(
+        np.deg2rad(180)), 100, 100, np.deg2rad(0.3))
+
+    robot.setSpeed(150, 0)
+    check_position(robot, 0, altura, normalizar(np.deg2rad(180)),
+                   100, 25, np.deg2rad(90))  # tercera recta
+
+    robot.setSpeed(0, 45)
+    check_position(robot, 0, altura, normalizar(
+        np.deg2rad(270)), 100, 100, np.deg2rad(2))
+
+    robot.setSpeed(150, 0)
+    check_position(robot, 0, 0, normalizar(
+        np.deg2rad(270)), 30, 100, np.deg2rad(90))
+
+    robot.setSpeed(0, 45)
+    check_position(robot, 0, 0, normalizar(
+        np.deg2rad(0)), 100, 100, np.deg2rad(4))
 
     robot.setSpeed(0, 0)
 
@@ -184,35 +192,35 @@ def dos_puntos(robot, a, d, dist):
                    np.Infinity, np.Infinity, np.deg2rad(0.5))
 
     robot.setSpeed(v1, -w1)  # cuarto de circunferencia a la derecha
-    check_position(robot, -a, a, normalizar(np.deg2rad(0)),
+    check_position(robot, a, a, normalizar(np.deg2rad(0)),
                    25, 25, np.deg2rad(0.5))
 
     robot.setSpeed(0, w)    # gira th grados a la izquierda
-    check_position(robot, -a, a, normalizar(np.deg2rad(th)),
+    check_position(robot, a, a, normalizar(np.deg2rad(th)),
                    np.Infinity, np.Infinity, np.deg2rad(0.5))
 
     robot.setSpeed(v, 0)    # avanza r2 mm en linea recta
-    check_position(robot, -d, a+dist, normalizar(np.deg2rad(th)),
+    check_position(robot, a+dist, d, normalizar(np.deg2rad(th)),
                    25, 25, np.Infinity)
 
     robot.setSpeed(0, -w)   # gira th grados a la derecha
-    check_position(robot, -d, a+dist, normalizar(np.deg2rad(0)),
+    check_position(robot, a+dist, d, normalizar(np.deg2rad(0)),
                    np.Infinity, np.Infinity, np.deg2rad(0.5))
 
     robot.setSpeed(v1, -w2)  # media circunferencia a la derecha
-    check_position(robot, d, a+dist, normalizar(np.deg2rad(180)),
+    check_position(robot, a+dist, -d, normalizar(np.deg2rad(180)),
                    25, 25, np.deg2rad(0.5))
 
     robot.setSpeed(0, -w)   # gira th grados a la derecha
-    check_position(robot, d, a+dist, normalizar(np.deg2rad(180-th)),
+    check_position(robot, a+dist, -d, normalizar(np.deg2rad(180-th)),
                    np.Infinity, np.Infinity, np.deg2rad(0.5))
 
     robot.setSpeed(v, 0)    # avanza r2 mm en linea recta
-    check_position(robot, a, a, normalizar(np.deg2rad(180-th)),
+    check_position(robot, a, -a, normalizar(np.deg2rad(180-th)),
                    25, 25, np.Infinity)
 
     robot.setSpeed(0, w)    # gira th grados a la izquierda
-    check_position(robot, a, a, normalizar(np.deg2rad(180)),
+    check_position(robot, a, -a, normalizar(np.deg2rad(180)),
                    np.Infinity, np.Infinity, np.deg2rad(0.5))
 
     robot.setSpeed(v1, -w1)  # cuarto de circunferencia a la derecha
@@ -242,7 +250,7 @@ def main(args):
         print("Start : %s" % time.ctime())
 
         #rectangulo(robot, 800, 400)
-        ocho(robot,400)
+        ocho(robot, 400)
 
         #ocho_time(robot, 400)
         #robot.setSpeed(0, 0)
