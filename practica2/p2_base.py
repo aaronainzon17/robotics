@@ -128,7 +128,7 @@ def rectangulo(robot, base, altura):
 
     robot.setSpeed(0, w)
     check_position(robot, base, 0, normalizar(
-        np.deg2rad(90)), np.Infinity, np.Infinity, np.deg2rad(4))
+        np.deg2rad(90)), np.Infinity, np.Infinity, np.deg2rad(2))
 
     robot.setSpeed(v, 0)
     check_position(robot, base, altura, normalizar(
@@ -136,11 +136,11 @@ def rectangulo(robot, base, altura):
 
     robot.setSpeed(0, w)
     check_position(robot, base, altura, normalizar(
-        np.deg2rad(180)), np.Infinity, np.Infinity, np.deg2rad(4))
+        np.deg2rad(180)), np.Infinity, np.Infinity, np.deg2rad(2))
 
     robot.setSpeed(v, 0)
-    check_position(robot, 0, altura, normalizar(np.deg2rad(180)),
-                   5, 30, np.deg2rad(2))  # tercera recta
+    check_position(robot, 0, altura, normalizar(
+        np.deg2rad(180)), 5, 30, np.deg2rad(2))  # tercera recta
 
     robot.setSpeed(0, w)
     check_position(robot, 0, altura, normalizar(
