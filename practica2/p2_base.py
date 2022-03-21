@@ -136,7 +136,7 @@ def rectangulo(robot, base, altura):
 
     robot.setSpeed(0, w)
     check_position(robot, base, altura, normalizar(
-        np.deg2rad(180)), np.Infinity, np.Infinity, np.deg2rad(2))
+        np.deg2rad(180)), np.Infinity, np.Infinity, np.deg2rad(4))
 
     robot.setSpeed(v, 0)
     check_position(robot, 0, altura, normalizar(np.deg2rad(180)),
