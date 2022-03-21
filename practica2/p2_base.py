@@ -158,7 +158,7 @@ def rectangulo(robot, base, altura):
 
 
 def ocho(robot, d):
-    v = 100
+    v = 150
     w = np.rad2deg((float)(v/d))
 
     robot.setSpeed(0, -45)
@@ -174,7 +174,7 @@ def ocho(robot, d):
     check_position(robot, 2*d, 0, normalizar(np.deg2rad(90)),30, 5, np.deg2rad(10))
 
     robot.setSpeed(v, w)
-    check_position(robot, 0, 0, normalizar(np.deg2rad(-90)),5, 40, np.deg2rad(5))
+    check_position(robot, 0, 0, normalizar(np.deg2rad(-90)),5, 5, np.deg2rad(5))
 
     robot.setSpeed(0, 0)
     time.sleep(1)
