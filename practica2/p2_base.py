@@ -1,7 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import argparse
-from asyncio.windows_events import INFINITE
 from tokenize import Double
 import numpy as np
 import time
@@ -111,17 +110,17 @@ def check_position(robot,x,y,th,x_err,y_err, angular_err):
 
 def rectangulo(robot, base, altura): 
     robot.setSpeed(150, 0)
-    check_position(robot,base, 0, 0, 4, np.Infinity, np.deg2rad(20))
+    check_position(robot,base, 0, 0, 4, 100, np.deg2rad(20))
     
     
     robot.setSpeed(0, 45)
-    check_position(robot, base, 0, normalizar(np.deg2rad(90)), np.Infinity, np.Infinity, np.deg2rad(2))
+    check_position(robot, base, 0, normalizar(np.deg2rad(90)), 100, 100, np.deg2rad(2))
     
     robot.setSpeed(150, 0)
-    check_position(robot,base, altura, normalizar(np.deg2rad(90)), np.Infinity, 4, np.Infinity)
+    check_position(robot,base, altura, normalizar(np.deg2rad(90)), 100, 4, 100)
 
     robot.setSpeed(0, 45)
-    check_position(robot,base, altura, normalizar(np.deg2rad(180)), np.Infinity, np.Infinity, np.deg2rad(2))
+    check_position(robot,base, altura, normalizar(np.deg2rad(180)),100, 100, np.deg2rad(2))
 
     robot.setSpeed(150, 0)
     check_position(robot,0, altura, normalizar(np.deg2rad(180)), 6, 4, np.deg2rad(2))
