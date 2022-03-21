@@ -193,8 +193,10 @@ class Robot:
             # Need to decide when to store a log with the updated odometry ...
             [x, y, th] = self.readOdometry()
 
+            self.lock_odometry.acquire()
             coord = str(x) + ',' + str(y) + ',' + str(th) + '\n'
             self.log.write(coord)
+            self.lock_odometry.release()
 
             #self.log.write(x + ',' + y + ',' + th + '\n')
 
