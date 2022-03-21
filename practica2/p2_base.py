@@ -251,8 +251,8 @@ def main(args):
         # RECTANGLE
         print("Start : %s" % time.ctime())
 
-        rectangulo(robot, 800, 400)
-        #ocho(robot, 400)
+        #rectangulo(robot, 800, 400)
+        ocho(robot, 400)
         #dos_puntos(robot,200,400,600)
 
         #ocho_time(robot, 400)
