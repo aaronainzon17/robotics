@@ -140,7 +140,7 @@ def rectangulo(robot, base, altura):
 
     robot.setSpeed(v, 0)
     check_position(robot, 0, altura, normalizar(
-        np.deg2rad(180)), 5, 30, np.deg2rad(2))  # tercera recta
+        np.deg2rad(180)), 5, 40, np.deg2rad(2))  # tercera recta
 
     robot.setSpeed(0, w)
     check_position(robot, 0, altura, normalizar(
