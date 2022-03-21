@@ -105,8 +105,10 @@ def check_position(robot, x, y, th, x_err, y_err, angular_err):
         # if x_now > x:
         #print("ERROR: no ha parado y se ha superado el umbral")
         # robot.setSpeed(0,0)
-
-        if (abs(x-x_now) <= x_err) and (abs(y-y_now) <= y_err) and (abs(th-th_now) <= angular_err):
+        error_ang = abs(th-th_now)
+        if error_ang > 180: 
+            error_ang = 360 - error_ang
+        if (abs(x-x_now) <= x_err) and (abs(y-y_now) <= y_err) and (error_ang <= angular_err):
             # if (abs(x-x_now) <= pos_err) or (abs(y-y_now) <= pos_err) or (abs(th-th_now) <= angular_err):
             reached = True
             print("Se ha alcanzado el punto:[",
@@ -138,7 +140,7 @@ def rectangulo(robot, base, altura):
 
     robot.setSpeed(v, 0)
     check_position(robot, 0, altura, normalizar(np.deg2rad(-180)),
-                   30, 30, np.deg2rad(2))  # tercera recta
+                   5, 30, np.deg2rad(2))  # tercera recta
 
     robot.setSpeed(0, w)
     check_position(robot, 0, altura, normalizar(
@@ -146,7 +148,7 @@ def rectangulo(robot, base, altura):
 
     robot.setSpeed(v, 0)
     check_position(robot, 0, 0, normalizar(
-        np.deg2rad(270)), 40, 40, np.deg2rad(90))
+        np.deg2rad(270)), 40, 5, np.deg2rad(90))
 
     robot.setSpeed(0, w)
     check_position(robot, 0, 0, normalizar(
