@@ -204,6 +204,13 @@ class Robot:
 
             time.sleep(self.P - (tEnd-tIni))
 
+        [x, y, th] = self.readOdometry()
+
+        self.lock_odometry.acquire()
+        coord = str(x) + ',' + str(y) + ',' + str(th) + '\n'
+        self.log.write(coord)
+        self.lock_odometry.release()
+
         #print("Stopping odometry ... X= %d" %(self.x.value))
         # sys.stdout.write("Stopping odometry ... X=  %.2f, \
         #        Y=  %.2f, th=  %.2f \n" %(self.x.value, self.y.value, self.th.value))
