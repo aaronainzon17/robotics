@@ -104,7 +104,7 @@ def check_position(robot,x,y,th,x_err,y_err, angular_err):
                 [x_now,y_now,th_now] = robot.readOdometry()
                 print("La posicion actual es:",x_now,y_now)
 
-            time.sleep(robot.getPeriod())
+            #time.sleep(robot.getPeriod())
             
 
 
