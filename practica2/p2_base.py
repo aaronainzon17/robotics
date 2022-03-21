@@ -80,7 +80,7 @@ def normalizar(th):
         th = th + 2 * math.pi
     return th
 
-def check_position(robot,x,y,th,pos_err, angular_err):
+def check_position(robot,x,y,th,x_err,y_err, angular_err):
         [x_now,y_now,th_now] = robot.readOdometry()
         reached = False
         #if abs(x-x_now) <= pos_err & abs(y-y_now) <= pos_err & abs(th-th_now) <= angular_err: 
@@ -95,8 +95,8 @@ def check_position(robot,x,y,th,pos_err, angular_err):
             #if x_now > x:
                 #print("ERROR: no ha parado y se ha superado el umbral")
                 #robot.setSpeed(0,0)
-                
-            if (abs(abs(x)-abs(x_now)) <= pos_err) and (abs(abs(y)-abs(y_now)) <= pos_err) and (abs(abs(th)-abs(th_now)) <= angular_err):
+               
+            if (abs(abs(x)-abs(x_now)) <= x_err) and (abs(abs(y)-abs(y_now)) <= y_err) and (abs(abs(th)-abs(th_now)) <= angular_err):
             #if (abs(x-x_now) <= pos_err) or (abs(y-y_now) <= pos_err) or (abs(th-th_now) <= angular_err):  
                 reached = True
                 print("Se ha alcanzado el punto:[",x_now,",",y_now,",",th_now,"]")
@@ -109,30 +109,30 @@ def check_position(robot,x,y,th,pos_err, angular_err):
 
 
 def rectangulo(robot, base, altura): 
-    robot.setSpeed(100, 0)
-    check_position(robot,base, 0, 0, 4, np.deg2rad(5))
+    robot.setSpeed(150, 0)
+    check_position(robot,base, 0, 0, 4, 1, np.deg2rad(0))
     
     
     robot.setSpeed(0, 45)
-    check_position(robot, base, 0, normalizar(np.deg2rad(90)), 0, np.deg2rad(0,5))
+    check_position(robot, base, 0, normalizar(np.deg2rad(90)), 4, 1, np.deg2rad(1))
     
-    robot.setSpeed(100, 0)
-    check_position(robot,base, altura, normalizar(np.deg2rad(90)), 5, np.deg2rad(0,5))
+    robot.setSpeed(150, 0)
+    check_position(robot,base, altura, normalizar(np.deg2rad(90)), 4, 4, np.deg2rad(2))
 
     robot.setSpeed(0, 45)
-    check_position(robot,base, altura, normalizar(np.deg2rad(180)), 5, np.deg2rad(0,5))
+    check_position(robot,base, altura, normalizar(np.deg2rad(180)), 4, 4, np.deg2rad(2))
 
-    robot.setSpeed(100, 0)
-    check_position(robot,0, altura, normalizar(np.deg2rad(180)), 10, np.deg2rad(0,5))
-
-    robot.setSpeed(0, 45)
-    check_position(robot,0, altura, normalizar(np.deg2rad(270)), 10, np.deg2rad(1))
-
-    robot.setSpeed(100, 0)
-    check_position(robot,0, 0, normalizar(np.deg2rad(270)), 10, np.deg2rad(1))
+    robot.setSpeed(150, 0)
+    check_position(robot,0, altura, normalizar(np.deg2rad(180)), 6, 4, np.deg2rad(2))
 
     robot.setSpeed(0, 45)
-    check_position(robot,0, 0, normalizar(np.deg2rad(0)), 10, np.deg2rad(1))
+    check_position(robot,0, altura, normalizar(np.deg2rad(270)), 6, 4, np.deg2rad(4))
+
+    robot.setSpeed(150, 0)
+    check_position(robot,0, 0, normalizar(np.deg2rad(270)), 10, 6, np.deg2rad(4))
+
+    robot.setSpeed(0, 45)
+    check_position(robot,0, 0, normalizar(np.deg2rad(0)), 12, 8, np.deg2rad(5))
 
     robot.setSpeed(0, 0)
 
