@@ -89,7 +89,6 @@ def normalizar(th):
         th = th + 2 * math.pi
     return th
 
-<<<<<<< Updated upstream
 def check_position(robot,x,y,th,x_err,y_err, angular_err):
         [x_now,y_now,th_now] = robot.readOdometry()
         reached = False
@@ -143,68 +142,6 @@ def rectangulo(robot, base, altura):
 
     robot.setSpeed(0, 45)
     check_position(robot,0, 0, normalizar(np.deg2rad(0)), 100, 100, np.deg2rad(4))
-=======
-
-def check_position(robot, x, y, th, x_err, y_err, angular_err):
-    [x_now, y_now, th_now] = robot.readOdometry()
-    reached = False
-    # if abs(x-x_now) <= pos_err & abs(y-y_now) <= pos_err & abs(th-th_now) <= angular_err:
-    #    reached = 0
-    # else:
-    #    reached = 1
-    while not reached:
-        print("-------------------------------------------")
-        print("quiero llegar a ", x, " ", y, " ", th)
-        print("estoy en ", x_now, " ", y_now, " ", th_now)
-        print("-------------------------------------------")
-        # if x_now > x:
-        #print("ERROR: no ha parado y se ha superado el umbral")
-        # robot.setSpeed(0,0)
-
-        if (abs(abs(x)-abs(x_now)) <= x_err) and (abs(abs(y)-abs(y_now)) <= y_err) and (abs(abs(th)-abs(th_now)) <= angular_err):
-            # if (abs(x-x_now) <= pos_err) or (abs(y-y_now) <= pos_err) or (abs(th-th_now) <= angular_err):
-            reached = True
-            print("Se ha alcanzado el punto:[",
-                  x_now, ",", y_now, ",", th_now, "]")
-        else:
-            [x_now, y_now, th_now] = robot.readOdometry()
-            print("La posicion actual es:", x_now, y_now)
-
-        time.sleep(robot.getPeriod())
-
-
-def rectangulo(robot, base, altura):
-    robot.setSpeed(150, 0)
-    check_position(robot, base, 0, 0, 4, np.Infinity, np.deg2rad(20))
-
-    robot.setSpeed(0, 45)
-    check_position(robot, base, 0, normalizar(np.deg2rad(90)),
-                   np.Infinity, np.Infinity, np.deg2rad(2))
-
-    robot.setSpeed(150, 0)
-    check_position(robot, base, altura, normalizar(
-        np.deg2rad(90)), np.Infinity, 4, np.Infinity)
-
-    robot.setSpeed(0, 45)
-    check_position(robot, base, altura, normalizar(
-        np.deg2rad(180)), np.Infinity, np.Infinity, np.deg2rad(2))
-
-    robot.setSpeed(150, 0)
-    check_position(robot, 0, altura, normalizar(
-        np.deg2rad(180)), 6, 4, np.deg2rad(2))
-
-    robot.setSpeed(0, 45)
-    check_position(robot, 0, altura, normalizar(
-        np.deg2rad(270)), 6, 4, np.deg2rad(4))
-
-    robot.setSpeed(150, 0)
-    check_position(robot, 0, 0, normalizar(
-        np.deg2rad(270)), 10, 6, np.deg2rad(4))
-
-    robot.setSpeed(0, 45)
-    check_position(robot, 0, 0, normalizar(
-        np.deg2rad(0)), 12, 8, np.deg2rad(5))
->>>>>>> Stashed changes
 
     robot.setSpeed(0, 0)
 
@@ -304,8 +241,8 @@ def main(args):
         # RECTANGLE
         print("Start : %s" % time.ctime())
 
-        rectangulo(robot, 800, 400)
-        # ocho(robot,400,0,800,0)
+        #rectangulo(robot, 800, 400)
+        ocho(robot,400)
 
         #ocho_time(robot, 400)
         #robot.setSpeed(0, 0)
