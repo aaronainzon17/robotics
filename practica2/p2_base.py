@@ -114,25 +114,25 @@ def rectangulo(robot, base, altura):
     
     
     robot.setSpeed(0, 45)
-    check_position(robot, base, 0, normalizar(np.deg2rad(90)), 100, 100, np.deg2rad(0.5))
+    check_position(robot, base, 0, normalizar(np.deg2rad(90)), 100, 100, np.deg2rad(0.1))
     
     robot.setSpeed(150, 0)
     check_position(robot,base, altura, normalizar(np.deg2rad(90)), 100, 4, 100)
 
     robot.setSpeed(0, 45)
-    check_position(robot,base, altura, normalizar(np.deg2rad(180)),100, 100, np.deg2rad(2))
+    check_position(robot,base, altura, normalizar(np.deg2rad(180)),100, 100, np.deg2rad(1))
 
     robot.setSpeed(150, 0)
-    check_position(robot,0, altura, normalizar(np.deg2rad(180)), 100, 20, np.deg2rad(90))   #tercera recta
+    check_position(robot,0, altura, normalizar(np.deg2rad(180)), 100, 25, np.deg2rad(90))   #tercera recta
 
     robot.setSpeed(0, 45)
-    check_position(robot,0, altura, normalizar(np.deg2rad(270)), 100, 100, np.deg2rad(4))
+    check_position(robot,0, altura, normalizar(np.deg2rad(270)), 100, 100, np.deg2rad(2))
 
     robot.setSpeed(150, 0)
-    check_position(robot,0, 0, normalizar(np.deg2rad(270)), 20, 100, np.deg2rad(90))
+    check_position(robot,0, 0, normalizar(np.deg2rad(270)), 30, 100, np.deg2rad(90))
 
     robot.setSpeed(0, 45)
-    check_position(robot,0, 0, normalizar(np.deg2rad(0)), 100, 100, np.deg2rad(5))
+    check_position(robot,0, 0, normalizar(np.deg2rad(0)), 100, 100, np.deg2rad(4))
 
     robot.setSpeed(0, 0)
 
