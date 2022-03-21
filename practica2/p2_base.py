@@ -122,7 +122,7 @@ def rectangulo(robot, base, altura):
     v = 150
     w = 45
     robot.setSpeed(v, 0)
-    check_position(robot, base, 0, 0, 2, 1, np.deg2rad(2))
+    check_position(robot, base, 0, 0, 3, 3, np.deg2rad(2))
 
     robot.setSpeed(0, w)
     check_position(robot, base, 0, normalizar(
