@@ -177,7 +177,6 @@ def ocho(robot, d):
     check_position(robot, 0, 0, normalizar(np.deg2rad(-90)),5, 5, np.deg2rad(5))
 
     robot.setSpeed(0, 0)
-    time.sleep(1)
 
 def dos_puntos(robot, a, d, dist):
     r2 = math.sqrt(dist**2 + (d-a)**2)
