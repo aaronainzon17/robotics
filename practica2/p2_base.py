@@ -110,7 +110,7 @@ def check_position(robot,x,y,th,pos_err, angular_err):
 
 def rectangulo(robot, base, altura): 
     robot.setSpeed(100, 0)
-    check_position(robot,base, 0, 0, 0, np.deg2rad(5))
+    check_position(robot,base, 0, 0, 2, np.deg2rad(5))
     
     
     robot.setSpeed(0, 45)
