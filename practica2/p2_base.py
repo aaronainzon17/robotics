@@ -156,15 +156,15 @@ def ocho(robot, d):
 
     robot.setSpeed(v, w)
     check_position(robot, 0, 2*d, normalizar(np.deg2rad(90)),
-                   3, 3, np.deg2rad(0.5))
+                   25, 25, np.deg2rad(0.5))
 
     robot.setSpeed(v, -w)
     check_position(robot, 0, 2*d, normalizar(np.deg2rad(90)),
-                   3, 3, np.deg2rad(0.5))
+                   25, 25, np.deg2rad(0.5))
 
     robot.setSpeed(v, w)
     check_position(robot, 0, 0, normalizar(np.deg2rad(-90)),
-                   3, 3, np.deg2rad(0.5))
+                   25, 25, np.deg2rad(0.5))
 
     robot.setSpeed(0, 0)
 
