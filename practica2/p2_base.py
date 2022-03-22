@@ -255,7 +255,7 @@ def main(args):
         print("Start : %s" % time.ctime())
 
         # Trayectoria de Rectangulo
-        rectangulo(robot, 800, 400, 200,60)
+        rectangulo(robot, 800, 400, 150,30)
         
         #Trayectoria de Ocho
         #ocho(robot, 400, 150)
