@@ -206,7 +206,7 @@ class Robot:
 
         self.lock_odometry.acquire()
         coord = str(x) + ',' + str(y) + ',' + str(th) + '\n'
-        self.log.write(coord)
+        log.write(coord)
         self.lock_odometry.release()
 
         #print("Stopping odometry ... X= %d" %(self.x.value))

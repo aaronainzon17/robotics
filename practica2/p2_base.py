@@ -134,7 +134,7 @@ def rectangulo(robot, base, altura, vel, vel_giro):
 
     robot.setSpeed(v, 0) # Segunda recta (altura del rectangulo)
     check_position(robot, base, altura, normalizar(
-        np.deg2rad(90)), 20, 20, np.deg2rad(4))
+        np.deg2rad(90)), 20, 20, np.deg2rad(6))
 
     robot.setSpeed(0, w) # Giro 90 deg
     check_position(robot, base, altura, normalizar(
@@ -142,7 +142,7 @@ def rectangulo(robot, base, altura, vel, vel_giro):
 
     robot.setSpeed(v, 0) # Tercera recta (base del rectangulo)
     check_position(robot, 0, altura, normalizar(
-        np.deg2rad(180)), 5, 40, np.deg2rad(5)) 
+        np.deg2rad(180)), 5, 40, np.deg2rad(4)) 
 
     robot.setSpeed(0, w) # Giro 90 deg
     check_position(robot, 0, altura, normalizar(
@@ -150,7 +150,7 @@ def rectangulo(robot, base, altura, vel, vel_giro):
 
     robot.setSpeed(v, 0) # Recta final (altura del rectangulo)
     check_position(robot, 0, 0, normalizar(
-        np.deg2rad(270)), 40, 5, np.deg2rad(5))
+        np.deg2rad(270)), 40, 5, np.deg2rad(4))
 
     robot.setSpeed(0, w) # Ultimo giro de 90 deg
     check_position(robot, 0, 0, normalizar(
