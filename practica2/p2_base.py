@@ -188,8 +188,8 @@ def dos_puntos(robot, a, d, dist, vel):
     r2 = math.sqrt(dist**2 + (d-a)**2)
     th = np.rad2deg(math.acos((dist**2 + r2**2 - (d-a)**2)/(2*dist*r2)))
 
-    v = vel
-    v1 = vel
+    v = 150
+    v1 = 100
     w = 45
     w1 = np.rad2deg((float)(v1/a))
     w2 = np.rad2deg((float)(v1/d))
@@ -232,7 +232,7 @@ def dos_puntos(robot, a, d, dist, vel):
 
     robot.setSpeed(v1, -w1)  # cuarto de circunferencia a la derecha
     check_position(robot, 0, 0, normalizar(np.deg2rad(90)),
-                   40, 40, np.deg2rad(10))
+                   5, 40, np.deg2rad(10))
     robot.setSpeed(0, 0)
 
 
