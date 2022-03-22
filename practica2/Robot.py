@@ -28,7 +28,7 @@ class Robot:
 
         # Robot construction parameters
 
-        # Radio de la rueda y distncia entre ruedas
+        # Radio de la rueda y distancia entre ruedas
         self.R = 28
         self.L = 128
 
@@ -44,19 +44,12 @@ class Robot:
         # Motors and sensors setup
 
         # Create an instance of the BrickPi3 class. BP will be the BrickPi3 object.
-        #self.BP = brickpi3.BrickPi3()
         self.BP = brickpi3.BrickPi3()
 
         # Configure sensors, for example a touch sensor.
         #self.BP.set_sensor_type(self.BP.PORT_1, self.BP.SENSOR_TYPE.TOUCH)
-        #self.BP.set_sensor_type(self.BP.PORT_1, self.BP.SENSOR_TYPE.TOUCH)
 
-        # resete encoder B and C (or all the motors you are using)
-        # self.BP.offset_motor_encoder(self.BP.PORT_B,
-        #    self.BP.get_motor_encoder(self.BP.PORT_B))
-        # self.BP.offset_motor_ncoder(self.BP.PORT_C,
-        #    self.BP.get_motor_encoder(self.BP.PORT_C))
-
+        # reset encoder B and C (or all the motors you are using)
         self.BP.offset_motor_encoder(self.BP.PORT_B,
                                      self.BP.get_motor_encoder(self.BP.PORT_B))  # RUEDA DERECHA
         self.BP.offset_motor_encoder(self.BP.PORT_C,
@@ -81,10 +74,13 @@ class Robot:
         self.P = 0.03
 
     def setSpeed(self, v, w):
-        """ To be filled - These is all dummy sample code """
+        """ Funcion que establece la velocidad lineal del robot a v y la velocidad
+            angular del robot a w """
+
         print("setting speed to %.2f %.2f" % (v, w))
 
-        # compute the speed that should be set in each motor ...
+        # Calculo de la velocidad a establecer para cada motor
+        # segun las velocidades lineal y angular deseadas
         im0 = np.array([[1/self.R, self.L/(2*self.R)],
                         [1/self.R, (-self.L)/(2*self.R)]])
         print("im0", im0)
@@ -97,17 +93,20 @@ class Robot:
         speedDPS_right = np.rad2deg(wd)
         speedDPS_left = np.rad2deg(wi)
 
-        # SC
-
+        # Establece las velocidades de los motores con los valores calculados
         self.BP.set_motor_dps(self.BP.PORT_B, speedDPS_right)
         self.BP.set_motor_dps(self.BP.PORT_C, speedDPS_left)
+
+        # Actualizacion de la odometria
         self.lock_odometry.acquire()
+        # SC
         self.v.value = v
         self.w.value = np.deg2rad(w)
         self.lock_odometry.release()
 
     def readSpeed(self):
-        """ To be filled"""
+        """ Devuelve la velocidad lineal y angular actual del robot """
+
         self.lock_odometry.acquire()
         # SC
         [rightEngine, leftEngine] = [self.BP.get_motor_encoder(self.BP.PORT_B),
@@ -122,10 +121,12 @@ class Robot:
         self.acum_i = leftEngine
         grados_ruedas = np.array(
             [[np.deg2rad(deg_right_e)], [np.deg2rad(deg_left_e)]])
-        #grados_ruedas = np.array([[np.deg2rad(rightEngine)] , [np.deg2rad(leftEngine)]])
+
+        # Traccion diferencial
         trac = np.array(
             [[self.R/2, self.R/2], [self.R/self.L, (-self.R/self.L)]])
 
+        # Calculo de las velocidades lineal y angular
         vel = np.dot(trac, grados_ruedas)
 
         self.lock_odometry.release()
@@ -134,7 +135,7 @@ class Robot:
 
     def readOdometry(self):
         """ Returns current value of odometry estimation """
-        # return self.x.value, self.y.value, self.th.value
+
         self.lock_odometry.acquire()
         # SC
         x = self.x.value
@@ -145,18 +146,21 @@ class Robot:
 
     def startOdometry(self):
         """ This starts a new process/thread that will be updating the odometry periodically """
+
         self.finished.value = False
         self.BP.offset_motor_encoder(self.BP.PORT_B,
                                      self.BP.get_motor_encoder(self.BP.PORT_B))  # reset encoder B
         self.BP.offset_motor_encoder(self.BP.PORT_C,
                                      self.BP.get_motor_encoder(self.BP.PORT_C))  # reset encoder C
-        # additional_params?))
+
         self.p = Process(target=self.updateOdometry, args=())
         self.p.start()
         print("PID: ", self.p.pid)
 
     # You may want to pass additional shared variables besides the odometry values and stop flag
-    def updateOdometry(self):  # , additional_params?):
+    def updateOdometry(self):
+        """ Actualiza la odometria con una frecuencia establecidad por el perido P """
+
         # Fichero de log
         if os.path.exists("log_odometry.log"):
             os.remove("log_odometry.log")
@@ -166,8 +170,10 @@ class Robot:
             # current processor time in a floating point value, in seconds
             tIni = time.clock()
 
+            # Lee los valores reales de la velocidad lineal y angular
             [real_v, real_w] = self.readSpeed()
 
+            # Calcula los nuevos valores de la odometria
             if real_w == 0:
                 d_x = (real_v * self.P) * np.cos(self.th.value)
                 d_y = (real_v * self.P) * np.sin(self.th.value)
@@ -179,32 +185,30 @@ class Robot:
                 d_x = d_s * np.cos(self.th.value + (d_th/2))
                 d_y = d_s * np.sin(self.th.value + (d_th/2))
 
-            # # to "lock" a whole set of operations, we can use a "mutex"
+            # Actualiza la odometria con los nuevos valores en exclusion mutua
             self.lock_odometry.acquire()
+            # SC
             self.x.value += d_x
             self.y.value += d_y
             self.th.value += d_th
             self.th.value = self.normalizar(self.th.value)
             self.lock_odometry.release()
 
-            # save LOG
-            # Need to decide when to store a log with the updated odometry ...
+            # Escribe en el LOG los valores actualizados de la odometria
             [x, y, th] = self.readOdometry()
-
             self.lock_odometry.acquire()
+            # SC
             coord = str(x) + ',' + str(y) + ',' + str(th) + '\n'
             log.write(coord)
             self.lock_odometry.release()
 
-            #self.log.write(x + ',' + y + ',' + th + '\n')
-
             tEnd = time.clock()
-            #print('Me ha costado', (tEnd-tIni))           
             time.sleep(self.P - (tEnd-tIni))
 
+        # Escribe en el LOG los valores finales de la odometria
         [x, y, th] = self.readOdometry()
-
         self.lock_odometry.acquire()
+        # SC
         coord = str(x) + ',' + str(y) + ',' + str(th) + '\n'
         log.write(coord)
         self.lock_odometry.release()
@@ -213,15 +217,16 @@ class Robot:
         # sys.stdout.write("Stopping odometry ... X=  %.2f, \
         #        Y=  %.2f, th=  %.2f \n" %(self.x.value, self.y.value, self.th.value))
 
-    # Stop the odometry thread.
-
     def stopOdometry(self):
+        """ Stop the odometry thread. """
+
         self.finished.value = True
 
         self.BP.reset_all()
         self.setSpeed(0, 0)
 
     def normalizar(self, th):
+        """ Funcion de normalizacion del angulo entre -pi, pi """
         if th > math.pi:
             th = th - 2 * math.pi
         elif th < -math.pi:
@@ -229,4 +234,5 @@ class Robot:
         return th
 
     def getPeriod(self):
+        """ Devuelve el periodo de actualizacion de la odometria """
         return self.P
