@@ -100,10 +100,10 @@ def check_position(robot, x, y, th, x_err, y_err, angular_err):
     reached = False
     period = robot.getPeriod()
     while not reached:
-        print("-------------------------------------------")
-        print("quiero llegar a ", x, " ", y, " ", th)
-        print("estoy en ", x_now, " ", y_now, " ", th_now)
-        print("-------------------------------------------")
+        #print("-------------------------------------------")
+        #print("quiero llegar a ", x, " ", y, " ", th)
+        #print("estoy en ", x_now, " ", y_now, " ", th_now)
+        #print("-------------------------------------------")
         
         # Se calcula el angulo
         error_ang = abs(th-th_now)
@@ -117,7 +117,7 @@ def check_position(robot, x, y, th, x_err, y_err, angular_err):
                   x_now, ",", y_now, ",", th_now, "]")
         else:
             [x_now, y_now, th_now] = robot.readOdometry()
-            print("La posicion actual es:", x_now, y_now)
+            #print("La posicion actual es:", x_now, y_now)
         time.sleep(period)
 
 # La funcion rectangulo realiza la trayectoria del rectangulo basandose en 
