@@ -118,7 +118,7 @@ def check_position(robot, x, y, th, x_err, y_err, angular_err):
         else:
             [x_now, y_now, th_now] = robot.readOdometry()
             #print("La posicion actual es:", x_now, y_now)
-        time.sleep(period)
+        #time.sleep(period)
 
 # La funcion rectangulo realiza la trayectoria del rectangulo basandose en 
 # la odometria para detener al robot y comenzar con el siguiente movimiento
