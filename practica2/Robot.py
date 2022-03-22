@@ -32,11 +32,6 @@ class Robot:
         self.R = 28
         self.L = 128
 
-        # Fichero de log
-        if os.path.exists("log_odometry.log"):
-            os.remove("log_odometry.log")
-        self.log = open("log_odometry.log", "a")
-
         # Ultimo valor leido de cada motor
         self.acum_d = 0
         self.acum_i = 0
@@ -162,7 +157,10 @@ class Robot:
 
     # You may want to pass additional shared variables besides the odometry values and stop flag
     def updateOdometry(self):  # , additional_params?):
-        """ To be filled ...  """
+        # Fichero de log
+        if os.path.exists("log_odometry.log"):
+            os.remove("log_odometry.log")
+        log = open("log_odometry.log", "a")
 
         while not self.finished.value:
             # current processor time in a floating point value, in seconds
@@ -195,13 +193,13 @@ class Robot:
 
             self.lock_odometry.acquire()
             coord = str(x) + ',' + str(y) + ',' + str(th) + '\n'
-            self.log.write(coord)
+            log.write(coord)
             self.lock_odometry.release()
 
             #self.log.write(x + ',' + y + ',' + th + '\n')
 
             tEnd = time.clock()
-
+            print('Me ha costado', (tEnd-tIni))           
             time.sleep(self.P - (tEnd-tIni))
 
         [x, y, th] = self.readOdometry()
