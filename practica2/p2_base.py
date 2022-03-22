@@ -258,10 +258,10 @@ def main(args):
         #rectangulo(robot, 800, 400, 150,30)
         
         #Trayectoria de Ocho
-        ocho(robot, 400, 150)
+        #ocho(robot, 400, 150)
         
         #Trayectoria de Dos circulos
-        #dos_puntos(robot,200,400,600,150)
+        dos_puntos(robot,200,400,600,150)
 
         print("End : %s" % time.ctime())
 
