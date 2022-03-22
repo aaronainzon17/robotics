@@ -122,9 +122,9 @@ def check_position(robot, x, y, th, x_err, y_err, angular_err):
 
 # La funcion rectangulo realiza la trayectoria del rectangulo basandose en 
 # la odometria para detener al robot y comenzar con el siguiente movimiento
-def rectangulo(robot, base, altura):
-    v = 100
-    w = 30
+def rectangulo(robot, base, altura, vel, vel_giro):
+    v = vel
+    w = vel_giro
     robot.setSpeed(v, 0) # Primera recta (base del rectangulo)
     check_position(robot, base, 0, 0, 3, 3, np.deg2rad(2))
 
@@ -255,7 +255,7 @@ def main(args):
         print("Start : %s" % time.ctime())
 
         # Trayectoria de Rectangulo
-        rectangulo(robot, 800, 400, 150)
+        rectangulo(robot, 800, 400, 150,45)
         
         #Trayectoria de Ocho
         #ocho(robot, 400, 150)
