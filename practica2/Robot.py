@@ -199,7 +199,7 @@ class Robot:
             #self.log.write(x + ',' + y + ',' + th + '\n')
 
             tEnd = time.clock()
-            print('Me ha costado', (tEnd-tIni))           
+            #print('Me ha costado', (tEnd-tIni))           
             time.sleep(self.P - (tEnd-tIni))
 
         [x, y, th] = self.readOdometry()

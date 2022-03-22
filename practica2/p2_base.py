@@ -98,7 +98,7 @@ def check_position(robot, x, y, th, x_err, y_err, angular_err):
     # Se lee incialmente la posicion del robot
     [x_now, y_now, th_now] = robot.readOdometry()
     reached = False
-    period = robot.getPeriod()
+    period = (robot.getPeriod())/2
     while not reached:
         #print("-------------------------------------------")
         #print("quiero llegar a ", x, " ", y, " ", th)
