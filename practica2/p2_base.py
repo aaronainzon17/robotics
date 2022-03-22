@@ -200,8 +200,9 @@ def dos_puntos(robot, a, d, dist, vel):
 
     robot.setSpeed(v1, -w1)  # cuarto de circunferencia a la derecha
     check_position(robot, a, a, normalizar(np.deg2rad(0)),
-                   10, 10, np.deg2rad(10))
-
+                   5, 5, np.deg2rad(2))
+    robot.setSpeed(0, 0)
+    exit
     robot.setSpeed(0, w)    # gira th grados a la izquierda
     check_position(robot, a, a, normalizar(np.deg2rad(th)),
                    12, 12, np.deg2rad(4))
