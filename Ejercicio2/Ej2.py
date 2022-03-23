@@ -1,8 +1,5 @@
-from operator import index
-from tkinter import W
 import numpy as np
 import math 
-import tkinter
 import matplotlib.pyplot as plt
 
 pi = 3.141592653589793
@@ -36,11 +33,11 @@ def dibrobot(loc_eje,c,tamano):
   robot=np.dot(Hwe,np.dot(Hec,np.transpose(extremos)))
   
   plt.plot(robot[0,:], robot[1,:], c)
-  plt.plot(0,10)
-  plt.plot(0,0)
-  plt.plot(5,0)
+  #plt.plot(0,10)
+  #plt.plot(0,0)
+  #plt.plot(5,0)
   
-  plt.show()
+  #plt.show()
 
 def norm_pi(num):
     return (num + pi)%tau - pi
@@ -51,7 +48,7 @@ def simubot(vc,xWR,T):
   else:
       R=vc[0]/vc[1]
       dtitak=vc[1]*T
-      titak=norm_pi(dtitak);
+      titak=norm_pi(dtitak)
       xRk=np.array([R*np.sin(titak), R*(1-np.cos(titak)), titak])  
 
   xWRp=loc(np.dot(hom(xWR),hom(xRk)))   # nueva localizaci�n xWR
@@ -109,21 +106,24 @@ def Ej2():
     objetivoAlcanzado = False
     K = np.array([[0.8,0,0],[0,0.9,0.8]])
     
-
+    i = 0
     while not objetivoAlcanzado:
         gxr = loc(hom(gxw)*hom(wxr))
         gpr_plus = cart2pol(gxr[0],gxr[1],gxr[2])
-        V = K * gpr_plus;
+        V = K * gpr_plus
         vr = V[0][0]
         wr = V[1][0]
-        wxr_plus = simubot(wxr,vr,wr)
+        wxr_plus = simubot(np.array([vr,wr]),wxr,i)
         wxr = wxr_plus
-        if wxr == objetivoActual:
-            dibrobot(wxr,'c','g')
+        print("Pisicion actual del robot en el mundo",wxr)
+        if np.array_equal(wxr, objetivoActual):
+            dibrobot(wxr,'c','p')
             indexObjectivoActual+=1
             objetivoActual = recorrido[indexObjectivoActual]
             if(indexObjectivoActual == 5):  #Ha acabado la trayectoria
                 objetivoAlcanzado = True
+        i += 0.2
+    plt.show()
 
 
 
