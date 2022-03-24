@@ -95,7 +95,7 @@ def cart2pol(x, y, th):
 
 def ej3():
     reached = False
-    k = np.array([[0.35,0,0],[0,0.4,0.2]])
+    k = np.array([[0.1,0,0],[0,0.4,0.2]])
     
     wxm = np.array([1.3, 2.2, np.deg2rad(90)])
     wxr = np.array([0.0,0.0,0.0])
@@ -147,7 +147,7 @@ def ej3():
         wxm = wxm_plus
         i += 0.00001
         x_axis += 1 
-        if x_axis%17 == 0:
+        if x_axis%500 == 0:
             w_movil = r.uniform(-1,1)
     
     # Muestra el recorrido 

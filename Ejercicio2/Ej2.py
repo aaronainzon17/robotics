@@ -93,7 +93,7 @@ def Ej2():
     wxr = np.array([0,0,np.deg2rad(0)]) # Posicion inical del robot con respecto al mundo
     
     objetivoAlcanzado = False
-    k = np.array([[0.35,0,0],[0,0.45,0.4]])
+    k = np.array([[0.1,0,0],[0,0.7,0.5]])
     
     # Variables auxiliares para el plot de la grafica
     i = 0
