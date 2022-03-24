@@ -122,7 +122,6 @@ def Ej2():
         # Comprobacion de que no se supera en ningun caso 3 m/s o 3 rad/s
         if vr > 3 or wr > 3: 
             print(vr , wr)
-            input()
 
         # Se simula el movimiento 
         wxr_plus = simubot(np.array([vr,wr]),wxr,i)

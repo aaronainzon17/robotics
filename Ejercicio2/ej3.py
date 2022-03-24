@@ -95,7 +95,7 @@ def cart2pol(x, y, th):
 
 def ej3():
     reached = False
-    k = np.array([[0.35,0,0],[0,0.4,0.4]])
+    k = np.array([[0.35,0,0],[0,0.4,0.2]])
     
     wxm = np.array([1.3, 2.2, np.deg2rad(90)])
     wxr = np.array([0.0,0.0,0.0])
@@ -122,10 +122,14 @@ def ej3():
         vr = vel[0][0]
         wr = vel[1][0]
 
+        # Aux para el plot de las grafiacas de v y w
+        vel_axis.append(vr)
+        w_vel_axis.append(wr)
+
         # Comprobacion de que no se supera en ningun caso 3 m/s o 3 rad/s
         if vr > 3 or wr > 3: 
             print(vr , wr)
-            #input()
+            
 
         # Se simula el movimiento 
         wxr_plus = simubot(np.array([vr,wr]),wxr,i)
@@ -150,9 +154,9 @@ def ej3():
     plt.show()
 
     # Muestra la grafica de velocidad 
-    #plt.plot(range(0, x_axis+1),w_vel_axis, color='red')
-    #plt.plot(range(0, x_axis+1),vel_axis, color='blue')
-    #plt.show()
+    plt.plot(range(0, x_axis+1),w_vel_axis, color='red')
+    plt.plot(range(0, x_axis+1),vel_axis, color='blue')
+    plt.show()
 
 
 
