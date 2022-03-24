@@ -134,6 +134,40 @@ def check_position(robot, x, y, th, x_err, y_err, angular_err):
             #print("La posicion actual es:", x_now, y_now)
         # time.sleep(period)
 
+def check_position_relativo(robot, x, y, th, x_err, y_err, angular_err):
+    """ check_position es la funcion de control de localizacion
+        En ella se comprueba la posicion real del robot leida de los
+        motores y se comprueba si se encuentra en la posicion deseada
+        permitiendo un cierto error. """
+
+    # Se lee incialmente la posicion del robot
+    [x_now, y_now, th_now] = robot.readOdometry()
+    #Ahora se calcula la posicion relativa
+    #A medio hacer
+
+    reached = False
+
+    while not reached:
+        # print("-------------------------------------------")
+        #print("quiero llegar a ", x, " ", y, " ", th)
+        #print("estoy en ", x_now, " ", y_now, " ", th_now)
+        # print("-------------------------------------------")
+
+        # Se calcula el angulo
+        error_ang = abs(th-th_now)
+        if error_ang > math.pi:
+            error_ang = (2*math.pi) - error_ang
+
+        # Se comprueba que la trayectoria se esta relaizando dentro del error permitido
+        if (abs(x-x_now) <= x_err) and (abs(y-y_now) <= y_err) and (error_ang <= angular_err):
+            reached = True
+            print("Se ha alcanzado el punto:[",
+                  x_now, ",", y_now, ",", th_now, "]")
+        else:
+            [x_now, y_now, th_now] = robot.readOdometry()
+            #print("La posicion actual es:", x_now, y_now)
+        # time.sleep(period)
+
 
 def rectangulo(robot, base, altura, vel, vel_giro):
     """ La funcion rectangulo realiza la trayectoria del rectangulo basandose en
@@ -174,6 +208,17 @@ def rectangulo(robot, base, altura, vel, vel_giro):
 
     robot.setSpeed(0, 0)  # Detener el robot
 
+def rectangulo_relativo(robot, base, altura, vel, vel_giro):
+    """ La funcion rectangulo realiza la trayectoria del rectangulo basandose en
+        la odometria para detener al robot y comenzar con el siguiente movimiento """
+    v = vel
+    w = vel_giro
+    robot.setSpeed(v, 0)
+
+    
+
+    robot.setSpeed(0, 0)  # Detener el robot
+
 
 def ocho(robot, d, vel):
     """ La funcion ocho realiza la trayectoria del ocho basandose en
@@ -203,6 +248,7 @@ def ocho(robot, d, vel):
         np.deg2rad(-90)), 5, 5, np.deg2rad(5))
 
     robot.setSpeed(0, 0)  # Parar el robot
+
 
 
 def dos_puntos(robot, a, d, dist, vel):
