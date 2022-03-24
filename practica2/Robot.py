@@ -1,6 +1,15 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 # use python 3 syntax but make it compatible with python 2
+
+"""
+            Practica 2:
+Autores:
+    - Aaron Ibañez Espes 779088
+    - Sergio Gabete Cesar 774631
+    - Belen Gimeno Chueca 756425
+    - Pablo Gancedo Alcalde 736839 
+"""
 from __future__ import print_function
 from __future__ import division  # ''
 

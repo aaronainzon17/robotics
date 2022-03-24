@@ -7,6 +7,14 @@ import time
 import math
 from Robot import Robot
 
+"""
+            Practica 2:
+Autores:
+    - Aaron Ibañez Espes 779088
+    - Sergio Gabete Cesar 774631
+    - Belen Gimeno Chueca 756425
+    - Pablo Gancedo Alcalde 736839 
+"""
 
 def dos_puntos_time(robot, a, d, dist):
     """ La funcion dos_puntos_time es una primera version de la trayectoria del

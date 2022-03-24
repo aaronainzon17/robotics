@@ -11,6 +11,7 @@ import sys
 import numpy as np
 import math
 import os
+import cv2
 
 # tambien se podria utilizar el paquete de threading
 from multiprocessing import Process, Value, Array, Lock
@@ -66,12 +67,12 @@ class Robot:
 
         # if we want to block several instructions to be run together, we may want to use an explicit Lock
         self.lock_odometry = Lock()
-        # self.lock_odometry.acquire()
-        #print('hello world', i)
-        # self.lock_odometry.release()
 
-        # odometry update period --> UPDATE value!
+        # odometry update period
         self.P = 0.03
+
+        # Variables de vision 
+        
 
     def setSpeed(self, v, w):
         """ Funcion que establece la velocidad lineal del robot a v y la velocidad
@@ -245,7 +246,8 @@ class Robot:
         finished = False
         targetFound = False
         targetPositionReached = False
-
+        # Inicializar la camara del robot 
+        camera = cv2.VideoCapture(0)
         while not finished:
         # 1. search the most promising blob ..
             while not targetPositionReached:
