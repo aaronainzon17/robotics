@@ -3,6 +3,7 @@
 
 # Standard imports
 import cv2
+from cv2 import waitKey
 import numpy as np;
 
 # Read image
@@ -75,14 +76,14 @@ blue = cv2.bitwise_and(img_BGR, img_BGR, mask = mask_blue)
 cv2.imshow("Red regions", np.hstack([img_BGR, red]))
 cv2.imshow("Blue regions", np.hstack([img_BGR, blue]))
 
-
 # detector finds "dark" blobs by default, so invert image for results with same detector
 keypoints_red = detector.detect(255-mask_red)
 keypoints_blue = detector.detect(255-mask_blue)
 
 # documentation of SimpleBlobDetector is not clear on what kp.size is exactly, but it looks like the diameter of the blob.
+prueba = []
 for kp in keypoints_red:
-	print kp.pt[0], kp.pt[1], kp.size
+	print (kp.pt[0], kp.pt[1], kp.size)
 
 # Draw detected blobs as red circles.
 # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures
@@ -92,8 +93,19 @@ im_with_keypoints = cv2.drawKeypoints(img_BGR, keypoints_red, np.array([]),
 im_with_keypoints2 = cv2.drawKeypoints(img_BGR, keypoints_blue, np.array([]),
 	(255,255,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
+# Prueba: se aumenta el diametro del circulo donde se encuentran los KeyPoints para hacer A
+for kp in keypoints_red:
+	kp.size += 20
+	print (kp.pt[0], kp.pt[1], kp.size)
+
+im_with_keypoints_A = cv2.drawKeypoints(im_with_keypoints, keypoints_red, np.array([]),
+	(255,0,0), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
 # Show mask and blobs found
-cv2.imshow("Keypoints on RED", im_with_keypoints)
+cv2.imshow("Keypoints on RED and A", im_with_keypoints_A)
+cv2.waitKey(0)
+
+#cv2.imshow("Keypoints on RED", im_with_keypoints)
 cv2.imshow("Keypoints on BLUE", im_with_keypoints2)
 cv2.waitKey(0)
 
