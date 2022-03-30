@@ -7,8 +7,8 @@ from cv2 import waitKey
 import numpy as np;
 #../fotosRobot/pelota_cerca_pero_no_mucho.jpg
 # Read image
-img_BGR = cv2.imread("../fotosRobot/pelota_cerca.jpg")
-
+img_BGR = cv2.imread("../fotosRobot/pelota_pinzas.jpg")
+cv2.imshow('Img original', img_BGR)
 # Setup default values for SimpleBlobDetector parameters.
 params = cv2.SimpleBlobDetector_Params()
 
@@ -19,17 +19,24 @@ params.maxThreshold = 200
 
 # Filter by Area
 params.filterByArea = True
-params.minArea = 200
-params.maxArea = 10000
+# Se ha calculado el area con el minimo diametro obtenido 24mm => A= 452 y se ha dado un margen de 100
+params.minArea = 350
+# Se ha calculado el area con el maximo diametro obtenido 129mm => A= 13070 y se ha dado un margen de 2000 aprox 
+params.maxArea = 15000
 
 # Filter by Circularity
-params.filterByCircularity = True
-params.minCircularity = 0.1
+# Lo he puesto a false porque sino en pelota_cerca como no es circular porque 
+# las pinzas tapan no detectaba la pelota
+params.filterByCircularity = False 
+params.minCircularity = 0.1 # Innecesario porque es false
 
 # Filter by Color
+# No noto al diferencia de ponerlo a true y false 
 params.filterByColor = False
 # not directly color, but intensity on the channel input
-#params.blobColor = 0
+params.blobColor = 255 # 255 para brillantes 0 oscuros 
+
+# Se mantienen a false 
 params.filterByConvexity = False
 params.filterByInertia = False
 
@@ -116,11 +123,11 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 	#Se utilizan 2 inRange porque el rojo en HSV se encuentra entre 0-10 y 160-180 
 	
 	# Limites inferiores (0-10)
-	red_0 = np.array([0, 80, 50])
+	red_0 = np.array([0, 70, 50])
 	red_10 = np.array([10, 255, 255])
 	
 	# Limites superiores (160-180)
-	red_160 = np.array([160,80,50])
+	red_160 = np.array([160,70,50])
 	red_180 = np.array([179,255,255])
 
 	mask0_10 = cv2.inRange(img_hsv, red_0, red_10)
@@ -137,18 +144,23 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 	print("La longitud de keypoints_red es", len(keypoints_red))
 	
 	# documentation of SimpleBlobDetector is not clear on what kp.size is exactly, but it looks like the diameter of the blob.
-	biggest = keypoints_red[0]
-	for kp in keypoints_red:
-		if kp.size > biggest.size:
-			biggest = kp 
+	if (len(keypoints_red) != 0):
+		biggest = keypoints_red[0]
+		for kp in keypoints_red:
+			if kp.size > biggest.size:
+				biggest = kp 
+	else:
+		biggest = 0
 	
 	#return biggest
 	print('Ther biggest is', biggest.size)
 	# Draw detected blobs as red circles.
 	# cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures
 	# the size of the circle corresponds to the size of blob
+	
 	im_with_keypoints = cv2.drawKeypoints(frame, keypoints_red, np.array([]),
 		(255,255,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+			
 
 
 	cv2.imshow('Bloobs Detected', im_with_keypoints)
