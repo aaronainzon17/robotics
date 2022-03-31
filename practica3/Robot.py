@@ -303,11 +303,11 @@ class Robot:
                         self.setSpeed(0,10)
                 
             
-                while not targetPositionReached:
-                    # 2. decide v and w for the robot to get closer to target position
-                    if (True):
-                        targetPositionReached = True
-                        finished = True
+                #while not targetPositionReached:
+                #    # 2. decide v and w for the robot to get closer to target position
+                #    if (True):
+                #        targetPositionReached = True
+                #        finished = True
             
             
             tEnd = time.clock()
