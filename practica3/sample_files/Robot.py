@@ -282,7 +282,7 @@ class Robot:
         #    #print(tEnd-tIni)
         #    time.sleep(0.5 - (tEnd-tIni))
         #return finished
-        time.sleep(2)
+        time.sleep(4)
         self.setSpeed(0,0)
 
     
