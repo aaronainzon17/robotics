@@ -22,10 +22,13 @@ def main(args):
         # for example the different target properties we want (size, position, color, ..)
         # or a boolean to indicate if we want the robot to catch the object or not
         # At least COLOR, the rest are up to you, but always put a default value.
-        robot.setSpeed(0,np.deg2rad(45))
+        
+        robot.setSpeed(0,45)
         time.sleep(4)
         robot.setSpeed(0,0)
-        robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
+        
+        #robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
+        
         #                   targetSize=??, target??=??, ...)
 
         # if res:
