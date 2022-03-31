@@ -4,7 +4,7 @@ import argparse
 import cv2
 import numpy as np
 import time
-from practica3.sample_files.Robot import Robot
+from Robot import Robot
 
 def main(args):
     try:
