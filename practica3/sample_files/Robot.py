@@ -81,16 +81,16 @@ class Robot:
         """ Funcion que establece la velocidad lineal del robot a v y la velocidad
             angular del robot a w """
 
-        print("setting speed to %.2f %.2f" % (v, w))
+        #print("setting speed to %.2f %.2f" % (v, w))
 
         # Calculo de la velocidad a establecer para cada motor
         # segun las velocidades lineal y angular deseadas
         im0 = np.array([[1/self.R, self.L/(2*self.R)],
                         [1/self.R, (-self.L)/(2*self.R)]])
-        print("im0", im0)
+        #print("im0", im0)
         im1 = np.array([v, np.deg2rad(w)])
         inverse_model = np.dot(im0, im1)
-        print("inverse_model", inverse_model)
+        #print("inverse_model", inverse_model)
         wd = inverse_model[0]
         wi = inverse_model[1]
 
@@ -279,6 +279,7 @@ class Robot:
             
             
             tEnd = time.clock()
+            print(tEnd-tIni)
             #time.sleep(self.P - (tEnd-tIni))
         return finished
 
