@@ -3,7 +3,6 @@
 # use python 3 syntax but make it compatible with python 2
 from __future__ import print_function
 from __future__ import division
-from curses import keyname  # ''
 
 # import brickpi3 # import the BrickPi3 drivers
 import time     # import the time library for the sleep function
@@ -81,7 +80,7 @@ class Robot:
         """ Funcion que establece la velocidad lineal del robot a v y la velocidad
             angular del robot a w """
 
-        #print("setting speed to %.2f %.2f" % (v, w))
+        print("setting speed to %.2f %.2f" % (v, w))
 
         # Calculo de la velocidad a establecer para cada motor
         # segun las velocidades lineal y angular deseadas
