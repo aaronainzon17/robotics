@@ -279,8 +279,8 @@ class Robot:
             
             
             tEnd = time.clock()
-            print(tEnd-tIni)
-            #time.sleep(self.P - (tEnd-tIni))
+            #print(tEnd-tIni)
+            time.sleep(0.5 - (tEnd-tIni))
         return finished
 
 
