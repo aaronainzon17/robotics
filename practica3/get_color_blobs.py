@@ -8,7 +8,7 @@ import numpy as np;
 #../fotosRobot/pelota_cerca_pero_no_mucho.jpg
 # Read image
 img_BGR = cv2.imread("../fotosRobot/pelota_pinzas.jpg")
-cv2.imshow('Img original', img_BGR)
+
 # Setup default values for SimpleBlobDetector parameters.
 params = cv2.SimpleBlobDetector_Params()
 
