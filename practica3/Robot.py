@@ -266,6 +266,7 @@ class Robot:
             if (keypoint != 0):
                 #Se detecta la pelota
                 finished = True
+                self.setSpeed(0,0)
             else:
                 # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
                 self.setSpeed(0,45)
