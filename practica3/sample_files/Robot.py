@@ -279,7 +279,7 @@ class Robot:
             
             
             tEnd = time.clock()
-            time.sleep(self.P - (tEnd-tIni))
+            #time.sleep(self.P - (tEnd-tIni))
         return finished
 
 
