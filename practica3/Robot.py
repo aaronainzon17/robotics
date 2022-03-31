@@ -249,7 +249,7 @@ class Robot:
         finished = False
         targetFound = False
         targetPositionReached = False
-
+        almost_centered = False
         # Inicializar la camara del robot 
         cam = cv2.VideoCapture(0)
         #cam.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
@@ -264,28 +264,50 @@ class Robot:
             # 1. search the most promising blob
             _, imgBGR = cam.read() 
             
-            keypoint = getRedBloobs(imgBGR) 
+            blob = getRedBloobs(imgBGR) 
+            w = 0.0
+            v = 0.0
+            if (len(blob) != 0 and almost_centered):
 
-            im_with_keypoints = cv2.drawKeypoints(imgBGR, keypoint, np.array([]),
-                    (255,255,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-            
-            cv2.imshow('Bloobs Detected', im_with_keypoints)
-
-            if (len(keypoint) != 0):
+                if blob.size > 120:
+                    finished = True
                 #Se detecta la pelota
-                finished = True
-                self.setSpeed(0,0)
+                #Se detecta la pelota pero es necesario que este en el centro
+                if blob.pt[0] > imgBGR.cols():
+                    #Se tiene que mover a la derecha
+                    w = -20.0
+                else: 
+                    if blob.pt[0] < imgBGR.cols():
+                        w = 20.0
+
+                if blob.size < 40:
+                    v = 45
+                else:
+                    if blob.size < 80:
+                        v = 30
+                    else:
+                        v = 15
                 
-                cv2.waitKey(0)
+                self.setSpeed(v,w)        
+                
+
             else:
                 # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
-                self.setSpeed(0,-45)
+                if (len(blob) > 0):
+                    mid_img = imgBGR.cols/2
+                    if abs(blob.pt[0] - mid_img) < 20:
+                        almost_centered = True
+                    elif blob.pt[0] - mid_img < 100:
+                        self.setSpeed(0,-10)
+                    elif abs(blob.pt[0] - mid_img) > 100:
+                        self.setSpeed(0,10)
+                
             
-            #while not targetPositionReached:
-            #    # 2. decide v and w for the robot to get closer to target position
-            #    if (True):
-            #        targetPositionReached = True
-            #        finished = True
+                while not targetPositionReached:
+                    # 2. decide v and w for the robot to get closer to target position
+                    if (True):
+                        targetPositionReached = True
+                        finished = True
             
             
             tEnd = time.clock()
