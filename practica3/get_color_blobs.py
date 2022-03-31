@@ -18,7 +18,7 @@ params.minThreshold = 10
 params.maxThreshold = 200
 
 # Filter by Area
-params.filterByArea = False
+params.filterByArea = True
 # Se ha calculado el area con el minimo diametro obtenido 24mm => A= 452 y se ha dado un margen de 100
 params.minArea = 350
 # Se ha calculado el area con el maximo diametro obtenido 129mm => A= 13070 y se ha dado un margen de 2000 aprox 

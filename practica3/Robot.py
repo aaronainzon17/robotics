@@ -252,8 +252,9 @@ class Robot:
 
         # Inicializar la camara del robot 
         cam = cv2.VideoCapture(0)
-        cam.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
-        cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+        #cam.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+        #cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+        
         # allow the camera to warmup
         time.sleep(0.1)
         
@@ -269,7 +270,7 @@ class Robot:
                     (255,255,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
             
             cv2.imshow('Bloobs Detected', im_with_keypoints)
-            
+
             if (len(keypoint) != 0):
                 #Se detecta la pelota
                 finished = True
