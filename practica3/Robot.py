@@ -268,6 +268,7 @@ class Robot:
             w = 0.0
             v = 0.0
             rows,cols,_ = imgBGR.shape
+            print('La imagen tiene ', cols,'columnas')
             if (blob is not None and almost_centered):
 
                 if blob.size > 120:
@@ -295,15 +296,22 @@ class Robot:
 
             else:
                 # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
-                if (blob is not None):
-                    #mid_img = imgBGR.cols/2
+                if (blob is not None):  
                     mid_img = cols/2
                     if abs(blob.pt[0] - mid_img) < 20:
                         almost_centered = True
+                        print('Paro en 20')
+                        self.setSpeed(0,0)
                     elif blob.pt[0] - mid_img < 100:
-                        self.setSpeed(0,-10)
+                        almost_centered = True
+                        print('Paro en -100')
+                        #self.setSpeed(0,-10)
+                        self.setSpeed(0,0)
                     elif abs(blob.pt[0] - mid_img) > 100:
-                        self.setSpeed(0,10)
+                        almost_centered = True
+                        print('Paro en +100')
+                        #self.setSpeed(0,10)
+                        self.setSpeed(0,0)
                 else:
                     self.setSpeed(0,-30)
                 

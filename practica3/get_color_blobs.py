@@ -140,8 +140,6 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 	frame = cv2.bitwise_and(frame, frame, mask=mask)
 	
 	keypoints_red = detector.detect(mask)
-
-	print("La longitud de keypoints_red es", len(keypoints_red))
 	
 	# documentation of SimpleBlobDetector is not clear on what kp.size is exactly, but it looks like the diameter of the blob.
 	if (len(keypoints_red) != 0):
