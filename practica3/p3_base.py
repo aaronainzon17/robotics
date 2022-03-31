@@ -42,15 +42,24 @@ def main(args):
     # THIS IS IMPORTANT if we want that motors STOP when we Ctrl+C ...
         robot.stopOdometry()
 
+#if __name__ == "__main__":
+#
+#    # get and parse arguments passed to main
+#    # Add as many args as you need ...
+#    parser = argparse.ArgumentParser()
+#    parser.add_argument("-c", "--color", help="color of the ball to track",
+#                        type=float, default=40.0)
+#    args = parser.parse_args()
+#
+#    main(args)
+
 if __name__ == "__main__":
 
     # get and parse arguments passed to main
     # Add as many args as you need ...
     parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--color", help="color of the ball to track",
+    parser.add_argument("-d", "--radioD", help="Radio to perform the 8-trajectory (mm)",
                         type=float, default=40.0)
     args = parser.parse_args()
 
     main(args)
-
-
