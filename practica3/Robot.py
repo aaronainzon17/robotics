@@ -2,7 +2,8 @@
 # -*- coding: UTF-8 -*-
 # use python 3 syntax but make it compatible with python 2
 from __future__ import print_function
-from __future__ import division  # ''
+from __future__ import division
+from curses import keyname  # ''
 
 # import brickpi3 # import the BrickPi3 drivers
 import time     # import the time library for the sleep function
@@ -15,6 +16,8 @@ import cv2
 
 # tambien se podria utilizar el paquete de threading
 from multiprocessing import Process, Value, Array, Lock
+
+from practica3.sample_files.get_color_blobs import getRedBloobs
 
 
 class Robot:
@@ -240,25 +243,47 @@ class Robot:
 
     def trackObject(self, colorRangeMin=[0,0,0], colorRangeMax=[255,255,255]):
         #targetSize=??, target??=??, catch=??, ...)
-        targetSize=20   #tamanyo dl target
-        targetRojo=np.array([10,10,0])  #Posicion del target
-        catch=True  #Si se coge el target o no
+        # NO SE QUE ES 
+        targetSize = 20   #tamanyo dl target
+        targetRojo = np.array([10,10,0])  #Posicion del target
+        catch = False  #Si se coge el target o no
         finished = False
         targetFound = False
         targetPositionReached = False
+
         # Inicializar la camara del robot 
-        camera = cv2.VideoCapture(0)
+        cam = cv2.VideoCapture(0)
+       
+        # allow the camera to warmup
+        time.sleep(0.1)
+
         while not finished:
-        # 1. search the most promising blob ..
-            while not targetPositionReached:
-            # 2. decide v and w for the robot to get closer to target position
-                if ...
-                    targetPositionReached = True
-                    finished = True
+            tIni = time.clock()
+
+            # 1. search the most promising blob
+            _, imgBGR = cam.read() 
+            
+            keypoint = getRedBloobs(imgBGR) 
+            if (keypoint != 0):
+                #Se detecta la pelota
+                finished = True
+            else:
+                # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
+                self.setSpeed(0,np.deg2rad(45))
+            
+            #while not targetPositionReached:
+            #    # 2. decide v and w for the robot to get closer to target position
+            #    if (True):
+            #        targetPositionReached = True
+            #        finished = True
+            
+            
+            tEnd = time.clock()
+            time.sleep(self.P - (tEnd-tIni))
         return finished
 
 
     
-    def catch(self):
-        # decide the strategy to catch the ball once you have reached the target
-        position
+    #def catch(self):
+    #    # decide the strategy to catch the ball once you have reached the target
+    #    position

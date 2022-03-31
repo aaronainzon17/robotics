@@ -9,7 +9,7 @@ from Robot import Robot
 def main(args):
     try:
         if args.radioD < 0:
-            print 'd must be a positive value'
+            print('d must be a positive value')
             exit(1)
 
         # Initialize Odometry. Default value will be 0,0,0
@@ -22,7 +22,7 @@ def main(args):
         # for example the different target properties we want (size, position, color, ..)
         # or a boolean to indicate if we want the robot to catch the object or not
         # At least COLOR, the rest are up to you, but always put a default value.
-    	# res = robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255], 
+        robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
         #                   targetSize=??, target??=??, ...)
 
         # if res:

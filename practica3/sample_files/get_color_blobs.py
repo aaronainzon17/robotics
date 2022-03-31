@@ -152,7 +152,12 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 	else:
 		biggest = 0
 	
-	#return biggest
+	im_with_keypoints = cv2.drawKeypoints(frame, keypoints_red, np.array([]),
+		(255,255,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
+	cv2.imshow('Bloobs Detected', im_with_keypoints)
+
+	return biggest
 	print('Ther biggest is', biggest.size)
 	# Draw detected blobs as red circles.
 	# cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures
@@ -163,9 +168,7 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 			
 
 
-	cv2.imshow('Bloobs Detected', im_with_keypoints)
+	
 
-	cv2.waitKey(0)
-	cv2.destroyAllWindows()
-
-getRedBloobs(img_BGR)
+	#cv2.waitKey(0)
+	#cv2.destroyAllWindows()
