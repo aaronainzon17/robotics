@@ -268,11 +268,12 @@ class Robot:
                     (255,255,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
             cv2.imshow('Bloobs Detected', im_with_keypoints)
-            cv2.waitKey(0)
+            
             if (len(keypoint) != 0):
                 #Se detecta la pelota
                 finished = True
                 self.setSpeed(0,0)
+                cv2.waitKey(0)
             else:
                 # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
                 self.setSpeed(0,45)
