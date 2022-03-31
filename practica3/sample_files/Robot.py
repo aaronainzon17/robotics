@@ -17,7 +17,7 @@ import cv2
 # tambien se podria utilizar el paquete de threading
 from multiprocessing import Process, Value, Array, Lock
 
-from practica3.sample_files.get_color_blobs import getRedBloobs
+from get_color_blobs import getRedBloobs
 
 
 class Robot:
