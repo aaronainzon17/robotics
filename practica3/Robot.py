@@ -251,10 +251,10 @@ class Robot:
         targetPositionReached = False
 
         # Inicializar la camara del robot 
-        cam = cv2.VideoCapture(0)
+        #cam = cv2.VideoCapture(0)
        
         # allow the camera to warmup
-        time.sleep(0.1)
+        #time.sleep(0.1)
         self.setSpeed(0,np.deg2rad(45))
         #while not finished:
         #    tIni = time.clock()
