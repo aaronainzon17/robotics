@@ -268,12 +268,13 @@ class Robot:
             w = 0.0
             v = 0.0
             rows,cols,_ = imgBGR.shape
-            print('La imagen tiene ', cols,'columnas')
+
             if (blob is not None and almost_centered):
 
-                if blob.size > 120:
+                if blob.size > 200:
                     print('Paro porque he encontrado un blob de',blob.size)
                     finished = True
+                    
                 #Se detecta la pelota
                 #Se detecta la pelota pero es necesario que este en el centro
                 if blob.pt[0] > cols:
@@ -284,12 +285,12 @@ class Robot:
                         w = 20.0
 
                 if blob.size < 40:
-                    v = 45
+                    v = 50
                 else:
                     if blob.size < 80:
-                        v = 30
+                        v = 40
                     else:
-                        v = 15
+                        v = 35
                 
                 self.setSpeed(v,0)        
                 
