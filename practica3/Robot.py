@@ -294,15 +294,15 @@ class Robot:
             else:
                 # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
                 if (blob is not None):
-                    mid_img = imgBGR.cols/2
+                    mid_img = imgBGR.cols()/2
                     if abs(blob.pt[0] - mid_img) < 20:
                         almost_centered = True
                     elif blob.pt[0] - mid_img < 100:
                         self.setSpeed(0,-10)
                     elif abs(blob.pt[0] - mid_img) > 100:
                         self.setSpeed(0,10)
-                    else:
-                        self.setSpeed(0,-30)
+                else:
+                    self.setSpeed(0,-30)
                 
             
                 #while not targetPositionReached:
