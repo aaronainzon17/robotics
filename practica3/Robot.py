@@ -271,6 +271,7 @@ class Robot:
             if (blob is not None and almost_centered):
 
                 if blob.size > 120:
+                    print('Paro porque he encontrado un blob de',blob.size)
                     finished = True
                 #Se detecta la pelota
                 #Se detecta la pelota pero es necesario que este en el centro
@@ -289,7 +290,7 @@ class Robot:
                     else:
                         v = 15
                 
-                self.setSpeed(v,w)        
+                self.setSpeed(v,0)        
                 
 
             else:
