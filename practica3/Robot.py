@@ -301,6 +301,8 @@ class Robot:
                         self.setSpeed(0,-10)
                     elif abs(blob.pt[0] - mid_img) > 100:
                         self.setSpeed(0,10)
+                    else:
+                        self.setSpeed(0,-30)
                 
             
                 #while not targetPositionReached:
