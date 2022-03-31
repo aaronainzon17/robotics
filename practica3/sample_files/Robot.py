@@ -207,7 +207,7 @@ class Robot:
             self.lock_odometry.release()
 
             tEnd = time.clock()
-            time.sleep(self.P - (tEnd-tIni))
+            #time.sleep(self.P - (tEnd-tIni))
 
         # Escribe en el LOG los valores finales de la odometria
         [x, y, th] = self.readOdometry()
