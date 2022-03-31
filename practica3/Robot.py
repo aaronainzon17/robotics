@@ -263,7 +263,13 @@ class Robot:
             _, imgBGR = cam.read() 
             
             keypoint = getRedBloobs(imgBGR) 
-            if (keypoint != 0):
+
+            im_with_keypoints = cv2.drawKeypoints(imgBGR, keypoint, np.array([]),
+                    (255,255,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
+            cv2.imshow('Bloobs Detected', im_with_keypoints)
+
+            if (len(keypoint) != 0):
                 #Se detecta la pelota
                 finished = True
                 self.setSpeed(0,0)
