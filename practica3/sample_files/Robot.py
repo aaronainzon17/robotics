@@ -256,33 +256,34 @@ class Robot:
        
         # allow the camera to warmup
         time.sleep(0.1)
-
-        while not finished:
-            tIni = time.clock()
-
-            # 1. search the most promising blob
-            _, imgBGR = cam.read() 
-            
-            keypoint = getRedBloobs(imgBGR) 
-            if (keypoint != 0):
-                #Se detecta la pelota
-                finished = True
-            else:
-                # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
-                self.setSpeed(0,np.deg2rad(45))
-            
-            #while not targetPositionReached:
-            #    # 2. decide v and w for the robot to get closer to target position
-            #    if (True):
-            #        targetPositionReached = True
-            #        finished = True
-            
-            
-            tEnd = time.clock()
-            #print(tEnd-tIni)
-            time.sleep(0.5 - (tEnd-tIni))
-        return finished
-
+        self.setSpeed(0,np.deg2rad(45))
+        #while not finished:
+        #    tIni = time.clock()
+#
+        #    # 1. search the most promising blob
+        #    _, imgBGR = cam.read() 
+        #    
+        #    keypoint = getRedBloobs(imgBGR) 
+        #    if (keypoint != 0):
+        #        #Se detecta la pelota
+        #        finished = True
+        #    else:
+        #        # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
+        #        self.setSpeed(0,np.deg2rad(45))
+        #    
+        #    #while not targetPositionReached:
+        #    #    # 2. decide v and w for the robot to get closer to target position
+        #    #    if (True):
+        #    #        targetPositionReached = True
+        #    #        finished = True
+        #    
+        #    
+        #    tEnd = time.clock()
+        #    #print(tEnd-tIni)
+        #    time.sleep(0.5 - (tEnd-tIni))
+        #return finished
+        time.sleep(2)
+        self.setSpeed(0,0)
 
     
     #def catch(self):
