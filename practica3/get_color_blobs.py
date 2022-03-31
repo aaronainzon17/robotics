@@ -150,7 +150,7 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 			if kp.size > biggest.size:
 				biggest = kp 
 	else:
-		biggest = 0
+		biggest = None
 
 	return biggest
 	print('Ther biggest is', biggest.size)

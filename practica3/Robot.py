@@ -267,7 +267,7 @@ class Robot:
             blob = getRedBloobs(imgBGR) 
             w = 0.0
             v = 0.0
-            if (len(blob) != 0 and almost_centered):
+            if (blob is not None and almost_centered):
 
                 if blob.size > 120:
                     finished = True
@@ -293,7 +293,7 @@ class Robot:
 
             else:
                 # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
-                if (len(blob) > 0):
+                if (blob is not None):
                     mid_img = imgBGR.cols/2
                     if abs(blob.pt[0] - mid_img) < 20:
                         almost_centered = True
