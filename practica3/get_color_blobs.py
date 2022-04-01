@@ -159,9 +159,9 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 		(255,255,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
 	#cv2.imshow('Capture', im_with_keypoints)
-	# cv2.startWindowThread()
-	# cv2.namedWindow("Capture")
-	#cv2.imshow("Capture", im_with_keypoints)
+	cv2.startWindowThread()
+	cv2.namedWindow("Capture")
+	cv2.imshow("Capture", im_with_keypoints)
 	#cv2.waitKey(0)
 	return biggest
 	

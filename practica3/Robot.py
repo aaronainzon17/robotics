@@ -287,11 +287,11 @@ class Robot:
                     mid_img = cols/2
                     self.setSpeed(0,-20)
                     if blob.pt[0] - mid_img > -80:
-                        self.setSpeed(0,0)
+                        #self.setSpeed(0,0)
                         almost_centered = True
                         print('Paro en -100')   
                     elif blob.pt[0] - mid_img < 80:
-                        self.setSpeed(0,0)
+                        #self.setSpeed(0,0)
                         almost_centered = True
                         print('Paro en +100')
                     
