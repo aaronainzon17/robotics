@@ -244,7 +244,6 @@ class Robot:
 
     def trackObject(self, colorRangeMin=[0,0,0], colorRangeMax=[255,255,255]):
         #targetSize=??, target??=??, catch=??, ...)
-        self.catch()
         # NO SE QUE ES 
         targetSize = 20   #tamanyo dl target
         targetRojo = np.array([10,10,0])  #Posicion del target
