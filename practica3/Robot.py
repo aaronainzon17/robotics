@@ -274,7 +274,7 @@ class Robot:
 
             if (blob is not None and almost_centered):
 
-                if blob.size > 190:
+                if blob.size > 120:
                     print('Paro porque he encontrado un blob de',blob.size)
                     finished = True
                     
@@ -287,15 +287,15 @@ class Robot:
                     if blob.pt[0] < cols:
                         w = 20.0
 
-                if blob.size < 40:
+                if blob.size < 80:
                     v = 50
                 else:
-                    if blob.size < 80:
+                    if blob.size < 100:
                         v = 40
                     else:
                         v = 35
                 
-                self.setSpeed(v,0)        
+                self.setSpeed(v,w)        
                 
 
             else:
