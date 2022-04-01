@@ -305,9 +305,9 @@ class Robot:
             if (blob is not None and triedCatch):
                 x_bl,y_bl = [blob.pt[0],blob.pt[1]]
                 print('tengo y en',y_bl, 'y x en',x_bl)
-                print('x es',rows/3, 'y el centro ', abs(x_bl - cols/2))
+                print('x es',3*rows/4, 'y el centro ', abs(x_bl - cols/2))
                 #print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
-                if (y_bl > rows/3) and (abs(x_bl - cols/2) < 200):
+                if (y_bl > 3*rows/4) and (abs(x_bl - cols/2) < 200):
                     finished = True
                     print('LO TENGOOO :)')
                 else:
