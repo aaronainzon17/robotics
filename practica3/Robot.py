@@ -277,40 +277,32 @@ class Robot:
                     print('Paro porque he encontrado un blob de',blob.size)
                     finished = True
                     
-                #Se detecta la pelota
-                
-                #Se detecta la pelota pero es necesario que este en el centro
-                if((x_actual >= cols/4 + (cols/4 + cols/2)/2) and x_actual <= cols/2):
+                #Se divide la imagen en 8 sectores verticales y en funcion del que se encuentre la pelota se aplica una velocidad u otra
+                if((x_actual > (3*cols)/8) and x_actual <= cols/2) or (x_actual >= cols/2 and x_actual<= (5*cols)/8):
+                    #Sector central [(3*cols)/8,(5*cols)/8]
                     w = 0
                     v = 60
-                else:
-                    if(x_actual >= cols/2 and x_actual<=((cols/2) + ((cols/2)+((3*cols)/4))/2)):
-                        w = 0
-                        v = 60
-                    else:
-                        if(x_actual > cols/4 and x_actual < cols/2):    #Esta en el segundo cuadrante
-                            w = 40
-                            v = 60
-                        else:
-                            if(x_actual > cols/2 and x_actual < (3*cols)/4):
-                                w = -40
-                                v = 60
-                            else:
-                                if x_actual <= cols/2 and x_actual >= 0:
-                                    #Se tiene que mover a la derecha
-                                    w = 40.0
-                                    v = 60
-                                else: 
-                                    if x_actual >= cols/2 and x_actual < cols:
-                                        w = -40.0
-                                        v = 60
-                                    else:
-                                        w = 0.0
-                                        v = 60
+                elif(x_actual >= (2*cols)/8 and x_actual <= (3*cols)/8):
+                    #Primer sector izquierda de 2*cols/8 hasta 3cols/8 (el pequeñito entre el que esta lejos y el del centro)
+                    w = 10
+                    v = 60
+                elif(x_actual >= 0 and x_actual <= (2*cols)/8):
+                    #Sector mas alejado de la izquierda de [0,(2*cols)/8]
+                    w = 20
+                    v = 60
+                elif(x_actual >= (5*cols)/8 and x_actual <= (6*cols)/8):
+                    #Primer sector derecha [(5*cols)/8, (6*cols)/8]
+                    w = 10
+                    v = 60  
+                elif(x_actual > (6*cols)/8 and x_actual <= cols):
+                #Sector mas alejado de derecha [(6*cols)/8, cols]
+                    w = 20
+                    v = 60  
+                
                 self.setSpeed(v,w)    
             else:
-                # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
-                if (blob is not None and not almost_centered):  
+                # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
+                if (blob is not None):  
                     mid_img = cols/2
                     self.setSpeed(0,-20)
                     if blob.pt[0] - mid_img > -100:
@@ -318,13 +310,14 @@ class Robot:
                         print('Paro en -100')
                         #self.setSpeed(0,-10)
                         self.setSpeed(0,0)
-                    elif abs(blob.pt[0] - mid_img) < 100:
+                    elif blob.pt[0] - mid_img < 100:
                         almost_centered = True
                         print('Paro en +100')
                         #self.setSpeed(0,10)
                         self.setSpeed(0,0)
                     
                 else:
+                    # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
                     self.setSpeed(0,-40)
                     almost_centered = False
                 
@@ -346,3 +339,26 @@ class Robot:
     #def catch(self):
     #    # decide the strategy to catch the ball once you have reached the target
     #    position
+
+
+
+
+
+
+
+        # else:
+        #                 if(x_actual > cols/2 and x_actual < (3*cols)/4):
+        #                     w = -40
+        #                     v = 60
+        #                 else:
+        #                     if x_actual <= cols/2 and x_actual >= 0:
+        #                         #Se tiene que mover a la derecha
+        #                         w = 40.0
+        #                         v = 60
+        #                     else: 
+        #                         if x_actual >= cols/2 and x_actual < cols:
+        #                             w = -40.0
+        #                             v = 60
+        #                         else:
+        #                             w = 0.0
+        #                             v = 60
