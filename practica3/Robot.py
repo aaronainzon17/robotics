@@ -284,31 +284,31 @@ class Robot:
                 #Se detecta la pelota pero es necesario que este en el centro
                 if((x_actual >= cols/4 + (cols/4 + cols/2)/2) and x_actual <= cols/2):
                     w = 0
-                    v = 30
+                    v = 60
                 else:
                     if(x_actual >= cols/2 and x_actual<=((cols/2) + ((cols/2)+((3*cols)/4))/2)):
                         w = 0
-                        v = 30
+                        v = 60
                     else:
                         if(x_actual > cols/4 and x_actual < cols/2):    #Esta en el segundo cuadrante
                             w = -20
-                            v = 30
+                            v = 60
                         else:
                             if(x_actual > cols/2 and x_actual < (3*cols)/4):
                                 w = 20
-                                v = 30
+                                v = 60
                             else:
                                 if blob.pt[0] > cols/2:
                                     #Se tiene que mover a la derecha
                                     w = -40.0
-                                    v = 30
+                                    v = 60
                                 else: 
                                     if blob.pt[0] < cols/2:
                                         w = 40.0
-                                        v = 30
+                                        v = 60
                                     else:
                                         w = 0.0
-                                        v = 30
+                                        v = 60
 
                 
                 
