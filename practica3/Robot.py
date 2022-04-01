@@ -319,13 +319,6 @@ class Robot:
                     # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
                     self.setSpeed(0,-40)
                     almost_centered = False
-                
-            
-                #while not targetPositionReached:
-                #    # 2. decide v and w for the robot to get closer to target position
-                #    if (True):
-                #        targetPositionReached = True
-                #        finished = True
             
         return finished
         
@@ -335,25 +328,3 @@ class Robot:
     #    # decide the strategy to catch the ball once you have reached the target
     #    position
 
-
-
-
-
-
-
-        # else:
-        #                 if(x_actual > cols/2 and x_actual < (3*cols)/4):
-        #                     w = -40
-        #                     v = 60
-        #                 else:
-        #                     if x_actual <= cols/2 and x_actual >= 0:
-        #                         #Se tiene que mover a la derecha
-        #                         w = 40.0
-        #                         v = 60
-        #                     else: 
-        #                         if x_actual >= cols/2 and x_actual < cols:
-        #                             w = -40.0
-        #                             v = 60
-        #                         else:
-        #                             w = 0.0
-        #                             v = 60
