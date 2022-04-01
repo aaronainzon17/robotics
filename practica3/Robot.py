@@ -298,9 +298,6 @@ class Robot:
                     # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
                     self.setSpeed(0,-40)
                     almost_centered = False
-            if finished:
-                self.setSpeed(0,0)
-                cv2.imshow('final img', imgBGR)
 
             if (blob is not None and triedCatch):
                 x_bl,y_bl = [blob.pt[0],blob.pt[1]]
@@ -314,7 +311,7 @@ class Robot:
                     print('No se ve la pelota en las pinzas')
                     triedCatch = False
             
-            if targetPositionReached and not finished: 
+            if targetPositionReached: 
                 print('Entro a catch')
                 self.catch()
                 targetPositionReached = False
