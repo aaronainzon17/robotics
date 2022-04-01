@@ -352,8 +352,8 @@ class Robot:
         time.sleep(0.5)
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
         #ACERCARSE SIGILOSAMENTE
-        self.setSpeed(20, 0)
-        time.sleep(2)
+        self.setSpeed(60, 0)
+        time.sleep(1.8)
         #DETECTA QUE ESTÁ A RANGO DE PINZA
         #CÓMO???????????????????????????????
         wc = -0.2    #cerrar
