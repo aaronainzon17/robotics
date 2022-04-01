@@ -244,65 +244,66 @@ class Robot:
 
     def trackObject(self, colorRangeMin=[0,0,0], colorRangeMax=[255,255,255]):
         #targetSize=??, target??=??, catch=??, ...)
+        self.catch()
         # NO SE QUE ES 
-        targetSize = 20   #tamanyo dl target
-        targetRojo = np.array([10,10,0])  #Posicion del target
-        catch = False  #Si se coge el target o no
-        finished = False
-        targetFound = False
-        targetPositionReached = False
-        almost_centered = False
-
-        # Inicializar la camara del robot 
-        cam = cv2.VideoCapture(0)
-        #cam.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
-        #cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
-        
-        # allow the camera to warmup
-        time.sleep(0.1)
-        
-        while not finished:
-            # 1. search the most promising blob
-            _, imgBGR = cam.read() 
-            blob = getRedBloobs(imgBGR)
-            
-            w = 0.0
-            v = 0.0
-            _,cols,_ = imgBGR.shape
-            
-            if (blob is not None and almost_centered):
-                x_actual = blob.pt[0]
-                #print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
-                if blob.size > 110:
-                    print('Paro porque he encontrado un blob de',blob.size)
-                    self.setSpeed(0,0)
-                    cv2.imshow('Ultimo Frame', imgBGR)
-                    cv2.waitKey(0)
-                    finished = True
-
-                self.trackObjectSpeed(x_actual,cols,blob)  
-                  
-            else:
-                # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
-                if (blob is not None):  
-                    mid_img = cols/2
-                    self.setSpeed(0,-20)
-                    if blob.pt[0] - mid_img > -80:
-                        self.setSpeed(0,0)
-                        almost_centered = True
-                        print('Paro en -100')   
-                    elif blob.pt[0] - mid_img < 80:
-                        self.setSpeed(0,0)
-                        almost_centered = True
-                        print('Paro en +100')
-                    
-                else:
-                    # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
-                    self.setSpeed(0,-40)
-                    almost_centered = False
-            
-        return finished
-        
+        #targetSize = 20   #tamanyo dl target
+        #targetRojo = np.array([10,10,0])  #Posicion del target
+        #catch = False  #Si se coge el target o no
+        #finished = False
+        #targetFound = False
+        #targetPositionReached = False
+        #almost_centered = False
+#
+        ## Inicializar la camara del robot 
+        #cam = cv2.VideoCapture(0)
+        ##cam.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+        ##cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+        #
+        ## allow the camera to warmup
+        #time.sleep(0.1)
+        #
+        #while not finished:
+        #    # 1. search the most promising blob
+        #    _, imgBGR = cam.read() 
+        #    blob = getRedBloobs(imgBGR)
+        #    
+        #    w = 0.0
+        #    v = 0.0
+        #    _,cols,_ = imgBGR.shape
+        #    
+        #    if (blob is not None and almost_centered):
+        #        x_actual = blob.pt[0]
+        #        #print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
+        #        if blob.size > 110:
+        #            print('Paro porque he encontrado un blob de',blob.size)
+        #            self.setSpeed(0,0)
+        #            cv2.imshow('Ultimo Frame', imgBGR)
+        #            cv2.waitKey(0)
+        #            finished = True
+#
+        #        self.trackObjectSpeed(x_actual,cols,blob)  
+        #          
+        #    else:
+        #        # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
+        #        if (blob is not None):  
+        #            mid_img = cols/2
+        #            self.setSpeed(0,-20)
+        #            if blob.pt[0] - mid_img > -80:
+        #                self.setSpeed(0,0)
+        #                almost_centered = True
+        #                print('Paro en -100')   
+        #            elif blob.pt[0] - mid_img < 80:
+        #                self.setSpeed(0,0)
+        #                almost_centered = True
+        #                print('Paro en +100')
+        #            
+        #        else:
+        #            # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
+        #            self.setSpeed(0,-40)
+        #            almost_centered = False
+        #    
+        #return finished
+        #
 
     def trackObjectSpeed(self,x_actual,cols,blob):
         #Se divide la imagen en 8 sectores verticales y en funcion del que se encuentre la pelota se aplica una velocidad u otra
@@ -342,17 +343,22 @@ class Robot:
             return expected_w/2 
     
     
-    #def catch(self):
-    #    # decide the strategy to catch the ball once you have reached the target
-    #    position
-    #    wc = 0.2   #abrir
-    #    speedDPS_claw = np.rad2deg(wc)
-    #    self.BP.set_motor_dps(self.BP.PORT_A, speedDPS_claw)
-    #    ACERCARSE SIGILOSAMENTE
-    #    self.setSpeed(20, 0)
-    #    DETECTA QUE ESTÁ A RANGO DE PINZA
-    #    CÓMO???????????????????????????????
-    #    wc = -0.2    #cerrar
-    #    speedDPS_claw = np.rad2deg(wc/2)    #con cuidado :)
-    #    self.BP.set_motor_dps(self.BP.PORT_A, speedDPS_claw)
+    def catch(self):
+        # decide the strategy to catch the ball once you have reached the target
+        # position
+        wc = 20   #abrir
+        speedDPS_claw = np.rad2deg(wc)
+        self.BP.set_motor_dps(self.BP.PORT_A, speedDPS_claw)
+        time.sleep(0.5)
+        self.BP.set_motor_dps(self.BP.PORT_A, 0)
+        #ACERCARSE SIGILOSAMENTE
+        self.setSpeed(20, 0)
+        #DETECTA QUE ESTÁ A RANGO DE PINZA
+        #CÓMO???????????????????????????????
+        wc = -0.2    #cerrar
+        speedDPS_claw = np.rad2deg(wc/2)    #con cuidado :)
+        self.BP.set_motor_dps(self.BP.PORT_A, speedDPS_claw)
+        time.sleep(1)
+        self.BP.set_motor_dps(self.BP.PORT_A, 0)
+
 
