@@ -313,6 +313,8 @@ class Robot:
                     cv2.waitKey(0)
                 else:
                     print('No se ve la pelota en las pinzas')
+                    cv2.imshow('Final img', imgBGR)
+                    cv2.waitKey(0)
                     triedCatch = False
                    
         return finished

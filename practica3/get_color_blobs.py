@@ -7,7 +7,7 @@ from cv2 import waitKey
 import numpy as np;
 #../fotosRobot/pelota_cerca_pero_no_mucho.jpg
 # Read image
-img_BGR = cv2.imread("../fotosRobot/pelota_pinzas.jpg")
+img_BGR = cv2.imread("./sample_files/foto_bot.jpg")
 
 # Setup default values for SimpleBlobDetector parameters.
 params = cv2.SimpleBlobDetector_Params()
@@ -161,10 +161,14 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 	#cv2.imshow('Capture', im_with_keypoints)
 	#cv2.startWindowThread()
 	#cv2.namedWindow("Capture")
-	#cv2.imshow("Capture", im_with_keypoints)
+	cv2.imshow("Capture", im_with_keypoints)
 	#cv2.waitKey(0)
-	return biggest
+	
 	
 
-	#cv2.waitKey(0)
-	#cv2.destroyAllWindows()
+	cv2.waitKey(0)
+	cv2.destroyAllWindows()
+
+	return biggest
+
+getRedBloobs()
