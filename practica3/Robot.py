@@ -277,6 +277,7 @@ class Robot:
                     print('Paro porque he encontrado un blob de',blob.size)
                     self.setSpeed(0,0)
                     self.catch()
+                    cv2.waitKey(0)
                     finished = True
 
                 self.trackObjectSpeed(x_actual,cols,blob)  
