@@ -284,7 +284,7 @@ class Robot:
                 # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
                 if (blob is not None):  
                     mid_img = cols/2
-                    self.setSpeed(0,-20)
+                    self.setSpeed(0,-10)
                     if blob.pt[0] - mid_img > -100:
                         almost_centered = True
                         print('Paro en -100')
@@ -298,7 +298,7 @@ class Robot:
                     
                 else:
                     # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
-                    self.setSpeed(0,-40)
+                    self.setSpeed(0,-50)
                     almost_centered = False
             
         return finished
@@ -330,7 +330,7 @@ class Robot:
         self.setSpeed(v,w)  
 
     def speed_size(self,size):
-        if (size < 50):
+        if (size < 80):
             return 150
         else:
             return 60   
