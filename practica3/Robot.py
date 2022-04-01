@@ -288,15 +288,13 @@ class Robot:
                     mid_img = cols/2
                     self.setSpeed(0,-20)
                     if blob.pt[0] - mid_img > -80:
-                        almost_centered = True
-                        print('Paro en -100')
-                        #self.setSpeed(0,-10)
                         self.setSpeed(0,0)
+                        almost_centered = True
+                        print('Paro en -100')   
                     elif blob.pt[0] - mid_img < 80:
+                        self.setSpeed(0,0)
                         almost_centered = True
                         print('Paro en +100')
-                        #self.setSpeed(0,10)
-                        self.setSpeed(0,0)
                     
                 else:
                     # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
@@ -351,8 +349,9 @@ class Robot:
     #    speedDPS_claw = np.rad2deg(wc)
     #    self.BP.set_motor_dps(self.BP.PORT_A, speedDPS_claw)
     #    ACERCARSE SIGILOSAMENTE
-    #    self.BP.set_motor_dps(self.BP.PORT_B, speedDPS_claw)
-
+    #    self.setSpeed(20, 0)
+    #    DETECTA QUE ESTÁ A RANGO DE PINZA
+    #    CÓMO???????????????????????????????
     #    wc = -0.2    #cerrar
     #    speedDPS_claw = np.rad2deg(wc/2)    #con cuidado :)
     #    self.BP.set_motor_dps(self.BP.PORT_A, speedDPS_claw)
