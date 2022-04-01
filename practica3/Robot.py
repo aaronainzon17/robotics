@@ -300,6 +300,7 @@ class Robot:
                     almost_centered = False
             
             if targetPositionReached: 
+                
                 self.catch()
                 targetPositionReached = False
                 triedCatch = True
@@ -367,8 +368,8 @@ class Robot:
         time.sleep(1.5)
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
         #ACERCARSE SIGILOSAMENTE
-        self.setSpeed(60, 0)
-        time.sleep(2.5)
+        #self.setSpeed(60, 0)
+        time.sleep(1)
         self.setSpeed(0, 0)
         # :)
         wc = -42    #cerrar
