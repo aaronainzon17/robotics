@@ -171,4 +171,4 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 
 	return biggest
 
-getRedBloobs()
+getRedBloobs(img_BGR)
