@@ -311,7 +311,7 @@ class Robot:
                     print('No se ve la pelota en las pinzas')
                     triedCatch = False
             
-            if targetPositionReached: 
+            if targetPositionReached and not finished: 
                 print('Entro a catch')
                 self.catch()
                 targetPositionReached = False
