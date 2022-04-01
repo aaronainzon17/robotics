@@ -249,7 +249,7 @@ class Robot:
         targetRojo = np.array([10,10,0])  #Posicion del target
         catch = False  #Si se coge el target o no
         finished = False
-        targetFound = False
+        triedCatch = False
         targetPositionReached = False
         almost_centered = False
 
@@ -268,19 +268,15 @@ class Robot:
             
             w = 0.0
             v = 0.0
-            _,cols,_ = imgBGR.shape
+            rows,cols,_ = imgBGR.shape
             
             if (blob is not None and almost_centered):
                 x_actual = blob.pt[0]
                 #print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
                 if blob.size > 120:
                     print('Paro porque he encontrado un blob de',blob.size)
+                    targetPositionReached = True
                     self.setSpeed(0,0)
-                    self.catch()
-                    _, imgBGR = cam.read() 
-                    blob = getRedBloobs(imgBGR)
-                    cv2.waitKey(0)
-                    finished = True
 
                 self.trackObjectSpeed(x_actual,cols,blob)  
                   
@@ -303,6 +299,22 @@ class Robot:
                     self.setSpeed(0,-40)
                     almost_centered = False
             
+            if targetPositionReached: 
+                self.catch()
+                targetPositionReached = False
+                triedCatch = True
+
+            if (blob is not None and triedCatch):
+                x_bl,y_bl = [blob.pt[0],blob.pt[1]]
+
+                if (y_bl > rows/8) and (abs(x_bl - cols/2) < 50):
+                    finished = True
+                    cv2.imshow('Final img', imgBGR)
+                    cv2.waitKey(0)
+                else:
+                    print('No se ve la pelota en las pinzas')
+                    triedCatch = False
+                   
         return finished
         
     def trackObjectSpeed(self,x_actual,cols,blob):
