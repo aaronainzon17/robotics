@@ -291,11 +291,11 @@ class Robot:
                         v = 60
                     else:
                         if(x_actual > cols/4 and x_actual < cols/2):    #Esta en el segundo cuadrante
-                            w = -40
+                            w = 40
                             v = 60
                         else:
                             if(x_actual > cols/2 and x_actual < (3*cols)/4):
-                                w = 40
+                                w = -40
                                 v = 60
                             else:
                                 if blob.pt[0] > cols/2:
