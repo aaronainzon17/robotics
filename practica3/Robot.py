@@ -370,7 +370,7 @@ class Robot:
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
         #ACERCARSE SIGILOSAMENTE
         #self.setSpeed(60, 0)
-        time.sleep(1)
+        time.sleep(0.6)
         self.setSpeed(0, 0)
         # :)
         wc = -42    #cerrar
