@@ -352,7 +352,7 @@ class Robot:
         time.sleep(2.5)
         self.setSpeed(0, 0)
         # :)
-        wc = -41    #cerrar
+        wc = -42    #cerrar
         self.BP.set_motor_dps(self.BP.PORT_A, wc)
         time.sleep(1.5)
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
