@@ -271,7 +271,7 @@ class Robot:
 
             if (blob is not None and almost_centered):
 
-                if blob.size > 200:
+                if blob.size > 190:
                     print('Paro porque he encontrado un blob de',blob.size)
                     finished = True
                     
