@@ -273,7 +273,7 @@ class Robot:
             if (blob is not None and almost_centered):
                 x_actual = blob.pt[0]
                 print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
-                if blob.size > 125:
+                if blob.size > 110:
                     print('Paro porque he encontrado un blob de',blob.size)
                     finished = True
                     
