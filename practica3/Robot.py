@@ -305,12 +305,9 @@ class Robot:
                 print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
                 if (y_bl > rows/8) and (abs(x_bl - cols/2) < 200):
                     finished = True
-                    cv2.imshow('Final img', imgBGR)
-                    #cv2.waitKey(0)
+                    print('LO TENGOOO :)')
                 else:
                     print('No se ve la pelota en las pinzas')
-                    cv2.imshow('Final img', imgBGR)
-                    #cv2.waitKey(0)
                     triedCatch = False
             
             if targetPositionReached: 
