@@ -304,7 +304,8 @@ class Robot:
 
             if (blob is not None and triedCatch):
                 x_bl,y_bl = [blob.pt[0],blob.pt[1]]
-                #print(x_bl,y_bl)
+                print('tengo y en',y_bl, 'y x en',x_bl)
+                print('7*Rows/8 es',(7*rows)/8, 'y el centro ', abs(x_bl - cols/2))
                 #print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
                 if (y_bl > (7*rows)/8) and (abs(x_bl - cols/2) < 200):
                     finished = True
