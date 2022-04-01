@@ -263,7 +263,7 @@ class Robot:
 
             # 1. search the most promising blob
             _, imgBGR = cam.read() 
-            
+            cv2.imshow('Capture', imgBGR)
             blob = getRedBloobs(imgBGR)
             
             w = 0.0
