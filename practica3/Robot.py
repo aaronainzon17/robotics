@@ -275,6 +275,7 @@ class Robot:
                 #print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
                 if blob.size > 110:
                     print('Paro porque he encontrado un blob de',blob.size)
+                    self.setSpeed(0,0)
                     cv2.imshow('Ultimo Frame', imgBGR)
                     cv2.waitKey(0)
                     finished = True
@@ -349,6 +350,7 @@ class Robot:
     #    wc = 0.2   #abrir
     #    speedDPS_claw = np.rad2deg(wc)
     #    self.BP.set_motor_dps(self.BP.PORT_A, speedDPS_claw)
+    #    self.BP.set_motor_dps(self.BP.PORT_, speedDPS_claw)
 
     #    wc = -0.2    #cerrar
     #    speedDPS_claw = np.rad2deg(wc/2)    #con cuidado :)
