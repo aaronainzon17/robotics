@@ -80,7 +80,7 @@ class Robot:
         """ Funcion que establece la velocidad lineal del robot a v y la velocidad
             angular del robot a w """
 
-        print("setting speed to %.2f %.2f" % (v, w))
+        #print("setting speed to %.2f %.2f" % (v, w))
 
         # Calculo de la velocidad a establecer para cada motor
         # segun las velocidades lineal y angular deseadas
@@ -265,12 +265,14 @@ class Robot:
             _, imgBGR = cam.read() 
             
             blob = getRedBloobs(imgBGR) 
-            #if blob is not None:
+            if blob is not None:
                 #print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
+                x_actual = blob.pt[0]
             
             w = 0.0
             v = 0.0
             rows,cols,_ = imgBGR.shape
+            
 
             if (blob is not None and almost_centered):
 
@@ -280,24 +282,38 @@ class Robot:
                     
                 #Se detecta la pelota
                 #Se detecta la pelota pero es necesario que este en el centro
-                if blob.pt[0] > cols/2:
-                    #Se tiene que mover a la derecha
-                    w = -40.0
-                else: 
-                    if blob.pt[0] < cols/2:
-                        w = 40.0
-                    else:
-                        w = 0.0
-
-                if blob.size < 80:
-                    v = 50
+                if((x_actual >= cols/4 + (cols/4 + cols/2)/2) and x_actual <= cols/2):
+                    w = 0
+                    v = 30
                 else:
-                    if blob.size < 100:
-                        v = 50
+                    if(x_actual >= cols/2 and x_actual<=((cols/2) + ((cols/2)+((3*cols)/4))/2)):
+                        w = 0
+                        v = 30
                     else:
-                        v = 50
+                        if(x_actual > cols/4 and x_actual < cols/2):    #Esta en el segundo cuadrante
+                            w = -20
+                            v = 30
+                        else:
+                            if(x_actual > cols/2 and x_actual < (3*cols)/4):
+                                w = 20
+                                v = 30
+                            else:
+                                if blob.pt[0] > cols/2:
+                                    #Se tiene que mover a la derecha
+                                    w = -40.0
+                                    v = 30
+                                else: 
+                                    if blob.pt[0] < cols/2:
+                                        w = 40.0
+                                        v = 30
+                                    else:
+                                        w = 0.0
+                                        v = 30
+
                 
-                self.setSpeed(v,w)        
+                
+                self.setSpeed(v,w)    
+
                 
 
             else:
