@@ -299,12 +299,6 @@ class Robot:
                     self.setSpeed(0,-40)
                     almost_centered = False
             
-            if targetPositionReached: 
-                
-                self.catch()
-                targetPositionReached = False
-                triedCatch = True
-
             if (blob is not None and triedCatch):
                 x_bl,y_bl = [blob.pt[0],blob.pt[1]]
                 print(x_bl,y_bl)
@@ -318,6 +312,11 @@ class Robot:
                     #cv2.imshow('Final img', imgBGR)
                     #cv2.waitKey(0)
                     triedCatch = False
+            
+            if targetPositionReached: 
+                self.catch()
+                targetPositionReached = False
+                triedCatch = True
                    
         return finished
         
