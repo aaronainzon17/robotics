@@ -250,6 +250,7 @@ class Robot:
         targetFound = False
         targetPositionReached = False
         almost_centered = False
+
         # Inicializar la camara del robot 
         cam = cv2.VideoCapture(0)
         #cam.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
@@ -259,20 +260,18 @@ class Robot:
         time.sleep(0.1)
         
         while not finished:
-            tIni = time.clock()
 
             # 1. search the most promising blob
             _, imgBGR = cam.read() 
-            cv2.imshow('Capture', imgBGR)
             blob = getRedBloobs(imgBGR)
             
             w = 0.0
             v = 0.0
-            rows,cols,_ = imgBGR.shape
+            _,cols,_ = imgBGR.shape
             
             if (blob is not None and almost_centered):
                 x_actual = blob.pt[0]
-                print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
+                #print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
                 if blob.size > 110:
                     print('Paro porque he encontrado un blob de',blob.size)
                     finished = True
@@ -301,9 +300,8 @@ class Robot:
                 
                 self.setSpeed(v,w)    
             else:
-
                 # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
-                if (blob is not None and not almost_centered):  
+                if (blob is not None):  
                     mid_img = cols/2
                     self.setSpeed(0,-20)
                     if blob.pt[0] - mid_img > -100:
@@ -329,10 +327,6 @@ class Robot:
                 #        targetPositionReached = True
                 #        finished = True
             
-            
-            tEnd = time.clock()
-            #print(tEnd-tIni)
-            #time.sleep(0.5 - (tEnd-tIni))
         return finished
         
 
