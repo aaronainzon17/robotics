@@ -306,7 +306,9 @@ class Robot:
 
             if (blob is not None and triedCatch):
                 x_bl,y_bl = [blob.pt[0],blob.pt[1]]
-
+                print(x_bl,y_bl)
+                print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
+                cv2.waitKey(0)
                 if (y_bl > rows/8) and (abs(x_bl - cols/2) < 50):
                     finished = True
                     cv2.imshow('Final img', imgBGR)
