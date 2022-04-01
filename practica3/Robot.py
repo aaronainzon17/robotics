@@ -277,6 +277,8 @@ class Robot:
                     print('Paro porque he encontrado un blob de',blob.size)
                     self.setSpeed(0,0)
                     self.catch()
+                    _, imgBGR = cam.read() 
+                    blob = getRedBloobs(imgBGR)
                     cv2.waitKey(0)
                     finished = True
 
