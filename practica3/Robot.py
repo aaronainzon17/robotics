@@ -57,6 +57,8 @@ class Robot:
                                      self.BP.get_motor_encoder(self.BP.PORT_B))  # RUEDA DERECHA
         self.BP.offset_motor_encoder(self.BP.PORT_C,
                                      self.BP.get_motor_encoder(self.BP.PORT_C))  # RUEDA IZQUIERDA
+        self.BP.offset_motor_encoder(self.BP.PORT_A,
+                                     self.BP.get_motor_encoder(self.BP.PORT_A))  # PINZAS
 
         ##################################################
 
@@ -310,20 +312,20 @@ class Robot:
             v = self.speed_size(blob.size)
         elif(x_actual >= (2*cols)/8 and x_actual <= (3*cols)/8):
             #Primer sector izquierda de 2*cols/8 hasta 3cols/8 (el pequeñito entre el que esta lejos y el del centro)
-            w = 10
             v = self.speed_size(blob.size)
+            w = self.w_speed_size(v,10)
         elif(x_actual >= 0 and x_actual <= (2*cols)/8):
             #Sector mas alejado de la izquierda de [0,(2*cols)/8]
-            w = 20
             v = self.speed_size(blob.size)
+            w = self.w_speed_size(v,20)
         elif(x_actual >= (5*cols)/8 and x_actual <= (6*cols)/8):
             #Primer sector derecha [(5*cols)/8, (6*cols)/8]
-            w = 10
-            v = self.speed_size(blob.size)  
+            v = self.speed_size(blob.size)
+            w = self.w_speed_size(v,-10)  
         elif(x_actual > (6*cols)/8 and x_actual <= cols):
         #Sector mas alejado de derecha [(6*cols)/8, cols]
-            w = 20
             v = self.speed_size(blob.size)  
+            w = self.w_speed_size(v,-20)
                     
         self.setSpeed(v,w)  
 
@@ -333,8 +335,21 @@ class Robot:
         else:
             return 60   
     
+    def w_speed_size(self,v,expected_w):
+        if (v < 60):
+            return expected_w
+        else:
+            return expected_w/2 
+    
     
     #def catch(self):
     #    # decide the strategy to catch the ball once you have reached the target
     #    position
+    #    wc = 0.2   #abrir
+    #    speedDPS_claw = np.rad2deg(wc)
+    #    self.BP.set_motor_dps(self.BP.PORT_A, speedDPS_claw)
+
+    #    wc = -0.2    #cerrar
+    #    speedDPS_claw = np.rad2deg(wc/2)    #con cuidado :)
+    #    self.BP.set_motor_dps(self.BP.PORT_A, speedDPS_claw)
 
