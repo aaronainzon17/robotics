@@ -291,11 +291,11 @@ class Robot:
                         v = 60
                     else:
                         if(x_actual > cols/4 and x_actual < cols/2):    #Esta en el segundo cuadrante
-                            w = -20
+                            w = -40
                             v = 60
                         else:
                             if(x_actual > cols/2 and x_actual < (3*cols)/4):
-                                w = 20
+                                w = 40
                                 v = 60
                             else:
                                 if blob.pt[0] > cols/2:
@@ -335,7 +335,7 @@ class Robot:
                         #self.setSpeed(0,10)
                         self.setSpeed(0,0)
                 else:
-                    self.setSpeed(0,-30)
+                    self.setSpeed(0,-40)
                     almost_centered = False
                 
             
