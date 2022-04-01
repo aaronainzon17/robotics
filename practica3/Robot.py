@@ -272,7 +272,7 @@ class Robot:
             
             if (blob is not None and almost_centered):
                 x_actual = blob.pt[0]
-                #print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
+                print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
                 if blob.size > 125:
                     print('Paro porque he encontrado un blob de',blob.size)
                     finished = True
@@ -301,8 +301,9 @@ class Robot:
                 
                 self.setSpeed(v,w)    
             else:
+
                 # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
-                if (blob is not None):  
+                if (blob is not None and not almost_centered):  
                     mid_img = cols/2
                     self.setSpeed(0,-20)
                     if blob.pt[0] - mid_img > -100:
