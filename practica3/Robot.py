@@ -264,19 +264,16 @@ class Robot:
             # 1. search the most promising blob
             _, imgBGR = cam.read() 
             
-            blob = getRedBloobs(imgBGR) 
-            if blob is not None:
-                #print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
-                x_actual = blob.pt[0]
+            blob = getRedBloobs(imgBGR)
             
             w = 0.0
             v = 0.0
             rows,cols,_ = imgBGR.shape
             
-
             if (blob is not None and almost_centered):
-
-                if blob.size > 130:
+                x_actual = blob.pt[0]
+                #print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
+                if blob.size > 125:
                     print('Paro porque he encontrado un blob de',blob.size)
                     finished = True
                     
@@ -309,31 +306,23 @@ class Robot:
                                     else:
                                         w = 0.0
                                         v = 60
-
-                
-                
                 self.setSpeed(v,w)    
-
-                
-
             else:
                 # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
                 if (blob is not None and not almost_centered):  
                     mid_img = cols/2
-                    if abs(blob.pt[0] - mid_img) < 20:
-                        almost_centered = True
-                        print('Paro en 20')
-                        self.setSpeed(0,0)
-                    elif blob.pt[0] - mid_img < 100:
+                    self.setSpeed(0,-20)
+                    if blob.pt[0] - mid_img > -100:
                         almost_centered = True
                         print('Paro en -100')
                         #self.setSpeed(0,-10)
                         self.setSpeed(0,0)
-                    elif abs(blob.pt[0] - mid_img) > 100:
+                    elif abs(blob.pt[0] - mid_img) < 100:
                         almost_centered = True
                         print('Paro en +100')
                         #self.setSpeed(0,10)
                         self.setSpeed(0,0)
+                    
                 else:
                     self.setSpeed(0,-40)
                     almost_centered = False
