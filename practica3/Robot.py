@@ -350,7 +350,7 @@ class Robot:
     #    wc = 0.2   #abrir
     #    speedDPS_claw = np.rad2deg(wc)
     #    self.BP.set_motor_dps(self.BP.PORT_A, speedDPS_claw)
-    #
+    #    A
     #    self.BP.set_motor_dps(self.BP.PORT_B, speedDPS_claw)
 
     #    wc = -0.2    #cerrar
