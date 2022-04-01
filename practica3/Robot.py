@@ -247,7 +247,7 @@ class Robot:
         # NO SE QUE ES 
         targetSize = 20   #tamanyo dl target
         targetRojo = np.array([10,10,0])  #Posicion del target
-        catch = False  #Si se coge el target o no
+        #catch = False  #Si se coge el target o no
         finished = False
         triedCatch = False
         targetPositionReached = False
@@ -301,7 +301,7 @@ class Robot:
             if finished:
                 self.setSpeed(0,0)
                 cv2.imshow('final img', imgBGR)
-                
+
             if (blob is not None and triedCatch):
                 x_bl,y_bl = [blob.pt[0],blob.pt[1]]
                 #print(x_bl,y_bl)
@@ -313,7 +313,8 @@ class Robot:
                     print('No se ve la pelota en las pinzas')
                     triedCatch = False
             
-            if targetPositionReached: 
+            if targetPositionReached and not finished: 
+                print('Entro a catch')
                 self.catch()
                 targetPositionReached = False
                 triedCatch = True
