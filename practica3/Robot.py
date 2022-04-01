@@ -298,12 +298,15 @@ class Robot:
                     # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
                     self.setSpeed(0,-40)
                     almost_centered = False
-            
+            if finished:
+                self.setSpeed(0,0)
+                cv2.imshow('final img', imgBGR)
+                
             if (blob is not None and triedCatch):
                 x_bl,y_bl = [blob.pt[0],blob.pt[1]]
-                print(x_bl,y_bl)
-                print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
-                if (y_bl > rows/8) and (abs(x_bl - cols/2) < 200):
+                #print(x_bl,y_bl)
+                #print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
+                if (y_bl > (7*rows)/8) and (abs(x_bl - cols/2) < 200):
                     finished = True
                     print('LO TENGOOO :)')
                 else:
