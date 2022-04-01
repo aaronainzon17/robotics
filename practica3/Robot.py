@@ -346,18 +346,18 @@ class Robot:
     def catch(self):
         # decide the strategy to catch the ball once you have reached the target
         # position
-        wc = 30   #abrir
+        wc = 40   #abrir
         self.BP.set_motor_dps(self.BP.PORT_A, wc)
-        time.sleep(0.5)
+        time.sleep(2)
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
         #ACERCARSE SIGILOSAMENTE
         self.setSpeed(60, 0)
         time.sleep(1.8)
         #DETECTA QUE ESTÁ A RANGO DE PINZA
         #CÓMO??????????????????????????????? :)
-        wc = -15    #cerrar
+        wc = -40.5    #cerrar
         self.BP.set_motor_dps(self.BP.PORT_A, wc)
-        time.sleep(1)
+        time.sleep(2)
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
 
 
