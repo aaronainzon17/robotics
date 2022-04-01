@@ -280,11 +280,11 @@ class Robot:
                     
                 #Se detecta la pelota
                 #Se detecta la pelota pero es necesario que este en el centro
-                if blob.pt[0] > cols:
+                if blob.pt[0] > cols/2:
                     #Se tiene que mover a la derecha
                     w = -40.0
                 else: 
-                    if blob.pt[0] < cols:
+                    if blob.pt[0] < cols/2:
                         w = 40.0
                     else:
                         w = 0.0
@@ -320,6 +320,7 @@ class Robot:
                         self.setSpeed(0,0)
                 else:
                     self.setSpeed(0,-30)
+                    almost_centered = False
                 
             
                 #while not targetPositionReached:
