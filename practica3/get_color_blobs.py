@@ -123,11 +123,11 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 	#Se utilizan 2 inRange porque el rojo en HSV se encuentra entre 0-10 y 160-180 
 	
 	# Limites inferiores (0-10)
-	red_0 = np.array([0, 70, 50])
+	red_0 = np.array([0, 80, 50])
 	red_10 = np.array([10, 255, 255])
 	
 	# Limites superiores (160-180)
-	red_160 = np.array([160,70,50])
+	red_160 = np.array([160,80,50])
 	red_180 = np.array([179,255,255])
 
 	mask0_10 = cv2.inRange(img_hsv, red_0, red_10)
