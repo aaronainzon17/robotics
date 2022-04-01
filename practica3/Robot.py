@@ -262,7 +262,6 @@ class Robot:
         time.sleep(0.1)
         
         while not finished:
-
             # 1. search the most promising blob
             _, imgBGR = cam.read() 
             blob = getRedBloobs(imgBGR)
@@ -276,6 +275,8 @@ class Robot:
                 #print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
                 if blob.size > 110:
                     print('Paro porque he encontrado un blob de',blob.size)
+                    cv2.imshow('Ultimo Frame', imgBGR)
+                    cv2.waitKey(0)
                     finished = True
 
                 self.trackObjectSpeed(x_actual,cols,blob)  
@@ -284,7 +285,7 @@ class Robot:
                 # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
                 if (blob is not None):  
                     mid_img = cols/2
-                    self.setSpeed(0,-10)
+                    self.setSpeed(0,-20)
                     if blob.pt[0] - mid_img > -100:
                         almost_centered = True
                         print('Paro en -100')
@@ -298,7 +299,7 @@ class Robot:
                     
                 else:
                     # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
-                    self.setSpeed(0,-50)
+                    self.setSpeed(0,-40)
                     almost_centered = False
             
         return finished
