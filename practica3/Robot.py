@@ -302,36 +302,38 @@ class Robot:
         return finished
         
 
-def trackObjectSpeed(self,x_actual,cols,blob):
-    #Se divide la imagen en 8 sectores verticales y en funcion del que se encuentre la pelota se aplica una velocidad u otra
-    if((x_actual > (3*cols)/8) and x_actual <= cols/2) or (x_actual >= cols/2 and x_actual<= (5*cols)/8):
-        #Sector central [(3*cols)/8,(5*cols)/8]
-        w = 0
-        v = speed_size(blob.size)
-    elif(x_actual >= (2*cols)/8 and x_actual <= (3*cols)/8):
-        #Primer sector izquierda de 2*cols/8 hasta 3cols/8 (el pequeñito entre el que esta lejos y el del centro)
-        w = 10
-        v = speed_size(blob.size)
-    elif(x_actual >= 0 and x_actual <= (2*cols)/8):
-        #Sector mas alejado de la izquierda de [0,(2*cols)/8]
-        w = 20
-        v = speed_size(blob.size)
-    elif(x_actual >= (5*cols)/8 and x_actual <= (6*cols)/8):
-        #Primer sector derecha [(5*cols)/8, (6*cols)/8]
-        w = 10
-        v = speed_size(blob.size)  
-    elif(x_actual > (6*cols)/8 and x_actual <= cols):
-    #Sector mas alejado de derecha [(6*cols)/8, cols]
-        w = 20
-        v = speed_size(blob.size)  
-                
-    self.setSpeed(v,w)  
+    def trackObjectSpeed(self,x_actual,cols,blob):
+        #Se divide la imagen en 8 sectores verticales y en funcion del que se encuentre la pelota se aplica una velocidad u otra
+        if((x_actual > (3*cols)/8) and x_actual <= cols/2) or (x_actual >= cols/2 and x_actual<= (5*cols)/8):
+            #Sector central [(3*cols)/8,(5*cols)/8]
+            w = 0
+            v = self.speed_size(blob.size)
+        elif(x_actual >= (2*cols)/8 and x_actual <= (3*cols)/8):
+            #Primer sector izquierda de 2*cols/8 hasta 3cols/8 (el pequeñito entre el que esta lejos y el del centro)
+            w = 10
+            v = self.speed_size(blob.size)
+        elif(x_actual >= 0 and x_actual <= (2*cols)/8):
+            #Sector mas alejado de la izquierda de [0,(2*cols)/8]
+            w = 20
+            v = self.speed_size(blob.size)
+        elif(x_actual >= (5*cols)/8 and x_actual <= (6*cols)/8):
+            #Primer sector derecha [(5*cols)/8, (6*cols)/8]
+            w = 10
+            v = self.speed_size(blob.size)  
+        elif(x_actual > (6*cols)/8 and x_actual <= cols):
+        #Sector mas alejado de derecha [(6*cols)/8, cols]
+            w = 20
+            v = self.speed_size(blob.size)  
+                    
+        self.setSpeed(v,w)  
 
-def speed_size(size):
-    if (size < 50):
-        return 150
-    else:
-        return 60   
+    def speed_size(self,size):
+        if (size < 50):
+            return 150
+        else:
+            return 60   
+    
+    
     #def catch(self):
     #    # decide the strategy to catch the ball once you have reached the target
     #    position
