@@ -265,7 +265,7 @@ class Robot:
             _, imgBGR = cam.read() 
             
             blob = getRedBloobs(imgBGR) 
-            if blob is not None:
+            #if blob is not None:
                 #print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
             
             w = 0.0
