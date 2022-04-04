@@ -268,7 +268,7 @@ class Robot:
             if (blob is not None and almost_centered):
                 x_actual = blob.pt[0] # Se obtiene la coordenada x en la que se encuentra 
                 # Si el diametro es mayor que 120 se inica el proceso de catch
-                if blob.size > 120 and not triedCatch:
+                if blob.size > 120:
                     print('Paro porque he encontrado un blob de', blob.size)
                     targetPositionReached = True # Se indica que se ha alcanzado el objeto 
                     #self.setSpeed(0,0) CREO QUE SE PUEDE BORRAR 
@@ -297,7 +297,7 @@ class Robot:
                 print('x es',5*rows/6, 'y el centro ', abs(x_bl - cols/2))
                 
                 # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
-                if (blob.size > 215 and abs(y_bl - 350) < 20) and (abs(x_bl - cols/2) < 20):
+                if (y_bl > rows/2) and (abs(x_bl - cols/2) < 150):
                     finished = True
                     print('LO TENGOOO :)')
                     #
@@ -344,7 +344,7 @@ class Robot:
     # Funcion utilizada para decidir la velocidad lienal de acercamiento 
     # hacia la pelota en funcion de su tamanyo
     def speed_size(self,size):
-        if (size < 100):
+        if (size < 80):
             return 150
         else:
             return 60   
