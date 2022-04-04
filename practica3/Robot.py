@@ -265,17 +265,17 @@ class Robot:
             rows,cols,_ = frame.shape   # Se obtiene el numero de filas y columnas del fotograma 
             
             # Si se ha detectado un blob casi centrado en la imagen
-            if (blob is not None and almost_centered):
+            if (blob is not None and almost_centered and not triedCatch):
                 x_actual = blob.pt[0] # Se obtiene la coordenada x en la que se encuentra 
                 # Si el diametro es mayor que 120 se inica el proceso de catch
-                if blob.size > 120:
+                if blob.size > 120 and not triedCatch:
                     print('Paro porque he encontrado un blob de', blob.size)
                     targetPositionReached = True # Se indica que se ha alcanzado el objeto 
                     #self.setSpeed(0,0) CREO QUE SE PUEDE BORRAR 
 
                 self.trackObjectSpeed(x_actual,cols,blob)  
                   
-            else:
+            elif not triedCatch:
                 mid_img = cols/2 # Se calcula en eje central de la imagen
 
                 # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
@@ -297,10 +297,10 @@ class Robot:
                 print('x es',5*rows/6, 'y el centro ', abs(x_bl - cols/2))
                 
                 # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
-                if (y_bl > rows/2) and (abs(x_bl - cols/2) < 150):
+                #if (y_bl > rows/2) and (abs(x_bl - cols/2) < 150):
+                if blob.size > 200:
                     finished = True
                     print('LO TENGOOO :)')
-                    #
                 else:
                     print('No se ve la pelota en las pinzas')
                     triedCatch = False
