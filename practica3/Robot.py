@@ -281,13 +281,13 @@ class Robot:
                 # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
                 if (blob is not None):  
                     last_bloob = blob
-                    self.find_ball(last_bloob, 20, mid_img) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
+                    self.find_ball(last_bloob, 25, mid_img) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
                     # Si se encuentra a 80 pixeles del centro 
                     if abs(blob.pt[0] - mid_img) < 80:
                         almost_centered = True # Se indica que el blob esta casi centrado
                 else:
                     # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
-                    self.find_ball(last_bloob, 40, mid_img) # PREV = self.setSpeed(0,-40)
+                    self.find_ball(last_bloob, 60, mid_img) # PREV = self.setSpeed(0,-40)
                     almost_centered = False
 
             # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
