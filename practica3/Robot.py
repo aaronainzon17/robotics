@@ -278,11 +278,11 @@ class Robot:
 
                     #Ajustar un poco para que pueda girar el robot
                     if (x_actual > cols/2 + 40) :
-                        self.setSpeed(0,-20)
-                        time.sleep(10)
+                        self.setSpeed(0,-40)
+                        time.sleep(1)
                     elif (x_actual < cols/2 - 40):
-                        self.setSpeed(0,20)
-                        time.sleep(10)
+                        self.setSpeed(0,40)
+                        time.sleep(1)
 
                     print('Paro porque he encontrado un blob de', blob.size)
                     targetPositionReached = True # Se indica que se ha alcanzado el objeto 
