@@ -73,8 +73,8 @@ class Robot:
         self.lock_odometry = Lock()
 
         # odometry update period
-        #self.P = 0.03
-        self.P = 0.1
+        self.P = 0.03
+        
 
         # Variables de vision 
         
@@ -259,7 +259,6 @@ class Robot:
         time.sleep(0.1)
         
         while not finished:
-            tIni = time.clock()
             # Busqueda del blob mas prometedor 
             _, frame = cam.read()       # Se captura un fotograma
             blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
@@ -345,9 +344,6 @@ class Robot:
                 #self.catch() # Se inicia el proceso de captura 
                 targetPositionReached = False
                 triedCatch = True
-            
-            tEnd = time.clock()
-            time.sleep(self.P - (tEnd-tIni))
                    
         return finished
     
