@@ -297,9 +297,10 @@ class Robot:
                 print('x es',5*rows/6, 'y el centro ', abs(x_bl - cols/2))
                 
                 # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
-                if (y_bl > 5*rows/6) and (abs(x_bl - cols/2) < 150):
+                if (blob.size > 215 and abs(y_bl - 350) > 20) and (abs(x_bl - cols/2) < 20):
                     finished = True
                     print('LO TENGOOO :)')
+                    #
                 else:
                     print('No se ve la pelota en las pinzas')
                     triedCatch = False
@@ -343,7 +344,7 @@ class Robot:
     # Funcion utilizada para decidir la velocidad lienal de acercamiento 
     # hacia la pelota en funcion de su tamanyo
     def speed_size(self,size):
-        if (size < 80):
+        if (size < 100):
             return 150
         else:
             return 60   
