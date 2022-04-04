@@ -282,8 +282,9 @@ class Robot:
                 if (blob is not None):  
                     #last_bloob = blob
                     self.setSpeed(0,-20) #self.find_ball(last_bloob, 20, mid_img) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
+                    
                     # Si se encuentra a 80 pixeles del centro 
-                    if abs(blob.pt[0] - mid_img) < 80:
+                    if abs(blob.pt[0] - mid_img) < 100:
                         self.setSpeed(0,0)
                         almost_centered = True # Se indica que el blob esta casi centrado
                 else:
