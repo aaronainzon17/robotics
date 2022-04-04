@@ -277,10 +277,10 @@ class Robot:
                     #Ajustar un poco para que pueda girar el robot
                     if (x_actual > cols/2 + 20) :
                         self.setSpeed(0,20)
-                        time.sleep(0.4)
+                        time.sleep(1)
                     elif (x_actual < cols/2 - 20):
                         self.setSpeed(0,-20)
-                        time.sleep(0.4)
+                        time.sleep(1)
                     print('Paro porque he encontrado un blob de', blob.size)
                     targetPositionReached = True # Se indica que se ha alcanzado el objeto 
                     self.setSpeed(0,0)
@@ -314,7 +314,7 @@ class Robot:
                 # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
                 #if (y_bl > rows/2) and (abs(x_bl - cols/2) < 150):
                 #if blob.size > 200 and (x_bl > 300 and x_bl < 400) and (y_bl >290 and y_bl <390):
-                if blob.size > 150 and (x_bl > 300 and x_bl < 400) and (y_bl >290 and y_bl <390):
+                if blob.size > 120 and (x_bl > 300 and x_bl < 400) and (y_bl >290 and y_bl <390):
                     finished = True
                     print('LO TENGOOO :)')
                 else:
