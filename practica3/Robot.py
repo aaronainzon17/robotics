@@ -314,7 +314,18 @@ class Robot:
             # Si se ha alcanzado la pelota y no se ha capturado previamente
             if targetPositionReached and not finished: 
                 print('Entro a catch')
-                self.catch() # Se inicia el proceso de captura 
+                w = 40   # Velocidad angular para abrir las pinzas 
+                self.BP.set_motor_dps(self.BP.PORT_A, w)
+                time.sleep(1.5) # Tiempo de apertura 
+                self.BP.set_motor_dps(self.BP.PORT_A, 0)
+                self.setSpeed(60, 0)
+                time.sleep(1) # Resto de acercamiento a la pelota
+                self.setSpeed(0, 0)
+                w = -42    # Velocidad angular para cerrar las pinzas 
+                self.BP.set_motor_dps(self.BP.PORT_A, w)
+                time.sleep(1.5) # Tiempo de cierre de pinzas
+                self.BP.set_motor_dps(self.BP.PORT_A, 0)
+                #self.catch() # Se inicia el proceso de captura 
                 targetPositionReached = False
                 triedCatch = True
                    
