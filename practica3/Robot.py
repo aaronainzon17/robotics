@@ -243,154 +243,78 @@ class Robot:
         return self.P
 
     def trackObject(self, colorRangeMin=[0,0,0], colorRangeMax=[255,255,255]):
-        #targetSize=??, target??=??, catch=??, ...)
-        # NO SE QUE ES 
-        targetSize = 20   #tamanyo dl target
-        targetRojo = np.array([10,10,0])  #Posicion del target
-        #catch = False  #Si se coge el target o no
         finished = False
         triedCatch = False
         targetPositionReached = False
         almost_centered = False
-
+        last_bloob = None # Se alamcena la ultima imagen en la que aparece un bloob 
+        
         # Inicializar la camara del robot 
         cam = cv2.VideoCapture(0)
         #cam.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
         #cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
         
-        # allow the camera to warmup
+        # Inicializacion de la camara
         time.sleep(0.1)
         
         while not finished:
-            # 1. search the most promising blob
-            _, imgBGR = cam.read() 
-            blob = getRedBloobs(imgBGR)
+            # Busqueda del blob mas prometedor 
+            _, frame = cam.read()       # Se captura un fotograma
+            blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
             
-            w = 0.0
-            v = 0.0
-            rows,cols,_ = imgBGR.shape
+            rows,cols,_ = frame.shape   # Se obtiene el numero de filas y columnas del fotograma 
             
+            # Si se ha detectado un blob casi centrado en la imagen
             if (blob is not None and almost_centered):
-                x_actual = blob.pt[0]
-                #print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
-                if blob.size > 120:
-                    print('Paro porque he encontrado un blob de',blob.size)
-                    targetPositionReached = True
+                x_actual = blob.pt[0] # Se obtiene la coordenada x en la que se encuentra 
+                # Si el diametro es mayor que 175 se inica el proceso de catch
+                if blob.size > 150 and not triedCatch:
+                    print('Paro porque he encontrado un blob de', blob.size)
+                    targetPositionReached = True # Se indica que se ha alcanzado el objeto 
                     self.setSpeed(0,0)
-
-                self.trackObjectSpeed(x_actual,cols,blob)  
+                else:
+                    self.trackObjectSpeed(x_actual,cols,blob)  
                   
             else:
+                mid_img = cols/2 # Se calcula en eje central de la imagen
+
                 # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
                 if (blob is not None):  
-                    mid_img = cols/2
-                    self.setSpeed(0,-20)
-                    if blob.pt[0] - mid_img > -80:
-                        #self.setSpeed(0,0)
-                        almost_centered = True
-                        print('Paro en -100')   
-                    elif blob.pt[0] - mid_img < 80:
-                        #self.setSpeed(0,0)
-                        almost_centered = True
-                        print('Paro en +100')
-                    
+                    #last_bloob = blob
+                    self.setSpeed(0,-20) #self.find_ball(last_bloob, 20, mid_img) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
+                    # Si se encuentra a 80 pixeles del centro 
+                    if abs(blob.pt[0] - mid_img) < 80:
+                        self.setSpeed(0,0)
+                        almost_centered = True # Se indica que el blob esta casi centrado
                 else:
                     # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
-                    self.setSpeed(0,-40)
+                    self.setSpeed(0,-40) #self.find_ball(last_bloob, 40, mid_img) # PREV = self.setSpeed(0,-40)
                     almost_centered = False
 
+            # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
             if (blob is not None and triedCatch):
                 x_bl,y_bl = [blob.pt[0],blob.pt[1]]
                 print('tengo y en',y_bl, 'y x en',x_bl)
-                print('x es',5*rows/6, 'y el centro ', abs(x_bl - cols/2))
-                #print("X_Blob = ", blob.pt[0], ", Y_Blob = ", blob.pt[1],", Blob_Size= ", blob.size)
-                if (y_bl > 5*rows/6) and (abs(x_bl - cols/2) < 150):
+                #print('x es',5*rows/6, 'y el centro ', abs(x_bl - cols/2))
+                
+                # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
+                #if (y_bl > rows/2) and (abs(x_bl - cols/2) < 150):
+                if blob.size > 200:
                     finished = True
                     print('LO TENGOOO :)')
                 else:
                     print('No se ve la pelota en las pinzas')
                     triedCatch = False
             
+            # Si se ha alcanzado la pelota y no se ha capturado previamente
             if targetPositionReached and not finished: 
                 print('Entro a catch')
-                self.catch()
+                self.catch() # Se inicia el proceso de captura 
                 targetPositionReached = False
                 triedCatch = True
                    
         return finished
     
-    #def trackObject(self, colorRangeMin=[0,0,0], colorRangeMax=[255,255,255]):
-    #    finished = False
-    #    triedCatch = False
-    #    targetPositionReached = False
-    #    almost_centered = False
-    #    last_bloob = None # Se alamcena la ultima imagen en la que aparece un bloob 
-    #    
-    #    # Inicializar la camara del robot 
-    #    cam = cv2.VideoCapture(0)
-    #    #cam.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
-    #    #cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
-    #    
-    #    # Inicializacion de la camara
-    #    time.sleep(0.1)
-    #    
-    #    while not finished:
-    #        # Busqueda del blob mas prometedor 
-    #        _, frame = cam.read()       # Se captura un fotograma
-    #        blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
-    #        
-    #        rows,cols,_ = frame.shape   # Se obtiene el numero de filas y columnas del fotograma 
-    #        
-    #        # Si se ha detectado un blob casi centrado en la imagen
-    #        if (blob is not None and almost_centered):
-    #            x_actual = blob.pt[0] # Se obtiene la coordenada x en la que se encuentra 
-    #            # Si el diametro es mayor que 175 se inica el proceso de catch
-    #            if blob.size > 175 and not triedCatch:
-    #                print('Paro porque he encontrado un blob de', blob.size)
-    #                targetPositionReached = True # Se indica que se ha alcanzado el objeto 
-    #                self.setSpeed(0,0)
-    #            else:
-    #                self.trackObjectSpeed(x_actual,cols,blob)  
-    #              
-    #        else:
-    #            mid_img = cols/2 # Se calcula en eje central de la imagen
-#
-    #            # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
-    #            if (blob is not None):  
-    #                #last_bloob = blob
-    #                self.setSpeed(0,-20) #self.find_ball(last_bloob, 20, mid_img) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
-    #                # Si se encuentra a 80 pixeles del centro 
-    #                if abs(blob.pt[0] - mid_img) < 80:
-    #                    almost_centered = True # Se indica que el blob esta casi centrado
-    #            else:
-    #                # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
-    #                self.setSpeed(0,-40) #self.find_ball(last_bloob, 40, mid_img) # PREV = self.setSpeed(0,-40)
-    #                almost_centered = False
-#
-    #        # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
-    #        if (blob is not None and triedCatch):
-    #            x_bl,y_bl = [blob.pt[0],blob.pt[1]]
-    #            print('tengo y en',y_bl, 'y x en',x_bl)
-    #            #print('x es',5*rows/6, 'y el centro ', abs(x_bl - cols/2))
-    #            
-    #            # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
-    #            #if (y_bl > rows/2) and (abs(x_bl - cols/2) < 150):
-    #            if blob.size > 200:
-    #                finished = True
-    #                print('LO TENGOOO :)')
-    #            else:
-    #                print('No se ve la pelota en las pinzas')
-    #                triedCatch = False
-    #        
-    #        # Si se ha alcanzado la pelota y no se ha capturado previamente
-    #        if targetPositionReached and not finished: 
-    #            print('Entro a catch')
-    #            self.catch() # Se inicia el proceso de captura 
-    #            targetPositionReached = False
-    #            triedCatch = True
-    #               
-    #    return finished
-    #
     # Funcion utilizada para decidir la velocidad y direccion del robot
     # en funcion de donde se encuenta la pelota en la imagen  
     def trackObjectSpeed(self,x_actual,cols,blob):
