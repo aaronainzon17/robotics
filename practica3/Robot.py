@@ -258,6 +258,7 @@ class Robot:
         time.sleep(0.1)
         
         while not finished:
+            tIni = time.clock()
             # Busqueda del blob mas prometedor 
             _, frame = cam.read()       # Se captura un fotograma
             blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
@@ -297,7 +298,7 @@ class Robot:
                     #self.setSpeed(0,-20) #self.find_ball(last_bloob, 20, mid_img) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
                     
                     # Si se encuentra a 80 pixeles del centro 
-                    if abs(blob.pt[0] - mid_img) < 50:
+                    if abs(blob.pt[0] - mid_img) < 100:
                         self.setSpeed(0,0)
                         almost_centered = True # Se indica que el blob esta casi centrado
                 else:
@@ -343,6 +344,9 @@ class Robot:
                 #self.catch() # Se inicia el proceso de captura 
                 targetPositionReached = False
                 triedCatch = True
+            
+            tEnd = time.clock()
+            time.sleep(self.P - (tEnd-tIni))
                    
         return finished
     
