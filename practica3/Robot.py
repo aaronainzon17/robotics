@@ -281,7 +281,7 @@ class Robot:
                 # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
                 if (blob is not None):  
                     #last_bloob = blob
-                    #self.setSpeed(0,-20) #self.find_ball(last_bloob, 20, mid_img) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
+                    self.setSpeed(0,-20) #self.find_ball(last_bloob, 20, mid_img) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
                     # Si se encuentra a 80 pixeles del centro 
                     if abs(blob.pt[0] - mid_img) < 80:
                         self.setSpeed(0,0)
