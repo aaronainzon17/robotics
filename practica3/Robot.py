@@ -379,7 +379,7 @@ class Robot:
         self.setSpeed(0, 0)
         w = -42    # Velocidad angular para cerrar las pinzas 
         self.BP.set_motor_dps(self.BP.PORT_A, w)
-        time.sleep(1.5) # Tiempo de cierre de pinzas
+        time.sleep(1.7) # Tiempo de cierre de pinzas
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
 
 
