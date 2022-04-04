@@ -276,10 +276,11 @@ class Robot:
                 self.trackObjectSpeed(x_actual,cols,blob)  
                   
             else:
+                mid_img = cols/2 # Se calcula en eje central de la imagen
+                
                 # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
                 if (blob is not None):  
                     last_bloob = blob
-                    mid_img = cols/2 # Se calcula en eje central de la imagen
                     self.find_ball(last_bloob, mid_img, 20) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
                     # Si se encuentra a 80 pixeles del centro 
                     if abs(blob.pt[0] - mid_img) < 80:
