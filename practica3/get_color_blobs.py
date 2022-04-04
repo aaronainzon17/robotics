@@ -160,9 +160,11 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 		(255,255,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
 	#cv2.imshow('Capture', im_with_keypoints)
-	cv2.startWindowThread()
-	cv2.namedWindow("Capture")
-	cv2.imshow("Capture", im_with_keypoints)
+
+	#cv2.startWindowThread()
+	#cv2.namedWindow("Capture")
+	#cv2.imshow("Capture", im_with_keypoints)
+
 	#cv2.waitKey(0)
 	return biggest
 	
@@ -171,10 +173,10 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 	#cv2.destroyAllWindows()
 
 
-cam = cv2.VideoCapture(0)
+#cam = cv2.VideoCapture(0)
 
-time.sleep(1)
+#time.sleep(1)
 
-while(True):
-	_, frame = cam.read()       # Se captura un fotograma
-	blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
+#while(True):
+#	_, frame = cam.read()       # Se captura un fotograma
+#	blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
