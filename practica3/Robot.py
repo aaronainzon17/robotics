@@ -343,19 +343,23 @@ class Robot:
         elif(x_actual >= (2*cols)/8 and x_actual <= (3*cols)/8):
             #Primer sector izquierda de 2*cols/8 hasta 3cols/8 (el pequeñito entre el que esta lejos y el del centro)
             v = self.speed_size(blob.size)
-            w = self.w_speed_size(v,10)
+            #w = self.w_speed_size(v,10)
+            w = self.w_speed_size(v,30)
         elif(x_actual >= 0 and x_actual <= (2*cols)/8):
             #Sector mas alejado de la izquierda de [0,(2*cols)/8]
             v = self.speed_size(blob.size)
-            w = self.w_speed_size(v,20)
+            #w = self.w_speed_size(v,20)
+            w = self.w_speed_size(v,40)
         elif(x_actual >= (5*cols)/8 and x_actual <= (6*cols)/8):
             #Primer sector derecha [(5*cols)/8, (6*cols)/8]
             v = self.speed_size(blob.size)
-            w = self.w_speed_size(v,-10)  
+            #w = self.w_speed_size(v,-10)
+            w = self.w_speed_size(v,-30)  
         elif(x_actual > (6*cols)/8 and x_actual <= cols):
             #Sector mas alejado de derecha [(6*cols)/8, cols]
             v = self.speed_size(blob.size)  
-            w = self.w_speed_size(v,-20)
+            #w = self.w_speed_size(v,-20)
+            w = self.w_speed_size(v,-40)
                     
         self.setSpeed(v,w)  
 
