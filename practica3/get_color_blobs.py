@@ -173,7 +173,7 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 while(True):
 	cam = cv2.VideoCapture(0)
 
-	time.sleep(0.1)
+	time.sleep(1)
 
 	_, frame = cam.read()       # Se captura un fotograma
 	blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
