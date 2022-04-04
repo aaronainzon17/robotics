@@ -268,7 +268,7 @@ class Robot:
             if (blob is not None and almost_centered):
                 x_actual = blob.pt[0] # Se obtiene la coordenada x en la que se encuentra 
                 # Si el diametro es mayor que 120 se inica el proceso de catch
-                if blob.size > 120:
+                if blob.size > 120 and not triedCatch:
                     print('Paro porque he encontrado un blob de', blob.size)
                     targetPositionReached = True # Se indica que se ha alcanzado el objeto 
                     #self.setSpeed(0,0) CREO QUE SE PUEDE BORRAR 
@@ -297,7 +297,7 @@ class Robot:
                 print('x es',5*rows/6, 'y el centro ', abs(x_bl - cols/2))
                 
                 # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
-                if (blob.size > 215 and abs(y_bl - 350) > 20) and (abs(x_bl - cols/2) < 20):
+                if (blob.size > 215 and abs(y_bl - 350) < 20) and (abs(x_bl - cols/2) < 20):
                     finished = True
                     print('LO TENGOOO :)')
                     #
