@@ -179,5 +179,6 @@ time.sleep(1)
 while(True):
 	_, frame = cam.read()       # Se captura un fotograma
 	blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
-	print('EL bloob esta en', blob.pt[0], blob.pt[1])
-	print('El tamanyo del blob es', blob.size)
+	if blob is not None:
+		print('EL bloob esta en', blob.pt[0], blob.pt[1])
+		print('El tamanyo del blob es', blob.size)
