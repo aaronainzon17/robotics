@@ -265,7 +265,7 @@ class Robot:
             rows,cols,_ = frame.shape   # Se obtiene el numero de filas y columnas del fotograma 
             
             # Si se ha detectado un blob casi centrado en la imagen
-            if (blob is not None and almost_centered and not triedCatch):
+            if (blob is not None and almost_centered):
                 x_actual = blob.pt[0] # Se obtiene la coordenada x en la que se encuentra 
                 # Si el diametro es mayor que 120 se inica el proceso de catch
                 if blob.size > 120 and not triedCatch:
@@ -275,12 +275,12 @@ class Robot:
 
                 self.trackObjectSpeed(x_actual,cols,blob)  
                   
-            elif not triedCatch:
+            else:
                 mid_img = cols/2 # Se calcula en eje central de la imagen
 
                 # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
                 if (blob is not None):  
-                    last_bloob = blob
+                    #last_bloob = blob
                     self.setSpeed(0,-20) #self.find_ball(last_bloob, 20, mid_img) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
                     # Si se encuentra a 80 pixeles del centro 
                     if abs(blob.pt[0] - mid_img) < 80:
@@ -379,7 +379,7 @@ class Robot:
         self.setSpeed(0, 0)
         w = -42    # Velocidad angular para cerrar las pinzas 
         self.BP.set_motor_dps(self.BP.PORT_A, w)
-        time.sleep(1.7) # Tiempo de cierre de pinzas
+        time.sleep(1.5) # Tiempo de cierre de pinzas
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
 
 
