@@ -310,10 +310,12 @@ class Robot:
 
             # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
             if (blob is not None and triedCatch):
+                _, frame = cam.read()       # Se captura un fotograma
+                blob = getRedBloobs(frame)
                 x_bl,y_bl = [blob.pt[0],blob.pt[1]]
                 print('tengo y en',y_bl, 'y x en',x_bl)
                 #print('x es',5*rows/6, 'y el centro ', abs(x_bl - cols/2))
-                
+
                 # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
                 #if (y_bl > rows/2) and (abs(x_bl - cols/2) < 150):
                 #if blob.size > 200 and (x_bl > 300 and x_bl < 400) and (y_bl >290 and y_bl <390):
