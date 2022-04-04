@@ -73,7 +73,8 @@ class Robot:
         self.lock_odometry = Lock()
 
         # odometry update period
-        self.P = 0.03
+        #self.P = 0.03
+        self.P = 0.1
 
         # Variables de vision 
         
