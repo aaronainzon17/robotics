@@ -297,7 +297,8 @@ class Robot:
                     self.setSpeed(0,-20) #self.find_ball(last_bloob, 20, mid_img) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
                     
                     # Si se encuentra a 80 pixeles del centro 
-                    if abs(blob.pt[0] - mid_img) < 100:
+                    #if abs(blob.pt[0] - mid_img) < 100:
+                    if abs(blob.pt[0] - mid_img) < 10:
                         self.setSpeed(0,0)
                         almost_centered = True # Se indica que el blob esta casi centrado
                 else:
@@ -358,22 +359,26 @@ class Robot:
             #Primer sector izquierda de 2*cols/8 hasta 3cols/8 (el pequeñito entre el que esta lejos y el del centro)
             v = self.speed_size(blob.size)
             #w = self.w_speed_size(v,10)
-            w = self.w_speed_size(v,30)
+            #w = self.w_speed_size(v,30)
+            w = self.w_speed_size(v,0)
         elif(x_actual >= 0 and x_actual <= (2*cols)/8):
             #Sector mas alejado de la izquierda de [0,(2*cols)/8]
             v = self.speed_size(blob.size)
             #w = self.w_speed_size(v,20)
-            w = self.w_speed_size(v,40)
+            #w = self.w_speed_size(v,40)
+            w = self.w_speed_size(v,0)
         elif(x_actual >= (5*cols)/8 and x_actual <= (6*cols)/8):
             #Primer sector derecha [(5*cols)/8, (6*cols)/8]
             v = self.speed_size(blob.size)
             #w = self.w_speed_size(v,-10)
-            w = self.w_speed_size(v,-30)  
+            #w = self.w_speed_size(v,-30)
+            w = self.w_speed_size(v,0)  
         elif(x_actual > (6*cols)/8 and x_actual <= cols):
             #Sector mas alejado de derecha [(6*cols)/8, cols]
             v = self.speed_size(blob.size)  
             #w = self.w_speed_size(v,-20)
-            w = self.w_speed_size(v,-40)
+            #w = self.w_speed_size(v,-40)
+            w = self.w_speed_size(v,0)
                     
         self.setSpeed(v,w)  
 
