@@ -304,7 +304,12 @@ class Robot:
                     print('LO TENGOOO :)')
                 else:
                     print('No se ve la pelota en las pinzas')
+                    print('x',x_bl, ', y', y_bl)
+                    print('blob size', blob.size)
                     triedCatch = False
+                    self.setSpeed(0,0)
+                    cv2.imshow("La foto", frame)
+                    cv2.waitKey(0)
             
             # Si se ha alcanzado la pelota y no se ha capturado previamente
             if targetPositionReached and not finished: 
