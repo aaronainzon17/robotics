@@ -311,8 +311,8 @@ class Robot:
                     almost_centered = False
 
             # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
-            _, frame = cam.read()       # Se captura un fotograma
-            blob = getRedBloobs(frame)
+            # _, frame = cam.read()       # Se captura un fotograma
+            # blob = getRedBloobs(frame)
             if (blob is not None and triedCatch):
                 # _, frame = cam.read()       # Se captura un fotograma
                 # blob = getRedBloobs(frame)
