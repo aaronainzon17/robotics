@@ -268,6 +268,7 @@ class Robot:
             if (blob is not None and almost_centered):
                 x_actual = blob.pt[0] # Se obtiene la coordenada x en la que se encuentra 
                 # Si el diametro es mayor que 175 se inica el proceso de catch
+                print("El tamanyo del blob es ", blob.size)
                 if blob.size > 150 and not triedCatch:
                     print('Paro porque he encontrado un blob de', blob.size)
                     targetPositionReached = True # Se indica que se ha alcanzado el objeto 
