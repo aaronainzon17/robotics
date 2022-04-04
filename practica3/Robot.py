@@ -267,13 +267,13 @@ class Robot:
             # Si se ha detectado un blob casi centrado en la imagen
             if (blob is not None and almost_centered):
                 x_actual = blob.pt[0] # Se obtiene la coordenada x en la que se encuentra 
-                # Si el diametro es mayor que 120 se inica el proceso de catch
-                if blob.size > 120 and not triedCatch:
+                # Si el diametro es mayor que 175 se inica el proceso de catch
+                if blob.size > 175 and not triedCatch:
                     print('Paro porque he encontrado un blob de', blob.size)
                     targetPositionReached = True # Se indica que se ha alcanzado el objeto 
-                    #self.setSpeed(0,0) CREO QUE SE PUEDE BORRAR 
-
-                self.trackObjectSpeed(x_actual,cols,blob)  
+                    self.setSpeed(0,0)
+                else:
+                    self.trackObjectSpeed(x_actual,cols,blob)  
                   
             else:
                 mid_img = cols/2 # Se calcula en eje central de la imagen
@@ -294,7 +294,7 @@ class Robot:
             if (blob is not None and triedCatch):
                 x_bl,y_bl = [blob.pt[0],blob.pt[1]]
                 print('tengo y en',y_bl, 'y x en',x_bl)
-                print('x es',5*rows/6, 'y el centro ', abs(x_bl - cols/2))
+                #print('x es',5*rows/6, 'y el centro ', abs(x_bl - cols/2))
                 
                 # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
                 #if (y_bl > rows/2) and (abs(x_bl - cols/2) < 150):
@@ -373,9 +373,10 @@ class Robot:
     def catch(self):
         w = 40   # Velocidad angular para abrir las pinzas 
         self.BP.set_motor_dps(self.BP.PORT_A, w)
-        time.sleep(1.5) # Tiempo de apertura en movimento 
+        time.sleep(1.5) # Tiempo de apertura 
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
-        time.sleep(0.6) # Resto de acercamiento a la pelota
+        self.setSpeed(60, 0)
+        time.sleep(1) # Resto de acercamiento a la pelota
         self.setSpeed(0, 0)
         w = -42    # Velocidad angular para cerrar las pinzas 
         self.BP.set_motor_dps(self.BP.PORT_A, w)
