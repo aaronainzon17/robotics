@@ -5,6 +5,7 @@
 import cv2
 from cv2 import waitKey
 import numpy as np;
+import time     # import the time library for the sleep function
 #../fotosRobot/pelota_cerca_pero_no_mucho.jpg
 # Read image
 img_BGR = cv2.imread("../fotosRobot/pelota_pinzas.jpg")
@@ -168,4 +169,11 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 
 	#cv2.waitKey(0)
 	#cv2.destroyAllWindows()
-	
+
+while(True):
+	cam = cv2.VideoCapture(0)
+
+	time.sleep(0.1)
+
+	_, frame = cam.read()       # Se captura un fotograma
+	blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
