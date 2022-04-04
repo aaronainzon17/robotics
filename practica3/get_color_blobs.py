@@ -28,12 +28,12 @@ params.maxArea = 15000
 # Filter by Circularity
 # Lo he puesto a false porque sino en pelota_cerca como no es circular porque 
 # las pinzas tapan no detectaba la pelota
-params.filterByCircularity = True 
+params.filterByCircularity = False 
 params.minCircularity = 0.1 # Innecesario porque es false
 
 # Filter by Color
 # No noto al diferencia de ponerlo a true y false 
-params.filterByColor = False
+params.filterByColor = True
 # not directly color, but intensity on the channel input
 params.blobColor = 255 # 255 para brillantes 0 oscuros 
 
