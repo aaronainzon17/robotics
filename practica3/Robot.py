@@ -270,16 +270,16 @@ class Robot:
                 # Si el diametro es mayor que 175 se inica el proceso de catch
                 print("El tamanyo del blob es ", blob.size)
                 #if blob.size > 150 and not triedCatch:
-                if blob.size > 120 and not triedCatch:
+                if blob.size > 120 and not triedCatch :
                     # print('Paro porque he encontrado un blob de', blob.size)
                     # targetPositionReached = True # Se indica que se ha alcanzado el objeto 
                     # self.setSpeed(0,0)
                     #Ajustar un poco para que pueda girar el robot
                     if (x_actual > cols/2 + 20) :
-                        self.setSpeed(0,20)
+                        self.setSpeed(0,-20)
                         time.sleep(1)
                     elif (x_actual < cols/2 - 20):
-                        self.setSpeed(0,-20)
+                        self.setSpeed(0,20)
                         time.sleep(1)
                     print('Paro porque he encontrado un blob de', blob.size)
                     targetPositionReached = True # Se indica que se ha alcanzado el objeto 
