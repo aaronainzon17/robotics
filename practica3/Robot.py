@@ -311,9 +311,11 @@ class Robot:
                     almost_centered = False
 
             # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
+            _, frame = cam.read()       # Se captura un fotograma
+            blob = getRedBloobs(frame)
             if (blob is not None and triedCatch):
-                _, frame = cam.read()       # Se captura un fotograma
-                blob = getRedBloobs(frame)
+                # _, frame = cam.read()       # Se captura un fotograma
+                # blob = getRedBloobs(frame)
                 x_bl,y_bl = [blob.pt[0],blob.pt[1]]
                 print('tengo y en',y_bl, 'y x en',x_bl)
                 #print('x es',5*rows/6, 'y el centro ', abs(x_bl - cols/2))
