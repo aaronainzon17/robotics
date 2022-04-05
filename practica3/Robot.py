@@ -79,7 +79,7 @@ class Robot:
         self.x_b= Value('d', 0)
         self.y_b = Value('d', 0)
         self.size_b = Value('d', 0)
-        self.is_blob = Value('b', 1)
+        self.is_blob = Value('b', False)
 
 
         self.rows = Value('i',0)
