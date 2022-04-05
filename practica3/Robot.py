@@ -452,7 +452,7 @@ class Robot:
         time.sleep(0.1)
         # Se captura una imagen inicial para obtener el tamanyo de la imagen 
         _, frame = cam.read() 
-        rows,cols = frame.shape
+        rows,cols,_ = frame.shape
         self.rows.value = rows
         self.cols.value = cols
         # Proceso concurrente que lee de la camara 
