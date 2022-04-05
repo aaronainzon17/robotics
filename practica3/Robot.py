@@ -274,8 +274,7 @@ class Robot:
         self.pCam.start()
         print("PID: ", self.pCam.pid)
         time.sleep(0.1)
-        while(True):
-            print()
+        time.sleep(40)
         # while not finished:
         #     # Busqueda del blob mas prometedor 
         #     #_, frame = cam.read()       # Se captura un fotograma
