@@ -95,12 +95,15 @@ rawCapture = PiRGBArray(cam, size=(640, 480))
 time.sleep(0.1)
 
 while(True):
-	cam.capture(rawCapture, format="bgr", use_video_port=True)
-	# clear the stream in preparation for the next frame
-	rawCapture.truncate(0)
-	frame = rawCapture.array
-	blob = getBlobs(frame)  # Se devuelve el blob mas grande
+    cam.capture(rawCapture, format="bgr", use_video_port=True)
+    # clear the stream in preparation for the next frame
+    rawCapture.truncate(0)
+    frame = rawCapture.array
+    blob = getBlobs(frame)  # Se devuelve el blob mas grande
 
-	if blob is not None:
-		print('EL bloob esta en', blob.pt[0], blob.pt[1])
-		print('El tamanyo del blob es', blob.size)
+    if blob is not None:
+        print('EL bloob esta en', blob.pt[0], blob.pt[1])
+        print('El tamanyo del blob es', blob.size)
+
+        if (blob.size > 210) and abs(blob.pt[0] - 320) < 50 and (blob.pt[1] > 240):
+            print('Esta en las pinzas')
