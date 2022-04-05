@@ -281,7 +281,7 @@ class Robot:
         
         while not finished:
             # Si se ha detectado un blob casi centrado en la imagen
-            if (self.is_blob.value and almost_centered):
+            if (self.is_blob.value):
                 x_actual = self.x_b.value # Se obtiene la coordenada x en la que se encuentra
 
                 # Si el diametro es mayor que 175 se inica el proceso de catch
@@ -292,26 +292,27 @@ class Robot:
                     self.trackObjectSpeed(x_actual,self.cols.value)  
                   
             else:
-                mid_img = self.cols.value/2 # Se calcula en eje central de la imagen
+                self.setSpeed(0,-40)
+                #mid_img = self.cols.value/2 # Se calcula en eje central de la imagen
 
                 # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
-                if self.is_blob.value:  #Si no es nulo
-                    #last_bloob = blob
-                    self.setSpeed(0,-20) #self.find_ball(last_bloob, 20, mid_img) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
-                    
-                    # #Si se encuentra a 100 pixeles del centro 
-                    if abs(mid_img - self.x_b.value) < 100:
-                        self.setSpeed(0,0)
-                        almost_centered = True # Se indica que el blob esta casi centrado
-                        print("Intentando detectar",self.x_b.value,',',self.y_b.value) 
-                        time.sleep(10)
-                    else:
-                        almost_centered = False
-                    
-                else:
-                    # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
-                    self.setSpeed(0,-40) #self.find_ball(last_bloob, 40, mid_img) # PREV = self.setSpeed(0,-40)
-                    almost_centered = False
+                #if self.is_blob.value:  #Si no es nulo
+                #    #last_bloob = blob
+                #    self.setSpeed(0,-20) #self.find_ball(last_bloob, 20, mid_img) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
+                #    
+                #    # #Si se encuentra a 100 pixeles del centro 
+                #    if abs(mid_img - self.x_b.value) < 100:
+                #        self.setSpeed(0,0)
+                #        almost_centered = True # Se indica que el blob esta casi centrado
+                #        print("Intentando detectar",self.x_b.value,',',self.y_b.value) 
+                #        time.sleep(10)
+                #    else:
+                #        almost_centered = False
+                #    
+                #else:
+                #    # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
+                #    self.setSpeed(0,-40) #self.find_ball(last_bloob, 40, mid_img) # PREV = self.setSpeed(0,-40)
+                #    almost_centered = False
 
             # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
             if self.is_blob.value and triedCatch:
