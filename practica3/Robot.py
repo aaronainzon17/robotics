@@ -79,7 +79,7 @@ class Robot:
         
 
         # Variables de vision 
-        self.x_blob
+        
         
 
     def setSpeed(self, v, w):
