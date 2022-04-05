@@ -361,9 +361,7 @@ class Robot:
         elif(x_actual > (6*cols)/8 and x_actual <= cols):
             #Sector mas alejado de derecha [(6*cols)/8, cols]
             v = self.speed_size(self.size_b.value)  
-            w = self.w_speed_size(v,-20)
-            
-                    
+            w = self.w_speed_size(v,-20)             
         self.setSpeed(v,w)  
 
     # Funcion utilizada para decidir la velocidad lienal de acercamiento 
