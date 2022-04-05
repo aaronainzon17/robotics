@@ -413,6 +413,7 @@ class Robot:
         # Se captura una imagen inicial para obtener el tamanyo de la imagen 
         _, frame = cam.read() 
         rows,cols,_ = frame.shape
+        print(rows,cols)
         self.rows.value = rows
         self.cols.value = cols
         # Proceso concurrente que lee de la camara 
