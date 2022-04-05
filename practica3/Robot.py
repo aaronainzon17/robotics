@@ -275,7 +275,7 @@ class Robot:
         self.pCam = Process(target=self.updateCamara, args=())
         self.pCam.start()
         print("PID: ", self.pCam.pid)
-        time.sleep(0.1)
+        time.sleep(1)
         
         print('Las lienas son', self.rows.value, 'y las columnas', self.cols.value)
         
