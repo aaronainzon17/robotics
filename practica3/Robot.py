@@ -350,9 +350,9 @@ class Robot:
                 #if blob.size > 200 and (x_bl > 300 and x_bl < 400) and (y_bl >290 and y_bl <390):
                 
                 if self.size_b.value > 130:
+                    self.setSpeed(0,0)
                     finished = True
                     print('LO TENGOOO :)')
-                    self.setSpeed(0,0)
                 else:
                     print('No se ve la pelota en las pinzas')
                     print('x',x_bl, ', y', y_bl)
