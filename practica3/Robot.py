@@ -267,8 +267,9 @@ class Robot:
             # Busqueda del blob mas prometedor 
             # _, frame = cam.read()       # Se captura un fotograma
             # blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
-            cam.capture(rawCapture, format="hsv")
+            cam.capture(rawCapture, format="bgr")
             frame = rawCapture.array
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV )
             blob = getRedBloobs(frame)
             
             rows,cols,_ = frame.shape   # Se obtiene el numero de filas y columnas del fotograma 
