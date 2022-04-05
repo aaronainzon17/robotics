@@ -69,7 +69,7 @@ class Robot:
         self.y = Value('d', init_position[1])
         self.th = Value('d', init_position[2])
         # boolean to show if odometry updates are finished
-        self.finished = Value('b', False)
+        self.finished = Value('b', 1)
 
         # if we want to block several instructions to be run together, we may want to use an explicit Lock
         self.lock_odometry = Lock()
@@ -79,7 +79,7 @@ class Robot:
         self.x_b= Value('d', 0)
         self.y_b = Value('d', 0)
         self.size_b = Value('d', 0)
-        self.is_blob = Value('b', False)
+        self.is_blob = Value('b', 1)
 
 
         self.rows = Value('i',0)
@@ -280,16 +280,6 @@ class Robot:
         print('Las lienas son', self.rows.value, 'y las columnas', self.cols.value)
         
         while not finished:
-            # Busqueda del blob mas prometedor 
-            #_, frame = cam.read()       # Se captura un fotograma
-        
-            # cam.capture(rawCapture, format="bgr")
-            # frame = rawCapture.array
-            # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV )
-            # blob = getRedBloobs(frame)
-            
-            #rows,cols,_ = frame.shape   # Se obtiene el numero de filas y columnas del fotograma 
-            
             # Si se ha detectado un blob casi centrado en la imagen
             if (self.is_blob.value and almost_centered):
                 x_actual = self.x_b.value # Se obtiene la coordenada x en la que se encuentra 
@@ -322,34 +312,27 @@ class Robot:
                 # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
                 if (self.is_blob.value):  #Si no es nulo
                     #last_bloob = blob
-                    #self.setSpeed(0,-20) #self.find_ball(last_bloob, 20, mid_img) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
+                    self.setSpeed(0,-20) #self.find_ball(last_bloob, 20, mid_img) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
                     
-                    # Si se encuentra a 80 pixeles del centro 
-                    # if abs(blob.pt[0] - mid_img) < 100:
-                    #     self.setSpeed(0,0)
-                    #     almost_centered = True # Se indica que el blob esta casi centrado
-                    self.trackObjectSpeed(self.x_b.value,self.cols.value)
-                    almost_centered = True
+                    #Si se encuentra a 100 pixeles del centro 
+                    if abs(self.x_b.value - mid_img) < 100:
+                        self.setSpeed(0,0)
+                        almost_centered = True # Se indica que el blob esta casi centrado
+                    #self.trackObjectSpeed(self.x_b.value,self.cols.value)
+                    #almost_centered = True
                 else:
                     # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
                     self.setSpeed(0,-40) #self.find_ball(last_bloob, 40, mid_img) # PREV = self.setSpeed(0,-40)
                     almost_centered = False
 
             # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
-            # _, frame = cam.read()       # Se captura un fotograma
-            # blob = getRedBloobs(frame)
-            if (self.is_blob.value is not None and triedCatch):
-                # _, frame = cam.read()       # Se captura un fotograma
-                # blob = getRedBloobs(frame)
+
+            if (self.is_blob.value and triedCatch):
                 x_bl,y_bl = [self.x_b.value,self.y_b.value]
                 print('tengo y en',y_bl, 'y x en',x_bl)
-                #print('x es',5*rows/6, 'y el centro ', abs(x_bl - cols/2))
 
                 # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
-                #if (y_bl > rows/2) and (abs(x_bl - cols/2) < 150):
-                #if blob.size > 200 and (x_bl > 300 and x_bl < 400) and (y_bl >290 and y_bl <390):
-                
-                if self.size_b.value > 130:
+                if self.size_b.value > 200:
                     self.setSpeed(0,0)
                     finished = True
                     print('LO TENGOOO :)')
@@ -358,10 +341,7 @@ class Robot:
                     print('x',x_bl, ', y', y_bl)
                     print('blob size', self.size_b.value)
                     triedCatch = False
-                    self.setSpeed(0,0)
-                    #cv2.imshow("La foto", frame)
-                    #cv2.waitKey(0)
-                cv2.waitKey(0)
+
             # Si se ha alcanzado la pelota y no se ha capturado previamente
             if targetPositionReached and not finished: 
                 print('Entro a catch')
