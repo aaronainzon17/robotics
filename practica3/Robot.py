@@ -256,7 +256,7 @@ class Robot:
         # Inicializar la camara del robot 
         #cam = cv2.VideoCapture(0)
         cam = picamera.PiCamera()
-        #cam.resolution=(600,600)
+        cam.resolution=(640,480)
         #cam.framerate=32
         rawCapture = PiRGBArray(cam)
         
