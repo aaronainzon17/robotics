@@ -281,7 +281,7 @@ class Robot:
                         self.setSpeed(0,-25)
                         time.sleep(1)
                     elif (x_actual < cols/2 - 40):
-                        self.setSpeed(25)
+                        self.setSpeed(0,25)
                         time.sleep(1)
 
                     print('Paro porque he encontrado un blob de', blob.size)
