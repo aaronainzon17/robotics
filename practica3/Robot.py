@@ -350,15 +350,15 @@ class Robot:
     # Funcion utilizada para decidir la velocidad lienal de acercamiento 
     # hacia la pelota en funcion de su tamanyo
     def speed_size(self,size):
-        if (size < 80):
+        if (size < 100):
             return 150
         else:
-            return 60   
+            return 100   
     
     # Funcion utilizada para decidir la velocidad angular de acercamiento 
     # hacia la pelota en funcion de su tamanyo
     def w_speed_size(self,v,expected_w):
-        if (v < 60):
+        if (v < 100):
             return expected_w
         else:
             return expected_w/2 
