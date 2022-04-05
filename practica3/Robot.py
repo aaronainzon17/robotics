@@ -309,7 +309,7 @@ class Robot:
                         self.setSpeed(0,20)
                         time.sleep(1)
 
-                    print('Paro porque he encontrado un blob de', self.size.value)
+                    print('Paro porque he encontrado un blob de', self.size_b.value)
                     targetPositionReached = True # Se indica que se ha alcanzado el objeto 
                     self.setSpeed(0,0)
 
