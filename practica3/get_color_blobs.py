@@ -6,6 +6,8 @@ import cv2
 from cv2 import waitKey
 import numpy as np;
 import time     # import the time library for the sleep function
+import picamera
+from picamera.array import PiRGBArray
 #../fotosRobot/pelota_cerca_pero_no_mucho.jpg
 # Read image
 img_BGR = cv2.imread("../fotosRobot/pelota_pinzas.jpg")
@@ -28,7 +30,7 @@ params.maxArea = 150000
 # Filter by Circularity
 # Lo he puesto a false porque sino en pelota_cerca como no es circular porque 
 # las pinzas tapan no detectaba la pelota
-params.filterByCircularity = False 
+params.filterByCircularity = True 
 params.minCircularity = 0.1 # Innecesario porque es false
 
 # Filter by Color
@@ -173,12 +175,20 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 	#cv2.destroyAllWindows()
 
 
-#cam = cv2.VideoCapture(0)
-#time.sleep(1)
-#
-#while(True):
-#	_, frame = cam.read()       # Se captura un fotograma
-#	blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
-#	if blob is not None:
-#		print('EL bloob esta en', blob.pt[0], blob.pt[1])
-#		print('El tamanyo del blob es', blob.size)
+cam = picamera.PiCamera()
+cam.resolution = (640,480)
+cam.framerate = 32 
+rawCapture = PiRGBArray(cam, size=(640, 480))
+
+time.sleep(0.1)
+
+while(True):
+	cam.capture(rawCapture, format="bgr", use_video_port=True)
+	# clear the stream in preparation for the next frame
+	rawCapture.truncate(0)
+	frame = rawCapture.array
+	blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
+
+	if blob is not None:
+		print('EL bloob esta en', blob.pt[0], blob.pt[1])
+		print('El tamanyo del blob es', blob.size)
