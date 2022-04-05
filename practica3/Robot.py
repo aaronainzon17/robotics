@@ -276,7 +276,8 @@ class Robot:
         self.pCam.start()
         print("PID: ", self.pCam.pid)
         time.sleep(0.1)
-        #time.sleep(40)
+        
+        print('Las lienas son', self.rows.value, 'y las columnas', self.cols.value)
         
         while not finished:
             # Busqueda del blob mas prometedor 
@@ -462,7 +463,7 @@ class Robot:
             if blob is not None:
                 self.x_b.value = blob.pt[0]
                 self.y_b.value = blob.pt[1]
-                self.size_b = blob.size 
+                self.size_b.value = blob.size 
                 self.is_blob.value = True
             else:
                 self.is_blob.value = False
