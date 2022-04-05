@@ -408,6 +408,7 @@ class Robot:
         time.sleep(1.5) # Tiempo de cierre de pinzas
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
 
+    """
     def updateCamara(self):
         cam = cv2.VideoCapture(0)
         time.sleep(0.1)
@@ -420,6 +421,34 @@ class Robot:
         # Proceso concurrente que lee de la camara 
         while not self.finished.value:
             _, frame = cam.read()       # Se captura un fotograma
+            blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
+            
+            if blob is not None:
+                self.x_b.value = blob.pt[0]
+                self.y_b.value = blob.pt[1]
+                self.size_b.value = blob.size 
+                self.is_blob.value = True
+            else:
+                self.is_blob.value = False
+    """
+    
+    
+    def updateCamara(self):
+        
+        cam = picamera.PiCamera()
+        cam.resolution = (640,480)
+        cam.framerate = 32 
+        rawCapture = PiRGBArray(cam, size=(640, 480))
+        
+        time.sleep(0.1)
+        # Se captura una imagen inicial para obtener el tamanyo de la imagen 
+        
+        self.rows.value = 480
+        self.cols.value = 640
+        # Proceso concurrente que lee de la camara 
+        while not self.finished.value:
+            img = cam.capture(rawCapture, format="bgr", use_video_port=True)
+            frame = img.array
             blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
             
             if blob is not None:
