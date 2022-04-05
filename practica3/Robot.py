@@ -257,19 +257,6 @@ class Robot:
         finished = False
         triedCatch = False
         targetPositionReached = False
-        almost_centered = False
-        last_bloob = None # Se alamcena la ultima imagen en la que aparece un bloob 
-        
-        # Inicializar la camara del robot 
-        #cam = cv2.VideoCapture(0)
-
-        # cam = picamera.PiCamera()
-        # cam.resolution=(640,480)
-        # cam.framerate=32
-        # rawCapture = PiRGBArray(cam)
-        
-        # Inicializacion de la camara
-        #Se pone el sleep aqui porque como el otro es proceso concurrente van a la vez
 
         #Se inicia el proces concurrente que lee la camara
         self.pCam = Process(target=self.updateCamara, args=())
@@ -284,7 +271,7 @@ class Robot:
             if (self.is_blob.value):
                 x_actual = self.x_b.value # Se obtiene la coordenada x en la que se encuentra
 
-                # Si el diametro es mayor que 175 se inica el proceso de catch
+                # Si el diametro es mayor que 120 se inica el proceso de catch
                 if self.size_b.value > 120 and not triedCatch :
                     targetPositionReached = True # Se indica que se ha alcanzado el objeto 
                     self.setSpeed(0,0)
@@ -292,8 +279,9 @@ class Robot:
                     self.trackObjectSpeed(x_actual,self.cols.value)  
                   
             else:
+                # En caso en el que la pelota desaparezca de la imagen se inicia busqueda
                 self.find_ball(80)
-                #self.setSpeed(0,-100)
+                
 
             # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
             if self.is_blob.value and triedCatch:
