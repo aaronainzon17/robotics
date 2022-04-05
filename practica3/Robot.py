@@ -444,8 +444,4 @@ class Robot:
         time.sleep(1.5) # Tiempo de cierre de pinzas
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
 
-    def leerCamara(self):
-
-        while(not self.finished):
-
 
