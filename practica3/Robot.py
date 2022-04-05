@@ -448,6 +448,9 @@ class Robot:
         # Proceso concurrente que lee de la camara 
         while not self.finished.value:
             cam.capture(rawCapture, format="bgr", use_video_port=True)
+            # clear the stream in preparation for the next frame
+            rawCapture.truncate(0)
+
             frame = rawCapture.array
             blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
             
