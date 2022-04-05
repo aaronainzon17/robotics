@@ -367,11 +367,8 @@ class Robot:
     # por defecto rotacion hacia la derecha 
     def find_ball(self, vel):
         mid_img = self.cols.value/2
-        if self.is_blob.value:
-            if self.x_b.value < mid_img:
-                self.setSpeed(0, vel)
-            else:
-                self.setSpeed(0,-vel)
+        if self.x_b.value < mid_img:
+            self.setSpeed(0, vel)
         else:
             self.setSpeed(0,-vel)
 
