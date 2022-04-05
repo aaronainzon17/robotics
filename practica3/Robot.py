@@ -292,7 +292,8 @@ class Robot:
                     self.trackObjectSpeed(x_actual,self.cols.value)  
                   
             else:
-                self.setSpeed(0,-100)
+                self.find_ball(100)
+                #self.setSpeed(0,-100)
 
             # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
             if self.is_blob.value and triedCatch:
@@ -364,10 +365,10 @@ class Robot:
     
     # Funcion utilizada para decidir el lado de rotacion
     # por defecto rotacion hacia la derecha 
-    def find_ball(self, last_blob, vel, mid_img):
-        if last_blob is not None:
-            x_lb = last_blob.pt[0]
-            if x_lb < mid_img:
+    def find_ball(self, vel):
+        mid_img = self.cols.value/2
+        if self.is_blob.value:
+            if self.x_b.value < mid_img:
                 self.setSpeed(0, vel)
             else:
                 self.setSpeed(0,-vel)
