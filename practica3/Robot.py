@@ -447,8 +447,7 @@ class Robot:
         self.cols.value = 640
         # Proceso concurrente que lee de la camara 
         while not self.finished.value:
-            img = cam.capture(rawCapture, format="bgr", use_video_port=True)
-            frame = img.array
+            frame = cam.capture(rawCapture, format="bgr", use_video_port=True)
             blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
             
             if blob is not None:
