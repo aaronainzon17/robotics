@@ -287,22 +287,9 @@ class Robot:
                 print("El tamanyo del blob es ", self.size_b.value)
                 #if blob.size > 150 and not triedCatch:
                 if self.size_b.value > 120 and not triedCatch :
-                    # print('Paro porque he encontrado un blob de', blob.size)
-                    # targetPositionReached = True # Se indica que se ha alcanzado el objeto 
-                    # self.setSpeed(0,0)
-
-                    #Ajustar un poco para que pueda girar el robot
-                    # if (x_actual > self.cols.value/2 + 40) :
-                    #     self.setSpeed(0,-20)
-                    #     time.sleep(1)
-                    # elif (x_actual < self.cols.value/2 - 40):
-                    #     self.setSpeed(0,20)
-                    #     time.sleep(1)
-
                     print('Paro porque he encontrado un blob de', self.size_b.value)
                     targetPositionReached = True # Se indica que se ha alcanzado el objeto 
                     self.setSpeed(0,0)
-
                 else:
                     self.trackObjectSpeed(x_actual,self.cols.value)  
                   
@@ -310,24 +297,22 @@ class Robot:
                 mid_img = self.cols.value/2 # Se calcula en eje central de la imagen
 
                 # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
-                if (self.is_blob.value):  #Si no es nulo
+                if self.is_blob.value:  #Si no es nulo
                     #last_bloob = blob
                     # self.setSpeed(0,-20) #self.find_ball(last_bloob, 20, mid_img) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
                     
                     # #Si se encuentra a 100 pixeles del centro 
-                    # if abs(self.x_b.value - mid_img) < 100:
-                    #     self.setSpeed(0,0)
-                    #     almost_centered = True # Se indica que el blob esta casi centrado
-                    self.trackObjectSpeed(self.x_b.value,self.cols.value)
-                    almost_centered = True
+                    if abs(self.x_b.value - mid_img) < 100:
+                        self.setSpeed(0,0)
+                        almost_centered = True # Se indica que el blob esta casi centrado
+                    
                 else:
                     # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
                     self.setSpeed(0,-40) #self.find_ball(last_bloob, 40, mid_img) # PREV = self.setSpeed(0,-40)
                     almost_centered = False
 
             # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
-
-            if (self.is_blob.value and triedCatch):
+            if self.is_blob.value and triedCatch:
                 x_bl,y_bl = [self.x_b.value,self.y_b.value]
                 print('tengo y en',y_bl, 'y x en',x_bl)
 
@@ -335,7 +320,7 @@ class Robot:
                 if self.size_b.value > 220:
                     self.setSpeed(0,0)
                     finished = True
-                    print('LO TENGOOO :)')
+                    print('LO TENGOOO ')
                     self.setSpeed(150,15)
                     time.sleep(4)
                 else:
@@ -364,27 +349,20 @@ class Robot:
         elif(x_actual >= (2*cols)/8 and x_actual <= (3*cols)/8):
             #Primer sector izquierda de 2*cols/8 hasta 3cols/8 (el pequeñito entre el que esta lejos y el del centro)
             v = self.speed_size(self.size_b.value)
-            #w = self.w_speed_size(v,10)
-            w = self.w_speed_size(v,30)
-            #w = self.w_speed_size(v,0)
+            w = self.w_speed_size(v,10)
         elif(x_actual >= 0 and x_actual <= (2*cols)/8):
             #Sector mas alejado de la izquierda de [0,(2*cols)/8]
             v = self.speed_size(self.size_b.value)
-            #w = self.w_speed_size(v,20)
-            w = self.w_speed_size(v,40)
-            #w = self.w_speed_size(v,0)
+            w = self.w_speed_size(v,20)         
         elif(x_actual >= (5*cols)/8 and x_actual <= (6*cols)/8):
             #Primer sector derecha [(5*cols)/8, (6*cols)/8]
             v = self.speed_size(self.size_b.value)
-            #w = self.w_speed_size(v,-10)
-            w = self.w_speed_size(v,-30)
-            #w = self.w_speed_size(v,0)  
+            w = self.w_speed_size(v,-10)   
         elif(x_actual > (6*cols)/8 and x_actual <= cols):
             #Sector mas alejado de derecha [(6*cols)/8, cols]
             v = self.speed_size(self.size_b.value)  
-            #w = self.w_speed_size(v,-20)
-            w = self.w_speed_size(v,-40)
-            #w = self.w_speed_size(v,0)
+            w = self.w_speed_size(v,-20)
+            
                     
         self.setSpeed(v,w)  
 
