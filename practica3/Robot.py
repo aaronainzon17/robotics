@@ -459,6 +459,7 @@ class Robot:
         while not self.finished.value:
             _, frame = cam.read()       # Se captura un fotograma
             blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
-            self.x_b.value = blob.pt[0]
-            self.y_b.value = blob.pt[1]
-            self.size_b = blob.size 
+            if blob is not None:
+                self.x_b.value = blob.pt[0]
+                self.y_b.value = blob.pt[1]
+                self.size_b = blob.size 
