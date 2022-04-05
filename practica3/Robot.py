@@ -272,12 +272,11 @@ class Robot:
                 x_actual = self.x_b.value # Se obtiene la coordenada x en la que se encuentra
 
                 # Si el diametro es mayor que 120 se inica el proceso de catch
-                if self.size_b.value > 120 and not triedCatch :
+                if self.size_b.value > 150 and not triedCatch :
                     targetPositionReached = True # Se indica que se ha alcanzado el objeto 
                     self.setSpeed(0,0)
                 else:
                     self.trackObjectSpeed(x_actual,self.cols.value)  
-                  
             else:
                 # En caso en el que la pelota desaparezca de la imagen se inicia busqueda
                 self.find_ball(80)
@@ -313,7 +312,11 @@ class Robot:
     # en funcion de donde se encuenta la pelota en la imagen  
     def trackObjectSpeed(self,x_actual,cols):
         #Se divide la imagen en 8 sectores verticales y en funcion del que se encuentre la pelota se aplica una velocidad u otra
-        if((x_actual > (3*cols)/8) and x_actual <= cols/2) or (x_actual >= cols/2 and x_actual<= (5*cols)/8):
+        if self.size_b.value > 120 and (self.x_b.value - cols/2) > 50:
+            self.setSpeed(0,-10)
+        elif self.size_b.value > 120 and (self.x_b.value - cols/2) > -50:
+             self.setSpeed(0,10)
+        elif((x_actual > (3*cols)/8) and x_actual <= cols/2) or (x_actual >= cols/2 and x_actual<= (5*cols)/8):
             #Sector central [(3*cols)/8,(5*cols)/8]
             w = 0
             v = self.speed_size(self.size_b.value)
