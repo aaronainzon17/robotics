@@ -163,9 +163,9 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 
 	#cv2.imshow('Capture', im_with_keypoints)
 
-	cv2.startWindowThread()
-	cv2.namedWindow("Capture")
-	cv2.imshow("Capture", im_with_keypoints)
+	#cv2.startWindowThread()
+	#cv2.namedWindow("Capture")
+	#cv2.imshow("Capture", im_with_keypoints)
 
 	#cv2.waitKey(0)
 	return biggest
@@ -174,7 +174,7 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 	#cv2.waitKey(0)
 	#cv2.destroyAllWindows()
 
-
+"""
 cam = picamera.PiCamera()
 cam.resolution = (640,480)
 cam.framerate = 32 
@@ -192,4 +192,4 @@ while(True):
 	if blob is not None:
 		print('EL bloob esta en', blob.pt[0], blob.pt[1])
 		print('El tamanyo del blob es', blob.size)
-
+"""
