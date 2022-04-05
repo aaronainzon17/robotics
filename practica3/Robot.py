@@ -76,9 +76,9 @@ class Robot:
 
         # odometry update period
         self.P = 0.03
-        self.x_b= Value('d', None)
-        self.y_b = Value('d', None)
-        self.size_b = Value('d', None)
+        self.x_b= Value('f', None)
+        self.y_b = Value('f', None)
+        self.size_b = Value('f', None)
 
         self.rows = Value('i',0)
         self.cols = Value('i',0)
