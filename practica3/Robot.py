@@ -336,6 +336,8 @@ class Robot:
                     self.setSpeed(0,0)
                     finished = True
                     print('LO TENGOOO :)')
+                    self.setSpeed(150,15)
+                    time.sleep(4)
                 else:
                     print('No se ve la pelota en las pinzas')
                     print('x',x_bl, ', y', y_bl)
