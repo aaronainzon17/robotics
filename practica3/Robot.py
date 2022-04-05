@@ -352,6 +352,7 @@ class Robot:
                 if self.size_b.value > 130:
                     finished = True
                     print('LO TENGOOO :)')
+                    self.setSpeed(0,0)
                 else:
                     print('No se ve la pelota en las pinzas')
                     print('x',x_bl, ', y', y_bl)
