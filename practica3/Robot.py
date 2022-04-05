@@ -76,7 +76,9 @@ class Robot:
 
         # odometry update period
         self.P = 0.03
-        
+        self.biggest_blob = Value(None, None)
+        self.rows = Value('i',0)
+        self.cols = Value('i',0)
 
         # Variables de vision 
         
@@ -255,118 +257,114 @@ class Robot:
         
         # Inicializar la camara del robot 
         #cam = cv2.VideoCapture(0)
-        cam = picamera.PiCamera()
-        cam.resolution=(640,480)
-        #cam.framerate=32
-        rawCapture = PiRGBArray(cam)
+
+        # cam = picamera.PiCamera()
+        # cam.resolution=(640,480)
+        # cam.framerate=32
+        # rawCapture = PiRGBArray(cam)
         
         # Inicializacion de la camara
+        #Se pone el sleep aqui porque como el otro es proceso concurrente van a la vez
+
+        #Se inicia el proces concurrente que lee la camara
+        self.pCam = Process(target=self.updateCamara, args=())
+        self.pCam.start()
+        print("PID: ", self.pCam.pid)
         time.sleep(0.1)
         
-        while not finished:
-            # Busqueda del blob mas prometedor 
-            # _, frame = cam.read()       # Se captura un fotograma
-            # blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
-            cam.capture(rawCapture, format="bgr")
-            frame = rawCapture.array
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV )
-            blob = getRedBloobs(frame)
+        # while not finished:
+        #     # Busqueda del blob mas prometedor 
+        #     #_, frame = cam.read()       # Se captura un fotograma
+        #     blob = self.biggest_blob.value  # Se devuelve el blob mas grande
+        #     # cam.capture(rawCapture, format="bgr")
+        #     # frame = rawCapture.array
+        #     # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV )
+        #     # blob = getRedBloobs(frame)
             
-            rows,cols,_ = frame.shape   # Se obtiene el numero de filas y columnas del fotograma 
+        #     #rows,cols,_ = frame.shape   # Se obtiene el numero de filas y columnas del fotograma 
             
-            # Si se ha detectado un blob casi centrado en la imagen
-            if (blob is not None and almost_centered):
-                x_actual = blob.pt[0] # Se obtiene la coordenada x en la que se encuentra 
-                # Si el diametro es mayor que 175 se inica el proceso de catch
-                print("El tamanyo del blob es ", blob.size)
-                #if blob.size > 150 and not triedCatch:
-                if blob.size > 120 and not triedCatch :
-                    # print('Paro porque he encontrado un blob de', blob.size)
-                    # targetPositionReached = True # Se indica que se ha alcanzado el objeto 
-                    # self.setSpeed(0,0)
+        #     # Si se ha detectado un blob casi centrado en la imagen
+        #     if (blob is not None and almost_centered):
+        #         x_actual = blob.pt[0] # Se obtiene la coordenada x en la que se encuentra 
+        #         # Si el diametro es mayor que 175 se inica el proceso de catch
+        #         print("El tamanyo del blob es ", blob.size)
+        #         #if blob.size > 150 and not triedCatch:
+        #         if blob.size > 120 and not triedCatch :
+        #             # print('Paro porque he encontrado un blob de', blob.size)
+        #             # targetPositionReached = True # Se indica que se ha alcanzado el objeto 
+        #             # self.setSpeed(0,0)
 
-                    #Ajustar un poco para que pueda girar el robot
-                    if (x_actual > cols/2 + 40) :
-                        self.setSpeed(0,-20)
-                        time.sleep(1)
-                    elif (x_actual < cols/2 - 40):
-                        self.setSpeed(0,20)
-                        time.sleep(1)
+        #             #Ajustar un poco para que pueda girar el robot
+        #             if (x_actual > cols/2 + 40) :
+        #                 self.setSpeed(0,-20)
+        #                 time.sleep(1)
+        #             elif (x_actual < cols/2 - 40):
+        #                 self.setSpeed(0,20)
+        #                 time.sleep(1)
 
-                    print('Paro porque he encontrado un blob de', blob.size)
-                    targetPositionReached = True # Se indica que se ha alcanzado el objeto 
-                    self.setSpeed(0,0)
+        #             print('Paro porque he encontrado un blob de', blob.size)
+        #             targetPositionReached = True # Se indica que se ha alcanzado el objeto 
+        #             self.setSpeed(0,0)
 
-                else:
-                    self.trackObjectSpeed(x_actual,cols,blob)  
+        #         else:
+        #             self.trackObjectSpeed(x_actual,cols,blob)  
                   
-            else:
-                mid_img = cols/2 # Se calcula en eje central de la imagen
+        #     else:
+        #         mid_img = cols/2 # Se calcula en eje central de la imagen
 
-                # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
-                if (blob is not None):  
-                    #last_bloob = blob
-                    #self.setSpeed(0,-20) #self.find_ball(last_bloob, 20, mid_img) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
+        #         # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
+        #         if (blob is not None):  
+        #             #last_bloob = blob
+        #             #self.setSpeed(0,-20) #self.find_ball(last_bloob, 20, mid_img) # Se ralentiza el giro PREV: self.setSpeed(0,-20)
                     
-                    # Si se encuentra a 80 pixeles del centro 
-                    # if abs(blob.pt[0] - mid_img) < 100:
-                    #     self.setSpeed(0,0)
-                    #     almost_centered = True # Se indica que el blob esta casi centrado
-                    self.trackObjectSpeed(blob.pt[0],cols,blob)
-                    almost_centered = True
-                else:
-                    # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
-                    self.setSpeed(0,-40) #self.find_ball(last_bloob, 40, mid_img) # PREV = self.setSpeed(0,-40)
-                    almost_centered = False
+        #             # Si se encuentra a 80 pixeles del centro 
+        #             # if abs(blob.pt[0] - mid_img) < 100:
+        #             #     self.setSpeed(0,0)
+        #             #     almost_centered = True # Se indica que el blob esta casi centrado
+        #             self.trackObjectSpeed(blob.pt[0],cols,blob)
+        #             almost_centered = True
+        #         else:
+        #             # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
+        #             self.setSpeed(0,-40) #self.find_ball(last_bloob, 40, mid_img) # PREV = self.setSpeed(0,-40)
+        #             almost_centered = False
 
-            # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
-            # _, frame = cam.read()       # Se captura un fotograma
-            # blob = getRedBloobs(frame)
-            if (blob is not None and triedCatch):
-                # _, frame = cam.read()       # Se captura un fotograma
-                # blob = getRedBloobs(frame)
-                x_bl,y_bl = [blob.pt[0],blob.pt[1]]
-                print('tengo y en',y_bl, 'y x en',x_bl)
-                #print('x es',5*rows/6, 'y el centro ', abs(x_bl - cols/2))
+        #     # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
+        #     # _, frame = cam.read()       # Se captura un fotograma
+        #     # blob = getRedBloobs(frame)
+        #     if (blob is not None and triedCatch):
+        #         # _, frame = cam.read()       # Se captura un fotograma
+        #         # blob = getRedBloobs(frame)
+        #         x_bl,y_bl = [blob.pt[0],blob.pt[1]]
+        #         print('tengo y en',y_bl, 'y x en',x_bl)
+        #         #print('x es',5*rows/6, 'y el centro ', abs(x_bl - cols/2))
 
-                # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
-                #if (y_bl > rows/2) and (abs(x_bl - cols/2) < 150):
-                #if blob.size > 200 and (x_bl > 300 and x_bl < 400) and (y_bl >290 and y_bl <390):
-                cv2.startWindowThread()
-                cv2.namedWindow("Capture")
-                cv2.imshow("Capture", frame)
+        #         # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
+        #         #if (y_bl > rows/2) and (abs(x_bl - cols/2) < 150):
+        #         #if blob.size > 200 and (x_bl > 300 and x_bl < 400) and (y_bl >290 and y_bl <390):
+        #         cv2.startWindowThread()
+        #         cv2.namedWindow("Capture")
+        #         cv2.imshow("Capture", frame)
                 
-                if blob.size > 130:
-                    finished = True
-                    print('LO TENGOOO :)')
-                else:
-                    print('No se ve la pelota en las pinzas')
-                    print('x',x_bl, ', y', y_bl)
-                    print('blob size', blob.size)
-                    triedCatch = False
-                    self.setSpeed(0,0)
-                    #cv2.imshow("La foto", frame)
-                    #cv2.waitKey(0)
-                cv2.waitKey(0)
-            # Si se ha alcanzado la pelota y no se ha capturado previamente
-            if targetPositionReached and not finished: 
-                print('Entro a catch')
-                w = 40   # Velocidad angular para abrir las pinzas 
-                self.BP.set_motor_dps(self.BP.PORT_A, w)
-                time.sleep(1.5) # Tiempo de apertura 
-                self.BP.set_motor_dps(self.BP.PORT_A, 0)
-                self.setSpeed(60, 0)
-                time.sleep(1.5) # Resto de acercamiento a la pelota
-                self.setSpeed(0, 0)
-                w = -42    # Velocidad angular para cerrar las pinzas 
-                self.BP.set_motor_dps(self.BP.PORT_A, w)
-                time.sleep(1.5) # Tiempo de cierre de pinzas
-                self.BP.set_motor_dps(self.BP.PORT_A, 0)
-                #self.catch() # Se inicia el proceso de captura 
-                targetPositionReached = False
-                triedCatch = True
+        #         if blob.size > 130:
+        #             finished = True
+        #             print('LO TENGOOO :)')
+        #         else:
+        #             print('No se ve la pelota en las pinzas')
+        #             print('x',x_bl, ', y', y_bl)
+        #             print('blob size', blob.size)
+        #             triedCatch = False
+        #             self.setSpeed(0,0)
+        #             #cv2.imshow("La foto", frame)
+        #             #cv2.waitKey(0)
+        #         cv2.waitKey(0)
+        #     # Si se ha alcanzado la pelota y no se ha capturado previamente
+        #     if targetPositionReached and not finished: 
+        #         print('Entro a catch')
+        #         self.catch() # Se inicia el proceso de captura 
+        #         targetPositionReached = False
+        #         triedCatch = True
                    
-        return finished
+        # return finished
     
     # Funcion utilizada para decidir la velocidad y direccion del robot
     # en funcion de donde se encuenta la pelota en la imagen  
@@ -445,4 +443,15 @@ class Robot:
         time.sleep(1.5) # Tiempo de cierre de pinzas
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
 
-
+    def updateCamara(self):
+        cam = cv2.VideoCapture(0)
+        time.sleep(0.1)
+        # Se captura una imagen inicial para obtener el tamanyo de la imagen 
+        _, frame = cam.read() 
+        self.rows.value, self.cols.value = frame.shape
+        
+        # Proceso concurrente que lee de la camara 
+        while not self.finished.value:
+            _, frame = cam.read()       # Se captura un fotograma
+            
+            self.biggest_blob.value = getRedBloobs(frame)  # Se devuelve el blob mas grande
