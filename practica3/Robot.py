@@ -323,6 +323,10 @@ class Robot:
                 # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
                 #if (y_bl > rows/2) and (abs(x_bl - cols/2) < 150):
                 #if blob.size > 200 and (x_bl > 300 and x_bl < 400) and (y_bl >290 and y_bl <390):
+                cv2.startWindowThread()
+                cv2.namedWindow("Capture")
+                cv2.imshow("Capture", frame)
+                
                 if blob.size > 130:
                     finished = True
                     print('LO TENGOOO :)')
@@ -334,7 +338,7 @@ class Robot:
                     self.setSpeed(0,0)
                     #cv2.imshow("La foto", frame)
                     #cv2.waitKey(0)
-            
+                cv2.waitKey(0)
             # Si se ha alcanzado la pelota y no se ha capturado previamente
             if targetPositionReached and not finished: 
                 print('Entro a catch')
