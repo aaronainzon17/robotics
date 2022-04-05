@@ -69,14 +69,17 @@ class Robot:
         self.y = Value('d', init_position[1])
         self.th = Value('d', init_position[2])
         # boolean to show if odometry updates are finished
-        self.finished = Value('b', 1)
+        self.finished = Value('b', False)
 
         # if we want to block several instructions to be run together, we may want to use an explicit Lock
         self.lock_odometry = Lock()
 
         # odometry update period
         self.P = 0.03
-        self.biggest_blob = Value(None, None)
+        self.x_b= Value('d', None)
+        self.y_b = Value('d', None)
+        self.size_b = Value('d', None)
+
         self.rows = Value('i',0)
         self.cols = Value('i',0)
 
@@ -271,7 +274,8 @@ class Robot:
         self.pCam.start()
         print("PID: ", self.pCam.pid)
         time.sleep(0.1)
-        
+        time.sleep(20)
+        self.finished.value = True 
         # while not finished:
         #     # Busqueda del blob mas prometedor 
         #     #_, frame = cam.read()       # Se captura un fotograma
@@ -453,5 +457,7 @@ class Robot:
         # Proceso concurrente que lee de la camara 
         while not self.finished.value:
             _, frame = cam.read()       # Se captura un fotograma
-            
-            self.biggest_blob.value = getRedBloobs(frame)  # Se devuelve el blob mas grande
+            blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
+            self.x_b.value = blob.pt[0]
+            self.y_b.value = blob.pt[1]
+            self.size_b = blob.size 
