@@ -292,7 +292,7 @@ class Robot:
                     self.trackObjectSpeed(x_actual,self.cols.value)  
                   
             else:
-                self.setSpeed(0,-40)
+                self.setSpeed(0,-100)
                 #mid_img = self.cols.value/2 # Se calcula en eje central de la imagen
 
                 # Si se ha encontrado la pelota en la imagen se ralentiza el giro hasta centrarla
