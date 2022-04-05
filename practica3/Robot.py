@@ -282,12 +282,10 @@ class Robot:
         while not finished:
             # Si se ha detectado un blob casi centrado en la imagen
             if (self.is_blob.value and almost_centered):
-                x_actual = self.x_b.value # Se obtiene la coordenada x en la que se encuentra 
+                x_actual = self.x_b.value # Se obtiene la coordenada x en la que se encuentra
+
                 # Si el diametro es mayor que 175 se inica el proceso de catch
-                print("El tamanyo del blob es ", self.size_b.value)
-                #if blob.size > 150 and not triedCatch:
                 if self.size_b.value > 120 and not triedCatch :
-                    print('Paro porque he encontrado un blob de', self.size_b.value)
                     targetPositionReached = True # Se indica que se ha alcanzado el objeto 
                     self.setSpeed(0,0)
                 else:
@@ -305,6 +303,7 @@ class Robot:
                     if abs(self.x_b.value - mid_img) < 100:
                         self.setSpeed(0,0)
                         almost_centered = True # Se indica que el blob esta casi centrado
+                        print("Intentando detectar",self.x_b.value,',',self.y_b.value) 
                         time.sleep(10)
                     else:
                         almost_centered = False
@@ -317,7 +316,6 @@ class Robot:
             # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
             if self.is_blob.value and triedCatch:
                 x_bl,y_bl = [self.x_b.value,self.y_b.value]
-                print('tengo y en',y_bl, 'y x en',x_bl)
 
                 # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
                 if self.size_b.value > 220:
