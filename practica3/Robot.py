@@ -292,7 +292,7 @@ class Robot:
                     self.trackObjectSpeed(x_actual,self.cols.value)  
                   
             else:
-                self.find_ball(100)
+                self.find_ball(80)
                 #self.setSpeed(0,-100)
 
             # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
@@ -304,8 +304,8 @@ class Robot:
                     self.setSpeed(0,0)
                     finished = True
                     print('LO TENGOOO ')
-                    self.setSpeed(150,15)
-                    time.sleep(4)
+                    #self.setSpeed(150,15)
+                    #time.sleep(4)
                 else:
                     print('No se ve la pelota en las pinzas')
                     print('x',x_bl, ', y', y_bl)
