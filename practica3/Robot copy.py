@@ -12,8 +12,6 @@ import numpy as np
 import math
 import os
 import cv2
-import picamera
-from picamera.array import PiRGBArray
 
 # tambien se podria utilizar el paquete de threading
 from multiprocessing import Process, Value, Array, Lock
@@ -254,22 +252,17 @@ class Robot:
         last_bloob = None # Se alamcena la ultima imagen en la que aparece un bloob 
         
         # Inicializar la camara del robot 
-        #cam = cv2.VideoCapture(0)
-        cam = picamera.PiCamera()
-        #cam.resolution=(600,600)
-        #cam.framerate=32
-        rawCapture = PiRGBArray(cam)
+        cam = cv2.VideoCapture(0)
+        #cam.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+        #cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
         
         # Inicializacion de la camara
         time.sleep(0.1)
         
         while not finished:
             # Busqueda del blob mas prometedor 
-            # _, frame = cam.read()       # Se captura un fotograma
-            # blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
-            cam.capture(rawCapture, format="hsv")
-            frame = rawCapture.array
-            blob = getRedBloobs(frame)
+            _, frame = cam.read()       # Se captura un fotograma
+            blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
             
             rows,cols,_ = frame.shape   # Se obtiene el numero de filas y columnas del fotograma 
             
