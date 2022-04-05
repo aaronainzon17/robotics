@@ -327,7 +327,7 @@ class Robot:
                     # if abs(blob.pt[0] - mid_img) < 100:
                     #     self.setSpeed(0,0)
                     #     almost_centered = True # Se indica que el blob esta casi centrado
-                    self.trackObjectSpeed(x_actual,self.cols.value)
+                    self.trackObjectSpeed(self.x_b.value,self.cols.value)
                     almost_centered = True
                 else:
                     # Si no se ha encontrado la pelota en la imagen se comienza a girar para buscar la pelota
