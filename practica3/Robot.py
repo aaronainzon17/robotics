@@ -312,11 +312,7 @@ class Robot:
     # en funcion de donde se encuenta la pelota en la imagen  
     def trackObjectSpeed(self,x_actual,cols):
         #Se divide la imagen en 8 sectores verticales y en funcion del que se encuentre la pelota se aplica una velocidad u otra
-        if self.size_b.value > 120 and (self.x_b.value - cols/2) > 50:
-            self.setSpeed(0,-10)
-        elif self.size_b.value > 120 and (self.x_b.value - cols/2) > -50:
-             self.setSpeed(0,10)
-        elif((x_actual > (3*cols)/8) and x_actual <= cols/2) or (x_actual >= cols/2 and x_actual<= (5*cols)/8):
+        if((x_actual > (3*cols)/8) and x_actual <= cols/2) or (x_actual >= cols/2 and x_actual<= (5*cols)/8):
             #Sector central [(3*cols)/8,(5*cols)/8]
             w = 0
             v = self.speed_size(self.size_b.value)
@@ -430,3 +426,14 @@ class Robot:
                 self.is_blob.value = True
             else:
                 self.is_blob.value = False
+
+
+
+
+"""
+if self.size_b.value > 120 and (self.x_b.value - cols/2) > 50:
+            self.setSpeed(0,-10)
+        elif self.size_b.value > 120 and (self.x_b.value - cols/2) > -50:
+             self.setSpeed(0,10)
+        el
+"""
