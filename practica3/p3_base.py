@@ -26,7 +26,7 @@ def main(args):
         robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
         
         #                   targetSize=??, target??=??, ...)
-
+        robot.setPeed(0,0)
         # if res:
         #   robot.catch
 
