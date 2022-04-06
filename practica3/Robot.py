@@ -264,7 +264,7 @@ class Robot:
                 x_actual = self.x_b.value # Se obtiene la coordenada x en la que se encuentra
 
                 # Si el diametro es mayor que 150 se inica el proceso de catch porque esta muy cerca del robot
-                if self.size_b.value > 150 and not triedCatch and abs(self.x_b.value - self.cols.value/2) < 50:
+                if self.size_b.value > 120 and not triedCatch and abs(self.x_b.value - self.cols.value/2) < 50:
                     targetPositionReached = True # Se indica que se ha alcanzado el objeto 
                     self.setSpeed(0,0)
                 else:
@@ -366,7 +366,7 @@ class Robot:
         time.sleep(1.5) # Tiempo de apertura 
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
         self.setSpeed(60, 0)
-        time.sleep(1.5) # Resto de acercamiento a la pelota
+        time.sleep(2) # Resto de acercamiento a la pelota
         self.setSpeed(0, 0)
         w = -42    # Velocidad angular para cerrar las pinzas 
         self.BP.set_motor_dps(self.BP.PORT_A, w)
