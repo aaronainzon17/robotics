@@ -264,7 +264,7 @@ class Robot:
                 x_actual = self.x_b.value # Se obtiene la coordenada x en la que se encuentra
 
                 # Si el diametro es mayor que 150 se inica el proceso de catch porque esta muy cerca del robot
-                if self.size_b.value > 120 and not triedCatch and abs(self.x_b.value - self.cols.value/2) < 50:
+                if self.size_b.value > 150 and not triedCatch and abs(self.x_b.value - self.cols.value/2) < 50:
                     targetPositionReached = True # Se indica que se ha alcanzado el objeto 
                     self.setSpeed(0,0)
                 else:
@@ -309,7 +309,7 @@ class Robot:
         if self.size_b.value > 100 and (self.x_b.value - cols/2) > 50:
             v = 0
             w = -10
-        elif self.size_b.value > 100 and (self.x_b.value - cols/2) > -50 and (self.x_b.value - cols/2) > 50:
+        elif self.size_b.value > 100 and (self.x_b.value - cols/2) < -50:
             v = 0
             w = 10
         elif((x_actual > (3*cols)/8) and x_actual <= cols/2) or (x_actual >= cols/2 and x_actual<= (5*cols)/8):
