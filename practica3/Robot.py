@@ -287,7 +287,7 @@ class Robot:
                 x_bl,y_bl = [self.x_b.value,self.y_b.value]
 
                 # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
-                if self.size_b.value > 210 and abs(self.x_b.value - self.cols.value/2) < 50 and self.y_b.value > self.rows/2:
+                if self.size_b.value > 210 and abs(self.x_b.value - self.cols.value/2) < 50 and self.y_b.value > self.rows.value/2:
                     self.setSpeed(0,0)
                     finished = True
                     print('LO TENGOOO ')
@@ -366,7 +366,7 @@ class Robot:
         time.sleep(1.5) # Tiempo de apertura 
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
         self.setSpeed(60, 0)
-        time.sleep(2) # Resto de acercamiento a la pelota
+        time.sleep(1.5) # Resto de acercamiento a la pelota
         self.setSpeed(0, 0)
         w = -42    # Velocidad angular para cerrar las pinzas 
         self.BP.set_motor_dps(self.BP.PORT_A, w)
