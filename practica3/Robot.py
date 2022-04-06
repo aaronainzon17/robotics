@@ -284,6 +284,8 @@ class Robot:
                     self.setSpeed(0,0)
                     finished = True
                     print('LO TENGO')
+                    self.setSpeed(0,30)
+                    time.sleep(3)
                 else:
                     print('No se ve la pelota en las pinzas')
                     print('x',x_bl, ', y', y_bl)
