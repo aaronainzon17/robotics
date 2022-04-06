@@ -442,3 +442,13 @@ class Robot:
         while(not self.finished):
 
 
+
+
+
+"""
+if self.size_b.value > 120 and (self.x_b.value - cols/2) > 50:
+            self.setSpeed(0,-10)
+        elif self.size_b.value > 120 and (self.x_b.value - cols/2) > -50:
+             self.setSpeed(0,10)
+        el
+"""

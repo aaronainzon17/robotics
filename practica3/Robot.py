@@ -219,7 +219,6 @@ class Robot:
             self.lock_odometry.release()
 
             tEnd = time.clock()
-            #time.sleep(self.P - (tEnd-tIni))
 
         # Escribe en el LOG los valores finales de la odometria
         [x, y, th] = self.readOdometry()
@@ -229,9 +228,6 @@ class Robot:
         log.write(coord)
         self.lock_odometry.release()
 
-        #print("Stopping odometry ... X= %d" %(self.x.value))
-        # sys.stdout.write("Stopping odometry ... X=  %.2f, \
-        #        Y=  %.2f, th=  %.2f \n" %(self.x.value, self.y.value, self.th.value))
 
     def stopOdometry(self):
         """ Stop the odometry thread. """
@@ -252,47 +248,42 @@ class Robot:
     def getPeriod(self):
         """ Devuelve el periodo de actualizacion de la odometria """
         return self.P
-
+    # Esta funcion busca y se acerca al objeto hasta estar en p
     def trackObject(self, colorRangeMin=[0,0,0], colorRangeMax=[255,255,255]):
-        finished = False
-        triedCatch = False
-        targetPositionReached = False
-
+        finished = False    #Variable para determinar que el robot ha cogido la pelota
+        triedCatch = False  #Variable para determinar si el robot va a iniciar la accion de coger la pelota
+        targetPositionReached = False   #Variable para determinar si el robot ha iniciado el proceso de coger la pelota
         #Se inicia el proces concurrente que lee la camara
         self.pCam = Process(target=self.updateCamara, args=())
         self.pCam.start()
-        print("PID: ", self.pCam.pid)
+        #Se deja que se inicie la camara
         time.sleep(1)
-        
-        print('Las lienas son', self.rows.value, 'y las columnas', self.cols.value)
-        
         while not finished:
-            # Si se ha detectado un blob casi centrado en la imagen
+            # Si se ha detectado un blob
             if (self.is_blob.value):
                 x_actual = self.x_b.value # Se obtiene la coordenada x en la que se encuentra
 
-                # Si el diametro es mayor que 120 se inica el proceso de catch
+                # Si el diametro es mayor que 150 se inica el proceso de catch porque esta muy cerca del robot
                 if self.size_b.value > 150 and not triedCatch :
                     targetPositionReached = True # Se indica que se ha alcanzado el objeto 
                     self.setSpeed(0,0)
                 else:
+                    #La pelota se ha detectado pero esta lejos
                     self.trackObjectSpeed(x_actual,self.cols.value)  
             else:
                 # En caso en el que la pelota desaparezca de la imagen se inicia busqueda
                 self.find_ball(80)
                 
-
             # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
             if self.is_blob.value and triedCatch:
-                x_bl,y_bl = [self.x_b.value,self.y_b.value]
+                x_bl = self.x_b.value
+                y_bl = self.y_b.value
 
                 # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
                 if self.size_b.value > 210 and abs(self.x_b.value - self.cols.value/2) < 50 and self.y_b.value > self.rows.value/2:
                     self.setSpeed(0,0)
                     finished = True
-                    print('LO TENGOOO ')
-                    #self.setSpeed(150,15)
-                    #time.sleep(4)
+                    print('LO TENGO')
                 else:
                     print('No se ve la pelota en las pinzas')
                     print('x',x_bl, ', y', y_bl)
@@ -300,7 +291,7 @@ class Robot:
                     triedCatch = False
 
             # Si se ha alcanzado la pelota y no se ha capturado previamente
-            if targetPositionReached and not finished: 
+            if targetPositionReached and not finished and not triedCatch: 
                 print('Entro a catch')
                 self.catch() # Se inicia el proceso de captura 
                 targetPositionReached = False
@@ -351,6 +342,7 @@ class Robot:
             return expected_w/2 
     
     # Funcion utilizada para decidir el lado de rotacion
+    #Si la pelota se pierde por un lado, el robot la seguira por ese mismo lado
     # por defecto rotacion hacia la derecha 
     def find_ball(self, vel):
         mid_img = self.cols.value/2
@@ -372,53 +364,28 @@ class Robot:
         self.BP.set_motor_dps(self.BP.PORT_A, w)
         time.sleep(1.5) # Tiempo de cierre de pinzas
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
-
-    """
-    def updateCamara(self):
-        cam = cv2.VideoCapture(0)
-        time.sleep(0.1)
-        # Se captura una imagen inicial para obtener el tamanyo de la imagen 
-        _, frame = cam.read() 
-        rows,cols,_ = frame.shape
-        print(rows,cols)
-        self.rows.value = rows
-        self.cols.value = cols
-        # Proceso concurrente que lee de la camara 
-        while not self.finished.value:
-            _, frame = cam.read()       # Se captura un fotograma
-            blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
-            
-            if blob is not None:
-                self.x_b.value = blob.pt[0]
-                self.y_b.value = blob.pt[1]
-                self.size_b.value = blob.size 
-                self.is_blob.value = True
-            else:
-                self.is_blob.value = False
-    """
     
-    
+    #Proceso concurrente que sirve para capturar imagenes
+    #Se realiza un proceso concurrente para que la captura de imagenes sea mas rapida y eficiente
     def updateCamara(self):
-        
+        #Se inicia la camara del robot
         cam = picamera.PiCamera()
         cam.resolution = (640,480)
         cam.framerate = 32 
         rawCapture = PiRGBArray(cam, size=(640, 480))
-        
+        #Se espera un tiempo para que se pueda iniciar la camara
         time.sleep(0.1)
         # Se captura una imagen inicial para obtener el tamanyo de la imagen 
-        
         self.rows.value = 480
         self.cols.value = 640
-        # Proceso concurrente que lee de la camara 
+        #Mientras no se detengaa el robot, se siguen captando imagenes
         while not self.finished.value:
             cam.capture(rawCapture, format="bgr", use_video_port=True)
             # clear the stream in preparation for the next frame
             rawCapture.truncate(0)
-
             frame = rawCapture.array
             blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
-            
+            #Se actualizan las variables compartidas referentes a la imagen
             if blob is not None:
                 self.x_b.value = blob.pt[0]
                 self.y_b.value = blob.pt[1]
@@ -426,14 +393,3 @@ class Robot:
                 self.is_blob.value = True
             else:
                 self.is_blob.value = False
-
-
-
-
-"""
-if self.size_b.value > 120 and (self.x_b.value - cols/2) > 50:
-            self.setSpeed(0,-10)
-        elif self.size_b.value > 120 and (self.x_b.value - cols/2) > -50:
-             self.setSpeed(0,10)
-        el
-"""

@@ -3,20 +3,12 @@
 
 # Standard imports
 import cv2
-from cv2 import waitKey
-import numpy as np;
-import time     # import the time library for the sleep function
-import picamera
-from picamera.array import PiRGBArray
-#../fotosRobot/pelota_cerca_pero_no_mucho.jpg
-# Read image
-img_BGR = cv2.imread("../fotosRobot/pelota_pinzas.jpg")
+import numpy as np
 
 # Setup default values for SimpleBlobDetector parameters.
 params = cv2.SimpleBlobDetector_Params()
 
-# These are just examples, tune your own if needed
-# Change thresholds
+# Thresholds
 params.minThreshold = 10
 params.maxThreshold = 200
 
@@ -28,13 +20,10 @@ params.minArea = 350
 params.maxArea = 150000
 
 # Filter by Circularity
-# Lo he puesto a false porque sino en pelota_cerca como no es circular porque 
-# las pinzas tapan no detectaba la pelota
 params.filterByCircularity = True 
-params.minCircularity = 0.2 # Innecesario porque es false
+params.minCircularity = 0.2
 
 # Filter by Color
-# No noto al diferencia de ponerlo a true y false 
 params.filterByColor = True
 # not directly color, but intensity on the channel input
 params.blobColor = 255 # 255 para brillantes 0 oscuros 
@@ -51,74 +40,9 @@ if int(ver[0]) < 3 :
 else :
 	detector = cv2.SimpleBlobDetector_create(params)
 
-# keypoints on original image (will look for blobs in grayscale)
-#keypoints = detector.detect(img_BGR)
-# Draw detected blobs as red circles.
-# cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures
-# the size of the circle corresponds to the size of blob
-#im_with_keypoints = cv2.drawKeypoints(img_BGR, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-#
-## Show blobs
-#cv2.imshow("Keypoints on Gray Scale", im_with_keypoints)
-#cv2.waitKey(0)
-#
-## filter certain COLOR channels
-#
-## Pixels with 100 <= R <= 255, 15 <= B <= 56, 17 <= G <= 50 will be considered red.
-## similar for BLUE
-#
-## BY DEFAULT, opencv IMAGES have BGR format
-##redMin = (10, 10, 100)
-#redMax = (50, 50, 255)
-#
-#blueMin=(60, 10, 10)
-#blueMax=(255, 100, 100)
-#
-#mask_red=cv2.inRange(img_BGR, redMin, redMax)
-#mask_blue=cv2.inRange(img_BGR, blueMin, blueMax)
-#
-#
-## apply the mask
-#red = cv2.bitwise_and(img_BGR, img_BGR, mask = mask_red)
-#blue = cv2.bitwise_and(img_BGR, img_BGR, mask = mask_blue)
-## show resulting filtered image next to the original one
-#cv2.imshow("Red regions", np.hstack([img_BGR, red]))
-#cv2.imshow("Blue regions", np.hstack([img_BGR, blue]))
-#
-## detector finds "dark" blobs by default, so invert image for results with same detector
-#keypoints_red = detector.detect(255-mask_red)
-#keypoints_blue = detector.detect(255-mask_blue)
-#
-## documentation of SimpleBlobDetector is not clear on what kp.size is exactly, but it looks like the diameter of the blob.
-#prueba = []
-#for kp in keypoints_red:
-#	print (kp.pt[0], kp.pt[1], kp.size)
-#
-## Draw detected blobs as red circles.
-## cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures
-## the size of the circle corresponds to the size of blob
-#im_with_keypoints = cv2.drawKeypoints(img_BGR, keypoints_red, np.array([]),
-#	(255,255,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-#im_with_keypoints2 = cv2.drawKeypoints(img_BGR, keypoints_blue, np.array([]),
-#	(255,255,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-#
-## Prueba: se aumenta el diametro del circulo donde se encuentran los KeyPoints para hacer A
-#for kp in keypoints_red:
-#	kp.size += 20
-#	print (kp.pt[0], kp.pt[1], kp.size)
-#
-#im_with_keypoints_A = cv2.drawKeypoints(im_with_keypoints, keypoints_red, np.array([]),
-#	(255,0,0), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-#
-## Show mask and blobs found
-#cv2.imshow("Keypoints on RED and A", im_with_keypoints_A)
-#cv2.waitKey(0)
-#
-##cv2.imshow("Keypoints on RED", im_with_keypoints)
-#cv2.imshow("Keypoints on BLUE", im_with_keypoints2)
-#cv2.waitKey(0)
 
-
+# getRedBloobs: devuelve el blob de mayor tamanyo detectado en la imagen frame 
+# que se ha pasado por parametro 
 def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 	
 	img_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -133,18 +57,18 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 	red_160 = np.array([160,80,80])
 	red_180 = np.array([179,255,255])
 
+	# Se aplcian los filtros de rango para filtrar por color 
 	mask0_10 = cv2.inRange(img_hsv, red_0, red_10)
 	mask_160_180 = cv2.inRange(img_hsv, red_160, red_180)
 
 	mask = mask0_10 + mask_160_180
 
-	# Se pueden eliminar los blobs de ruido con erode y dilate
-
 	frame = cv2.bitwise_and(frame, frame, mask=mask)
 	
+	# Se utiliza el blob detector para calucular los keypoints
 	keypoints_red = detector.detect(mask)
 	
-	# documentation of SimpleBlobDetector is not clear on what kp.size is exactly, but it looks like the diameter of the blob.
+	# Se elige el blob mas prometedor (mas grande)
 	if (len(keypoints_red) != 0):
 		biggest = keypoints_red[0]
 		for kp in keypoints_red:
@@ -153,43 +77,5 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 	else:
 		biggest = None
 
-	
-	# Draw detected blobs as red circles.
-	# cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures
-	# the size of the circle corresponds to the size of blob
-	
-	im_with_keypoints = cv2.drawKeypoints(frame, keypoints_red, np.array([]),
-		(255,255,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-
-	#cv2.imshow('Capture', im_with_keypoints)
-
-	#cv2.startWindowThread()
-	#cv2.namedWindow("Capture")
-	#cv2.imshow("Capture", im_with_keypoints)
-
-	#cv2.waitKey(0)
+	# Se devuelve el blob mas grande
 	return biggest
-	
-
-	#cv2.waitKey(0)
-	#cv2.destroyAllWindows()
-
-"""
-cam = picamera.PiCamera()
-cam.resolution = (640,480)
-cam.framerate = 32 
-rawCapture = PiRGBArray(cam, size=(640, 480))
-
-time.sleep(0.1)
-
-while(True):
-	cam.capture(rawCapture, format="bgr", use_video_port=True)
-	# clear the stream in preparation for the next frame
-	rawCapture.truncate(0)
-	frame = rawCapture.array
-	blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
-
-	if blob is not None:
-		print('EL bloob esta en', blob.pt[0], blob.pt[1])
-		print('El tamanyo del blob es', blob.size)
-"""
