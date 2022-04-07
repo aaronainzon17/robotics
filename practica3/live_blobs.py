@@ -105,5 +105,5 @@ while(True):
         print('EL bloob esta en', blob.pt[0], blob.pt[1])
         print('El tamanyo del blob es', blob.size)
 
-        if (blob.size > 210) and abs(blob.pt[0] - 320) < 50 and (blob.pt[1] > 240):
+        if (blob.size > 195) and abs(blob.pt[0] - 320) < 50 and (blob.pt[1] > 240):
             print('Esta en las pinzas')
