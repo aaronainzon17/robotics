@@ -397,8 +397,7 @@ class Map2D:
     # METHODS to IMPLEMENT in P4
     # ############################################################
 
-    # TODO: falta hacer el 8 vecindad y tener en cuenta los obstaculos
-    def fillCostMatrix(self, x_end, y_end):
+    def fillCostMatrix(self, x_end, y_end, ocho=False):
         """
         NOTE: Make sure self.costMatrix is a 2D numpy array of dimensions dimX x dimY
         TO-DO
@@ -407,34 +406,24 @@ class Map2D:
         wavefront.put([x_end, y_end])
         self.costMatrix[x_end][y_end] = 0
         while not wavefront.empty():
-            actual = wavefront.get()
-            coord = self._cell2connCoord(actual[0], actual[1])
-            if actual[0] > 0:
-                if self.costMatrix[actual[0]-1][actual[1]] == -2:
-                    wavefront.put([actual[0]-1, actual[1]])
-                    if self.connectionMatrix[coord[0]-1][coord[1]] == 1:
-                        self.costMatrix[actual[0]-1][actual[1]
-                                                     ] = self.costMatrix[actual[0]][actual[1]] + 1
-                    else:
-                        self.costMatrix[actual[0]-1][actual[1]
-                                                     ] = self.costMatrix[actual[0]][actual[1]]
+            [x, y] = wavefront.get()
+            val = self.costMatrix[x][y]
 
-            if actual[1] > 0:
-                if self.costMatrix[actual[0]][actual[1]-1] == -2:
-                    wavefront.put([actual[0], actual[1]-1])
-                    self.costMatrix[actual[0]][actual[1] -
-                                               1] = self.costMatrix[actual[0]][actual[1]] + 1
-            if actual[0] < self.sizeX-1:
-                if self.costMatrix[actual[0]+1][actual[1]] == -2:
-                    wavefront.put([actual[0]+1, actual[1]])
-                    self.costMatrix[actual[0]+1][actual[1]
-                                                 ] = self.costMatrix[actual[0]][actual[1]] + 1
-            if actual[1] < self.sizeX-1:
-                if self.costMatrix[actual[0]][actual[1]+1] == -2:
-                    wavefront.put([actual[0], actual[1]+1])
-                    self.costMatrix[actual[0]][actual[1] +
-                                               1] = self.costMatrix[actual[0]][actual[1]] + 1
-        print(self.costMatrix)
+            self._checkCell(x, y+1, self._cell2connCoord(x, y, 0), wavefront, val)
+            self._checkCell(x+1, y, self._cell2connCoord(x, y, 2), wavefront, val)
+            self._checkCell(x, y-1, self._cell2connCoord(x, y, 4), wavefront, val)
+            self._checkCell(x-1, y, self._cell2connCoord(x, y, 6), wavefront, val)
+            if ocho:
+                self._checkCell(x+1, y+1, self._cell2connCoord(x, y, 1), wavefront, val)
+                self._checkCell(x+1, y-1, self._cell2connCoord(x, y, 3), wavefront, val)
+                self._checkCell(x-1, y-1, self._cell2connCoord(x, y, 5), wavefront, val)
+                self._checkCell(x-1, y+1, self._cell2connCoord(x, y, 7), wavefront, val)
+
+    def _checkCell(self, x, y, conn, wavefront, val):
+        if x >= 0 and x <= (self.sizeX-1) and y >= 0 and y <= (self.sizeY-1):
+            if self.costMatrix[x][y] == -2 and self.connectionMatrix[conn[0]][conn[1]] == 1:
+                wavefront.put([x, y])
+                self.costMatrix[x][y] = val + 1
 
     def findPath(self, x_ini,  y_ini, x_end, y_end):
         """

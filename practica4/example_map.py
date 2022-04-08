@@ -35,10 +35,10 @@ def main(args):
 
         # 1. load map and compute costs and path
         myMap = Map2D(map_file)
-        myMap.fillCostMatrix(0, 0)
-        return
+        myMap.fillCostMatrix(0, 0, True)
         #myMap.verbose = True
         myMap.drawMap(saveSnapshot=False)
+        return
 
         # you can set verbose to False to stop displaying plots interactively
         # (and maybe just save the snapshots of the map)
