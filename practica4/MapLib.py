@@ -3,6 +3,7 @@
 # use python 3 syntax but make it compatible with python 2
 from __future__ import print_function
 from __future__ import division
+from tkinter import Y
 import wave  # ''
 
 import matplotlib.pyplot as plt
@@ -161,6 +162,33 @@ class Map2D:
         connX = 2*cellX+1
         connY = 2*cellY+1
         p = [connX, connY]
+
+        result = {
+            0: lambda p: [p[0],    p[1]+1],
+            1: lambda p: [p[0]+1,  p[1]+1],
+            2: lambda p: [p[0]+1,  p[1]],
+            3: lambda p: [p[0]+1,  p[1]-1],
+            4: lambda p: [p[0],    p[1]-1],
+            5: lambda p: [p[0]-1,  p[1]-1],
+            6: lambda p: [p[0]-1,  p[1]],
+            7: lambda p: [p[0]-1,  p[1]+1],
+        }
+
+        return result[numNeigh](p)
+
+    def _neighbour(self, cellX, cellY, numNeigh):
+        """
+        Input:
+            cellX, cellY: cell coordinates (cellX, cellY) in the map grid
+            numNeigh: index of one of the cell 8-neighbours
+
+        Output:
+            (connX,connY): 2D coordinates (in the connectionMatrix!!) \
+            of the connection of the input cell to the input neighbour
+        """
+        #connX = 2*cellX+1
+        #connY = 2*cellY+1
+        p = [cellX, cellY]
 
         result = {
             0: lambda p: [p[0],    p[1]+1],
@@ -402,9 +430,13 @@ class Map2D:
         NOTE: Make sure self.costMatrix is a 2D numpy array of dimensions dimX x dimY
         TO-DO
         """
+        # Se crea una cola en la que se guardan las celdas las cuales 
+        # sus vecinas se tienen que rellenar
         wavefront = queue.Queue()
         wavefront.put([x_end, y_end])
         self.costMatrix[x_end][y_end] = 0
+        
+        # Mientras queden celdas por rellenar 
         while not wavefront.empty():
             [x, y] = wavefront.get()
             val = self.costMatrix[x][y]
@@ -413,33 +445,73 @@ class Map2D:
             self._checkCell(x+1, y, self._cell2connCoord(x, y, 2), wavefront, val)
             self._checkCell(x, y-1, self._cell2connCoord(x, y, 4), wavefront, val)
             self._checkCell(x-1, y, self._cell2connCoord(x, y, 6), wavefront, val)
+            
+            # Si se quiere realizar 8 vecindad
             if ocho:
                 self._checkCell(x+1, y+1, self._cell2connCoord(x, y, 1), wavefront, val)
                 self._checkCell(x+1, y-1, self._cell2connCoord(x, y, 3), wavefront, val)
                 self._checkCell(x-1, y-1, self._cell2connCoord(x, y, 5), wavefront, val)
                 self._checkCell(x-1, y+1, self._cell2connCoord(x, y, 7), wavefront, val)
 
+    # En esta funcion se comprueba si ya se le ha asignado previamente peso a la celda
+    # en caso de que no, se le asigna un peso y se anyade a la cola para hacer lo mismo con 
+    # sus vecinas
     def _checkCell(self, x, y, conn, wavefront, val):
         if x >= 0 and x <= (self.sizeX-1) and y >= 0 and y <= (self.sizeY-1):
+            # Si todavia no se le ha asignado un peso y no es obstaculo
             if self.costMatrix[x][y] == -2 and self.connectionMatrix[conn[0]][conn[1]] == 1:
+                # Se anyade a la cola 
                 wavefront.put([x, y])
+                # Se le da un peso de val + 1 
                 self.costMatrix[x][y] = val + 1
 
-    def findPath(self, x_ini,  y_ini, x_end, y_end):
+    def planPath(self, x_ini,  y_ini, x_end, y_end, ocho=False):
         """
         x_ini, y_ini, x_end, y_end: integer values that indicate \
-            the x and y coordinates of the starting (ini) and ending (end) cell
-
-        NOTE: Make sure self.currentPath is a 2D numpy array
-        ...  TO-DO  ....
+        the x and y coordinates of the starting (ini) and ending (end) cell
         """
         # FAKE sample path: [ [0,0], [0,0], [0,0], ...., [0,0]  ]
-        self.currentPath = np.array([[0, 0]] * num_steps)
-        pathFound = True
-
-        # ????
-
+        self.currentPath = [[x_ini, y_ini]] #np.array([[0, 0]] * num_steps)
+        pathFound = False 
+        
+        self.fillCostMatrix(x_end, y_end, False) # El tercer parametro es opcional, por defecto False
+        while not pathFound:
+            [x,y] = self.currentPath[len(self.currentPath) - 1]
+            nextStep = self.min_neighbour(x,y,self.costMatrix[x][y],ocho)
+            #print('Voy de:', [x,y] , 'a', nextStep)
+            self.currentPath.append(nextStep)
+            if [x_end,y_end] == nextStep:
+                pathFound = True
+        
+        #print(self.currentPath)
         return pathFound
 
+    def min_neighbour(self, x, y, min, ocho=False):
+        if ocho:
+            values = list(range(0,7))
+        else:
+            values = list(range(0,7,2))
+
+        minCoord = None
+        for i in values:
+            cm = self._cell2connCoord(x, y, i) # cm = connection matrix 
+            if x >= 0 and x <= (self.sizeX-1) and y >= 0 and y <= (self.sizeY-1) and self.connectionMatrix[cm[0]][cm[1]] == 1: # si la celda del vecino i no es obstaculo
+                [x_n,y_n] = self._neighbour(x,y,i) # Se obtienen las coordenadas de la celda en la matriz de costes
+                # se compara con la minima
+                if self.costMatrix[x_n][y_n] < min:
+                    minCoord = [x_n, y_n]
+                    min = self.costMatrix[x_n][y_n]
+        
+        return minCoord
+
+
+    def _checkCell(self, x, y, conn, wavefront, val):
+        if x >= 0 and x <= (self.sizeX-1) and y >= 0 and y <= (self.sizeY-1):
+            # Si todavia no se le ha asignado un peso y no es obstaculo
+            if self.costMatrix[x][y] == -2 and self.connectionMatrix[conn[0]][conn[1]] == 1:
+                # Se anyade a la cola 
+                wavefront.put([x, y])
+                # Se le da un peso de val + 1 
+                self.costMatrix[x][y] = val + 1
     # def replanPath(self, ??):
     # """ TO-DO """
