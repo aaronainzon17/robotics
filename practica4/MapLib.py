@@ -416,10 +416,10 @@ class Map2D:
 
         return current_fig
 
-    def findPath(self, point_ini, point_end):
+    def findPath(self, point_ini, point_end, ocho=False):
         """ overloaded call to planPath (x_ini,  y_ini, x_end, y_end) """
         return self.planPath(point_ini[0], point_ini[1],
-                             point_end[0], point_end[1])
+                             point_end[0], point_end[1], ocho)
 
     # ############################################################
     # METHODS to IMPLEMENT in P4
@@ -470,20 +470,18 @@ class Map2D:
         x_ini, y_ini, x_end, y_end: integer values that indicate \
         the x and y coordinates of the starting (ini) and ending (end) cell
         """
-        # FAKE sample path: [ [0,0], [0,0], [0,0], ...., [0,0]  ]
-        self.currentPath = [[x_ini, y_ini]] #np.array([[0, 0]] * num_steps)
+
+        self.currentPath = [[x_ini, y_ini]]
         pathFound = False 
         
         self.fillCostMatrix(x_end, y_end, False) # El tercer parametro es opcional, por defecto False
         while not pathFound:
             [x,y] = self.currentPath[len(self.currentPath) - 1]
             nextStep = self.min_neighbour(x,y,self.costMatrix[x][y],ocho)
-            #print('Voy de:', [x,y] , 'a', nextStep)
             self.currentPath.append(nextStep)
             if [x_end,y_end] == nextStep:
                 pathFound = True
         
-        #print(self.currentPath)
         return pathFound
 
     def min_neighbour(self, x, y, min, ocho=False):
@@ -503,15 +501,6 @@ class Map2D:
                     min = self.costMatrix[x_n][y_n]
         
         return minCoord
-
-
-    def _checkCell(self, x, y, conn, wavefront, val):
-        if x >= 0 and x <= (self.sizeX-1) and y >= 0 and y <= (self.sizeY-1):
-            # Si todavia no se le ha asignado un peso y no es obstaculo
-            if self.costMatrix[x][y] == -2 and self.connectionMatrix[conn[0]][conn[1]] == 1:
-                # Se anyade a la cola 
-                wavefront.put([x, y])
-                # Se le da un peso de val + 1 
-                self.costMatrix[x][y] = val + 1
-    # def replanPath(self, ??):
-    # """ TO-DO """
+    
+    def replanPath(self, x_ini,  y_ini, x_end, y_end, ocho=False):
+        return self.planPath(x_ini, y_ini, x_end, y_end, ocho)

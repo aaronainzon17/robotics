@@ -35,11 +35,11 @@ def main(args):
 
         # 1. load map and compute costs and path
         myMap = Map2D(map_file)
-        myMap.fillCostMatrix(6, 0, False)
+        myMap.fillCostMatrix(3, 3, True)
         #myMap.verbose = True
         myMap.drawMap(saveSnapshot=False)
-
-        myMap.planPath(0, 0, 6, 0, False)
+        myMap.findPath([0,0],[3,3], True)
+        #myMap.planPath(0, 0, 6, 0, True)
         print(myMap.currentPath)
         path2print = []
         for i in myMap.currentPath:
