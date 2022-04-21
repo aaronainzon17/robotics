@@ -444,11 +444,11 @@ class Robot:
                     print(d_th,",",error_ang)
                     aligned = True
                 else:
-                    if d_th < 0:
-                        w = -30
-                    else:
-                        w = 30
-
+                    #if d_th < 0:
+                    #    w = -30
+                    #else:
+                    #    w = 30
+                    w = self.lienar_w(d_th)
                     self.setSpeed(0,w)
     
     # Funcion que define la velocidad angular en funcion de los 
