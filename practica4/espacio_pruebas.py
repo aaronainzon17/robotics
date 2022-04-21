@@ -36,7 +36,8 @@ def align(x_goal, y_goal, error_ang=np.deg2rad(3)):
 align(600,600,np.deg2rad(5))
 
 point_now = np.array([4,1,3])
-point = np.array([0,0])
+prev_point = np.array([2,2])
+point = np.array([4,4])
 print(point,point_now)
-goal_point = point + (point - point_now[:2])
+goal_point = point_now[:2] + (point - prev_point)
 print(goal_point)
