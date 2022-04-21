@@ -36,7 +36,7 @@ def main(args):
         map_file = args.mapfile
         
         # Se instancia el robot
-        robot = Robot() 
+        robot = Robot(init_position=[200,200,np.deg2rad(90)]) 
         # Se inicia la odometria
         robot.startOdometry()
 
@@ -61,7 +61,7 @@ def main(args):
         
         for point in path2print:
              robot.go(point[0],point[1])
-             
+
         myMap.drawMapWithRobotLocations(
             path2print, saveSnapshot=False)
         return
