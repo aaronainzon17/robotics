@@ -44,7 +44,7 @@ def main(args):
         myMap = Map2D(map_file)
         myMap.fillCostMatrix(2, 2, True)
         #myMap.verbose = True
-        myMap.drawMap(saveSnapshot=False)
+        #myMap.drawMap(saveSnapshot=False)
         myMap.findPath([0,0],[2,2], True)
         #myMap.planPath(0, 0, 6, 0, True)
         print(myMap.currentPath)
