@@ -59,7 +59,7 @@ def main(args):
         for point in path2print:
             point_now = np.array(robot.readOdometry())
             point = np.array(point)
-            print(point,',',point_now)
+            print(point,',',point_now[:2])
             goal_point = point_now[:2] + (point - prev_point)
             print(goal_point)
             print('Voy al punto', point, 'desde', point_now)
