@@ -24,10 +24,7 @@ def solveMap(robot, map_file, point_ini, point_end, ocho=False):
     myMap.fillCostMatrix(3, 3, True)
 
 def main(args):
-    """
-    Example to load "mapa1.txt"
-    """
-
+    
     try:
         if not os.path.isfile(args.mapfile):
             print('Map file %s does not exist' % args.mapfile)

@@ -407,7 +407,7 @@ class Robot:
     
     def go(self, x_goal, y_goal):
         # Aliena al robot con el siguiente punto
-        self.align(x_goal, y_goal, np.deg2rad(3))
+        self.align(x_goal, y_goal, np.deg2rad(1))
         # Se le asigna una velocidad lienal
         self.setSpeed(150,0)
         # Se comprueba que el robot alcanza correctamente la posicion 
@@ -443,7 +443,11 @@ class Robot:
                     self.setSpeed(0,0)
                     aligned = True
                 else:
-                    w = 30#self.lienar_w(d_th)
+                    if d_th < 0:
+                        w = -30
+                    else:
+                        w = 30
+
                     self.setSpeed(0,w)
     
     # Funcion que define la velocidad angular en funcion de los 
