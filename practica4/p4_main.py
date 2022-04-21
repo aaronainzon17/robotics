@@ -42,7 +42,7 @@ def main(args):
         myMap.fillCostMatrix(2, 2, True)
         #myMap.verbose = True
         #myMap.drawMap(saveSnapshot=False)
-        myMap.findPath([0,0],[2,2], True)
+        myMap.findPath([0,0],[0,2], True)
         
         print(myMap.currentPath)
         path2print = []
