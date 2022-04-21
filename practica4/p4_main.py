@@ -59,65 +59,21 @@ def main(args):
         for point in path2print:
             point_now = np.array(robot.readOdometry())
             point = np.array(point[:2])
-            print(point,',',point_now[:2])
             goal_point = point_now[:2] + (point - prev_point)
-            print(goal_point)
-            print('Voy al punto', point, 'desde', point_now)
+            print('Voy al punto', goal_point, 'desde', point_now)
             robot.go(goal_point[0],goal_point[1])
             prev_point = point
 
         myMap.drawMapWithRobotLocations(
             path2print, saveSnapshot=False)
-        return
+        
+        # Se detiene la odometria
+        robot.stopOdometry()
 
-        # you can set verbose to False to stop displaying plots interactively
-        # (and maybe just save the snapshots of the map)
-        # myMap.verbose = False
-
-        # sample commands to see how to draw the map
-        sampleRobotLocations = [[0, 0, 0], [600, 600, 3.14]]
-        # this will save a .png with the current map visualization,
-        # all robot positions, last one in green
-        #myMap.verbose = True
-        myMap.drawMapWithRobotLocations(
-            sampleRobotLocations, saveSnapshot=False)
-
-        # this shows the current, and empty, map and an additionally closed connection
-        myMap.deleteConnection(0, 0, 0)
-        #myMap.verbose = True
-        myMap.drawMap(saveSnapshot=False)
-
-        # this will open a window with the results, but does not work well remotely
-        #myMap.verbose = True
-        sampleRobotLocations = [[200, 200, 3.14/2.0],
-                                [200, 600, 3.14/4.0], [200, 1000, -3.14/2.0], ]
-        myMap.drawMapWithRobotLocations(
-            sampleRobotLocations, saveSnapshot=False)
-
-        matplotlib.pyplot.close('all')
-        # 2. launch updateOdometry thread()
-        # robot.startOdometry()
-        # ...
-
-        # 3. perform trajectory
-        # robot.setSpeed(1,1) ...
-        # while (notfinished){
-
-        # robot.go(pathX[i],pathY[i]);
-        # check if there are close obstacles
-        # deal with them...
-        # Avoid_obstacle(...) OR RePlanPath(...)
-
-        # 4. wrap up and close stuff ...
-        # This currently unconfigure the sensors, disable the motors,
-        # and restore the LED to the control of the BrickPi3 firmware.
-        # robot.stopOdometry()
-
-    except KeyboardInterrupt:
-        # except the program gets interrupted by Ctrl+C on the keyboard.
-        # THIS IS IMPORTANT if we want that motors STOP when we Ctrl+C ...
-        #    robot.stopOdometry()
-        print('do something to stop Robot when we Ctrl+C ...')
+    except KeyboardInterrupt: 
+    # except the program gets interrupted by Ctrl+C on the keyboard.
+    # THIS IS IMPORTANT if we want that motors STOP when we Ctrl+C ...
+        robot.stopOdometry()
 
 
 if __name__ == "__main__":
