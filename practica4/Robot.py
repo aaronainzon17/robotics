@@ -411,13 +411,13 @@ class Robot:
         # Se le asigna una velocidad lienal
         self.setSpeed(150,0)
         # Se comprueba que el robot alcanza correctamente la posicion 
-        self.check_position(x_goal, y_goal, 20, 20)
+        self.check_position(x_goal, y_goal, 10, 10)
    
     # check_position es la funcion de control de localizacion
     # En ella se comprueba la posicion real del robot leida de los
     # motores y se comprueba si se encuentra en la posicion deseada
     # permitiendo un cierto error.
-    def check_position(self, x_goal, y_goal, x_err=5, y_err=5):
+    def check_position(self, x_goal, y_goal, x_err, y_err):
         reached = False
         while not reached:
             [x_now, y_now, th_now] = self.readOdometry()
@@ -430,7 +430,7 @@ class Robot:
                 
     # La funcion se encarga de alienar el robot con el punto objetivo para poder
     # realizar una trayectoria lienal
-    def align(self, x_goal, y_goal, error_ang=np.deg2rad(3)):
+    def align(self, x_goal, y_goal, error_ang):
             aligned = False 
             
             while not aligned:
