@@ -19,8 +19,6 @@ from picamera.array import PiRGBArray
 # tambien se podria utilizar el paquete de threading
 from multiprocessing import Process, Value, Array, Lock
 
-from get_color_blobs import getRedBloobs
-
 
 class Robot:
     def __init__(self, init_position=[0.0, 0.0, 0.0]):
