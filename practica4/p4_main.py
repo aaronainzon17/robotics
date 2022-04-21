@@ -39,10 +39,10 @@ def main(args):
 
         # 1. load map and compute costs and path
         myMap = Map2D(map_file)
-        myMap.fillCostMatrix(2, 0, True)
+        myMap.fillCostMatrix(2, 2, True)
         #myMap.verbose = True
         #myMap.drawMap(saveSnapshot=False)
-        myMap.findPath([0,0],[2,0], True)
+        myMap.findPath([0,0],[2,], True)
         
         print(myMap.currentPath)
         path2print = []
@@ -63,7 +63,7 @@ def main(args):
             #goal_point = point_now[:2] + (point - prev_point)
             #print('Voy al punto', goal_point, 'desde', point_now[:2])
             robot.go(point[0],point[1])
-            prev_point = point
+            #prev_point = point
 
         myMap.drawMapWithRobotLocations(
             path2print, saveSnapshot=False)
