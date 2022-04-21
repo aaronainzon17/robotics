@@ -21,17 +21,16 @@ def align(x_goal, y_goal, error_ang=np.deg2rad(3)):
             aligned = False 
             
             #while not aligned:
-            [x_now, y_now, th_now] = [200,0,np.deg2rad(90)]
+            [x_now, y_now, th_now] = [200,200,np.deg2rad(90)]
             d_x = x_goal - x_now
             d_y = y_goal - y_now
             d_th = norm_pi(np.arctan2(d_y, d_x) - th_now)
+            print(d_th)
             print('El error', error_ang)
-            if d_th < error_ang:
+            if abs(d_th) < error_ang:
                 print('Esta alienado')
                 aligned = True
             else:
                 print('Tengo que girar', d_th)
 
-
-[x_goal,y_goal,th_goal] = [2,10,np.deg2rad(180)]
-align(200,200,np.deg2rad(5))
+align(600,600,np.deg2rad(5))
