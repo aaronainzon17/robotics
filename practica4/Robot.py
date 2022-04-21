@@ -438,9 +438,10 @@ class Robot:
                 d_x = x_goal - x_now
                 d_y = y_goal - y_now
                 d_th = self.norm_pi(np.arctan2(d_y, d_x) - th_now)
-                print(d_th,error_ang)
+               
                 if abs(d_th) < error_ang:
                     self.setSpeed(0,0)
+                    print(d_th,",",error_ang)
                     aligned = True
                 else:
                     if d_th < 0:
