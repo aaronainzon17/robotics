@@ -441,7 +441,6 @@ class Robot:
                 print(d_th,error_ang)
                 if abs(d_th) < error_ang:
                     self.setSpeed(0,0)
-                    time.sleep(0.5)
                     aligned = True
                 else:
                     if d_th < 0:
