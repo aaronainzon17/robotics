@@ -60,7 +60,8 @@ def main(args):
                 path2print.append([200+i[0]*400, 200+i[1]*400, 1.57])
         
         for point in path2print:
-             robot.go(point[0],point[1])
+            print('Voy al punto', point)
+            robot.go(point[0],point[1])
 
         myMap.drawMapWithRobotLocations(
             path2print, saveSnapshot=False)
