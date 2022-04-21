@@ -34,3 +34,9 @@ def align(x_goal, y_goal, error_ang=np.deg2rad(3)):
                 print('Tengo que girar', d_th)
 
 align(600,600,np.deg2rad(5))
+
+point_now = np.array([4,1,3])
+point = np.array([0,0])
+print(point,point_now)
+goal_point = point + (point - point_now[:2])
+print(goal_point)
