@@ -36,7 +36,7 @@ def main(args):
         map_file = args.mapfile
         
         # Se instancia el robot
-        robot = Robot(init_position=[200,200,np.deg2rad(90)]) 
+        robot = Robot(init_position=[0,200,np.deg2rad(0)]) 
         # Se inicia la odometria
         robot.startOdometry()
 
@@ -44,7 +44,7 @@ def main(args):
         myMap = Map2D(map_file)
         myMap.fillCostMatrix(2, 2, True)
         #myMap.verbose = True
-        myMap.drawMap(saveSnapshot=False)
+        #myMap.drawMap(saveSnapshot=False)
         myMap.findPath([0,0],[2,2], True)
         
         print(myMap.currentPath)
@@ -60,8 +60,9 @@ def main(args):
                 path2print.append([200+i[0]*400, 200+i[1]*400, 1.57])
         
         for point in path2print:
-            print('Voy al punto', point)
-            #robot.go(point[0],point[1])
+            point_now = robot.readOdometry()
+            print('Voy al punto', point, 'desde', point_now)
+            robot.go(point[0],point[1])
 
         myMap.drawMapWithRobotLocations(
             path2print, saveSnapshot=False)
