@@ -58,11 +58,11 @@ def main(args):
         
         prev_point = np.array([200,0])
         for point in path2print:
-            point_now = np.array(robot.readOdometry())
-            point = np.array(point[:2])
-            goal_point = point_now[:2] + (point - prev_point)
-            print('Voy al punto', goal_point, 'desde', point_now[:2])
-            robot.go(goal_point[0],goal_point[1])
+            #point_now = np.array(robot.readOdometry())
+            #point = np.array(point[:2])
+            #goal_point = point_now[:2] + (point - prev_point)
+            #print('Voy al punto', goal_point, 'desde', point_now[:2])
+            robot.go(point[0],point[1])
             prev_point = point
 
         myMap.drawMapWithRobotLocations(
