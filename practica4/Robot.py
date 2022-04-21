@@ -409,7 +409,7 @@ class Robot:
         # Aliena al robot con el siguiente punto
         self.align(x_goal, y_goal, np.deg2rad(1))
         # Se le asigna una velocidad lienal
-        self.setSpeed(150,0)
+        self.setSpeed(80,0)
         # Se comprueba que el robot alcanza correctamente la posicion 
         self.check_position(x_goal, y_goal, 25, 25)
    
