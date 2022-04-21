@@ -63,7 +63,7 @@ def main(args):
             goal_point = point_now[:2] + (point - prev_point)
             print(goal_point)
             print('Voy al punto', point, 'desde', point_now)
-            robot.go(point[0],point[1])
+            robot.go(goal_point[0],goal_point[1])
             prev_point = point
 
         myMap.drawMapWithRobotLocations(
