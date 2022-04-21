@@ -17,12 +17,21 @@ def norm_pi(th):
             th = th + 2 * math.pi
         return th
 
-[x,y,th] = [0,0,np.deg2rad(90)]
+def align(x_goal, y_goal, error_ang=np.deg2rad(3)):
+            aligned = False 
+            
+            #while not aligned:
+            [x_now, y_now, th_now] = [200,0,np.deg2rad(90)]
+            d_x = x_goal - x_now
+            d_y = y_goal - y_now
+            d_th = norm_pi(np.arctan2(d_y, d_x) - th_now)
+            print('El error', error_ang)
+            if d_th < error_ang:
+                print('Esta alienado')
+                aligned = True
+            else:
+                print('Tengo que girar', d_th)
+
 
 [x_goal,y_goal,th_goal] = [2,10,np.deg2rad(180)]
-
-dx = x_goal - x
-dy = y_goal - y
-dth = norm_pi(np.arctan2(dy, dx) - th)
-print(dth, np.rad2deg(dth))
-print(lienar_w(dth))
+align(200,200,np.deg2rad(5))
