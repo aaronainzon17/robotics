@@ -59,7 +59,8 @@ def main(args):
                 robot.setSpeed(0,0)
                 break
                 myMap.replanPath(point[0],point[1])
-            path2print.append(point)
+            [_,_,th] = robot.readOdometry()
+            path2print.append(point.append(th))
             prev_point = point
 
         
