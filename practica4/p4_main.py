@@ -45,7 +45,7 @@ def main(args):
         myMap.findPath([0,0],[2,0], True)
         
         #print(myMap.currentPath)
-        
+        path2print = []
         
         prev_point = np.array([200,0])
         for point_map in myMap.currentPath:
@@ -58,13 +58,11 @@ def main(args):
                 print('SE HA ENCONTRADO UN OBSTACULO NO ESPERADO en el punto', point)
                 robot.setSpeed(0,0)
                 break
-                
                 myMap.replanPath(point[0],point[1])
+            path2print.append(point)
             prev_point = point
 
-        path2print = []
-        for i in myMap.currentPath:
-            path2print.append([200+i[0]*400, 200+i[1]*400, 1.57])
+        
         myMap.drawMapWithRobotLocations(
             path2print, saveSnapshot=False)
         
