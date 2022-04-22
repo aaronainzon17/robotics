@@ -43,7 +43,7 @@ def main(args):
         print(myMap.currentPath)
         path2print = []
         for i in myMap.currentPath:
-            path2print.append([200+i[0]*400, 200+i[1]*400, 1.57])
+            path2print.append(i.append([1]))
             #if i[0] == 0 and i[1] == 0: 
             #    path2print.append([200, 200, 1.57])
             #elif i[0] == 0: 
