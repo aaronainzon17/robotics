@@ -411,7 +411,7 @@ class Robot:
         # Aliena al robot con el siguiente punto
         self.align(x_goal, y_goal, np.deg2rad(1))
         #Comprueba que no se ha encontrado ningun obstaculo inesperado
-        if self.detectObstacle():
+        if self.detectObstacle(x_goal, y_goal):
             return False
         else:
             # Se le asigna una velocidad lienal
@@ -476,11 +476,14 @@ class Robot:
             th = th + 2 * math.pi
         return th
 
-    def detectObstacle(self):
+    def detectObstacle(self, x_goal, y_goal):
         try:
+            [x_now, y_now, th_now] = self.readOdometry()
+            espacio = np.linalg.norm([x_goal - x_now, y_goal - y_now])
+            print('La doistancia es:', espacio)
             value = self.BP.get_sensor(self.BP.PORT_1)
             print('He leido: ', value)
-            if value < 35:
+            if value < espacio:
                 return True
             else:
                 return False
