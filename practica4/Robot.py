@@ -478,11 +478,11 @@ class Robot:
 
     def detectObstacle(self, x_goal, y_goal):
         value = 0.0
-        while value <= 0.0:
+        while value <= 0.1:
             try:
                 [x_now, y_now, _] = self.readOdometry()
                 espacio = np.linalg.norm([x_goal - x_now, y_goal - y_now])
-                print('La doistancia es:', espacio)
+                print('La distancia es:', espacio)
                 value = self.BP.get_sensor(self.BP.PORT_1) * 10
                 print('He leido: ', value)
                 if value < espacio:
