@@ -61,6 +61,8 @@ class Robot:
                                      self.BP.get_motor_encoder(self.BP.PORT_C))  # RUEDA IZQUIERDA
         self.BP.offset_motor_encoder(self.BP.PORT_A,
                                      self.BP.get_motor_encoder(self.BP.PORT_A))  # PINZAS
+        self.BP.set_sensor_type(self.BP.PORT_1,
+                                    self.BP.SENSOR_TYPE.EV3_ULTRASONIC_CM)  # ULTRASONIDOS
 
         ##################################################
 
@@ -408,10 +410,15 @@ class Robot:
     def go(self, x_goal, y_goal):
         # Aliena al robot con el siguiente punto
         self.align(x_goal, y_goal, np.deg2rad(1))
-        # Se le asigna una velocidad lienal
-        self.setSpeed(80,0)
-        # Se comprueba que el robot alcanza correctamente la posicion 
-        self.check_position(x_goal, y_goal, 25, 25)
+        #Comprueba que no se ha encontrado ningun obstaculo inesperado
+        if self.detectObstacle():
+            return False
+        else:
+            # Se le asigna una velocidad lienal
+            self.setSpeed(80,0)
+            # Se comprueba que el robot alcanza correctamente la posicion 
+            self.check_position(x_goal, y_goal, 25, 25)
+            return True
    
     # check_position es la funcion de control de localizacion
     # En ella se comprueba la posicion real del robot leida de los
@@ -468,6 +475,17 @@ class Robot:
         elif th < -math.pi:
             th = th + 2 * math.pi
         return th
+
+    def detectObstacle(self):
+        try:
+            value = self.BP.get_sensor(self.BP.PORT_1)
+            print('He leido: ', value)
+            if value < 35:
+                return True
+            else:
+                return False
+        except brickpi3.SensorError as error:
+            print(error) 
 
 
 #########################################################
