@@ -56,13 +56,17 @@ def main(args):
             else:
                 path2print.append([200+i[0]*400, 200+i[1]*400, 1.57])
         
-        prev_point = np.array([200,0])
+        #prev_point = np.array([200,0])
         for point in path2print:
             #point_now = np.array(robot.readOdometry())
             #point = np.array(point[:2])
             #goal_point = point_now[:2] + (point - prev_point)
             #print('Voy al punto', goal_point, 'desde', point_now[:2])
-            robot.go(point[0],point[1])
+            if not robot.go(point[0],point[1]):
+                print('SE HA ENCONTRADO UN OBSTACULO NO ESPERADO')
+                robot.setSpeed(0,0)
+                break
+                #myMap.replanPath(point[0],point[1])
             #prev_point = point
 
         myMap.drawMapWithRobotLocations(
