@@ -477,7 +477,7 @@ class Robot:
         return th
 
     def detectObstacle(self, x_goal, y_goal):
-        while True:
+        while True and value <= 0.0:
             try:
                 [x_now, y_now, _] = self.readOdometry()
                 espacio = np.linalg.norm([x_goal - x_now, y_goal - y_now])
