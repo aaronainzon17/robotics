@@ -63,7 +63,7 @@ def main(args):
             #goal_point = point_now[:2] + (point - prev_point)
             #print('Voy al punto', goal_point, 'desde', point_now[:2])
             if not robot.go(point[0],point[1]):
-                print('SE HA ENCONTRADO UN OBSTACULO NO ESPERADO')
+                print('SE HA ENCONTRADO UN OBSTACULO NO ESPERADO en el punto', point)
                 robot.setSpeed(0,0)
                 break
                 #myMap.replanPath(point[0],point[1])
