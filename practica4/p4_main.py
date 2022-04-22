@@ -60,10 +60,10 @@ def main(args):
                 break
                 myMap.replanPath(point[0],point[1])
             [_,_,th] = robot.readOdometry()
-            path2print.append(point.append(th))
+            path2print.append([point[0], point[1], th])
             prev_point = point
 
-        
+
         myMap.drawMapWithRobotLocations(
             path2print, saveSnapshot=False)
         
