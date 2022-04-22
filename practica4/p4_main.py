@@ -46,18 +46,10 @@ def main(args):
         
         print(myMap.currentPath)
         path2print = []
-        for i in myMap.currentPath:
-            if i[0] == 0 and i[1] == 0: 
-                path2print.append([200, 200, 1.57])
-            elif i[0] == 0: 
-                path2print.append([200, 200+i[1]*400, 1.57])
-            elif i[1] == 0:
-                path2print.append([200+i[0]*400, 200,1.57]) 
-            else:
-                path2print.append([200+i[0]*400, 200+i[1]*400, 1.57])
         
-        #prev_point = np.array([200,0])
-        for point in path2print:
+        prev_point = np.array([200,0])
+        for point_map in myMap.currentPath:
+            point = [200+point_map[0]*400, 200+point_map[1]*400, 1.57]
             #point_now = np.array(robot.readOdometry())
             #point = np.array(point[:2])
             #goal_point = point_now[:2] + (point - prev_point)
@@ -66,8 +58,9 @@ def main(args):
                 print('SE HA ENCONTRADO UN OBSTACULO NO ESPERADO en el punto', point)
                 robot.setSpeed(0,0)
                 break
-                #myMap.replanPath(point[0],point[1])
-            #prev_point = point
+                
+                myMap.replanPath(point[0],point[1])
+            prev_point = point
 
         myMap.drawMapWithRobotLocations(
             path2print, saveSnapshot=False)
