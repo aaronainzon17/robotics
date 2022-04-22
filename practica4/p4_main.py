@@ -46,22 +46,32 @@ def main(args):
         
         #print(myMap.currentPath)
         path2print = []
-        
-        prev_point = np.array([200,0])
-        for point_map in myMap.currentPath:
-            point = [200+point_map[0]*400, 200+point_map[1]*400, 1.57]
-            #point_now = np.array(robot.readOdometry())
-            #point = np.array(point[:2])
-            #goal_point = point_now[:2] + (point - prev_point)
-            #print('Voy al punto', goal_point, 'desde', point_now[:2])
-            if not robot.go(point[0],point[1]):
-                print('SE HA ENCONTRADO UN OBSTACULO NO ESPERADO en el punto', point)
-                robot.setSpeed(0,0)
-                break
-                myMap.replanPath(point[0],point[1])
-            [_,_,th] = robot.readOdometry()
-            path2print.append([point[0], point[1], th])
-            prev_point = point
+        goal_reached = False
+        while not goal_reached:
+
+            #prev_point = np.array([200,0])
+            for point_map in myMap.currentPath:
+                point = [200+point_map[0]*400, 200+point_map[1]*400, 1.57]
+                #point_now = np.array(robot.readOdometry())
+                #point = np.array(point[:2])
+                #goal_point = point_now[:2] + (point - prev_point)
+                #print('Voy al punto', goal_point, 'desde', point_now[:2])
+                if robot.detectObstacle(point[0],point[1]):
+                    print('SE HA ENCONTRADO UN OBSTACULO NO ESPERADO en el punto', point)
+                    robot.setSpeed(0,0)
+                    [_,_,th] = robot.readOdometry()
+                    myMap.setNewObstacle(point, th)
+                    myMap.replanPath(point[0],point[1])
+                    break
+
+                robot.go(point[0],point[1])
+                path2print.append([point[0], point[1], 1.57])
+                #prev_point = point
+
+            goal_reached = True
+                
+                
+            
 
 
         myMap.drawMapWithRobotLocations(

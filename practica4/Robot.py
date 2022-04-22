@@ -410,15 +410,10 @@ class Robot:
     def go(self, x_goal, y_goal):
         # Aliena al robot con el siguiente punto
         self.align(x_goal, y_goal, np.deg2rad(1))
-        #Comprueba que no se ha encontrado ningun obstaculo inesperado
-        if self.detectObstacle(x_goal, y_goal):
-            return False
-        else:
-            # Se le asigna una velocidad lienal
-            self.setSpeed(80,0)
-            # Se comprueba que el robot alcanza correctamente la posicion 
-            self.check_position(x_goal, y_goal, 25, 25)
-            return True
+        # Se le asigna una velocidad lienal
+        self.setSpeed(80,0)
+        # Se comprueba que el robot alcanza correctamente la posicion 
+        self.check_position(x_goal, y_goal, 25, 25)
    
     # check_position es la funcion de control de localizacion
     # En ella se comprueba la posicion real del robot leida de los
@@ -477,6 +472,9 @@ class Robot:
         return th
 
     def detectObstacle(self, x_goal, y_goal):
+        # Aliena al robot con el siguiente punto
+        self.align(x_goal, y_goal, np.deg2rad(1))
+        
         value = 0.0
         while value <= 0.0:
             try:

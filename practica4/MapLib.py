@@ -505,5 +505,5 @@ class Map2D:
     def replanPath(self, x_ini,  y_ini, x_end, y_end, ocho=False):
         return self.planPath(x_ini, y_ini, x_end, y_end, ocho)
 
-    def setNewObstacle():
+    def setNewObstacle(self, point, th):
         print('Sin implementar')
