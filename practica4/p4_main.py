@@ -32,7 +32,8 @@ def main(args):
 
         map_file = args.mapfile
         ini = [0,0]
-        goal = [2,2]        
+        goal = [2,1]   
+        ocho = True     
         # Se instancia el robot
         robot = Robot(init_position=[200,0,np.deg2rad(90)]) 
         # Se inicia la odometria
@@ -40,10 +41,10 @@ def main(args):
 
         # 1. load map and compute costs and path
         myMap = Map2D(map_file)
-        myMap.fillCostMatrix(goal[0], goal[1], False)
+        myMap.fillCostMatrix(goal[0], goal[1], ocho)
         #myMap.verbose = True
         #myMap.drawMap(saveSnapshot=False)
-        myMap.findPath(ini,goal, False)
+        myMap.findPath(ini,goal, ocho)
         
         #print(myMap.currentPath)
         path2print = []
@@ -63,7 +64,7 @@ def main(args):
                     [_,_,th] = robot.readOdometry()
                     myMap.setNewObstacle(prev_point, th)
                     #myMap.drawMap(saveSnapshot=False)
-                    myMap.replanPath(prev_point[0],prev_point[1],goal[0], goal[1],False)
+                    myMap.replanPath(prev_point[0],prev_point[1],goal[0], goal[1],ocho)
                     #print('El nuevo path',myMap.currentPath)
                     goal_reached = False
                     break
