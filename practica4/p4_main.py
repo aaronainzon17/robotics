@@ -40,10 +40,10 @@ def main(args):
 
         # 1. load map and compute costs and path
         myMap = Map2D(map_file)
-        myMap.fillCostMatrix(goal[0], goal[1], True)
+        myMap.fillCostMatrix(goal[0], goal[1], False)
         #myMap.verbose = True
         #myMap.drawMap(saveSnapshot=False)
-        myMap.findPath(ini,goal, True)
+        myMap.findPath(ini,goal, False)
         
         #print(myMap.currentPath)
         path2print = []
@@ -63,7 +63,7 @@ def main(args):
                     [_,_,th] = robot.readOdometry()
                     myMap.setNewObstacle(prev_point, th)
                     myMap.drawMap(saveSnapshot=False)
-                    myMap.replanPath(point_map[0],point_map[1],goal[0], goal[1])
+                    myMap.replanPath(point_map[0],point_map[1],goal[0], goal[1],False)
                     print('El nuevo path',myMap.currentPath)
                     goal_reached = False
                     break
@@ -98,6 +98,6 @@ if __name__ == "__main__":
     # Add as many args as you need ...
     parser = argparse.ArgumentParser()
     parser.add_argument("-m", "--mapfile", help="path to find map file",
-                        default="mapa1.txt")
+                        default="mapa0.txt")
     args = parser.parse_args()
     main(args)
