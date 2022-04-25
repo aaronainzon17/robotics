@@ -50,7 +50,7 @@ def main(args):
         goal_reached = False
         while not goal_reached:
 
-            #prev_point = np.array([200,0])
+            prev_point = np.array(ini)
             for point_map in myMap.currentPath:
                 point = [200+point_map[0]*400, 200+point_map[1]*400, 1.57]
                 #point_now = np.array(robot.readOdometry())
@@ -61,7 +61,7 @@ def main(args):
                     print('SE HA ENCONTRADO UN OBSTACULO NO ESPERADO en el punto', point)
                     robot.setSpeed(0,0)
                     [_,_,th] = robot.readOdometry()
-                    myMap.setNewObstacle(point_map, th)
+                    myMap.setNewObstacle(prev_point, th)
                     myMap.drawMap(saveSnapshot=False)
                     myMap.replanPath(point_map[0],point_map[1],goal[0], goal[1])
                     print('El nuevo path',myMap.currentPath)
@@ -72,7 +72,7 @@ def main(args):
 
                 robot.go(point[0],point[1])
                 path2print.append([point[0], point[1], 1.57])
-                #prev_point = point
+                prev_point = point
 
             
                 
