@@ -39,28 +39,33 @@ def main(args):
         #myMap.verbose = True
         #myMap.drawMap(saveSnapshot=False)
         
-        myMap.findPath([0,0],[2,2], True)
+        myMap.findPath([0,0],[2,0], False)
         
-        myMap.setNewObstacle([1,1],np.deg2rad(90))
+        myMap.setNewObstacle([1,0],np.deg2rad(0))
         
-        myMap.replanPath(0,0,2,2,True)
+        myMap._initCostMatrix()
         
         #myMap.planPath(0, 0, 6, 0, True)
-        
-        print(myMap.currentPath)
-        path2print = []
-        for i in myMap.currentPath:
-            path2print.append([200+i[0]*400, 200+i[1]*400, np.deg2rad(-130)])
-            #if i[0] == 0 and i[1] == 0: 
-            #    path2print.append([200, 200, 1.57])
-            #elif i[0] == 0: 
-            #    path2print.append([200, 200+i[1]*400, 1.57])
-            #elif i[1] == 0:
-            #    path2print.append([200+i[0]*400, 200,1.57]) 
-            #else:
-            #    path2print.append([200+i[0]*400, 200+i[1]*400, 1.57])
-        
-        myMap.drawMapWithRobotLocations(path2print, saveSnapshot=False)
+        myMap.fillCostMatrix(2, 0, False)
+        myMap.drawMap(saveSnapshot=False)
+        #print(myMap.currentPath)
+        #path2print = []
+        #for i in myMap.currentPath:
+        #    if i == None:
+        #        print('No veo camino')
+        #        break
+        #    else:
+        #        path2print.append([200+i[0]*400, 200+i[1]*400, np.deg2rad(-130)])
+        #    #if i[0] == 0 and i[1] == 0: 
+        #    #    path2print.append([200, 200, 1.57])
+        #    #elif i[0] == 0: 
+        #    #    path2print.append([200, 200+i[1]*400, 1.57])
+        #    #elif i[1] == 0:
+        #    #    path2print.append([200+i[0]*400, 200,1.57]) 
+        #    #else:
+        #    #    path2print.append([200+i[0]*400, 200+i[1]*400, 1.57])
+        #
+        #myMap.drawMapWithRobotLocations(path2print, saveSnapshot=False)
         
         return
 

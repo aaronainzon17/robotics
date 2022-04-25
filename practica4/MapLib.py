@@ -504,7 +504,7 @@ class Map2D:
         return minCoord
     
     def replanPath(self, x_ini,  y_ini, x_end, y_end, ocho=False):
-        self.currentPath = None
+        self._initCostMatrix()
         return self.planPath(x_ini, y_ini, x_end, y_end, ocho)
 
     def setNewObstacle(self, point, th):
