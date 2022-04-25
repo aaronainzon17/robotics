@@ -427,8 +427,7 @@ class Robot:
             if (abs(x_goal-x_now) <= x_err) and (abs(y_goal-y_now) <= y_err):
                 self.setSpeed(0,0)
                 reached = True
-                print("Se ha alcanzado el punto:[",
-                    x_now, ",", y_now, ",", th_now, "]")
+                #print("Se ha alcanzado el punto:[",x_now, ",", y_now, ",", th_now, "]")
                 
     # La funcion se encarga de alienar el robot con el punto objetivo para poder
     # realizar una trayectoria lienal
@@ -440,16 +439,12 @@ class Robot:
                 d_x = x_goal - x_now
                 d_y = y_goal - y_now
                 d_th = self.norm_pi(np.arctan2(d_y, d_x) - th_now)
-               
+                print(d_th)
                 if abs(d_th) < error_ang:
                     self.setSpeed(0,0)
-                    print(d_th,",",error_ang)
+                    
                     aligned = True
                 else:
-                    #if d_th < 0:
-                    #    w = -30
-                    #else:
-                    #    w = 30
                     w = self.lienar_w(d_th)
                     self.setSpeed(0,w)
     
@@ -480,9 +475,9 @@ class Robot:
             try:
                 [x_now, y_now, _] = self.readOdometry()
                 espacio = np.linalg.norm([x_goal - x_now, y_goal - y_now])
-                print('La distancia es:', espacio)
+                #print('La distancia es:', espacio)
                 value = self.BP.get_sensor(self.BP.PORT_1) * 10
-                print('He leido: ', value)
+                #print('He leido: ', value)
                 if value < espacio and value > 0.0:
                     return True
                 elif value > 0.0:

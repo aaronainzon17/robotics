@@ -52,31 +52,27 @@ def main(args):
 
             prev_point = np.array(ini)
             for point_map in myMap.currentPath:
-                if point_map == None:
-                    robot.setSpeed(0,45)
-                    time.sleep(5)
+                point = [200+point_map[0]*400, 200+point_map[1]*400, 1.57]
+                #point_now = np.array(robot.readOdometry())
+                #point = np.array(point[:2])
+                #goal_point = point_now[:2] + (point - prev_point)
+                #print('Voy al punto', goal_point, 'desde', point_now[:2])
+                if robot.detectObstacle(point[0],point[1]):
+                    #print('SE HA ENCONTRADO UN OBSTACULO NO ESPERADO en el punto', point)
+                    robot.setSpeed(0,0)
+                    [_,_,th] = robot.readOdometry()
+                    myMap.setNewObstacle(prev_point, th)
+                    #myMap.drawMap(saveSnapshot=False)
+                    myMap.replanPath(prev_point[0],prev_point[1],goal[0], goal[1],False)
+                    #print('El nuevo path',myMap.currentPath)
+                    goal_reached = False
+                    break
                 else:
-                    point = [200+point_map[0]*400, 200+point_map[1]*400, 1.57]
-                    #point_now = np.array(robot.readOdometry())
-                    #point = np.array(point[:2])
-                    #goal_point = point_now[:2] + (point - prev_point)
-                    #print('Voy al punto', goal_point, 'desde', point_now[:2])
-                    if robot.detectObstacle(point[0],point[1]):
-                        print('SE HA ENCONTRADO UN OBSTACULO NO ESPERADO en el punto', point)
-                        robot.setSpeed(0,0)
-                        [_,_,th] = robot.readOdometry()
-                        myMap.setNewObstacle(prev_point, th)
-                        myMap.drawMap(saveSnapshot=False)
-                        myMap.replanPath(prev_point[0],prev_point[1],goal[0], goal[1],False)
-                        print('El nuevo path',myMap.currentPath)
-                        goal_reached = False
-                        break
-                    else:
-                        goal_reached = True
+                    goal_reached = True
 
-                    robot.go(point[0],point[1])
-                    path2print.append([point[0], point[1], 1.57])
-                    prev_point = point_map
+                robot.go(point[0],point[1])
+                path2print.append([point[0], point[1], 1.57])
+                prev_point = point_map
 
             
                 
