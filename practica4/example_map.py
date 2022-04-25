@@ -39,14 +39,14 @@ def main(args):
         #myMap.verbose = True
         #myMap.drawMap(saveSnapshot=False)
         
-        myMap.findPath([0,0],[2,0], False)
+        myMap.findPath([0,0],[2,2], False)
         
-        myMap.setNewObstacle([1,0],np.deg2rad(0))
+        myMap.setNewObstacle([1,2],np.deg2rad(0))
         
         myMap._initCostMatrix()
         
         #myMap.planPath(0, 0, 6, 0, True)
-        myMap.fillCostMatrix(2, 0, False)
+        myMap.fillCostMatrix(2, 2, False)
         myMap.drawMap(saveSnapshot=False)
         #print(myMap.currentPath)
         #path2print = []
