@@ -61,7 +61,7 @@ def main(args):
                     robot.setSpeed(0,0)
                     [_,_,th] = robot.readOdometry()
                     myMap.setNewObstacle(point_map, th)
-                    myMap.replanPath(point_map[0],point_map[1])
+                    myMap.replanPath(point_map[0],point_map[1],2,0)
                     break
 
                 robot.go(point[0],point[1])
