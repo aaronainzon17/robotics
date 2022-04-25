@@ -64,6 +64,7 @@ def main(args):
                     myMap.setNewObstacle(point_map, th)
                     myMap.replanPath(point_map[0],point_map[1],goal[0], goal[1])
                     print('El nuevo path',myMap.currentPath)
+                    goal_reached = False
                     break
                 else:
                     goal_reached = True
