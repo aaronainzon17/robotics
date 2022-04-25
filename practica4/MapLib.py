@@ -476,6 +476,7 @@ class Map2D:
         
         #self.fillCostMatrix(x_end, y_end, ocho) # El tercer parametro es opcional, por defecto False
         while not pathFound:
+            print(self.currentPath, len(self.currentPath))
             [x,y] = self.currentPath[len(self.currentPath) - 1]
             nextStep = self.min_neighbour(x,y,self.costMatrix[x][y],ocho)
             self.currentPath.append(nextStep)
