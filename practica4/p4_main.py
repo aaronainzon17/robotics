@@ -63,12 +63,14 @@ def main(args):
                     myMap.setNewObstacle(point_map, th)
                     myMap.replanPath(point_map[0],point_map[1],2,0)
                     break
-
+                else:
+                    goal_reached = True
+                    
                 robot.go(point[0],point[1])
                 path2print.append([point[0], point[1], 1.57])
                 #prev_point = point
 
-            goal_reached = True
+            
                 
                 
             
