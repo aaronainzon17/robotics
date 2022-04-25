@@ -35,15 +35,22 @@ def main(args):
 
         # 1. load map and compute costs and path
         myMap = Map2D(map_file)
-        myMap.fillCostMatrix(3, 3, True)
+        #myMap.fillCostMatrix(2, 2, True)
         #myMap.verbose = True
-        myMap.drawMap(saveSnapshot=False)
-        myMap.findPath([0,0],[3,3], True)
+        #myMap.drawMap(saveSnapshot=False)
+        
+        myMap.findPath([0,0],[2,2], True)
+        
+        myMap.setNewObstacle([1,1],np.deg2rad(90))
+        
+        myMap.replanPath(0,0,2,2,True)
+        
         #myMap.planPath(0, 0, 6, 0, True)
+        
         print(myMap.currentPath)
         path2print = []
         for i in myMap.currentPath:
-            path2print.append([200+i[0]*400, 200+i[1]*400, 1.57])
+            path2print.append([200+i[0]*400, 200+i[1]*400, np.deg2rad(-130)])
             #if i[0] == 0 and i[1] == 0: 
             #    path2print.append([200, 200, 1.57])
             #elif i[0] == 0: 
@@ -53,8 +60,8 @@ def main(args):
             #else:
             #    path2print.append([200+i[0]*400, 200+i[1]*400, 1.57])
         
-        myMap.drawMapWithRobotLocations(
-            path2print, saveSnapshot=False)
+        myMap.drawMapWithRobotLocations(path2print, saveSnapshot=False)
+        
         return
 
         # you can set verbose to False to stop displaying plots interactively
@@ -113,6 +120,6 @@ if __name__ == "__main__":
     # Add as many args as you need ...
     parser = argparse.ArgumentParser()
     parser.add_argument("-m", "--mapfile", help="path to find map file",
-                        default="mapa2.txt")
+                        default="mapa0.txt")
     args = parser.parse_args()
     main(args)

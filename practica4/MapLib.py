@@ -470,7 +470,7 @@ class Map2D:
         x_ini, y_ini, x_end, y_end: integer values that indicate \
         the x and y coordinates of the starting (ini) and ending (end) cell
         """
-
+        
         self.currentPath = [[x_ini, y_ini]]
         pathFound = False 
         
@@ -506,4 +506,27 @@ class Map2D:
         return self.planPath(x_ini, y_ini, x_end, y_end, ocho)
 
     def setNewObstacle(self, point, th):
-        print('Sin implementar')
+        neigbours = self.get_neighbours(th)
+        for cell in neigbours:
+            cm = self._cell2connCoord(point[0], point[1], cell) # cm = connection matrix
+            self.connectionMatrix[cm[0]][cm[1]] = 0
+
+    
+    def get_neighbours(self,th):
+        error = np.deg2rad(15)
+        
+        if abs(th - np.deg2rad(90)) < error:
+            # Esta mirando al frente (el obstaculo esta en los vecinos 7,0,1)
+            return [7,0,1]
+        elif abs(th + np.deg2rad(90)) < error:
+            # Esta mirando hacia abajo (el obstaculo esta en los vecinos 3,4,5)
+            return [3,4,5]
+        elif abs(th) < error: 
+            # Esta mirando a la derecha (el obstaculo esta en los vecinos 1,2,3)
+            return [1,2,3]
+        elif abs(th - np.deg2rad(180)) < error:
+            # Esta mirando a la izquierda (el obstaculo esta en los vecinos 5,6,7)
+            return [5,6,7]
+        elif abs(th + np.deg2rad(180)) < error:
+            # Esta mirando a la izquierda (el obstaculo esta en los vecinos 5,6,7)
+            return [5,6,7]
