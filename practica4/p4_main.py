@@ -72,7 +72,7 @@ def main(args):
 
                 robot.go(point[0],point[1])
                 path2print.append([point[0], point[1], 1.57])
-                prev_point = point
+                prev_point = point_map
 
             
                 
