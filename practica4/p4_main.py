@@ -60,8 +60,8 @@ def main(args):
                     print('SE HA ENCONTRADO UN OBSTACULO NO ESPERADO en el punto', point)
                     robot.setSpeed(0,0)
                     [_,_,th] = robot.readOdometry()
-                    myMap.setNewObstacle(point, th)
-                    myMap.replanPath(point[0],point[1])
+                    myMap.setNewObstacle(point_map, th)
+                    myMap.replanPath(point_map[0],point_map[1])
                     break
 
                 robot.go(point[0],point[1])
