@@ -63,7 +63,7 @@ def main(args):
                     [_,_,th] = robot.readOdometry()
                     myMap.setNewObstacle(prev_point, th)
                     myMap.drawMap(saveSnapshot=False)
-                    myMap.replanPath(point_map[0],point_map[1],goal[0], goal[1],False)
+                    myMap.replanPath(prev_point[0],prev_point[1],goal[0], goal[1],False)
                     print('El nuevo path',myMap.currentPath)
                     goal_reached = False
                     break
