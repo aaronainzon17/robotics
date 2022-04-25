@@ -470,7 +470,7 @@ class Map2D:
         x_ini, y_ini, x_end, y_end: integer values that indicate \
         the x and y coordinates of the starting (ini) and ending (end) cell
         """
-        self.currentPath.clear()
+
         self.currentPath = [[x_ini, y_ini]]
         pathFound = False 
         
@@ -504,6 +504,7 @@ class Map2D:
         return minCoord
     
     def replanPath(self, x_ini,  y_ini, x_end, y_end, ocho=False):
+        self.currentPath = None
         return self.planPath(x_ini, y_ini, x_end, y_end, ocho)
 
     def setNewObstacle(self, point, th):
