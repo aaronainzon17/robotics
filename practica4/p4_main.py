@@ -32,7 +32,7 @@ def main(args):
 
         map_file = args.mapfile
         ini = [0,0]
-        goal = [2,0]        
+        goal = [2,2]        
         # Se instancia el robot
         robot = Robot(init_position=[200,0,np.deg2rad(90)]) 
         # Se inicia la odometria
