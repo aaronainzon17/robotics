@@ -69,7 +69,7 @@ def main(args):
                     
                     robot.setSpeed(0,0)
                     [_,_,th] = robot.readOdometry()
-                    myMap.setNewObstacle(prev_point, th)
+                    ocho = myMap.setNewObstacle(prev_point, th)
                     
                     if not myMap.replanPath(prev_point[0],prev_point[1],goal[0], goal[1],ocho):
                         print('NO EXISTE CAMINO DISPONIBLE CON EL NUEVO OBSTACULO DETECTADO')

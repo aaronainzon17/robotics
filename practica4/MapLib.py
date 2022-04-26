@@ -514,9 +514,16 @@ class Map2D:
 
     def setNewObstacle(self, point, th):
         neigbours = self.get_neighbours(th)
-        for cell in neigbours:
-            cm = self._cell2connCoord(point[0], point[1], cell) # cm = connection matrix
-            self.connectionMatrix[cm[0]][cm[1]] = 0
+        if neigbours != None:
+            # Se introduce el obstaculo   
+            for cell in neigbours:
+                cm = self._cell2connCoord(point[0], point[1], cell) # cm = connection matrix
+                self.connectionMatrix[cm[0]][cm[1]] = 0
+            return True
+        else:
+            # Si no es claro donde esta el obstaculo, no se introduce y se planea 4 vecindad
+            return False
+
 
     
     def get_neighbours(self,th):
@@ -537,3 +544,8 @@ class Map2D:
         elif abs(th + np.deg2rad(180)) < error:
             # Esta mirando a la izquierda (el obstaculo esta en los vecinos 5,6,7)
             return [5,6,7]
+        else:
+            # En caso de que el obstaculo no este ni al frente ni a la derecha 
+            # Se asume que no se sabe donde esta y se acaba el camino haciendo 4 vecindad 
+            # para evitar ver obstaculos en diagonal
+            return None
