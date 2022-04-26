@@ -55,7 +55,8 @@ def main(args):
         
         path2print = []
         goal_reached = False
-        while not goal_reached:
+        lost = False
+        while not goal_reached and not lost:
 
             prev_point = np.array(ini)
             for point_map in myMap.currentPath:
@@ -75,7 +76,7 @@ def main(args):
                         robot.setSpeed(0,45)
                         time.sleep(5)
                         robot.setSpeed(0,0)
-                        exit(1)
+                        lost = True
                     
                     goal_reached = False
                     break
@@ -85,7 +86,7 @@ def main(args):
                 robot.go(point[0],point[1])
                 path2print.append([point[0], point[1], 1.57])
                 prev_point = point_map
-                
+
         myMap.drawMapWithRobotLocations(
             path2print, saveSnapshot=False)
         
