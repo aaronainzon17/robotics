@@ -33,7 +33,7 @@ def main(args):
         # robot = Robot()
         # ...
         ini = [0,0]
-        goal = [2,1]   
+        goal = [6,4]   
         ocho = True  
         # 1. load map and compute costs and path
         myMap = Map2D(map_file)
@@ -41,7 +41,7 @@ def main(args):
         #myMap.verbose = True
         #myMap.drawMap(saveSnapshot=False)
         
-        myMap.findPath([0,0],[2,2], ocho)
+        myMap.findPath(ini,goal, ocho)
         
         #myMap.setNewObstacle([1,2],np.deg2rad(0))
         
@@ -50,13 +50,13 @@ def main(args):
         myMap.drawMap(saveSnapshot=False)
         
         #print(myMap.currentPath)
-        #path2print = []
-        #for i in myMap.currentPath:
+        path2print = []
+        for i in myMap.currentPath:
         #    if i == None:
         #        print('No veo camino')
         #        break
         #    else:
-        #        path2print.append([200+i[0]*400, 200+i[1]*400, np.deg2rad(-130)])
+            path2print.append([200+i[0]*400, 200+i[1]*400, np.deg2rad(-130)])
         #    #if i[0] == 0 and i[1] == 0: 
         #    #    path2print.append([200, 200, 1.57])
         #    #elif i[0] == 0: 
@@ -66,7 +66,7 @@ def main(args):
         #    #else:
         #    #    path2print.append([200+i[0]*400, 200+i[1]*400, 1.57])
         #
-        #myMap.drawMapWithRobotLocations(path2print, saveSnapshot=False)
+        myMap.drawMapWithRobotLocations(path2print, saveSnapshot=False)
         
         return
 
@@ -126,6 +126,6 @@ if __name__ == "__main__":
     # Add as many args as you need ...
     parser = argparse.ArgumentParser()
     parser.add_argument("-m", "--mapfile", help="path to find map file",
-                        default="mapa1.txt")
+                        default="mapa2.txt")
     args = parser.parse_args()
     main(args)
