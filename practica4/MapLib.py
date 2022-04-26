@@ -473,17 +473,22 @@ class Map2D:
 
         self.currentPath = [[x_ini, y_ini]]
         pathFound = False 
-        
+        existePath = True
         self.fillCostMatrix(x_end, y_end, ocho) # El tercer parametro es opcional, por defecto False
-        while not pathFound:
-            print(self.currentPath, len(self.currentPath))
-            [x,y] = self.currentPath[len(self.currentPath) - 1]
-            nextStep = self.min_neighbour(x,y,self.costMatrix[x][y],ocho)
-            self.currentPath.append(nextStep)
-            if [x_end,y_end] == nextStep:
-                pathFound = True
-        
-        return pathFound
+        while not pathFound and existePath:
+            #print(self.currentPath, len(self.currentPath))
+            if self.currentPath[len(self.currentPath) - 1] is not None:
+                [x,y] = self.currentPath[len(self.currentPath) - 1]
+                nextStep = self.min_neighbour(x,y,self.costMatrix[x][y],ocho)
+                self.currentPath.append(nextStep)
+                if [x_end,y_end] == nextStep:
+                    pathFound = True
+            else: 
+                existePath = False
+        if existePath:
+            return pathFound
+        else:
+            return False
 
     def min_neighbour(self, x, y, min, ocho=False):
         if ocho:

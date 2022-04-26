@@ -44,7 +44,11 @@ def main(args):
         #myMap.fillCostMatrix(goal[0], goal[1], ocho)
         #myMap.verbose = True
         #myMap.drawMap(saveSnapshot=False)
-        myMap.findPath(ini,goal, ocho)
+        if not myMap.findPath(ini,goal, ocho):
+            print('NO EXISTE CAMINO DISPONIBLE')
+            robot.setSpeed(0,45)
+            time.sleep(5)
+            exit(1)
         
         #print(myMap.currentPath)
         path2print = []
@@ -64,7 +68,12 @@ def main(args):
                     [_,_,th] = robot.readOdometry()
                     myMap.setNewObstacle(prev_point, th)
                     #myMap.drawMap(saveSnapshot=False)
-                    myMap.replanPath(prev_point[0],prev_point[1],goal[0], goal[1],ocho)
+                    if not myMap.replanPath(prev_point[0],prev_point[1],goal[0], goal[1],ocho):
+                        print('NO EXISTE CAMINO DISPONIBLE CON EL NUEVO OBSTACULO DETECTADO')
+                        robot.setSpeed(0,45)
+                        time.sleep(5)
+                        exit(1)
+                    
                     #print('El nuevo path',myMap.currentPath)
                     goal_reached = False
                     break
