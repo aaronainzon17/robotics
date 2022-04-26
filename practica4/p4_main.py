@@ -32,7 +32,7 @@ def main(args):
 
         map_file = args.mapfile
         ini = [0,0]
-        goal = [2,1]   
+        goal = [3,4]   
         ocho = True     
 
         # Se instancia el robot
