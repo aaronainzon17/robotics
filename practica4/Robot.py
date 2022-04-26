@@ -427,7 +427,6 @@ class Robot:
             if (abs(x_goal-x_now) <= x_err) and (abs(y_goal-y_now) <= y_err):
                 self.setSpeed(0,0)
                 reached = True
-                #print("Se ha alcanzado el punto:[",x_now, ",", y_now, ",", th_now, "]")
                 
     # La funcion se encarga de alienar el robot con el punto objetivo para poder
     # realizar una trayectoria lienal
@@ -439,7 +438,6 @@ class Robot:
                 d_x = x_goal - x_now
                 d_y = y_goal - y_now
                 d_th = self.norm_pi(np.arctan2(d_y, d_x) - th_now)
-                print(d_th)
                 if abs(d_th) < error_ang:
                     self.setSpeed(0,0)
                     
@@ -466,18 +464,23 @@ class Robot:
             th = th + 2 * math.pi
         return th
 
+    # Se evalua si el sensor ultrasonidos ha detectado un obstaculo a menos de
+    # la distancia que se va a recorrer 
     def detectObstacle(self, x_goal, y_goal):
         # Aliena al robot con el siguiente punto
         self.align(x_goal, y_goal, np.deg2rad(1))
         
         value = 0.0
+        # Se itera hasta que el sensor devuelve un valor distinto a 0 (le cuesta encenderse y sino da error)
         while value <= 0.0:
             try:
                 [x_now, y_now, _] = self.readOdometry()
+                # Se calcula el espacio a recorrer 
                 espacio = np.linalg.norm([x_goal - x_now, y_goal - y_now])
-                #print('La distancia es:', espacio)
+                # Se lee la distancia que recoge el sensor (*10 para pasarlo a mm)
                 value = self.BP.get_sensor(self.BP.PORT_1) * 10
-                #print('He leido: ', value)
+                
+                # Se devuelve True si hay obstaculo, False si no
                 if value < espacio and value > 0.0:
                     return True
                 elif value > 0.0:

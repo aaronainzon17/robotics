@@ -425,11 +425,8 @@ class Map2D:
     # METHODS to IMPLEMENT in P4
     # ############################################################
 
+    # Rellena la matriz de coste del mapa
     def fillCostMatrix(self, x_end, y_end, ocho=False):
-        """
-        NOTE: Make sure self.costMatrix is a 2D numpy array of dimensions dimX x dimY
-        TO-DO
-        """
         # Se crea una cola en la que se guardan las celdas las cuales 
         # sus vecinas se tienen que rellenar
         wavefront = queue.Queue()
@@ -464,32 +461,41 @@ class Map2D:
                 wavefront.put([x, y])
                 # Se le da un peso de val + 1 
                 self.costMatrix[x][y] = val + 1
-
+                
+    # Calcula el recorrido basandose en los pesos calculados en la matriz de costes 
     def planPath(self, x_ini,  y_ini, x_end, y_end, ocho=False):
         """
         x_ini, y_ini, x_end, y_end: integer values that indicate \
         the x and y coordinates of the starting (ini) and ending (end) cell
         """
-
-        self.currentPath = [[x_ini, y_ini]]
+        # Se inicializa el nuevo recorrido con la coordenada de partida 
+        REVISAR
+        self.currentPath = [[x_ini, y_ini]] 
         pathFound = False 
         existePath = True
-        self.fillCostMatrix(x_end, y_end, ocho) # El tercer parametro es opcional, por defecto False
+        # Se rellena la matriz usando NF1
+        self.fillCostMatrix(x_end, y_end, ocho)
+        # Se recalcula el camino
         while not pathFound and existePath:
-            #print(self.currentPath, len(self.currentPath))
             if self.currentPath[len(self.currentPath) - 1] is not None:
+                # Si existe el camino
                 [x,y] = self.currentPath[len(self.currentPath) - 1]
+                # Se anyade al path el vecino de menor peso
                 nextStep = self.min_neighbour(x,y,self.costMatrix[x][y],ocho)
                 self.currentPath.append(nextStep)
                 if [x_end,y_end] == nextStep:
                     pathFound = True
             else: 
+                # Si no existe camino posibe 
                 existePath = False
+        REVISAR
+        # self.currentPath = self.currentPath[1:]
         if existePath:
             return pathFound
         else:
             return False
 
+    # Devuelve la coordenada de la celda vecina de menor coste
     def min_neighbour(self, x, y, min, ocho=False):
         if ocho:
             values = list(range(0,7))
@@ -508,10 +514,12 @@ class Map2D:
         
         return minCoord
     
+    # Replanifica el recorrido tras encontrar un obstaculo no conocido
     def replanPath(self, x_ini,  y_ini, x_end, y_end, ocho=False):
         self._initCostMatrix()
         return self.planPath(x_ini, y_ini, x_end, y_end, ocho)
 
+    # Anyade un nuevo obstaculo a la matriz de conexiones del mapa
     def setNewObstacle(self, point, th):
         neigbours = self.get_neighbours(th)
         if neigbours != None:
@@ -525,7 +533,8 @@ class Map2D:
             return False
 
 
-    
+    # Devuelve en que vecinos de la celda se encuentra el obstaculo, 
+    # en caso indeterminado devuelve None
     def get_neighbours(self,th):
         error = np.deg2rad(15)
         
