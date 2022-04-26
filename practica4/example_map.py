@@ -43,9 +43,9 @@ def main(args):
         
         myMap.findPath([0,0],[2,2], ocho)
         
-        myMap.setNewObstacle([1,2],np.deg2rad(0))
+        #myMap.setNewObstacle([1,2],np.deg2rad(0))
         
-        myMap.replanPath(1, 1, 2, 1, ocho)
+        #myMap.replanPath(1, 1, 2, 1, ocho)
         
         myMap.drawMap(saveSnapshot=False)
         
@@ -126,6 +126,6 @@ if __name__ == "__main__":
     # Add as many args as you need ...
     parser = argparse.ArgumentParser()
     parser.add_argument("-m", "--mapfile", help="path to find map file",
-                        default="mapa0.txt")
+                        default="mapa1.txt")
     args = parser.parse_args()
     main(args)
