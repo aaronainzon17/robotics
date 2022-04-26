@@ -48,6 +48,7 @@ def main(args):
             print('NO EXISTE CAMINO DISPONIBLE')
             robot.setSpeed(0,45)
             time.sleep(5)
+            robot.setSpeed(0,0)
             exit(1)
         
         #print(myMap.currentPath)
@@ -72,6 +73,7 @@ def main(args):
                         print('NO EXISTE CAMINO DISPONIBLE CON EL NUEVO OBSTACULO DETECTADO')
                         robot.setSpeed(0,45)
                         time.sleep(5)
+                        robot.setSpeed(0,0)
                         exit(1)
                     
                     #print('El nuevo path',myMap.currentPath)
