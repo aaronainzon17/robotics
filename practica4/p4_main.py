@@ -34,8 +34,10 @@ def main(args):
         ini = [0,0]
         goal = [2,1]   
         ocho = True     
+
         # Se instancia el robot
         robot = Robot(init_position=[200,0,np.deg2rad(90)]) 
+        
         # Se inicia la odometria
         robot.startOdometry()
 
@@ -51,7 +53,6 @@ def main(args):
             robot.setSpeed(0,0)
             exit(1)
         
-        #print(myMap.currentPath)
         path2print = []
         goal_reached = False
         while not goal_reached:
@@ -64,11 +65,11 @@ def main(args):
                 #goal_point = point_now[:2] + (point - prev_point)
                 #print('Voy al punto', goal_point, 'desde', point_now[:2])
                 if robot.detectObstacle(point[0],point[1]):
-                    #print('SE HA ENCONTRADO UN OBSTACULO NO ESPERADO en el punto', point)
+                    
                     robot.setSpeed(0,0)
                     [_,_,th] = robot.readOdometry()
                     myMap.setNewObstacle(prev_point, th)
-                    #myMap.drawMap(saveSnapshot=False)
+                    
                     if not myMap.replanPath(prev_point[0],prev_point[1],goal[0], goal[1],ocho):
                         print('NO EXISTE CAMINO DISPONIBLE CON EL NUEVO OBSTACULO DETECTADO')
                         robot.setSpeed(0,45)
@@ -76,7 +77,6 @@ def main(args):
                         robot.setSpeed(0,0)
                         exit(1)
                     
-                    #print('El nuevo path',myMap.currentPath)
                     goal_reached = False
                     break
                 else:
@@ -85,13 +85,7 @@ def main(args):
                 robot.go(point[0],point[1])
                 path2print.append([point[0], point[1], 1.57])
                 prev_point = point_map
-
-            
                 
-                
-            
-
-
         myMap.drawMapWithRobotLocations(
             path2print, saveSnapshot=False)
         
