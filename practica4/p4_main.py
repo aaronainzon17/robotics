@@ -41,7 +41,7 @@ def main(args):
 
         # 1. load map and compute costs and path
         myMap = Map2D(map_file)
-        myMap.fillCostMatrix(goal[0], goal[1], ocho)
+        #myMap.fillCostMatrix(goal[0], goal[1], ocho)
         #myMap.verbose = True
         #myMap.drawMap(saveSnapshot=False)
         myMap.findPath(ini,goal, ocho)

@@ -32,22 +32,23 @@ def main(args):
         # Instantiate Odometry with your own files from P2/P3
         # robot = Robot()
         # ...
-
+        ini = [0,0]
+        goal = [2,1]   
+        ocho = True  
         # 1. load map and compute costs and path
         myMap = Map2D(map_file)
-        #myMap.fillCostMatrix(2, 2, True)
+        
         #myMap.verbose = True
         #myMap.drawMap(saveSnapshot=False)
         
-        myMap.findPath([0,0],[2,2], False)
+        myMap.findPath([0,0],[2,2], ocho)
         
         myMap.setNewObstacle([1,2],np.deg2rad(0))
         
-        myMap._initCostMatrix()
+        myMap.replanPath(1, 1, 2, 1, ocho)
         
-        #myMap.planPath(0, 0, 6, 0, True)
-        myMap.fillCostMatrix(2, 2, False)
         myMap.drawMap(saveSnapshot=False)
+        
         #print(myMap.currentPath)
         #path2print = []
         #for i in myMap.currentPath:
