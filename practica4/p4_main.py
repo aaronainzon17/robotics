@@ -73,7 +73,7 @@ def main(args):
                     robot.setSpeed(0,0)
                     [_,_,th] = robot.readOdometry()
                     # se anyade el obsatculo al mapa 
-                    ocho = myMap.setNewObstacle(prev_point, th)
+                    ocho = myMap.setNewObstacle(prev_point, th, ocho)
                     
                     # Se recalcula el camino con el nuevo obstaculo 
                     if not myMap.replanPath(prev_point[0],prev_point[1],goal[0], goal[1],ocho):

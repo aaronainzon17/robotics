@@ -520,14 +520,17 @@ class Map2D:
         return self.planPath(x_ini, y_ini, x_end, y_end, ocho)
 
     # Anyade un nuevo obstaculo a la matriz de conexiones del mapa
-    def setNewObstacle(self, point, th):
+    def setNewObstacle(self, point, th, ocho):
         neigbours = self.get_neighbours(th)
         if neigbours != None:
             # Se introduce el obstaculo   
             for cell in neigbours:
                 cm = self._cell2connCoord(point[0], point[1], cell) # cm = connection matrix
                 self.connectionMatrix[cm[0]][cm[1]] = 0
-            return True
+            if ocho:
+                return True
+            else:
+                return False
         else:
             # Si no es claro donde esta el obstaculo, no se introduce y se planea 4 vecindad
             return False
