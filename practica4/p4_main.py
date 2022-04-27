@@ -38,7 +38,7 @@ def main(args):
         ocho = False     
 
         # Se calcula la posicion en la realidad del robot para la coordenada inicial
-        ini_point = [200+point_map[0]*400, 200+point_map[1]*400, 1.57]
+        ini_point = [200+ini[0]*400, 200+ini[1]*400, 1.57]
         # Se instancia el robot
         robot = Robot(init_position=[ini_point[0],ini_point[1],np.deg2rad(90)]) 
         
