@@ -469,7 +469,7 @@ class Map2D:
         the x and y coordinates of the starting (ini) and ending (end) cell
         """
         # Se inicializa el nuevo recorrido con la coordenada de partida 
-        REVISAR
+        #REVISAR
         self.currentPath = [[x_ini, y_ini]] 
         pathFound = False 
         existePath = True
@@ -488,8 +488,8 @@ class Map2D:
             else: 
                 # Si no existe camino posibe 
                 existePath = False
-        REVISAR
-        # self.currentPath = self.currentPath[1:]
+        #REVISAR
+        self.currentPath = self.currentPath[1:]
         if existePath:
             return pathFound
         else:

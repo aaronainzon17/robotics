@@ -34,8 +34,8 @@ def main(args):
         
         # Punto inicial, objetivo y 8-vecindad
         ini = [0,0]
-        goal = [4,2]     
-        ocho = True     
+        goal = [2,2]     
+        ocho = False     
 
         # Se calcula la posicion en la realidad del robot para la coordenada inicial
         ini_point = [200+point_map[0]*400, 200+point_map[1]*400, 1.57]
@@ -114,6 +114,6 @@ if __name__ == "__main__":
     # Add as many args as you need ...
     parser = argparse.ArgumentParser()
     parser.add_argument("-m", "--mapfile", help="path to find map file",
-                        default="mapa2.txt")
+                        default="mapa0.txt")
     args = parser.parse_args()
     main(args)
