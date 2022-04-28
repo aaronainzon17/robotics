@@ -367,6 +367,7 @@ class Robot:
         #Que avance un poquito antes de bajar la pinza
         self.setSpeed(20,0)
         time.sleep(2.0)
+        self.setSpeed(0,0)
         self.BP.set_motor_dps(self.BP.PORT_A, w)
         time.sleep(2.0) # Tiempo de apertura 
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
