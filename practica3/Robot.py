@@ -364,16 +364,21 @@ class Robot:
     def catch(self):
         w = 40   # Velocidad angular para abrir las pinzas 
         self.BP.set_motor_dps(self.BP.PORT_A, w)
-        time.sleep(1.5) # Tiempo de apertura 
+        time.sleep(2.0) # Tiempo de apertura 
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
-        self.setSpeed(60, 0)
-        time.sleep(1.8) # Resto de acercamiento a la pelota
-        self.setSpeed(0, 0)
+        #self.setSpeed(60, 0)
+        #time.sleep(1.8) # Resto de acercamiento a la pelota
+        #self.setSpeed(0, 0)
+        #w = -42    # Velocidad angular para cerrar las pinzas 
+        #self.BP.set_motor_dps(self.BP.PORT_A, w)
+        #time.sleep(1.5) # Tiempo de cierre de pinzas
+        #self.BP.set_motor_dps(self.BP.PORT_A, 0)
+    def un_catch(self):
         w = -42    # Velocidad angular para cerrar las pinzas 
         self.BP.set_motor_dps(self.BP.PORT_A, w)
-        time.sleep(1.5) # Tiempo de cierre de pinzas
+        time.sleep(2) # Tiempo de cierre de pinzas
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
-    
+
     #Proceso concurrente que sirve para capturar imagenes
     #Se realiza un proceso concurrente para que la captura de imagenes sea mas rapida y eficiente
     def updateCamara(self):
