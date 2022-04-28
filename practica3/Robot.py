@@ -292,6 +292,7 @@ class Robot:
                     print('x',x_bl, ', y', y_bl)
                     print('blob size', self.size_b.value)
                     triedCatch = False
+                    self.uncatch()
 
             # Si se ha alcanzado la pelota y no se ha capturado previamente
             if targetPositionReached and not finished and not triedCatch: 
@@ -363,6 +364,9 @@ class Robot:
     # Funcion de captura de la pelota
     def catch(self):
         w = 40   # Velocidad angular para abrir las pinzas 
+        #Que avance un poquito antes de bajar la pinza
+        self.setSpeed(20,0)
+        time.sleep(2.0)
         self.BP.set_motor_dps(self.BP.PORT_A, w)
         time.sleep(2.0) # Tiempo de apertura 
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
@@ -373,7 +377,7 @@ class Robot:
         #self.BP.set_motor_dps(self.BP.PORT_A, w)
         #time.sleep(1.5) # Tiempo de cierre de pinzas
         #self.BP.set_motor_dps(self.BP.PORT_A, 0)
-    def un_catch(self):
+    def uncatch(self):
         w = -42    # Velocidad angular para cerrar las pinzas 
         self.BP.set_motor_dps(self.BP.PORT_A, w)
         time.sleep(2) # Tiempo de cierre de pinzas
