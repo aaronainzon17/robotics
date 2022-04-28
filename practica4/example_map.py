@@ -33,7 +33,7 @@ def main(args):
         # robot = Robot()
         # ...
         ini = [0,0]
-        goal = [4,2]   
+        goal = [6,4]   
         ocho = True  
         # 1. load map and compute costs and path
         myMap = Map2D(map_file)
