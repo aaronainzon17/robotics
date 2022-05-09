@@ -495,7 +495,7 @@ class Robot:
         valor = 0
         while valor <= 2000:
             try:
-                valor = self.BP.get_sensor(self.BP.PORT_2)
+                x = self.BP.get_sensor(self.BP.PORT_2)
                 print('He leido', valor)
                 if valor > 2000 and valor < 2750:     #Se detecta el colo blanco entonces es el A
                     return "A"
