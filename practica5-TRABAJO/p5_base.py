@@ -103,36 +103,20 @@ def s_B(robot, vel):
     """ La funcion ocho realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
 
-    r = 400
-    v = vel
-    w = np.rad2deg((float)(v/r))
-
-    pos = [5,6]
-    robot.setSpeed(0, 45)  # Giro de 45 deg a la izquierda
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-45)),
-                   np.Infinity, np.Infinity, np.deg2rad(2))
-
-    pos = [5,4]
-    robot.setSpeed(v, -w)  # Primera semicircunferencia
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-135)),
-                   10, 5, np.deg2rad(10))
-
-    pos = [5,2]
-    robot.setSpeed(v, w)  # Segunda semicircunferencia
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-45)),
-                   20, 5, np.deg2rad(10))
-
-    pos = [5,2]
-    robot.setSpeed(0, -45)  # Giro de 45 deg a la derecha
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-90)),
-                   np.Infinity, np.Infinity, np.deg2rad(2))
-
-
-    robot.setSpeed(0, 0)  # Parar el robot
+    pos = [[0,5],[1,4],[2,3],[1,1.5]]
+    for point_map in pos:
+        point = [200+point_map[0]*400, 200+point_map[1]*400]
+        # Se mueve el robot a la siguiente celda
+        robot.go(point[0],point[1])
+        print('Voy a ',point)
 
 
 def main(args):
     try:
+        robot = Robot(init_position=[200+ini[0]*400, 200+ini[1]*400,np.deg2rad(-90)])
+
+        tipoRecorrido = robot.detectar_recorrido()
+        print("El recorrido es ", tipoRecorrido)
         # 0. Se carga el mapa en función de la marca en el suelo
         if args.mapa == "A":
             ini = [1,6]
@@ -144,7 +128,7 @@ def main(args):
             print('Mapa desconocido, seleccione mapa A o B')
             exit(1)
         
-        robot = Robot(init_position=[200+ini[0]*400, 200+ini[1]*400,np.deg2rad(-90)])
+        
 
         print("X value at the beginning from main X= %.2f" % (robot.x.value))
 
