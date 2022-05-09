@@ -87,7 +87,7 @@ def check_position(robot, x, y, th, x_err, y_err, angular_err):
 
 
 def s_A(robot, vel):
-    """ La funcion ocho realiza la trayectoria de s del mapa A basandose en
+    """ La funcion s_A realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
 
     pos = [[0,5],[1,4],[2,3],[1,1.5]]
@@ -100,7 +100,7 @@ def s_A(robot, vel):
     robot.setSpeed(0, 0)  # Parar el robot
 
 def s_B(robot, vel):
-    """ La funcion ocho realiza la trayectoria de s del mapa A basandose en
+    """ La funcion s_B realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
 
     pos = [[6,5],[5,4],[4,3],[5,1.5]]
@@ -113,9 +113,8 @@ def s_B(robot, vel):
 
 def main(args):
     try:
-        robot = Robot(init_position=[200+ini[0]*400, 200+ini[1]*400,np.deg2rad(-90)])
-
-        tipoRecorrido = robot.detectar_recorrido()
+        
+        
         print("El recorrido es ", tipoRecorrido)
         # 0. Se carga el mapa en función de la marca en el suelo
         if args.mapa == "A":
@@ -128,7 +127,9 @@ def main(args):
             print('Mapa desconocido, seleccione mapa A o B')
             exit(1)
         
-        
+        robot = Robot(init_position=[200+ini[0]*400, 200+ini[1]*400,np.deg2rad(-90)])
+
+        tipoRecorrido = robot.detectar_recorrido()
 
         print("X value at the beginning from main X= %.2f" % (robot.x.value))
 
