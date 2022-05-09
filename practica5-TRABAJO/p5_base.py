@@ -1,15 +1,15 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from MapLib import Map2D
+from libraries.MapLib import Map2D
 import argparse
 from tokenize import Double
 import numpy as np
 import time
 import math
-from Robot import Robot
+from libraries.Robot import Robot
 
 """
-            Practica 2:
+            TRABAJO FINAL:
 Autores:
     - Aaron Ibañez Espes 779088
     - Sergio Gabete Cesar 774631
@@ -103,22 +103,22 @@ def s_A(robot, vel):
 
     pos = [1,6]
     robot.setSpeed(0, -45)  # Giro de 45 deg a la derecha
-    check_position(robot, 200 + 400 * pos[1], 200 + 400 * pos[2], normalizar(np.deg2rad(-135)),
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-135)),
                    np.Infinity, np.Infinity, np.deg2rad(2))
 
     pos = [1,4]
     robot.setSpeed(v, w)  # Primera semicircunferencia
-    check_position(robot, 200 + 400 * pos[1], 200 + 400 * pos[2], normalizar(np.deg2rad(-45)),
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-45)),
                    10, 5, np.deg2rad(10))
 
     pos = [1,2]
     robot.setSpeed(v, -w)  # Segunda semicircunferencia
-    check_position(robot, 200 + 400 * pos[1], 200 + 400 * pos[2], normalizar(np.deg2rad(-135)),
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-135)),
                    20, 5, np.deg2rad(10))
 
     pos = [1,2]
     robot.setSpeed(0, 45)  # Giro de 45 deg a la izquierda
-    check_position(robot, 200 + 400 * pos[1], 200 + 400 * pos[2], normalizar(np.deg2rad(-90)),
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-90)),
                    np.Infinity, np.Infinity, np.deg2rad(2))
 
 
@@ -134,22 +134,22 @@ def s_B(robot, vel):
 
     pos = [5,6]
     robot.setSpeed(0, 45)  # Giro de 45 deg a la izquierda
-    check_position(robot, 200 + 400 * pos[1], 200 + 400 * pos[2], normalizar(np.deg2rad(-45)),
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-45)),
                    np.Infinity, np.Infinity, np.deg2rad(2))
 
     pos = [5,4]
     robot.setSpeed(v, -w)  # Primera semicircunferencia
-    check_position(robot, 200 + 400 * pos[1], 200 + 400 * pos[2], normalizar(np.deg2rad(-135)),
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-135)),
                    10, 5, np.deg2rad(10))
 
     pos = [5,2]
     robot.setSpeed(v, w)  # Segunda semicircunferencia
-    check_position(robot, 200 + 400 * pos[1], 200 + 400 * pos[2], normalizar(np.deg2rad(-45)),
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-45)),
                    20, 5, np.deg2rad(10))
 
     pos = [5,2]
     robot.setSpeed(0, -45)  # Giro de 45 deg a la derecha
-    check_position(robot, 200 + 400 * pos[1], 200 + 400 * pos[2], normalizar(np.deg2rad(-90)),
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-90)),
                    np.Infinity, np.Infinity, np.deg2rad(2))
 
 
@@ -184,8 +184,10 @@ def main(args):
 
         # Trayectoria en s
         if args.mapa == "A":
+            # R2D2
             s_A(robot, 150)
         else:
+            # BB8
             s_B(robot, 150)
 
         print("End : %s" % time.ctime())
@@ -212,7 +214,7 @@ if __name__ == "__main__":
     # Add as many args as you need ...
     parser = argparse.ArgumentParser()
     parser.add_argument("-m", "--mapa", help="Mapa seleccionado (A o B)",
-                        type=float, default="A")
+                        type=str, default="A")
     args = parser.parse_args()
 
     main(args)
