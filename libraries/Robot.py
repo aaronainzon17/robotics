@@ -18,7 +18,8 @@ from picamera.array import PiRGBArray
 
 # tambien se podria utilizar el paquete de threading
 from multiprocessing import Process, Value, Array, Lock
-from ..libraries.BlobDetector import getRedBloobs
+sys.path.append('../libraries')
+from BlobDetector import getRedBloobs
 
 
 class Robot:

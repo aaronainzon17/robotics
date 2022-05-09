@@ -1,5 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
+
+
 from ..libraries.MapLib import Map2D
 import argparse
 from tokenize import Double
