@@ -133,22 +133,22 @@ def s_B(robot, vel):
     w = np.rad2deg((float)(v/r))
 
     pos = [5,6]
-    robot.setSpeed(0, -45)  # Giro de 45 deg a la izquierda
+    robot.setSpeed(0, 45)  # Giro de 45 deg a la izquierda
     check_position(robot, 200 + 400 * pos[1], 200 + 400 * pos[2], normalizar(np.deg2rad(-45)),
                    np.Infinity, np.Infinity, np.deg2rad(2))
 
     pos = [5,4]
-    robot.setSpeed(v, w)  # Primera semicircunferencia
+    robot.setSpeed(v, -w)  # Primera semicircunferencia
     check_position(robot, 200 + 400 * pos[1], 200 + 400 * pos[2], normalizar(np.deg2rad(-135)),
                    10, 5, np.deg2rad(10))
 
     pos = [5,2]
-    robot.setSpeed(v, -w)  # Segunda semicircunferencia
+    robot.setSpeed(v, w)  # Segunda semicircunferencia
     check_position(robot, 200 + 400 * pos[1], 200 + 400 * pos[2], normalizar(np.deg2rad(-45)),
                    20, 5, np.deg2rad(10))
 
     pos = [5,2]
-    robot.setSpeed(0, -45)  # Giro de 45 deg a la derecha
+    robot.setSpeed(0, 45)  # Giro de 45 deg a la derecha
     check_position(robot, 200 + 400 * pos[1], 200 + 400 * pos[2], normalizar(np.deg2rad(-90)),
                    np.Infinity, np.Infinity, np.deg2rad(2))
 
