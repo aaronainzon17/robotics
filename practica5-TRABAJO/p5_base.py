@@ -168,7 +168,7 @@ def main(args):
             ini = [1,6]
             map_file = "mapaA_CARRERA.txt"
         elif args.mapa == "B": 
-            ini = [6,6]
+            ini = [5,6]
             map_file = "mapaB_CARRERA.txt"
         else:
             print('Mapa desconocido, seleccione mapa A o B')
@@ -181,7 +181,7 @@ def main(args):
         # 1. Se incia la odometria u el proceso update odometry
         robot.startOdometry()
 
-        myMap = Map2D(map_file)
+        #myMap = Map2D(map_file)
 
         # 2. perform trajectory
 
