@@ -99,6 +99,7 @@ def s_A(robot, vel):
         point = [200+point_map[0]*400, 200+point_map[1]*400, 1.57]
         # Se mueve el robot a la siguiente celda
         robot.go(point[0],point[1])
+        print('Voy a ',point)
 
     robot.setSpeed(0, 0)  # Parar el robot
 
