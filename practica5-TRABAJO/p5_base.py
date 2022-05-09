@@ -121,7 +121,7 @@ def s_B(robot, vel):
     """ La funcion ocho realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
 
-    r = 40
+    r = 400
     v = vel
     w = np.rad2deg((float)(v/r))
 
