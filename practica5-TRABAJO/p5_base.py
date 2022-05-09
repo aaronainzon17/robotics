@@ -1,14 +1,16 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+import sys
+sys.path.append('../libraries')
 
-from ..libraries.MapLib import Map2D
 import argparse
 from tokenize import Double
 import numpy as np
 import time
 import math
-from ..libraries.Robot import Robot
+from Robot import Robot
+from MapLib import Map2D
 
 """
             TRABAJO FINAL:
