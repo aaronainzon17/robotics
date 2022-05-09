@@ -503,6 +503,7 @@ class Robot:
                     return "B"
             except brickpi3.SensorError as error:
                 print(error)
+            time.sleep(0.02)
 
 
 #########################################################
