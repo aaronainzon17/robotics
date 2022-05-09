@@ -94,26 +94,11 @@ def s_A(robot, vel):
     v = vel
     w = np.rad2deg((float)(v/r))
 
-    pos = [1,6]
-    robot.setSpeed(0, -45)  # Giro de 45 deg a la derecha
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], norm_pi(np.deg2rad(-135)),
-                   np.Infinity, np.Infinity, np.deg2rad(2))
-
-    pos = [1,4]
-    robot.setSpeed(v, w)  # Primera semicircunferencia
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], norm_pi(np.deg2rad(-45)),
-                   10, 5, np.deg2rad(10))
-
-    pos = [1,2]
-    robot.setSpeed(v, -w)  # Segunda semicircunferencia
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], norm_pi(np.deg2rad(-135)),
-                   20, 5, np.deg2rad(10))
-
-    pos = [1,2]
-    robot.setSpeed(0, 45)  # Giro de 45 deg a la izquierda
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], norm_pi(np.deg2rad(-90)),
-                   np.Infinity, np.Infinity, np.deg2rad(2))
-
+    pos = [[1,6],[1,4],[1,2]]
+    for point_map in pos:
+        point = [200+point_map[0]*400, 200+point_map[1]*400, 1.57]
+        # Se mueve el robot a la siguiente celda
+        robot.go(point[0],point[1])
 
     robot.setSpeed(0, 0)  # Parar el robot
 
