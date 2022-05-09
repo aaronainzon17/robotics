@@ -414,7 +414,7 @@ class Robot:
         # Se le asigna una velocidad lienal
         self.setSpeed(120,0)
         # Se comprueba que el robot alcanza correctamente la posicion 
-        self.check_position(x_goal, y_goal, 10, 10)
+        self.check_position(x_goal, y_goal, 25, 25)
    
     # check_position es la funcion de control de localizacion
     # En ella se comprueba la posicion real del robot leida de los
