@@ -488,6 +488,17 @@ class Robot:
                     return False
             except brickpi3.SensorError as error:
                 print(error) 
+        
+    def detectar_recorrido(self):
+        try:
+            self.BP.set_sensor_type(self.BP.PORT_2, self.BP.SENSOR_TYPE.NXT_COLOR_RED)
+            valor = self.BP.get_sensor(self.BP.PORT_2)
+            if valor < 500:     #Se detecta el colo blanco entonces es el A
+                return "A"
+            else:
+                return "B"
+        except brickpi3.SensorError as error:
+            print(error)
 
 
 #########################################################
@@ -506,12 +517,4 @@ class Robot:
             return False
 
     
-    def detectar_recorrido(self):
-        try:
-            valor = self.BP.get_sensor(self.BP.PORT_2)
-            if valor < 500:     #Se detecta el colo blanco entonces es el A
-                return "A"
-            else:
-                return "B"
-        except brickpi3.SensorError as error:
-            print(error)
+    
