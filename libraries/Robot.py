@@ -495,6 +495,7 @@ class Robot:
         try:
             time.sleep(2)
             valor = self.BP.get_sensor(self.BP.PORT_2)
+            print('He leido', valor)
             if valor < 2750:     #Se detecta el colo blanco entonces es el A
                 return "A"
             else:
