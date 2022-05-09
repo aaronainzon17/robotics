@@ -21,20 +21,8 @@ Autores:
     - Pablo Gancedo Alcalde 736839 
 """
 
-
-
-def normalizar(th):
-    """ Funcion de normalizacion del angulo entre -pi, pi """
-
-    if th > math.pi:
-        th -= (2 * math.pi)
-    elif th < -math.pi:
-        th += (2 * math.pi)
-    return th
-
-
+#Funcion que normaliza el angulo entre -pi, pi
 def norm_pi(th):
-    """ Funcion que normaliza el angulo entre -pi, pi """
     if th > math.pi:
         th = th - 2 * math.pi
     elif th < -math.pi:
@@ -102,28 +90,28 @@ def s_A(robot, vel):
     """ La funcion ocho realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
 
-    r = 40
+    r = 400
     v = vel
     w = np.rad2deg((float)(v/r))
 
     pos = [1,6]
     robot.setSpeed(0, -45)  # Giro de 45 deg a la derecha
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-135)),
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], norm_pi(np.deg2rad(-135)),
                    np.Infinity, np.Infinity, np.deg2rad(2))
 
     pos = [1,4]
     robot.setSpeed(v, w)  # Primera semicircunferencia
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-45)),
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], norm_pi(np.deg2rad(-45)),
                    10, 5, np.deg2rad(10))
 
     pos = [1,2]
     robot.setSpeed(v, -w)  # Segunda semicircunferencia
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-135)),
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], norm_pi(np.deg2rad(-135)),
                    20, 5, np.deg2rad(10))
 
     pos = [1,2]
     robot.setSpeed(0, 45)  # Giro de 45 deg a la izquierda
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-90)),
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], norm_pi(np.deg2rad(-90)),
                    np.Infinity, np.Infinity, np.deg2rad(2))
 
 
