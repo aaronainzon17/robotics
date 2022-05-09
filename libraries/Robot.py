@@ -497,9 +497,9 @@ class Robot:
             while valor <= 2000:
                 valor = self.BP.get_sensor(self.BP.PORT_2)
                 print('He leido', valor)
-                if valor < 2750:     #Se detecta el colo blanco entonces es el A
+                if valor > 2000 and valor < 2750:     #Se detecta el colo blanco entonces es el A
                     return "A"
-                else:
+                elif valor > 2000 :
                     return "B"
         except brickpi3.SensorError as error:
             print(error)
