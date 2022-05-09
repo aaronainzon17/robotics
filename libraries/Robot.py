@@ -18,7 +18,7 @@ from picamera.array import PiRGBArray
 
 # tambien se podria utilizar el paquete de threading
 from multiprocessing import Process, Value, Array, Lock
-from libraries.BlobDetector import getRedBloobs
+from ..libraries.BlobDetector import getRedBloobs
 
 
 class Robot:
@@ -503,3 +503,14 @@ class Robot:
         else:
             # Movimiento cirular
             return False
+
+    
+    def detectar_recorrido(self):
+        try:
+            valor = self.BP.get_sensor(self.BP.PORT_2)
+            if valor < 500:     #Se detecta el colo blanco entonces es el A
+                return "A"
+            else:
+                return "B"
+        except brickpi3.SensorError as error:
+            print(error)

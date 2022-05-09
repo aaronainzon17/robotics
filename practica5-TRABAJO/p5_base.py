@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from libraries.MapLib import Map2D
+from ..libraries.MapLib import Map2D
 import argparse
 from tokenize import Double
 import numpy as np
 import time
 import math
-from libraries.Robot import Robot
+from ..libraries.Robot import Robot
 
 """
             TRABAJO FINAL:
@@ -16,6 +16,7 @@ Autores:
     - Belen Gimeno Chueca 756425
     - Pablo Gancedo Alcalde 736839 
 """
+
 
 
 def normalizar(th):
