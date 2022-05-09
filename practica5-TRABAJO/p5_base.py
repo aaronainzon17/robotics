@@ -165,7 +165,7 @@ def main(args):
     try:
         # 0. Se carga el mapa en función de la marca en el suelo
         if args.mapa == "A":
-            ini = [6,1]
+            ini = [1,6]
             map_file = "mapaA_CARRERA.txt"
         elif args.mapa == "B": 
             ini = [6,6]
