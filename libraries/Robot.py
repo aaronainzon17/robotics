@@ -492,17 +492,17 @@ class Robot:
                 print(error) 
         
     def detectar_recorrido(self):
-        try:
-            valor = 0
-            while valor <= 2000:
+        valor = 0
+        while valor <= 2000:
+            try:
                 valor = self.BP.get_sensor(self.BP.PORT_2)
                 print('He leido', valor)
                 if valor > 2000 and valor < 2750:     #Se detecta el colo blanco entonces es el A
                     return "A"
                 elif valor > 2000 :
                     return "B"
-        except brickpi3.SensorError as error:
-            print(error)
+            except brickpi3.SensorError as error:
+                print(error)
 
 
 #########################################################
