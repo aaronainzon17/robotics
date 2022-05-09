@@ -90,7 +90,7 @@ def s_A(robot, vel):
     """ La funcion ocho realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
 
-    pos = [[1,6],[0,5],[2,2,3],[1.3,2]]
+    pos = [[1,6],[0,5],[2,3],[1,2]]
     for point_map in pos:
         point = [200+point_map[0]*400, 200+point_map[1]*400]
         # Se mueve el robot a la siguiente celda
