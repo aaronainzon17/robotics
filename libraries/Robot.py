@@ -64,6 +64,8 @@ class Robot:
                                      self.BP.get_motor_encoder(self.BP.PORT_A))  # PINZAS
         self.BP.set_sensor_type(self.BP.PORT_1,
                                     self.BP.SENSOR_TYPE.EV3_ULTRASONIC_CM)  # ULTRASONIDOS
+        self.BP.set_sensor_type(self.BP.PORT_2,
+                                    self.BP.SENSOR_TYPE.NXT_COLOR_RED)  # SENSOR DE COLOR
 
         ##################################################
 
@@ -491,9 +493,9 @@ class Robot:
         
     def detectar_recorrido(self):
         try:
-            self.BP.set_sensor_type(self.BP.PORT_2, self.BP.SENSOR_TYPE.NXT_COLOR_RED)
+            time.sleep(2)
             valor = self.BP.get_sensor(self.BP.PORT_2)
-            if valor < 500:     #Se detecta el colo blanco entonces es el A
+            if valor < 2750:     #Se detecta el colo blanco entonces es el A
                 return "A"
             else:
                 return "B"
