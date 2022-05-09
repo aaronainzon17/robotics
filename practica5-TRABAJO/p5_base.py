@@ -94,9 +94,9 @@ def s_A(robot, vel):
     v = vel
     w = np.rad2deg((float)(v/r))
 
-    pos = [[1,6],[1,4],[1,2]]
+    pos = [[1,4],[1,2]]
     for point_map in pos:
-        point = [200+point_map[0]*400, 200+point_map[1]*400, 1.57]
+        point = [200+point_map[0]*400, 200+point_map[1]*400]
         # Se mueve el robot a la siguiente celda
         robot.go(point[0],point[1])
         print('Voy a ',point)
