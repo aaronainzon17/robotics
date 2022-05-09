@@ -117,7 +117,7 @@ def s_A(robot, vel):
                    20, 5, np.deg2rad(10))
 
     pos = [1,2]
-    robot.setSpeed(0, -45)  # Giro de 45 deg a la izquierda
+    robot.setSpeed(0, 45)  # Giro de 45 deg a la izquierda
     check_position(robot, 200 + 400 * pos[1], 200 + 400 * pos[2], normalizar(np.deg2rad(-90)),
                    np.Infinity, np.Infinity, np.deg2rad(2))
 
@@ -148,7 +148,7 @@ def s_B(robot, vel):
                    20, 5, np.deg2rad(10))
 
     pos = [5,2]
-    robot.setSpeed(0, 45)  # Giro de 45 deg a la derecha
+    robot.setSpeed(0, -45)  # Giro de 45 deg a la derecha
     check_position(robot, 200 + 400 * pos[1], 200 + 400 * pos[2], normalizar(np.deg2rad(-90)),
                    np.Infinity, np.Infinity, np.deg2rad(2))
 
