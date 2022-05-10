@@ -85,7 +85,7 @@ def main(args):
         
         # Punto inicial, objetivo y 8-vecindad
         ini = [0,0]
-        goal = [2,2]     
+        goal = [0,2]     
         ocho = False     
 
         # Se calcula la posicion en la realidad del robot para la coordenada inicial
