@@ -111,6 +111,9 @@ cam.capture(rawCapture, format="bgr", use_video_port=True)
 rawCapture.truncate(0)
 frame = rawCapture.array
 detect_red(frame)
+cv2.namedWindow("Capture")
+cv2.imshow("Capture", frame)
+cv2.waitKey(0)
 #blob = getBlobs(frame)  # Se devuelve el blob mas grande
 
 #if blob is not None:
