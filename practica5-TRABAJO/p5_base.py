@@ -11,6 +11,7 @@ import time
 import math
 from Robot import Robot
 from MapLib import Map2D
+from SolveMap import solveMap
 
 """
             TRABAJO FINAL:
@@ -113,6 +114,16 @@ def s_B(robot, vel):
 
 def main(args):
     try:
+        r2d2 = "R2-D2_s.png"
+        bb8 = "BB8_s.png"
+        if not os.path.isfile(r2d2):
+            print("test image %s does not exist" % r2d2)
+            return
+        if not os.path.isfile(bb8):
+            print("test image %s does not exist" % bb8)
+            return
+        mirror=False
+
         robot = Robot()
 
         mapa = robot.detectar_recorrido()
@@ -121,13 +132,7 @@ def main(args):
             print('Mapa desconocido, seleccione mapa A o B')
             exit(1)
 
-        
-        
-        
-
-        print("X value at the beginning from main X= %.2f" % (robot.x.value))
-
-        
+        print("X value at the beginning from main X= %.2f" % (robot.x.value))   
 
         myMap = Map2D(mapa)
         input("Press Enter to continue...")
@@ -140,11 +145,14 @@ def main(args):
 
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":
-            # R2D2
+            imagenFin = cv2.imread(r2d2, cv2.IMREAD_COLOR)
+            imagenOtro = cv2.imread(bb8, cv2.IMREAD_COLOR)
+            target_robot_file = r2d2
             s_A(robot, 150)
-        else:
-            # "mapaB_CARRERA.txt"
-            # BB8
+        else: # "mapaB_CARRERA.txt"
+            imagenFin = cv2.imread(bb8, cv2.IMREAD_COLOR)
+            imagenOtro = cv2.imread(r2d2, cv2.IMREAD_COLOR)
+            target_robot_file = bb8
             s_B(robot, 150)
 
         print("End : %s" % time.ctime())
@@ -154,9 +162,27 @@ def main(args):
               (robot.x.value, robot.y.value, robot.th.value))
         robot.lock_odometry.release()
 
-        # 3. wrap up and close stuff ...
+        # 3. Labyrinth
+
+        # 4. Play catch
+
+        # 5. Where is Wall-e?
+        # Dejadme hacer magia a mi ritmo FUS FUS
+        #match_images(imagenFin, self.capture_image())
+        # ÑOFeature extractor uses grayscale images
+        # Ñ img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        # O cap = cv2.cvtColor(capture, cv2.COLOR_BGR2GRAY)
+        #foundFin = robot.detectImage(imagenFin)
+        # Gira derecha para buscar el otro robot
+        # Si está, girar a izquierda para ir a salida
+        # Si no está, es la salida
+        #foundOtro = robot.detectImage(imagenOtro)
+
+
+        # 6. wrap up and close stuff ...
         # This currently unconfigure the sensors, disable the motors,
         # and restore the LED to the control of the BrickPi3 firmware.
+        
         robot.stopOdometry()
 
     except KeyboardInterrupt:
