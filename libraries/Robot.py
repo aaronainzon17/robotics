@@ -287,6 +287,9 @@ class Robot:
             if self.is_blob.value and triedCatch:
                 x_bl = self.x_b.value
                 y_bl = self.y_b.value
+                cv2.namedWindow("Capture")
+                cv2.imshow("Capture", self.last_img.value)
+                cv2.waitKey(0)
                 red_pixels = detect_red(self.last_img)
                 # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
                 if red_pixels > 300:
