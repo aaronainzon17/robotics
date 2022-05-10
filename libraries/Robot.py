@@ -498,9 +498,19 @@ class Robot:
                 value = self.BP.get_sensor(self.BP.PORT_2)
                 print('He leido', value)
                 if value > 2000 and value < 2750:     #Se detecta el colo blanco entonces es el A
-                    return "A"
+                    # Se indican las coordenadas iniciales del robot 
+                    self.x = Value('d', 600)
+                    self.y = Value('d', 2600)
+                    self.th = Value('d', self.norm_pi(np.deg2rad(-90)))
+                    return "mapaA_CARRERA.txt"
                 elif value > 2000 :
-                    return "B"
+                    # Se indican las coordenadas iniciales del robot 
+                    self.x = Value('d', 2200)
+                    self.y = Value('d', 2600)
+                    self.th = Value('d', self.norm_pi(np.deg2rad(-90)))
+                    return "mapaB_CARRERA.txt"
+                else:
+                    return None
             except brickpi3.SensorError as error:
                 print(error)
             time.sleep(0.02)
