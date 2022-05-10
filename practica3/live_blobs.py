@@ -95,7 +95,6 @@ rawCapture = PiRGBArray(cam, size=(640, 480))
 time.sleep(0.1)
 def detect_red(frame):
 	img_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-	print(img_hsv[479])
 	#Se utilizan 2 inRange porque el rojo en HSV se encuentra entre 0-10 y 160-180 
 	
 	# Limites inferiores (0-10)
@@ -115,21 +114,21 @@ def detect_red(frame):
 		if mask[479][i] == 255:
 			red_pixels+=1
 	print(red_pixels)
-	
-#while(True):
-cam.capture(rawCapture, format="bgr", use_video_port=True)
-# clear the stream in preparation for the next frame
-rawCapture.truncate(0)
-frame = rawCapture.array
-detect_red(frame)
-cv2.namedWindow("Capture")
-cv2.imshow("Capture", frame)
-cv2.waitKey(0)
-#blob = getBlobs(frame)  # Se devuelve el blob mas grande
 
-#if blob is not None:
-#	print('EL bloob esta en', blob.pt[0], blob.pt[1])
-#	print('El tamanyo del blob es', blob.size)
-#
-#	if (blob.size > 195) and abs(blob.pt[0] - 320) < 50 and (blob.pt[1] > 240):
-#		print('Esta en las pinzas')
+while(True):
+	cam.capture(rawCapture, format="bgr", use_video_port=True)
+	# clear the stream in preparation for the next frame
+	rawCapture.truncate(0)
+	frame = rawCapture.array
+	detect_red(frame)
+	cv2.namedWindow("Capture")
+	cv2.imshow("Capture", frame)
+	cv2.waitKey(0)
+	#blob = getBlobs(frame)  # Se devuelve el blob mas grande
+
+	#if blob is not None:
+	#	print('EL bloob esta en', blob.pt[0], blob.pt[1])
+	#	print('El tamanyo del blob es', blob.size)
+	#
+	#	if (blob.size > 195) and abs(blob.pt[0] - 320) < 50 and (blob.pt[1] > 240):
+	#		print('Esta en las pinzas')
