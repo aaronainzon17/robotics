@@ -110,10 +110,12 @@ def detect_red(frame):
 	mask_160_180 = cv2.inRange(img_hsv, red_160, red_180)
 
 	mask = mask0_10 + mask_160_180
-	cv2.namedWindow("mascara")
-	cv2.imshow("mascara", mask)
-
-	print(mask[479])
+	red_pixels = 0
+	for i in range(len(mask[479])):
+		if mask[479][i] == 255:
+			red_pixels+=1
+	print(red_pixels)
+	
 #while(True):
 cam.capture(rawCapture, format="bgr", use_video_port=True)
 # clear the stream in preparation for the next frame
