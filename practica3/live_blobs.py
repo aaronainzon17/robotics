@@ -93,6 +93,7 @@ cam.framerate = 32
 rawCapture = PiRGBArray(cam, size=(640, 480))
 
 time.sleep(0.1)
+
 def detect_red(frame):
 	img_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 	#Se utilizan 2 inRange porque el rojo en HSV se encuentra entre 0-10 y 160-180 
@@ -114,6 +115,7 @@ def detect_red(frame):
 		if mask[479][i] == 255:
 			red_pixels+=1
 	print(red_pixels)
+	return red_pixels
 
 while(True):
 	cam.capture(rawCapture, format="bgr", use_video_port=True)

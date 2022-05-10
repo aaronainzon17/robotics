@@ -18,8 +18,9 @@ from picamera.array import PiRGBArray
 
 # tambien se podria utilizar el paquete de threading
 from multiprocessing import Process, Value, Array, Lock
+
 sys.path.append('../libraries')
-from BlobDetector import getRedBloobs
+from BlobDetector import getRedBloobs, detect_red
 
 
 class Robot:
@@ -87,13 +88,13 @@ class Robot:
         self.y_b = Value('d', 0)
         self.size_b = Value('d', 0)
         self.is_blob = Value('b', False)
+        self.last_img = Value(cv2.Mat, None)
 
 
         self.rows = Value('i',0)
         self.cols = Value('i',0)
 
         # Variables de vision 
-        
         
 
     def setSpeed(self, v, w):
@@ -286,9 +287,9 @@ class Robot:
             if self.is_blob.value and triedCatch:
                 x_bl = self.x_b.value
                 y_bl = self.y_b.value
-
+                red_pixels = detect_red(self.last_img)
                 # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
-                if self.size_b.value > 195 and abs(self.x_b.value - self.cols.value/2) < 50 and self.y_b.value > self.rows.value/2:
+                if red_pixels > 300:
                     self.setSpeed(0,0)
                     finished = True
                     print('LO TENGO')
@@ -399,8 +400,8 @@ class Robot:
             cam.capture(rawCapture, format="bgr", use_video_port=True)
             # clear the stream in preparation for the next frame
             rawCapture.truncate(0)
-            frame = rawCapture.array
-            blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
+            self.last_img = rawCapture.array
+            blob = getRedBloobs(self.last_img)  # Se devuelve el blob mas grande
             #Se actualizan las variables compartidas referentes a la imagen
             if blob is not None:
                 self.x_b.value = blob.pt[0]

@@ -79,3 +79,26 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 
 	# Se devuelve el blob mas grande
 	return biggest
+
+def detect_red(frame):
+	img_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+	#Se utilizan 2 inRange porque el rojo en HSV se encuentra entre 0-10 y 160-180 
+	
+	# Limites inferiores (0-10)
+	red_0 = np.array([0, 80, 80])
+	red_10 = np.array([10, 255, 255])
+	
+	# Limites superiores (160-180)
+	red_160 = np.array([160,80,80])
+	red_180 = np.array([179,255,255])
+	
+	mask0_10 = cv2.inRange(img_hsv, red_0, red_10)
+	mask_160_180 = cv2.inRange(img_hsv, red_160, red_180)
+
+	mask = mask0_10 + mask_160_180
+	red_pixels = 0
+	for i in range(len(mask[479])):
+		if mask[479][i] == 255:
+			red_pixels+=1
+	print(red_pixels)
+	return red_pixels
