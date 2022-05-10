@@ -93,13 +93,24 @@ cam.framerate = 32
 rawCapture = PiRGBArray(cam, size=(640, 480))
 
 time.sleep(0.1)
-
+def detect_red(frame):
+	img_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+	print(img_hsv)
+	#Se utilizan 2 inRange porque el rojo en HSV se encuentra entre 0-10 y 160-180 
+	
+	# Limites inferiores (0-10)
+	red_0 = np.array([0, 80, 80])
+	red_10 = np.array([10, 255, 255])
+	
+	# Limites superiores (160-180)
+	red_160 = np.array([160,80,80])
+	red_180 = np.array([179,255,255])
 #while(True):
 cam.capture(rawCapture, format="bgr", use_video_port=True)
 # clear the stream in preparation for the next frame
 rawCapture.truncate(0)
 frame = rawCapture.array
-print(frame)
+detect_red(frame)
 #blob = getBlobs(frame)  # Se devuelve el blob mas grande
 
 #if blob is not None:
