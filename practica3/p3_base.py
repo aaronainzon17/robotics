@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import argparse
-#import sys
-#sys.path.append('../libraries')
-from libraries.Robot import Robot
+import sys
+sys.path.append('../libraries')
+from Robot import Robot
 
 def main(args):
     try:
