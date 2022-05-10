@@ -105,6 +105,17 @@ def detect_red(frame):
 	# Limites superiores (160-180)
 	red_160 = np.array([160,80,80])
 	red_180 = np.array([179,255,255])
+	
+	mask0_10 = cv2.inRange(img_hsv, red_0, red_10)
+	mask_160_180 = cv2.inRange(img_hsv, red_160, red_180)
+
+	mask = mask0_10 + mask_160_180
+
+	# Se pueden eliminar los blobs de ruido con erode y dilate
+
+	bool_array = cv2.bitwise_and(frame, frame, mask=mask)
+
+	print(bool_array)
 #while(True):
 cam.capture(rawCapture, format="bgr", use_video_port=True)
 # clear the stream in preparation for the next frame
