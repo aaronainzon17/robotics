@@ -88,7 +88,7 @@ class Robot:
         self.y_b = Value('d', 0)
         self.size_b = Value('d', 0)
         self.is_blob = Value('b', False)
-        self.last_img = Value(None)
+        self.last_img = None
 
 
         self.rows = Value('i',0)
