@@ -400,7 +400,7 @@ class Robot:
             cam.capture(rawCapture, format="bgr", use_video_port=True)
             # clear the stream in preparation for the next frame
             rawCapture.truncate(0)
-            self.last_img = rawCapture.array
+            self.last_img.value = rawCapture.array
             blob = getRedBloobs(self.last_img)  # Se devuelve el blob mas grande
             #Se actualizan las variables compartidas referentes a la imagen
             if blob is not None:
