@@ -205,7 +205,7 @@ class Robot:
     
             raw_gyros = self.BP.get_sensor(self.BP.PORT_4)[0]
             th_gyros = np.deg2rad((err_gyroscope - raw_gyros) * deg_gyroscope) * self.P
-            
+            print(th_gyros)
             # Calcula los nuevos valores de la odometria
             if real_w == 0:
                 d_x = (real_v * self.P) * np.cos(self.th.value)
@@ -471,7 +471,7 @@ class Robot:
                     
                     aligned = True
                 else:
-                    w = 30#self.lienar_w(d_th)
+                    w = self.lienar_w(d_th)
                     self.setSpeed(0,w)
     
     # Funcion que define la velocidad angular en funcion de los 
