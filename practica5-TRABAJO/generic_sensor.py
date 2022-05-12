@@ -35,6 +35,7 @@ try:
         #     The second is the pin 6 analog line value.
         #     The third is the pin 5 digital value.
         #     The fourth is the pin 6 digital value.
+        value = 0
         try:
             value = BP.get_sensor(BP.PORT_4)[0] # read the sensor port value
             print("Raw value: %4d   Voltage: %5.3fv" % (value, (value / (4095.0 / BP.get_voltage_5v())))) # print the raw value, and calculate and print the voltage as well
