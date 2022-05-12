@@ -54,7 +54,7 @@ BP.offset_motor_encoder(BP.PORT_B,
 BP.offset_motor_encoder(BP.PORT_C,
                                      BP.get_motor_encoder(BP.PORT_C))  # RUEDA IZQUIERDA
 
-setSpeed(0,350)
+setSpeed(0,40)
 try:
     GYRO_DEFAULT = 2449.47
     GYRO2DEG = 0.24
@@ -71,7 +71,7 @@ try:
         value = 0
         try:
             gyro_data = BP.get_sensor(BP.PORT_4)[0]
-            gyro_speed = GYRO_DEFAULT - gyro_data
+            gyro_speed = np.deg2rad((GYRO_DEFAULT - gyro_data) * GYRO2DEG)
             #value = BP.get_sensor(BP.PORT_4)[0] - avg_gyroscppe # read the sensor port value
             print('valor del giro', gyro_speed)
             #print("Raw value: %4d   Voltage: %5.3fv" % (value, (value / (4095.0 / BP.get_voltage_5v())))) # print the raw value, and calculate and print the voltage as well
