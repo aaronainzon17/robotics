@@ -83,7 +83,7 @@ class Robot:
         self.lock_odometry = Lock()
 
         # odometry update period
-        self.P = 0.05
+        self.P = 0.03
         
         # Blob values
         self.x_b= Value('d', 0)
@@ -200,12 +200,12 @@ class Robot:
             [real_v, real_w] = self.readSpeed()
             
             # Leer vaores del giroscopio
-            GYRO_DEFAULT = 2451
-            GYRO2DEG = 30/130 # Se calcula con la mediana en 1500 iteraciones (30 dps/130gyrosen)
+            err_gyroscope = 2451
+            deg_gyroscope = 30/130 # Se calcula con la mediana en 1500 iteraciones (30 dps/130gyrosen)
     
             raw_gyros = self.BP.get_sensor(self.BP.PORT_4)[0]
-            th_gyros = (GYRO_DEFAULT - raw_gyros) * GYRO2DEG * self.P
-
+            th_gyros = (err_gyroscope - raw_gyros) * deg_gyroscope * self.P
+            print(th_gyros)
             # Calcula los nuevos valores de la odometria
             if real_w == 0:
                 d_x = (real_v * self.P) * np.cos(self.th.value)
@@ -237,7 +237,7 @@ class Robot:
             self.lock_odometry.release()
 
             tEnd = time.clock()
-            
+
             time.sleep(self.P - (tEnd - tIni))
 
         # Escribe en el LOG los valores finales de la odometria
