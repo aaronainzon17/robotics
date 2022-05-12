@@ -471,7 +471,7 @@ class Robot:
                     
                     aligned = True
                 else:
-                    w = self.lienar_w(d_th)
+                    w = 30#self.lienar_w(d_th)
                     self.setSpeed(0,w)
     
     # Funcion que define la velocidad angular en funcion de los 
