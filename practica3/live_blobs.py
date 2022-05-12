@@ -43,8 +43,9 @@ if int(ver[0]) < 3 :
 else :
 	detector = cv2.SimpleBlobDetector_create(params)
 
-
-def getBlobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
+#Naranja = frame, HSV_min=(5, 50, 50) , HSV_max=(15, 255, 255)
+#Rojo = frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)
+def getBlobs(frame, HSV_min=(5, 50, 50) , HSV_max=(15, 255, 255)):	
 	
 	img_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 	

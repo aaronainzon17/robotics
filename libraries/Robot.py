@@ -537,6 +537,8 @@ class Robot:
         #Resetea los encoders
         self.lock_odometry.acquire()
         #Leer imagen y sacar nueva posicion
+        #Activar la camara
+        #LLamar
         
         self.BP.offset_motor_encoder(self.BP.PORT_B,
                                      self.BP.get_motor_encoder(self.BP.PORT_B))  # reset encoder B

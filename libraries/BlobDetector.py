@@ -103,3 +103,40 @@ def detect_red(frame):
 	print(red_pixels)
 	return red_pixels
 
+#Deteccion del blob de la pared para poder ubicarse
+def getRedBloobs(frame, HSV_min=(5, 50, 50) , HSV_max=(15, 255, 255) ):
+	
+	img_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+	
+	#Se utilizan 2 inRange porque el rojo en HSV se encuentra entre 0-10 y 160-180 
+	
+	# Limites inferiores (0-10)
+	red_0 = np.array([0, 80, 80])
+	red_10 = np.array([10, 255, 255])
+	
+	# Limites superiores (160-180)
+	red_160 = np.array([160,80,80])
+	red_180 = np.array([179,255,255])
+
+	# Se aplcian los filtros de rango para filtrar por color 
+	mask0_10 = cv2.inRange(img_hsv, red_0, red_10)
+	mask_160_180 = cv2.inRange(img_hsv, red_160, red_180)
+
+	mask = mask0_10 + mask_160_180
+
+	frame = cv2.bitwise_and(frame, frame, mask=mask)
+	
+	# Se utiliza el blob detector para calucular los keypoints
+	keypoints_red = detector.detect(mask)
+	
+	# Se elige el blob mas prometedor (mas grande)
+	if (len(keypoints_red) != 0):
+		biggest = keypoints_red[0]
+		for kp in keypoints_red:
+			if kp.size > biggest.size:
+				biggest = kp 
+	else:
+		biggest = None
+
+	# Se devuelve el blob mas grande
+	return biggest
