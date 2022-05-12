@@ -372,7 +372,7 @@ class Robot:
 
     # Funcion de captura de la pelota
     def catch(self):
-        w = 40   # Velocidad angular para abrir las pinzas 
+        w = 42 #40   # Velocidad angular para abrir las pinzas 
         #Que avance un poquito antes de bajar la pinza
         self.setSpeed(20,0)
         time.sleep(2.0)
@@ -388,7 +388,7 @@ class Robot:
         #time.sleep(1.5) # Tiempo de cierre de pinzas
         #self.BP.set_motor_dps(self.BP.PORT_A, 0)
     def uncatch(self):
-        w = -42    # Velocidad angular para cerrar las pinzas 
+        w = -44 #-42    # Velocidad angular para cerrar las pinzas 
         self.BP.set_motor_dps(self.BP.PORT_A, w)
         time.sleep(2) # Tiempo de cierre de pinzas
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
