@@ -36,7 +36,7 @@ class Robot:
         # Robot construction parameters
 
         # Radio de la rueda y distancia entre ruedas
-        self.R = 28
+        self.R = 26 #28
         self.L = 128
 
         # Ultimo valor leido de cada motor
