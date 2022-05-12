@@ -83,7 +83,7 @@ class Robot:
         self.lock_odometry = Lock()
 
         # odometry update period
-        self.P = 0.03
+        self.P = 0.05
         
         # Blob values
         self.x_b= Value('d', 0)
