@@ -102,3 +102,4 @@ def detect_red(frame):
 			red_pixels+=1
 	print(red_pixels)
 	return red_pixels
+

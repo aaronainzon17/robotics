@@ -24,7 +24,9 @@ BP = brickpi3.BrickPi3() # Create an instance of the BrickPi3 class. BP will be 
 BP.set_sensor_type(BP.PORT_4, BP.SENSOR_TYPE.CUSTOM, [(BP.SENSOR_CUSTOM.PIN1_ADC)]) # Configure for an analog on sensor port pin 1, and poll the analog line on pin 1.
 
 try:
-    while True:
+    val = 0
+    acum = 0
+    while val < 1500:
         # read the sensor value
         # BP.get_sensor retrieves a sensor value.
         # BP.PORT_1 specifies that we are looking for the value of sensor port 1.
@@ -40,6 +42,10 @@ try:
             print(error)
         
         time.sleep(0.02)  # delay for 0.02 seconds (20ms) to reduce the Raspberry Pi CPU load.
+        acum+= value
+        val+=1
+    avg = acum/1500
+    print('La media es', avg)
 
 except KeyboardInterrupt: # except the program gets interrupted by Ctrl+C on the keyboard.
     BP.reset_all()        # Unconfigure the sensors, disable the motors, and restore the LED to the control of the BrickPi3 firmware.
