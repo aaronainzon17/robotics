@@ -24,9 +24,8 @@ BP = brickpi3.BrickPi3() # Create an instance of the BrickPi3 class. BP will be 
 BP.set_sensor_type(BP.PORT_4, BP.SENSOR_TYPE.CUSTOM, [(BP.SENSOR_CUSTOM.PIN1_ADC)]) # Configure for an analog on sensor port pin 1, and poll the analog line on pin 1.
 
 try:
-    val = 0
-    acum = 0
-    while val < 1500:
+    avg_gyroscppe = 2449.47
+    while True:
         # read the sensor value
         # BP.get_sensor retrieves a sensor value.
         # BP.PORT_1 specifies that we are looking for the value of sensor port 1.
@@ -37,16 +36,13 @@ try:
         #     The fourth is the pin 6 digital value.
         value = 0
         try:
-            value = BP.get_sensor(BP.PORT_4)[0] # read the sensor port value
-            print("Raw value: %4d   Voltage: %5.3fv" % (value, (value / (4095.0 / BP.get_voltage_5v())))) # print the raw value, and calculate and print the voltage as well
+            value = BP.get_sensor(BP.PORT_4)[0] - avg_gyroscppe # read the sensor port value
+            print('valor del giro', value)
+            #print("Raw value: %4d   Voltage: %5.3fv" % (value, (value / (4095.0 / BP.get_voltage_5v())))) # print the raw value, and calculate and print the voltage as well
         except brickpi3.SensorError as error:
             print(error)
         
         time.sleep(0.02)  # delay for 0.02 seconds (20ms) to reduce the Raspberry Pi CPU load.
-        acum+= value
-        val+=1
-    avg = acum/1500
-    print('La media es', avg)
 
 except KeyboardInterrupt: # except the program gets interrupted by Ctrl+C on the keyboard.
     BP.reset_all()        # Unconfigure the sensors, disable the motors, and restore the LED to the control of the BrickPi3 firmware.
