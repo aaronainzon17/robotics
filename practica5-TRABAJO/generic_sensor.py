@@ -72,11 +72,10 @@ try:
         
         try:
             gyro_data = BP.get_sensor(BP.PORT_4)[0]
-            
-            i+=1
             gyro_speed = (GYRO_DEFAULT - gyro_data) * GYRO2DEG
             acum.append(gyro_speed)
             print(gyro_speed)
+            acum+=1
             #value = BP.get_sensor(BP.PORT_4)[0] - avg_gyroscppe # read the sensor port value
             #print("Raw value: %4d   Voltage: %5.3fv" % (value, (value / (4095.0 / BP.get_voltage_5v())))) # print the raw value, and calculate and print the voltage as well
         except brickpi3.SensorError as error:

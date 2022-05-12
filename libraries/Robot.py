@@ -198,6 +198,13 @@ class Robot:
 
             # Lee los valores reales de la velocidad lineal y angular
             [real_v, real_w] = self.readSpeed()
+            
+            # Leer vaores del giroscopio
+            GYRO_DEFAULT = 2451
+            GYRO2DEG = 30/130 # Se calcula con la mediana en 1500 iteraciones (30 dps/130gyrosen)
+    
+            raw_gyros = self.BP.get_sensor(self.BP.PORT_4)[0]
+            th_gyros = (GYRO_DEFAULT - raw_gyros) * GYRO2DEG * self.P
 
             # Calcula los nuevos valores de la odometria
             if real_w == 0:
@@ -206,11 +213,12 @@ class Robot:
                 d_th = 0
             else:
                 # El radio se calcula R = v/w
-                d_th = real_w * self.P
+                d_th = th_gyros
                 d_s = (real_v/real_w) * d_th
-                d_x = d_s * np.cos(self.th.value + (d_th/2))
-                d_y = d_s * np.sin(self.th.value + (d_th/2))
-
+                d_x = d_s * np.cos(self.th.value + (th_gyros/2))
+                d_y = d_s * np.sin(self.th.value + (th_gyros/2))
+            
+            
             # Actualiza la odometria con los nuevos valores en exclusion mutua
             self.lock_odometry.acquire()
             # SC
@@ -229,6 +237,8 @@ class Robot:
             self.lock_odometry.release()
 
             tEnd = time.clock()
+
+            time.sleep(self.P - (tEnd - tIni))
 
         # Escribe en el LOG los valores finales de la odometria
         [x, y, th] = self.readOdometry()
