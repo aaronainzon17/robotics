@@ -204,7 +204,7 @@ class Robot:
             deg_gyroscope = 30/130 # Se calcula con la mediana en 1500 iteraciones (30 dps/130gyrosen)
     
             raw_gyros = self.BP.get_sensor(self.BP.PORT_4)[0]
-            th_gyros = (err_gyroscope - raw_gyros) * deg_gyroscope * self.P
+            th_gyros = np.deg2rad((err_gyroscope - raw_gyros) * deg_gyroscope) * self.P
             
             # Calcula los nuevos valores de la odometria
             if real_w == 0:
