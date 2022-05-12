@@ -198,14 +198,7 @@ class Robot:
 
             # Lee los valores reales de la velocidad lineal y angular
             [real_v, real_w] = self.readSpeed()
-            
-            # Leer vaores del giroscopio
-            err_gyroscope = 2451
-            deg_gyroscope = 30/130 # Se calcula con la mediana en 1500 iteraciones (30 dps/130gyrosen)
-    
-            raw_gyros = self.BP.get_sensor(self.BP.PORT_4)[0]
-            th_gyros = np.deg2rad((err_gyroscope - raw_gyros) * deg_gyroscope) * self.P
-            print(th_gyros)
+
             # Calcula los nuevos valores de la odometria
             if real_w == 0:
                 d_x = (real_v * self.P) * np.cos(self.th.value)
@@ -213,12 +206,11 @@ class Robot:
                 d_th = 0
             else:
                 # El radio se calcula R = v/w
-                d_th = th_gyros
+                d_th = real_w * self.P
                 d_s = (real_v/real_w) * d_th
-                d_x = d_s * np.cos(self.th.value + (th_gyros/2))
-                d_y = d_s * np.sin(self.th.value + (th_gyros/2))
-            
-            
+                d_x = d_s * np.cos(self.th.value + (d_th/2))
+                d_y = d_s * np.sin(self.th.value + (d_th/2))
+
             # Actualiza la odometria con los nuevos valores en exclusion mutua
             self.lock_odometry.acquire()
             # SC
@@ -237,7 +229,6 @@ class Robot:
             self.lock_odometry.release()
 
             tEnd = time.clock()
-
             time.sleep(self.P - (tEnd - tIni))
 
         # Escribe en el LOG los valores finales de la odometria
@@ -441,7 +432,7 @@ class Robot:
         # Se le asigna una velocidad lienal
         self.setSpeed(120,0)
         # Se comprueba que el robot alcanza correctamente la posicion 
-        self.check_position(x_goal, y_goal, 50, 50)
+        self.check_position(x_goal, y_goal, 25, 25)
    
     # check_position es la funcion de control de localizacion
     # En ella se comprueba la posicion real del robot leida de los
