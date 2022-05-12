@@ -207,7 +207,7 @@ class Robot:
             th_gyros = np.deg2rad((err_gyroscope - raw_gyros) * deg_gyroscope) * self.P
             
             # Calcula los nuevos valores de la odometria
-            if real_w <= np.deg2rad(1):
+            if real_w == 0:
                 d_x = (real_v * self.P) * np.cos(self.th.value)
                 d_y = (real_v * self.P) * np.sin(self.th.value)
                 d_th = 0
