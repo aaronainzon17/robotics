@@ -67,6 +67,8 @@ class Robot:
                                     self.BP.SENSOR_TYPE.EV3_ULTRASONIC_CM)  # ULTRASONIDOS
         self.BP.set_sensor_type(self.BP.PORT_2,
                                     self.BP.SENSOR_TYPE.NXT_LIGHT_ON)  # SENSOR DE LUZ
+        self.BP.set_sensor_type(self.BP.PORT_D, self.BP.SENSOR_TYPE.CUSTOM, 
+                                    [(self.BP.SENSOR_CUSTOM.PIN1_ADC)]) # GIROSCOPIO
 
         ##################################################
 
@@ -528,6 +530,21 @@ class Robot:
                 print(error)
             time.sleep(0.02)
 
+    def relocalizarRobot(self):
+        #El robot esta de frente a una pared
+        #Toma una imagen
+        #saca la nueva x,y,th
+        #Resetea los encoders
+        self.lock_odometry.acquire()
+        #Leer imagen y sacar nueva posicion
+        
+        self.BP.offset_motor_encoder(self.BP.PORT_B,
+                                     self.BP.get_motor_encoder(self.BP.PORT_B))  # reset encoder B
+        self.BP.offset_motor_encoder(self.BP.PORT_C,
+                                     self.BP.get_motor_encoder(self.BP.PORT_C))  # reset encoder C
+
+        self.lock_odometry.release()
+        
 
 #########################################################
 ################## Funciones obsoletas ##################
