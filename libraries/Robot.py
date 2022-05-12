@@ -207,7 +207,7 @@ class Robot:
             th_gyros = np.deg2rad((err_gyroscope - raw_gyros) * deg_gyroscope) * self.P
             
             # Calcula los nuevos valores de la odometria
-            if real_w == 0:
+            if real_w <= np.deg2rad(1):
                 d_x = (real_v * self.P) * np.cos(self.th.value)
                 d_y = (real_v * self.P) * np.sin(self.th.value)
                 d_th = 0
@@ -441,7 +441,7 @@ class Robot:
         # Se le asigna una velocidad lienal
         self.setSpeed(120,0)
         # Se comprueba que el robot alcanza correctamente la posicion 
-        self.check_position(x_goal, y_goal, 25, 25)
+        self.check_position(x_goal, y_goal, 50, 50)
    
     # check_position es la funcion de control de localizacion
     # En ella se comprueba la posicion real del robot leida de los
