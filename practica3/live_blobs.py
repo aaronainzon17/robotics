@@ -56,8 +56,8 @@ def getBlobs(frame, HSV_min=(5, 50, 50) , HSV_max=(15, 255, 255)):
 	# red_10 = np.array([10, 255, 255])
 
 	# Limites inferiores (0-10) Para Najarnja
-	red_0 = np.array([25, 52, 72])
-	red_10 = np.array([102, 255, 255])
+	red_0 = np.array([65,60,60])
+	red_10 = np.array([80,255,255])
 	
 	# Limites superiores (160-180) Para rojo
 	# red_160 = np.array([160,80,80])
