@@ -5,7 +5,7 @@ import numpy as np
 import time
 
 import matplotlib
-matplotlib.use("TkAgg")
+#matplotlib.use("TkAgg")
 
 def solveMap(robot, map_file, point_ini, point_end, ocho=False):
     # 1. load map and compute costs and path
