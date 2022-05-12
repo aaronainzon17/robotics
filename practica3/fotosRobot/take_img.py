@@ -13,7 +13,7 @@ ret, frame = vid.read()
 # Display the resulting frame
 cv2.imshow('frame', frame)
 # Filename
-filename = 'foto_bot.jpg'
+filename = 'homografia1.jpg'
 
 # Using cv2.imwrite() method
 # Saving the image
