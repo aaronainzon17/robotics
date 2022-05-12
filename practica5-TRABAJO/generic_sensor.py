@@ -56,7 +56,9 @@ BP.offset_motor_encoder(BP.PORT_C,
 
 setSpeed(0,40)
 try:
-    avg_gyroscppe = 2449.47
+    GYRO_DEFAULT = 2449.47
+    GYRO2DEG = 0.24
+    
     while True:
         # read the sensor value
         # BP.get_sensor retrieves a sensor value.
@@ -68,8 +70,10 @@ try:
         #     The fourth is the pin 6 digital value.
         value = 0
         try:
-            value = BP.get_sensor(BP.PORT_4)[0] - avg_gyroscppe # read the sensor port value
-            print('valor del giro', value)
+            gyro_data = BP.get_sensor(BP.PORT_4)[0]
+            gyro_speed = np.deg2rad((GYRO_DEFAULT - gyro_data) * GYRO2DEG)
+            #value = BP.get_sensor(BP.PORT_4)[0] - avg_gyroscppe # read the sensor port value
+            print('valor del giro', gyro_speed)
             #print("Raw value: %4d   Voltage: %5.3fv" % (value, (value / (4095.0 / BP.get_voltage_5v())))) # print the raw value, and calculate and print the voltage as well
         except brickpi3.SensorError as error:
             print(error)
