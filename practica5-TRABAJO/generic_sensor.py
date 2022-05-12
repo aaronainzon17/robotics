@@ -21,7 +21,7 @@ import brickpi3 # import the BrickPi3 drivers
 
 BP = brickpi3.BrickPi3() # Create an instance of the BrickPi3 class. BP will be the BrickPi3 object.
 
-BP.set_sensor_type(BP.PORT_D, BP.SENSOR_TYPE.CUSTOM, [(BP.SENSOR_CUSTOM.PIN1_ADC)]) # Configure for an analog on sensor port pin 1, and poll the analog line on pin 1.
+BP.set_sensor_type(BP.PORT_4, BP.SENSOR_TYPE.CUSTOM, [(BP.SENSOR_CUSTOM.PIN1_ADC)]) # Configure for an analog on sensor port pin 1, and poll the analog line on pin 1.
 
 try:
     while True:
@@ -34,7 +34,7 @@ try:
         #     The third is the pin 5 digital value.
         #     The fourth is the pin 6 digital value.
         try:
-            value = BP.get_sensor(BP.PORT_D)[0] # read the sensor port value
+            value = BP.get_sensor(BP.PORT_4)[0] # read the sensor port value
             print("Raw value: %4d   Voltage: %5.3fv" % (value, (value / (4095.0 / BP.get_voltage_5v())))) # print the raw value, and calculate and print the voltage as well
         except brickpi3.SensorError as error:
             print(error)
