@@ -88,7 +88,7 @@ class Robot:
         self.y_b = Value('d', 0)
         self.size_b = Value('d', 0)
         self.is_blob = Value('b', False)
-        self.last_img = None
+        self.red_pixels = Value('i', 0)
 
 
         self.rows = Value('i',0)
@@ -287,12 +287,8 @@ class Robot:
             if self.is_blob.value and triedCatch:
                 x_bl = self.x_b.value
                 y_bl = self.y_b.value
-                cv2.namedWindow("Capture")
-                cv2.imshow("Capture", self.last_img)
-                cv2.waitKey(0)
-                red_pixels = detect_red(self.last_img)
                 # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
-                if red_pixels > 300:
+                if self.red_pixels.value > 300:
                     self.setSpeed(0,0)
                     finished = True
                     print('LO TENGO')
@@ -403,8 +399,9 @@ class Robot:
             cam.capture(rawCapture, format="bgr", use_video_port=True)
             # clear the stream in preparation for the next frame
             rawCapture.truncate(0)
-            self.last_img = rawCapture.array
-            blob = getRedBloobs(self.last_img)  # Se devuelve el blob mas grande
+            frame = rawCapture.array
+            blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
+            self.red_pixels.value = detect_red(frame)
             #Se actualizan las variables compartidas referentes a la imagen
             if blob is not None:
                 self.x_b.value = blob.pt[0]
