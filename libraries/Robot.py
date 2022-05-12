@@ -513,13 +513,13 @@ class Robot:
                 if value > 2000 and value < 2750:     #Se detecta el colo blanco entonces es el A
                     # Se indican las coordenadas iniciales del robot 
                     self.x = Value('d', 600)
-                    self.y = Value('d', 2600)
+                    self.y = Value('d', 2800)
                     self.th = Value('d', self.norm_pi(np.deg2rad(-90)))
                     return "mapaA_CARRERA.txt"
                 elif value > 2000 :
                     # Se indican las coordenadas iniciales del robot 
                     self.x = Value('d', 2200)
-                    self.y = Value('d', 2600)
+                    self.y = Value('d', 2800)
                     self.th = Value('d', self.norm_pi(np.deg2rad(-90)))
                     return "mapaB_CARRERA.txt"
                 else:

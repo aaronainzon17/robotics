@@ -22,76 +22,12 @@ Autores:
     - Pablo Gancedo Alcalde 736839 
 """
 
-#Funcion que normaliza el angulo entre -pi, pi
-def norm_pi(th):
-    if th > math.pi:
-        th = th - 2 * math.pi
-    elif th < -math.pi:
-        th = th + 2 * math.pi
-    return th
-
-def hom(x):
-    """ A partir de un punto crea la matriz en coordenadas homogeneas """
-    x1 = x[0]
-    y1 = x[1]
-    th = x[2]
-
-    T = np.array([
-        [np.cos(th), - np.sin(th), x1],
-        [np.sin(th), np.cos(th), y1],
-        [0, 0, 1]])
-
-    return T
-
-
-def loc(T):
-    """ A partir de una matriz calcula el punto """
-    nx = T[0][0]
-    ny = T[1][0]
-    px = T[0][2]
-    py = T[1][2]
-    x = np.array([px, py, norm_pi(np.arctan2(ny, nx))])
-
-    return x
-
-
-def check_position(robot, x, y, th, x_err, y_err, angular_err):
-    """ check_position es la funcion de control de localizacion
-        En ella se comprueba la posicion real del robot leida de los
-        motores y se comprueba si se encuentra en la posicion deseada
-        permitiendo un cierto error. """
-
-    # Se lee incialmente la posicion del robot
-    [x_now, y_now, th_now] = robot.readOdometry()
-    reached = False
-
-    while not reached:
-        # print("-------------------------------------------")
-        #print("quiero llegar a ", x, " ", y, " ", th)
-        #print("estoy en ", x_now, " ", y_now, " ", th_now)
-        # print("-------------------------------------------")
-
-        # Se calcula el angulo
-        error_ang = abs(th-th_now)
-        if error_ang > math.pi:
-            error_ang = (2*math.pi) - error_ang
-
-        # Se comprueba que la trayectoria se esta relaizando dentro del error permitido
-        if (abs(x-x_now) <= x_err) and (abs(y-y_now) <= y_err) and (error_ang <= angular_err):
-            reached = True
-            print("Se ha alcanzado el punto:[",
-                  x_now, ",", y_now, ",", th_now, "]")
-        else:
-            [x_now, y_now, th_now] = robot.readOdometry()
-            #print("La posicion actual es:", x_now, y_now)
-        # time.sleep(period)
-
 
 def s_A(robot, vel):
     """ La funcion s_A realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
 
-    pos = [[0,5],[1,4],[2,3],[1,1.5]]
+    pos = [[1,6],[0,5],[1,4],[2,3],[1,1.5]]
     for point_map in pos:
         point = [200+point_map[0]*400, 200+point_map[1]*400]
         # Se mueve el robot a la siguiente celda
@@ -104,7 +40,7 @@ def s_B(robot, vel):
     """ La funcion s_B realiza la trayectoria de s del mapa B basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """  
     
-    pos = [[6,5],[5,4],[4,3],[5,1.5]]
+    pos = [[5,6],[6,5],[5,4],[4,3],[5,1.5]]
     for point_map in pos:
         point = [200+point_map[0]*400, 200+point_map[1]*400]
         # Se mueve el robot a la siguiente celda
@@ -127,7 +63,7 @@ def main(args):
         robot = Robot()
 
         mapa = robot.detectar_recorrido()
-        
+        print("Se ha detectado el mapa ", mapa)
         if mapa is None:
             print('Mapa desconocido, seleccione mapa A o B')
             exit(1)
@@ -149,11 +85,13 @@ def main(args):
             imagenOtro = cv2.imread(bb8, cv2.IMREAD_COLOR)
             target_robot_file = r2d2
             s_A(robot, 150)
+            #Ahora toca corregir la homografia
         else: # "mapaB_CARRERA.txt"
             imagenFin = cv2.imread(bb8, cv2.IMREAD_COLOR)
             imagenOtro = cv2.imread(r2d2, cv2.IMREAD_COLOR)
             target_robot_file = bb8
             s_B(robot, 150)
+            #Ahora toca corregir la homografia
 
         print("End : %s" % time.ctime())
 
