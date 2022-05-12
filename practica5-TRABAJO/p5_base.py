@@ -62,6 +62,7 @@ def main(args):
         mirror=False
 
         robot = Robot()
+        time.sleep(1)
 
         mapa = robot.detectar_recorrido()
         print("Se ha detectado el mapa ", mapa)
