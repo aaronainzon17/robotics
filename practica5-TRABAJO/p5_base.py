@@ -22,13 +22,24 @@ Autores:
     - Belen Gimeno Chueca 756425
     - Pablo Gancedo Alcalde 736839 
 """
+def mov_debug(robot, vel):
+    """ La funcion s_A realiza la trayectoria de s del mapa A basandose en
+        la odometria para detener al robot y comenzar con el siguiente movimiento """
 
+    pos = [[1,6],[2,6],[1,4],[2,3],[1,1.8]]
+    for point_map in pos:
+        point = [200+point_map[0]*400, 200+point_map[1]*400]
+        # Se mueve el robot a la siguiente celda
+        robot.go(point[0],point[1])
+        print('Voy a ',point)
+
+    robot.setSpeed(0, 0)  # Parar el robot
 
 def s_A(robot, vel):
     """ La funcion s_A realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
 
-    pos = [[1,6],[0,5],[1,4],[2,3],[1,1.8]]
+    pos = [[0,5],[1,4],[2,3],[1,1.8]]
     for point_map in pos:
         point = [200+point_map[0]*400, 200+point_map[1]*400]
         # Se mueve el robot a la siguiente celda
@@ -86,7 +97,8 @@ def main(args):
             imagenFin = cv2.imread(r2d2, cv2.IMREAD_COLOR)
             imagenOtro = cv2.imread(bb8, cv2.IMREAD_COLOR)
             target_robot_file = r2d2
-            s_A(robot, 150)
+            mov_debug(robot, 150)
+            #s_A(robot, 150)
             #Ahora toca corregir la homografia
         else: # "mapaB_CARRERA.txt"
             imagenFin = cv2.imread(bb8, cv2.IMREAD_COLOR)
