@@ -54,7 +54,7 @@ BP.offset_motor_encoder(BP.PORT_B,
 BP.offset_motor_encoder(BP.PORT_C,
                                      BP.get_motor_encoder(BP.PORT_C))  # RUEDA IZQUIERDA
 
-setSpeed(0,40)
+setSpeed(0,90)
 try:
     GYRO_DEFAULT = 2449.47
     GYRO2DEG = 0.24
