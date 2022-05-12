@@ -56,16 +56,16 @@ def getBlobs(frame, HSV_min=(5, 50, 50) , HSV_max=(15, 255, 255)):
 	# red_10 = np.array([10, 255, 255])
 
 	# Limites inferiores (0-10) Para Najarnja
-	red_0 = np.array([3, 50, 50])
-	red_10 = np.array([8, 255, 255])
+	red_0 = np.array([110, 90, 90])
+	red_10 = np.array([115, 95, 95])
 	
 	# Limites superiores (160-180) Para rojo
 	# red_160 = np.array([160,80,80])
 	# red_180 = np.array([179,255,255])
 
 	# Limites superiores (160-180) Para Naranja
-	red_160 = np.array([10, 255, 255])
-	red_180 = np.array([20,255,255])
+	red_160 = np.array([125,110, 110])
+	red_180 = np.array([130,120,120])
 
 	mask0_10 = cv2.inRange(img_hsv, red_0, red_10)
 	mask_160_180 = cv2.inRange(img_hsv, red_160, red_180)
