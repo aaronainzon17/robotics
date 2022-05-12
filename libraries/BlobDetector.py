@@ -81,9 +81,6 @@ def getRedBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
 	return biggest
 
 def detect_red(frame):
-	cv2.namedWindow("Capture")
-	cv2.imshow("Capture", frame)
-	cv2.waitKey(0)
 	img_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 	#Se utilizan 2 inRange porque el rojo en HSV se encuentra entre 0-10 y 160-180 
 	
