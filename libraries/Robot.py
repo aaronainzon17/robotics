@@ -205,7 +205,7 @@ class Robot:
     
             raw_gyros = self.BP.get_sensor(self.BP.PORT_4)[0]
             th_gyros = (err_gyroscope - raw_gyros) * deg_gyroscope * self.P
-            print(th_gyros)
+            
             # Calcula los nuevos valores de la odometria
             if real_w == 0:
                 d_x = (real_v * self.P) * np.cos(self.th.value)
