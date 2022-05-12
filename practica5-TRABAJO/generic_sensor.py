@@ -54,12 +54,13 @@ BP.offset_motor_encoder(BP.PORT_B,
 BP.offset_motor_encoder(BP.PORT_C,
                                      BP.get_motor_encoder(BP.PORT_C))  # RUEDA IZQUIERDA
 
-setSpeed(0,60)
+#setSpeed(0,60)
 try:
     GYRO_DEFAULT = 2449.47
     GYRO2DEG = 0.24
-    
-    while True:
+    acum = []
+    i = 0
+    while i < 1500:
         # read the sensor value
         # BP.get_sensor retrieves a sensor value.
         # BP.PORT_1 specifies that we are looking for the value of sensor port 1.
@@ -68,18 +69,18 @@ try:
         #     The second is the pin 6 analog line value.
         #     The third is the pin 5 digital value.
         #     The fourth is the pin 6 digital value.
-        value = 0
+        
         try:
             gyro_data = BP.get_sensor(BP.PORT_4)[0]
-            gyro_speed = (GYRO_DEFAULT - gyro_data)* GYRO2DEG
+            acum.append(gyro_data)
+            #gyro_speed = (GYRO_DEFAULT - gyro_data)* GYRO2DEG
             
             #value = BP.get_sensor(BP.PORT_4)[0] - avg_gyroscppe # read the sensor port value
-            print('valor del giro', gyro_speed)
             #print("Raw value: %4d   Voltage: %5.3fv" % (value, (value / (4095.0 / BP.get_voltage_5v())))) # print the raw value, and calculate and print the voltage as well
         except brickpi3.SensorError as error:
             print(error)
         
         time.sleep(0.02)  # delay for 0.02 seconds (20ms) to reduce the Raspberry Pi CPU load../g   
-
+    print('la mediana',np.median(acum))
 except KeyboardInterrupt: # except the program gets interrupted by Ctrl+C on the keyboard.
     BP.reset_all()        # Unconfigure the sensors, disable the motors, and restore the LED to the control of the BrickPi3 firmware.
