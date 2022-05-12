@@ -74,7 +74,7 @@ try:
             gyro_data = BP.get_sensor(BP.PORT_4)[0]
             
             i+=1
-            gyro_speed = (GYRO_DEFAULT - gyro_data)* GYRO2DEG
+            gyro_speed = GYRO_DEFAULT - gyro_data
             acum.append(gyro_speed)
             print(gyro_speed)
             #value = BP.get_sensor(BP.PORT_4)[0] - avg_gyroscppe # read the sensor port value
