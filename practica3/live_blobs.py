@@ -122,15 +122,14 @@ while(True):
 	# clear the stream in preparation for the next frame
 	rawCapture.truncate(0)
 	frame = rawCapture.array
-	detect_red(frame)
-	cv2.namedWindow("Capture")
-	cv2.imshow("Capture", frame)
-	cv2.waitKey(0)
-	#blob = getBlobs(frame)  # Se devuelve el blob mas grande
-
-	#if blob is not None:
-	#	print('EL bloob esta en', blob.pt[0], blob.pt[1])
-	#	print('El tamanyo del blob es', blob.size)
-	#
-	#	if (blob.size > 195) and abs(blob.pt[0] - 320) < 50 and (blob.pt[1] > 240):
-	#		print('Esta en las pinzas')
+	#detect_red(frame)
+	#cv2.namedWindow("Capture")
+	#cv2.imshow("Capture", frame)
+	#cv2.waitKey(0)
+	blob = getBlobs(frame)  # Se devuelve el blob mas grande
+	if blob is not None:
+		print('EL bloob esta en', blob.pt[0], blob.pt[1])
+		print('El tamanyo del blob es', blob.size)
+	
+		#if (blob.size > 195) and abs(blob.pt[0] - 320) < 50 and (blob.pt[1] > 240):
+		#	print('Esta en las pinzas')
