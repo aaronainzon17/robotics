@@ -623,9 +623,13 @@ class Robot:
         distanciaMaxima=200000
         #self.setSpeed(0,-10)
         value = self.BP.get_sensor(self.BP.PORT_1) * 10
+        print("La distancia maxima es ",  distanciaMaxima)
+        print("La distancia es ", value)
         while(value <= distanciaMaxima):
             distanciaMaxima=value
             value = self.BP.get_sensor(self.BP.PORT_1) * 10
+            print("La distancia maxima es ",  distanciaMaxima)
+            print("La distancia es ", value)
         self.setSpeed(0,0)
         
 
