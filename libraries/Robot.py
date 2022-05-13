@@ -625,7 +625,7 @@ class Robot:
         value = self.BP.get_sensor(self.BP.PORT_1) * 10
         print("La distancia maxima es ",  distanciaMaxima)
         print("La distancia es ", value)
-        while(value <= distanciaMaxima):
+        while(value <= distanciaMaxima +2):
             distanciaMaxima=value
             value = self.BP.get_sensor(self.BP.PORT_1) * 10
             print("La distancia maxima es ",  distanciaMaxima)
