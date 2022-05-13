@@ -195,7 +195,7 @@ def detect_green(frame):
 	for i in range(len(mask[479])):
 		if mask[479][i] == 255:
 			red_pixels+=1
-	print(red_pixels)
+	#print(red_pixels)
 	return red_pixels
 
 #Deteccion del blob de la pared para poder ubicarse
