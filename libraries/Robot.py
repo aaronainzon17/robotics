@@ -601,7 +601,7 @@ class Robot:
 
         self.setSpeed(0,0)
         #self.pCam.stop()
-        self.pCam.exit()
+        self.pCam.kill()
 
 
 
