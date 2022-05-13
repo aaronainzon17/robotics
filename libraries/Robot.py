@@ -567,7 +567,7 @@ class Robot:
         self.pCam.start()
         #Se deja que se inicie la camara
         time.sleep(1)
-        while((not self.is_blob) or (self.x_b>self.cols/2)):
+        while((not self.is_blob.value) or (self.x_b.value>self.cols.value/2)):
             self.setSpeed(0,30)
 
         self.setSpeed(0,0)
