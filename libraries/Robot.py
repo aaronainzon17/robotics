@@ -598,12 +598,9 @@ class Robot:
         time.sleep(1)
         self.setSpeed(0,30)
         while(not self.is_blob.value):
-            
-            print("El blob es nulo")
-
+            pass
         while(self.x_b.value<=self.cols.value/2):
-            #self.setSpeed(0,30)
-            print("El blob esta en ",self.x_b.value)
+            pass
         self.setSpeed(0,0)
         
 
