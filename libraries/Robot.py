@@ -551,7 +551,7 @@ class Robot:
     def centrar_con_sonar(self):
         distanciaMaxima=200000
         value = self.BP.get_sensor(self.BP.PORT_1) * 10
-        while(value<distanciaMaxima):
+        while(value<distanciaMaxima or value==None):
             self.setSpeed(0,30)
             distanciaMaxima=value
             value = self.BP.get_sensor(self.BP.PORT_1) * 10
