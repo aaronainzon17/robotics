@@ -537,9 +537,8 @@ class Robot:
         #saca la nueva x,y,th
         #Resetea los encoders
         self.lock_odometry.acquire()
-        #Leer imagen y sacar nueva posicion
-        #Activar la camara
-        #LLamar
+        #Se usa el sonar para centrarse
+        
         
         self.BP.offset_motor_encoder(self.BP.PORT_B,
                                      self.BP.get_motor_encoder(self.BP.PORT_B))  # reset encoder B
@@ -547,7 +546,21 @@ class Robot:
                                      self.BP.get_motor_encoder(self.BP.PORT_C))  # reset encoder C
 
         self.lock_odometry.release()
-        
+
+
+    def centrar_con_sonar(self):
+        distanciaMaxima=200000
+        value = self.BP.get_sensor(self.BP.PORT_1) * 10
+        while(value<distanciaMaxima):
+            self.setSpeed(0,30)
+            distanciaMaxima=value
+            value = self.BP.get_sensor(self.BP.PORT_1) * 10
+            print("Esta a una distancia de ",value)
+        self.setSpeed(0,0)
+
+
+
+
 
 #########################################################
 ################## Funciones obsoletas ##################

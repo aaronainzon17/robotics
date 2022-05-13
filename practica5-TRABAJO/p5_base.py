@@ -74,6 +74,8 @@ def main(args):
 
         robot = Robot()
         time.sleep(1)
+        robot.centrar_con_sonar()
+        time.sleep(10)
 
         mapa = robot.detectar_recorrido()
         print("Se ha detectado el mapa ", mapa)
