@@ -22,6 +22,52 @@ Autores:
     - Belen Gimeno Chueca 756425
     - Pablo Gancedo Alcalde 736839 
 """
+
+def normalizar(th):
+    """ Funcion de normalizacion del angulo entre -pi, pi """
+
+    if th > math.pi:
+        th -= (2 * math.pi)
+    elif th < -math.pi:
+        th += (2 * math.pi)
+    return th
+
+
+def check_position(robot, x, y, th, x_err, y_err, angular_err):
+    """ check_position es la funcion de control de localizacion
+        En ella se comprueba la posicion real del robot leida de los
+        motores y se comprueba si se encuentra en la posicion deseada
+        permitiendo un cierto error. """
+
+    # Se lee incialmente la posicion del robot
+    [x_now, y_now, th_now] = robot.readOdometry()
+    reached = False
+
+    while not reached:
+        # print("-------------------------------------------")
+        #print("quiero llegar a ", x, " ", y, " ", th)
+        #print("estoy en ", x_now, " ", y_now, " ", th_now)
+        # print("-------------------------------------------")
+
+        # Se calcula el angulo
+        error_ang = abs(th-th_now)
+        if error_ang > math.pi:
+            error_ang = (2*math.pi) - error_ang
+
+        # Se comprueba que la trayectoria se esta relaizando dentro del error permitido
+        if (abs(x-x_now) <= x_err) and (abs(y-y_now) <= y_err) and (error_ang <= angular_err):
+            reached = True
+            print("Se ha alcanzado el punto:[",
+                  x_now, ",", y_now, ",", th_now, "]")
+        else:
+            [x_now, y_now, th_now] = robot.readOdometry()
+            #print("La posicion actual es:", x_now, y_now)
+        # time.sleep(period)
+
+
+
+
+
 def mov_debug(robot, vel):
     """ La funcion s_A realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
@@ -101,6 +147,12 @@ def main(args):
             target_robot_file = r2d2
             #mov_debug(robot, 150)
             s_A(robot, 150)
+            [xA,yA,thA]= robot.readOdometry()
+            robot.setSpeed(0, 10)  # cuarto de circunferencia a la derecha
+            check_position(robot, xA, yA, normalizar(np.deg2rad(270)), np.Infinity, np.Infinity, np.deg2rad(2))
+            robot.setSpeed(0,0)
+            [xA,yA,thA]= robot.readOdometry()
+            print("La odometria tras acabar la s es: x= ",xA," y= ",yA," th= ",thA)
             #Ahora toca corregir la homografia
         else: # "mapaB_CARRERA.txt"
             imagenFin = cv2.imread(bb8, cv2.IMREAD_COLOR)
@@ -112,7 +164,7 @@ def main(args):
         print("End : %s" % time.ctime())
 
         #Se reorienta el robot
-        robot.centrar_con_imagen()
+        #robot.centrar_con_imagen()
         time.sleep(10)
 
 

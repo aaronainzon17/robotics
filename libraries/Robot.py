@@ -616,6 +616,9 @@ class Robot:
             if(self.x_b.value<=self.cols.value/2):
                 self.setSpeed(0,0)
 
+        print("La x final del blob es ",self.x_b.value)
+        print("El tamaño final del blob es ")
+
 
         # self.setSpeed(0,20)
         # time.sleep(1)
