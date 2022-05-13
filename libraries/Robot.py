@@ -444,7 +444,7 @@ class Robot:
             rawCapture.truncate(0)
             frame = rawCapture.array
             blob = getGreenBloobs(frame)  # Se devuelve el blob mas grande
-            self.red_pixels.value = detect_red(frame)
+            #self.red_pixels.value = detect_red(frame)
             #Se actualizan las variables compartidas referentes a la imagen
             if blob is not None:
                 self.x_b.value = blob.pt[0]
