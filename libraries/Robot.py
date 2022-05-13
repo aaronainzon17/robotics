@@ -548,14 +548,28 @@ class Robot:
         self.lock_odometry.release()
 
 
-    def centrar_con_sonar(self):
-        distanciaMaxima=200000
-        value = self.BP.get_sensor(self.BP.PORT_1) * 10
-        while(value<distanciaMaxima or value==None):
+    # def centrar_con_sonar(self):
+    #     distanciaMaxima=200000
+    #     value = self.BP.get_sensor(self.BP.PORT_1) * 10
+    #     while(value<distanciaMaxima or value==None):
+    #         self.setSpeed(0,30)
+    #         distanciaMaxima=value
+    #         value = self.BP.get_sensor(self.BP.PORT_1) * 10
+    #         print("Esta a una distancia de ",value)
+    #     self.setSpeed(0,0)
+
+    def centrar_con_imagen(self):
+        #leer imagen
+        #Si no hay blob entonces giro a la izquierda
+        #Si el centro del blob es menor que la parte derecha entonces sigo girando
+        #Si supera la mitaz entonces para
+        self.pCam = Process(target=self.updateCamara, args=())
+        self.pCam.start()
+        #Se deja que se inicie la camara
+        time.sleep(1)
+        while((not self.is_blob) or (self.x_b>self.cols/2)):
             self.setSpeed(0,30)
-            distanciaMaxima=value
-            value = self.BP.get_sensor(self.BP.PORT_1) * 10
-            print("Esta a una distancia de ",value)
+
         self.setSpeed(0,0)
 
 
