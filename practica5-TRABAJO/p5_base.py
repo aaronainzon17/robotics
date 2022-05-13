@@ -92,8 +92,7 @@ def main(args):
         # 2. perform trajectory
         print("Start : %s" % time.ctime())
 
-        robot.centrar_con_imagen()
-        time.sleep(10)
+        
 
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":
@@ -111,6 +110,11 @@ def main(args):
             #Ahora toca corregir la homografia
 
         print("End : %s" % time.ctime())
+
+        #Se reorienta el robot
+        robot.centrar_con_imagen()
+        time.sleep(10)
+
 
         robot.lock_odometry.acquire()
         print("Odom values at main at the END: %.2f, %.2f, %.2f " %
