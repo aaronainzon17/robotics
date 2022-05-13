@@ -140,3 +140,93 @@ def getRedBloobs(frame, HSV_min=(5, 50, 50) , HSV_max=(15, 255, 255) ):
 
 	# Se devuelve el blob mas grande
 	return biggest
+
+
+
+
+
+
+
+# getRedBloobs: devuelve el blob de mayor tamanyo detectado en la imagen frame 
+# que se ha pasado por parametro 
+def getGreenBloobs(frame, HSV_min=(0, 70, 50), HSV_max=(10, 255, 255)):
+	
+	img_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+	
+	#Se utilizan 2 inRange porque el rojo en HSV se encuentra entre 0-10 y 160-180 
+	
+	# Limites inferiores (0-10)
+	red_0 = np.array([54,100,100])
+	red_10 = np.array([80,255,255])
+
+	# Se aplcian los filtros de rango para filtrar por color 
+	mask0_10 = cv2.inRange(img_hsv, red_0, red_10)
+
+	mask = mask0_10
+
+	frame = cv2.bitwise_and(frame, frame, mask=mask)
+	
+	# Se utiliza el blob detector para calucular los keypoints
+	keypoints_red = detector.detect(mask)
+	
+	# Se elige el blob mas prometedor (mas grande)
+	if (len(keypoints_red) != 0):
+		biggest = keypoints_red[0]
+		for kp in keypoints_red:
+			if kp.size > biggest.size:
+				biggest = kp 
+	else:
+		biggest = None
+
+	# Se devuelve el blob mas grande
+	return biggest
+
+def detect_green(frame):
+	img_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+	#Se utilizan 2 inRange porque el rojo en HSV se encuentra entre 0-10 y 160-180 
+	
+	red_0 = np.array([54,100,100])
+	red_10 = np.array([80,255,255])
+	
+	mask0_10 = cv2.inRange(img_hsv, red_0, red_10)
+
+	mask = mask0_10
+	red_pixels = 0
+	for i in range(len(mask[479])):
+		if mask[479][i] == 255:
+			red_pixels+=1
+	print(red_pixels)
+	return red_pixels
+
+#Deteccion del blob de la pared para poder ubicarse
+def getGreenBloobs(frame, HSV_min=(5, 50, 50) , HSV_max=(15, 255, 255) ):
+	
+	img_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+	
+	#Se utilizan 2 inRange porque el rojo en HSV se encuentra entre 0-10 y 160-180 
+	
+	# Limites inferiores (0-10)
+	red_0 = np.array([54,100,100])
+	red_10 = np.array([80,255,255])
+
+	# Se aplcian los filtros de rango para filtrar por color 
+	mask0_10 = cv2.inRange(img_hsv, red_0, red_10)
+
+	mask = mask0_10
+
+	frame = cv2.bitwise_and(frame, frame, mask=mask)
+	
+	# Se utiliza el blob detector para calucular los keypoints
+	keypoints_red = detector.detect(mask)
+	
+	# Se elige el blob mas prometedor (mas grande)
+	if (len(keypoints_red) != 0):
+		biggest = keypoints_red[0]
+		for kp in keypoints_red:
+			if kp.size > biggest.size:
+				biggest = kp 
+	else:
+		biggest = None
+
+	# Se devuelve el blob mas grande
+	return biggest

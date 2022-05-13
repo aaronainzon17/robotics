@@ -426,6 +426,35 @@ class Robot:
             else:
                 self.is_blob.value = False
     
+    def updateCamaraGreen(self):
+        #Se inicia la camara del robot
+        cam = picamera.PiCamera()
+        cam.resolution = (640,480)
+        cam.framerate = 32 
+        rawCapture = PiRGBArray(cam, size=(640, 480))
+        #Se espera un tiempo para que se pueda iniciar la camara
+        time.sleep(0.1)
+        # Se captura una imagen inicial para obtener el tamanyo de la imagen 
+        self.rows.value = 480
+        self.cols.value = 640
+        #Mientras no se detengaa el robot, se siguen captando imagenes
+        while not self.finished.value:
+            cam.capture(rawCapture, format="bgr", use_video_port=True)
+            # clear the stream in preparation for the next frame
+            rawCapture.truncate(0)
+            frame = rawCapture.array
+            blob = getGreenBloobs(frame)  # Se devuelve el blob mas grande
+            self.red_pixels.value = detect_red(frame)
+            #Se actualizan las variables compartidas referentes a la imagen
+            if blob is not None:
+                self.x_b.value = blob.pt[0]
+                self.y_b.value = blob.pt[1]
+                self.size_b.value = blob.size 
+                self.is_blob.value = True
+            else:
+                self.is_blob.value = False
+    
+    
     def go(self, x_goal, y_goal):
         # Aliena al robot con el siguiente punto
         self.align(x_goal, y_goal, np.deg2rad(1))
@@ -563,7 +592,7 @@ class Robot:
         #Si no hay blob entonces giro a la izquierda
         #Si el centro del blob es menor que la parte derecha entonces sigo girando
         #Si supera la mitaz entonces para
-        self.pCam = Process(target=self.updateCamara, args=())
+        self.pCam = Process(target=self.updateCamaraGreen, args=())
         self.pCam.start()
         #Se deja que se inicie la camara
         time.sleep(1)
@@ -571,6 +600,7 @@ class Robot:
             self.setSpeed(0,30)
 
         self.setSpeed(0,0)
+        self.pCam.stop()
 
 
 
