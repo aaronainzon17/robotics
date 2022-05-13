@@ -99,8 +99,8 @@ def main(args):
             imagenFin = cv2.imread(r2d2, cv2.IMREAD_COLOR)
             imagenOtro = cv2.imread(bb8, cv2.IMREAD_COLOR)
             target_robot_file = r2d2
-            mov_debug(robot, 150)
-            #s_A(robot, 150)
+            #mov_debug(robot, 150)
+            s_A(robot, 150)
             #Ahora toca corregir la homografia
         else: # "mapaB_CARRERA.txt"
             imagenFin = cv2.imread(bb8, cv2.IMREAD_COLOR)
