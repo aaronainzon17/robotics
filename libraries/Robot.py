@@ -596,12 +596,12 @@ class Robot:
         self.pCam.start()
         #Se deja que se inicie la camara
         time.sleep(1)
-        self.setSpeed(0,20)
+        self.setSpeed(0,30)
         while(not self.is_blob.value):
             
             print("El blob es nulo")
 
-        while(self.x_b.value>=self.cols.value/2):
+        while(self.x_b.value<=self.cols.value/2):
             #self.setSpeed(0,30)
             print("El blob esta en ",self.x_b.value)
         self.setSpeed(0,0)
