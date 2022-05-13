@@ -6,7 +6,9 @@ from __future__ import division
 from ast import alias
 
 # import brickpi3 # import the BrickPi3 drivers
-import time     # import the time library for the sleep function
+import time
+
+from cv2 import distanceTransformWithLabels     # import the time library for the sleep function
 import brickpi3  # import the BrickPi3 drivers
 import sys
 import numpy as np
@@ -605,12 +607,20 @@ class Robot:
             if(self.x_b.value>=self.cols.value/2):
                 self.setSpeed(0,0)
         print("La x del blob es ",self.x_b.value)
-        while((not self.is_blob.value) or self.x_b.value>=self.cols.value/2 -10):
-            #print("La x del blob es ",self.x_b.value)
-            #print("Las columnas entre 2 son ",self.cols.value/2)
-            self.setSpeed(0,-10)
-            if(self.x_b.value<=self.cols.value/2):
-                self.setSpeed(0,0)
+        # while((not self.is_blob.value) or self.x_b.value>=self.cols.value/2 -10):
+        #     #print("La x del blob es ",self.x_b.value)
+        #     #print("Las columnas entre 2 son ",self.cols.value/2)
+        #     self.setSpeed(0,-10)
+        #     if(self.x_b.value<=self.cols.value/2):
+        #         self.setSpeed(0,0)
+
+        #Ahora leer del sonar para quedarse quieto
+        distanciaMaxima=20000
+        self.setSpeed(0,-10)
+        value = self.BP.get_sensor(self.BP.PORT_1) * 10
+        while(value <= distanciaMaxima):
+            distanciaMaxima=value
+            value = self.BP.get_sensor(self.BP.PORT_1) * 10
         self.setSpeed(0,0)
         
 
