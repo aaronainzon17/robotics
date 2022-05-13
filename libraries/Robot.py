@@ -598,25 +598,30 @@ class Robot:
         self.pCam.start()
         #Se deja que se inicie la camara
         time.sleep(1)
-        self.setSpeed(0,20)
-        while(not self.is_blob.value):
-            pass
-        while((not self.is_blob.value) or self.x_b.value<self.cols.value/2):
-            #print("La x del blob es ",self.x_b.value)
-            #print("Las columnas entre 2 son ",self.cols.value/2)
-            if(self.x_b.value>=self.cols.value/2):
-                self.setSpeed(0,0)
-        print("La x del blob es ",self.x_b.value)
+
+
+        # self.setSpeed(0,20)
+        # while(not self.is_blob.value):
+        #     pass
+        # while((not self.is_blob.value) or self.x_b.value<self.cols.value/2):
+        #     #print("La x del blob es ",self.x_b.value)
+        #     #print("Las columnas entre 2 son ",self.cols.value/2)
+        #     if(self.x_b.value>=self.cols.value/2):
+        #         self.setSpeed(0,0)
+        #print("La x del blob es ",self.x_b.value)
+
+
         # while((not self.is_blob.value) or self.x_b.value>=self.cols.value/2 -10):
         #     #print("La x del blob es ",self.x_b.value)
         #     #print("Las columnas entre 2 son ",self.cols.value/2)
         #     self.setSpeed(0,-10)
         #     if(self.x_b.value<=self.cols.value/2):
         #         self.setSpeed(0,0)
-
+        self.setSpeed(0,20)
+        time.sleep(1)
         #Ahora leer del sonar para quedarse quieto
         distanciaMaxima=200000
-        self.setSpeed(0,-10)
+        #self.setSpeed(0,-10)
         value = self.BP.get_sensor(self.BP.PORT_1) * 10
         while(value <= distanciaMaxima):
             distanciaMaxima=value
