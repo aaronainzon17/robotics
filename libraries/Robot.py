@@ -615,7 +615,7 @@ class Robot:
         #         self.setSpeed(0,0)
 
         #Ahora leer del sonar para quedarse quieto
-        distanciaMaxima=20000
+        distanciaMaxima=200000
         self.setSpeed(0,-10)
         value = self.BP.get_sensor(self.BP.PORT_1) * 10
         while(value <= distanciaMaxima):
