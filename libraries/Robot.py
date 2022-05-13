@@ -599,9 +599,11 @@ class Robot:
         self.setSpeed(0,20)
         while(not self.is_blob.value):
             pass
-        while((not self.is_blob.value) or self.x_b.value<=self.cols.value/2):
-            print("La x del blob es ",self.x_b.value)
+        while((not self.is_blob.value) or self.x_b.value<self.cols.value/2):
+            #print("La x del blob es ",self.x_b.value)
             #print("Las columnas entre 2 son ",self.cols.value/2)
+            if(self.x_b.value>=self.cols.value/2):
+                self.setSpeed(0,0)
         print("La x del blob es ",self.x_b.value)
         self.setSpeed(0,0)
         
