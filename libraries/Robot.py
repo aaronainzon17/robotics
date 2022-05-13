@@ -600,7 +600,7 @@ class Robot:
         while(not self.is_blob.value):
             pass
         while(self.x_b.value<=self.cols.value/2):
-            pass
+            print("La x del blob es ",self.x_b.value)
         self.setSpeed(0,0)
         
 
