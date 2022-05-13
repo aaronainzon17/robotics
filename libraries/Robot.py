@@ -600,7 +600,8 @@ class Robot:
             self.setSpeed(0,30)
 
         self.setSpeed(0,0)
-        self.pCam.stop()
+        #self.pCam.stop()
+        self.pCam.exit()
 
 
 
