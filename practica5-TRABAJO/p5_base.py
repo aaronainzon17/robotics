@@ -74,8 +74,6 @@ def main(args):
 
         robot = Robot()
         time.sleep(1)
-        robot.centrar_con_sonar()
-        time.sleep(10)
 
         mapa = robot.detectar_recorrido()
         print("Se ha detectado el mapa ", mapa)
@@ -93,6 +91,9 @@ def main(args):
         
         # 2. perform trajectory
         print("Start : %s" % time.ctime())
+
+        robot.centrar_con_imagen()
+        time.sleep(10)
 
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":
