@@ -138,7 +138,7 @@ def main(args):
         # 2. perform trajectory
         print("Start : %s" % time.ctime())
 
-        
+        robot.centrar_con_imagen()        
 
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":
