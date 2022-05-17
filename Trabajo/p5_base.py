@@ -123,6 +123,7 @@ def main(args):
         time.sleep(1)
 
         mapa = robot.detectar_recorrido()
+        time.sleep(10)
         print("Se ha detectado el mapa ", mapa)
         if mapa is None:
             print('Mapa desconocido, seleccione mapa A o B')
