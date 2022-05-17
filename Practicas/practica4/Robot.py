@@ -495,7 +495,7 @@ class Robot:
                     return [False, False] # No hay obstaculo 
 
             except brickpi3.SensorError as error:
-                print('') 
+                print(error) 
 
 
 #########################################################

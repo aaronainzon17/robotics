@@ -14,6 +14,7 @@ from libraries.Robot import Robot
 from libraries.MapLib import Map2D
 from libraries.SolveMap import solveMap
 from libraries.BlobDetector import getRedBloobs,detect_red,getGreenBloobs,detect_green
+from ficheros_codigo_auxiliar.sample_matching import find_template
 
 """
             TRABAJO FINAL:
@@ -145,18 +146,19 @@ def main(args):
 
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":
-            imagenFin = cv2.imread(r2d2, cv2.IMREAD_COLOR)
-            imagenOtro = cv2.imread(bb8, cv2.IMREAD_COLOR)
-            target_robot_file = r2d2
-            #mov_debug(robot, 150)
-            s_A(robot, 150)
-            [xA,yA,thA]= robot.readOdometry()
-            robot.setSpeed(0, 10)  # cuarto de circunferencia a la derecha
-            check_position(robot, xA, yA, normalizar(np.deg2rad(270)), np.Infinity, np.Infinity, np.deg2rad(2))
-            robot.setSpeed(0,0)
-            [xA,yA,thA]= robot.readOdometry()
-            print("La odometria tras acabar la s es: x= ",xA," y= ",yA," th= ",thA)
-            #Ahora toca corregir la homografia
+            #s_A(robot, 150)
+            #[xA,yA,thA]= robot.readOdometry()
+            #robot.setSpeed(0, 10)  # cuarto de circunferencia a la derecha
+            #check_position(robot, xA, yA, normalizar(np.deg2rad(270)), np.Infinity, np.Infinity, np.deg2rad(2))
+            #robot.setSpeed(0,0)
+            #[xA,yA,thA]= robot.readOdometry()
+            #print("La odometria tras acabar la s es: x= ",xA," y= ",yA," th= ",thA)
+            ##Ahora toca corregir la homografia
+            point = [200+4[0]*400, 200+4[1]*400]
+            ## Se mueve el robot a la siguiente celda
+            robot.go(point[0],point[1])
+            robot.align(4,5,np.deg2rad(1))
+            find_template(refFilename="./R2-D2_s.png")
         else: # "mapaB_CARRERA.txt"
             imagenFin = cv2.imread(bb8, cv2.IMREAD_COLOR)
             imagenOtro = cv2.imread(r2d2, cv2.IMREAD_COLOR)

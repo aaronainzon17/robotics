@@ -456,7 +456,11 @@ class Robot:
             else:
                 self.is_blob.value = False
     
-    
+    def setNewPosition(self,x_new, y_new, th_new):
+        self.x.value = x_new
+        self.y.value = y_new
+        self.th.value = th_new
+        
     def go(self, x_goal, y_goal):
         # Aliena al robot con el siguiente punto
         self.align(x_goal, y_goal, np.deg2rad(1))
@@ -524,6 +528,7 @@ class Robot:
         # Se itera hasta que el sensor devuelve un valor distinto a 0 (le cuesta encenderse y sino da error)
         while value <= 0.0:
             try:
+                
                 [x_now, y_now, _] = self.readOdometry()
                 # Se va a definir ,un umbral para detectar el obsatculo en  
                 # el borde de la celda o en el centro de la celda objetivo
@@ -534,10 +539,13 @@ class Robot:
                 
                 # Se devuelve True si hay obstaculo, False si no
                 if value < wall_o and value > 0.0:
+                    print(value)
                     return [True, True] # Hay obstaculo y esta en la pared
                 elif value > wall_o and value < center_o and value > 0.0:
+                    print(value)
                     return [True, False] # Hay obsaculo y no esta en la pared
                 elif value > 0.0:
+                    print(value)
                     return [False, False] # No hay obstaculo 
 
             except brickpi3.SensorError as error:
