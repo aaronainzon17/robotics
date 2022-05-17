@@ -474,7 +474,7 @@ class Robot:
         # Se itera hasta que el sensor devuelve un valor distinto a 0 (le cuesta encenderse y sino da error)
         while value <= 0.0:
             try:
-                print(value)
+                
                 [x_now, y_now, _] = self.readOdometry()
                 # Se va a definir ,un umbral para detectar el obsatculo en  
                 # el borde de la celda o en el centro de la celda objetivo
@@ -485,10 +485,13 @@ class Robot:
                 
                 # Se devuelve True si hay obstaculo, False si no
                 if value < wall_o and value > 0.0:
+                    print(value)
                     return [True, True] # Hay obstaculo y esta en la pared
                 elif value > wall_o and value < center_o and value > 0.0:
+                    print(value)
                     return [True, False] # Hay obsaculo y no esta en la pared
                 elif value > 0.0:
+                    print(value)
                     return [False, False] # No hay obstaculo 
 
             except brickpi3.SensorError as error:
