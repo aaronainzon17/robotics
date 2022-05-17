@@ -156,10 +156,12 @@ def main(args):
             ##Ahora toca corregir la homografia
             point = [200+4*400, 200+4*400,np.deg2rad(90)]
             robot.setNewPosition(200+3*400,200+3*400,np.deg2rad(90))
+            # Se inicia la busqueda de la pelota 
+            robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
             ## Se mueve el robot a la siguiente celda
             robot.go(point[0],point[1])
             robot.align(200+4*400,200+5*400,np.deg2rad(1))
-            find_template(refFilename="./BB8_s.png")
+            find_template(refFilename="./R2-D2s.png")
         else: # "mapaB_CARRERA.txt"
             imagenFin = cv2.imread(bb8, cv2.IMREAD_COLOR)
             imagenOtro = cv2.imread(r2d2, cv2.IMREAD_COLOR)

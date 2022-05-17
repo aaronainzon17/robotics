@@ -162,7 +162,7 @@ def match_images(img1_bgr, img2_bgr):
     return found
  
    
-def find_template(mirror=False, img=None, refFilename = "R2-D2s.png"):
+def find_template(mirror=False, img=None, refFilename = "./R2-D2s.png"):
  
     print("Looking for reference image : ", refFilename)
     imReference = cv2.imread(refFilename, cv2.IMREAD_COLOR)
