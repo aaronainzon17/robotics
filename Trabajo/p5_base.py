@@ -154,7 +154,8 @@ def main(args):
             #[xA,yA,thA]= robot.readOdometry()
             #print("La odometria tras acabar la s es: x= ",xA," y= ",yA," th= ",thA)
             ##Ahora toca corregir la homografia
-            point = [200+4*400, 200+4*400]
+            point = [200+4*400, 200+4*400,np.deg2rad(90)]
+            robot.setNewPosition(point[0],point[1],point[2])
             ## Se mueve el robot a la siguiente celda
             robot.go(point[0],point[1])
             robot.align(4,5,np.deg2rad(1))
