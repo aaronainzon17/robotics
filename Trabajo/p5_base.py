@@ -142,7 +142,7 @@ def main(args):
         print("Start : %s" % time.ctime())
 
         #Primero se centra hacia la pared
-        robot.centrar_con_imagen()        
+        #robot.centrar_con_imagen()        
 
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":
@@ -154,7 +154,7 @@ def main(args):
             #[xA,yA,thA]= robot.readOdometry()
             #print("La odometria tras acabar la s es: x= ",xA," y= ",yA," th= ",thA)
             ##Ahora toca corregir la homografia
-            point = [200+4[0]*400, 200+4[1]*400]
+            point = [200+4*400, 200+4*400]
             ## Se mueve el robot a la siguiente celda
             robot.go(point[0],point[1])
             robot.align(4,5,np.deg2rad(1))
