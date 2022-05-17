@@ -52,7 +52,7 @@ def solveMap(robot, map_file, point_ini, point_end, ocho=False):
                     # se anyade el obsatculo al mapa en la pared 
                     ocho = myMap.setNewObstacleWall(prev_point, th, ocho)
                 else: 
-                    ocho = myMap.setNewObstacleCenter(point, th, ocho)
+                    ocho = myMap.setNewObstacleCenter(point_map, th, ocho)
                 
                 # Se recalcula el camino con el nuevo obstaculo 
                 if not myMap.replanPath(prev_point[0],prev_point[1],point_end[0], point_end[1],ocho):
