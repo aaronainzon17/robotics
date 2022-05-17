@@ -598,6 +598,8 @@ class Robot:
         distanciaActual= self.BP.get_sensor(self.BP.PORT_1) * 10
         self.setSpeed(0,40)
         while distanciaActual <= distanciaMaxima:
+            print("Distancia maxima es ",distanciaMaxima)
+            print("Distancia Actuak es ",distanciaActual)
             distanciaMaxima= distanciaActual
             distanciaActual= self.BP.get_sensor(self.BP.PORT_1) * 10
 
