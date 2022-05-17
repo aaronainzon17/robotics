@@ -13,6 +13,7 @@ import math
 from libraries.Robot import Robot
 from libraries.MapLib import Map2D
 from libraries.SolveMap import solveMap
+from libraries.BlobDetector import BlobDetector
 
 """
             TRABAJO FINAL:
