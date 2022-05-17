@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import sys
-sys.path.append('../libraries')
+sys.path.append('../Practicas/libraries')
 import os
 import cv2
 import argparse
