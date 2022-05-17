@@ -595,50 +595,61 @@ class Robot:
     #     self.setSpeed(0,0)
 
     def centrar_con_imagen(self):
+
+        #colocarse un poco centrado
+        #Leer del sonar para centrarse
+        #una vez centrado sabes que estas a 90 grados y ya sabran la x y la y con el blob
+        distanciaMaxima=2000000
+        distanciaActual= self.BP.get_sensor(self.BP.PORT_1) * 10
+        self.setSpeed(0,40)
+        while distanciaActual <= distanciaMaxima:
+            print("Distancia maxima es ",distanciaMaxima)
+            print("Distancia Actuak es ",distanciaActual)
+            distanciaMaxima= distanciaActual
+            distanciaActual= self.BP.get_sensor(self.BP.PORT_1) * 10
+
+        self.setSpeed(0,0)
+
+
+
+
         #leer imagen
         #Si no hay blob entonces giro a la izquierda
         #Si el centro del blob es menor que la parte derecha entonces sigo girando
         #Si supera la mitaz entonces para
-        self.pCam = Process(target=self.updateCamaraGreen, args=())
-        self.pCam.start()
-        #Se deja que se inicie la camara
-        time.sleep(1)
-
-
-        self.setSpeed(0,20)
-        while(not self.is_blob.value):
-            pass
-        while((not self.is_blob.value) or self.x_b.value<self.cols.value/2):
-            #print("La x del blob es ",self.x_b.value)
-            #print("Las columnas entre 2 son ",self.cols.value/2)
-            if(self.x_b.value>=self.cols.value/2):
-                self.setSpeed(0,0)
-        print("La x del blob es ",self.x_b.value)
-
-
-        while((not self.is_blob.value) or self.x_b.value>=self.cols.value/2 -10):
-            self.setSpeed(0,-5)
-            if(self.x_b.value<=self.cols.value/2):
-                self.setSpeed(0,0)
-
-        print("La x final del blob es ",self.x_b.value)
-        print("El tamaño final del blob es ")
+        # self.pCam = Process(target=self.updateCamaraGreen, args=())
+        # self.pCam.start()
+        # #Se deja que se inicie la camara
+        # time.sleep(1)
 
 
         # self.setSpeed(0,20)
-        # time.sleep(1)
-        # #Ahora leer del sonar para quedarse quieto
-        # distanciaMaxima=200000
-        # #self.setSpeed(0,-10)
-        # value = self.BP.get_sensor(self.BP.PORT_1) * 10
-        # print("La distancia maxima es ",  distanciaMaxima)
-        # print("La distancia es ", value)
-        # while(value <= distanciaMaxima ):
-        #     distanciaMaxima=value
-        #     value = self.BP.get_sensor(self.BP.PORT_1) * 10
-        #     print("La distancia maxima es ",  distanciaMaxima)
-        #     print("La distancia es ", value)
-        self.setSpeed(0,0)
+        # while(not self.is_blob.value):
+        #     pass
+        # while((not self.is_blob.value) or self.x_b.value<self.cols.value/2):
+        #     #print("La x del blob es ",self.x_b.value)
+        #     #print("Las columnas entre 2 son ",self.cols.value/2)
+        #     if(self.x_b.value>=self.cols.value/2):
+        #         self.setSpeed(0,0)
+        # print("La x del blob es ",self.x_b.value)
+
+
+        # while((not self.is_blob.value) or self.x_b.value>=self.cols.value/2 -10):
+        #     self.setSpeed(0,-5)
+        #     if(self.x_b.value<=self.cols.value/2):
+        #         self.setSpeed(0,0)
+
+        # print("La x final del blob es ",self.x_b.value)
+        # print("El tamaño final del blob es ")
+
+        #Idea:
+        #Hacer regla de tres
+        #x = (a*b)/c
+        #a=tBlob=120 , b=yRobot=1000 , c=tBlob'=120 ->x=yRobot'=952.3809
+        #a=xBlob=320 , b=thRobot=-90 , c=xBlob'=300 ->x=thRobot'=-96
+        
+        
+        
         
 
 
