@@ -140,6 +140,7 @@ def main(args):
         # 2. perform trajectory
         print("Start : %s" % time.ctime())
 
+        #Primero se centra hacia la pared
         robot.centrar_con_imagen()        
 
         # Trayectoria en s
