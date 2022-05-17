@@ -159,7 +159,7 @@ def main(args):
             ## Se mueve el robot a la siguiente celda
             robot.go(point[0],point[1])
             robot.align(200+4*400,200+5*400,np.deg2rad(1))
-            find_template(refFilename="./R2-D2_s.png")
+            find_template(refFilename="./BB8_s.png")
         else: # "mapaB_CARRERA.txt"
             imagenFin = cv2.imread(bb8, cv2.IMREAD_COLOR)
             imagenOtro = cv2.imread(r2d2, cv2.IMREAD_COLOR)
