@@ -43,9 +43,9 @@ def main(args):
         
         myMap.findPath(ini,goal, ocho)
         
-        #myMap.setNewObstacle([1,2],np.deg2rad(0))
+        myMap.setNewObstacleCenter([0,3],np.deg2rad(0), ocho)
         
-        #myMap.replanPath(1, 1, 2, 1, ocho)
+        myMap.replanPath(ini[0], ini[1], goal[0], goal[1], ocho)
         
         myMap.drawMap(saveSnapshot=False)
         
