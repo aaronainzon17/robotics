@@ -10,9 +10,9 @@ from tokenize import Double
 import numpy as np
 import time
 import math
-from Robot import Robot
-from MapLib import Map2D
-from SolveMap import solveMap
+from libraries.Robot import Robot
+from libraries.MapLib import Map2D
+from libraries.SolveMap import solveMap
 
 """
             TRABAJO FINAL:
@@ -72,7 +72,7 @@ def mov_debug(robot, vel):
     """ La funcion s_A realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
 
-    pos = [[1,6],[0,6],[0,5],[0,4],[1,4]]
+    pos = [[1,6],[1,5],[1,4]]
     for point_map in pos:
         point = [200+point_map[0]*400, 200+point_map[1]*400]
         # Se mueve el robot a la siguiente celda
