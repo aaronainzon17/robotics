@@ -538,17 +538,14 @@ class Map2D:
     # Anyade un nuevo obstaculo a la matriz de conexiones del mapa en el centro de la siguiente celda
     def setNewObstacleCenter(self, point, th, ocho):
         neigbours = list(range(8))
-        if neigbours is not None:
-            # Se introduce el obstaculo   
-            for cell in neigbours:
-                cm = self._cell2connCoord(point[0], point[1], cell) # cm = connection matrix
-                self.connectionMatrix[cm[0]][cm[1]] = 0
-            if ocho:
-                return True
-            else:
-                return False
+        
+        # Se introduce el obstaculo   
+        for cell in neigbours:
+            cm = self._cell2connCoord(point[0], point[1], cell) # cm = connection matrix
+            self.connectionMatrix[cm[0]][cm[1]] = 0
+        if ocho:
+            return True
         else:
-            # Si no es claro donde esta el obstaculo, no se introduce y se planea 4 vecindad
             return False
 
 
