@@ -614,9 +614,10 @@ class Robot:
         self.setSpeed(0,30)
         while self.casilla_salida is None:
             cam.capture(rawCapture, format="bgr")
+            rawCapture.truncate(0)
             frame = rawCapture.array
             self.detectar_casilla_salida(frame)
-            
+
         print('Salgo por la casilla', self.casilla_salida)
         # Una vez se ha encontrado la salida se sale
         self.go(self.casilla_salida[0],self.casilla_salida[1])
