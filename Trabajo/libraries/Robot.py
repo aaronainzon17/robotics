@@ -23,7 +23,7 @@ from multiprocessing import Process, Value, Array, Lock
 
 sys.path.append('../libraries')
 from BlobDetector import getRedBloobs, detect_red, getGreenBloobs, detect_green
-from ficheros_codigo_auxiliar.sample_matching import match_images
+from sample_matching import match_images
 
 
 class Robot:
