@@ -183,7 +183,7 @@ def find_template(mirror=False, img=None, refFilename = "./R2-D2s.png"):
         cam.capture(rawCapture, format="bgr")
         frame = rawCapture.array  
         # NO HACE FALTA ROTARLA
-        #frame = cv2.flip(frame, -1) # to rotate 180
+        frame = cv2.flip(frame, -1) # to rotate 180
         if DEBUG > 2:
             cv2.imshow("Current view", frame)
             cv2.imshow("Current target", imReference)
