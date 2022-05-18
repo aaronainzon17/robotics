@@ -411,8 +411,9 @@ class Robot:
         time.sleep(0.7)
         self.setSpeed(0,0)
         self.BP.set_motor_dps(self.BP.PORT_A, w)
-        time.sleep(0.4) # Bajar cesta
+        time.sleep(0.45) # Bajar cesta
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
+        time.sleep(0.1)
         
 
     def uncatch(self):
