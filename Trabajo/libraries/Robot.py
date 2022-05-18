@@ -408,7 +408,7 @@ class Robot:
         w = 90 #40   # Velocidad angular para abrir las pinzas 
         #Que avance un poquito antes de bajar la pinza
         self.setSpeed(80,0)
-        time.sleep(0.9)
+        time.sleep(0.7)
         self.setSpeed(0,0)
         self.BP.set_motor_dps(self.BP.PORT_A, w)
         time.sleep(1.0) # Tiempo de apertura 
