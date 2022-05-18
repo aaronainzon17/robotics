@@ -619,8 +619,10 @@ class Robot:
 
     def detectar_casilla_salida(self, frame):
         if self.casilla_salida == None: 
-            found_salida, x_salida = match_images(self.img_salida, frame)
-            found_NO_salida, x_NO_salida = match_images(self.img_NO_salida, frame)
+            salida = cv2.imread(self.img_salida, cv2.IMREAD_COLOR)
+            NO_salida = cv2.imread(self.img_NO_salida, cv2.IMREAD_COLOR)
+            found_salida, x_salida = match_images(salida, frame)
+            found_NO_salida, x_NO_salida = match_images(NO_salida, frame)
             if found_salida and found_NO_salida and self.mapa == 'A':
                 if x_salida < x_NO_salida:
                     self.casilla_salida = [3,6]
