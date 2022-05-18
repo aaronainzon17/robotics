@@ -619,6 +619,8 @@ class Robot:
 
     def detectar_casilla_salida(self, frame):
         if self.casilla_salida == None: 
+            print(self.img_salida)
+            print(self.img_NO_salida)
             salida = cv2.imread(self.img_salida, cv2.IMREAD_COLOR)
             NO_salida = cv2.imread(self.img_NO_salida, cv2.IMREAD_COLOR)
             found_salida, x_salida = match_images(salida, frame)
