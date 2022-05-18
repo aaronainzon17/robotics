@@ -623,14 +623,14 @@ class Robot:
             found_NO_salida, x_NO_salida = match_images(self.img_NO_salida, frame)
             if found_salida and found_NO_salida and self.mapa == 'A':
                 if x_salida < x_NO_salida:
-                    self.casilla_salida = [3,6]
+                    self.casilla_salida = [1400,2600] # [3,6]
                 else:
-                    self.casilla_salida = [6,6]
+                    self.casilla_salida = [2600,2600] # [6,6]
             if found_salida and found_NO_salida and self.mapa == 'B':
                 if x_salida < x_NO_salida:
-                    self.casilla_salida = [0,6]
+                    self.casilla_salida = [200,2600] # [0,6]
                 else:
-                    self.casilla_salida = [3,6]
+                    self.casilla_salida = [1400,2600] # [3,6]
         else:
             print('He detectado la salida en:', self.casilla_salida)
 
