@@ -158,7 +158,7 @@ def main(args):
             robot.setNewPosition(1400,1200,np.deg2rad(90))
             # Se inicia la busqueda de la pelota 
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
-            robot.scape()
+            #robot.scape()
             
         else: # "mapaB_CARRERA.txt"
             imagenFin = cv2.imread(bb8, cv2.IMREAD_COLOR)
