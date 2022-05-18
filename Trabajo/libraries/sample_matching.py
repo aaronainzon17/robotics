@@ -66,7 +66,7 @@ def drawMatches2(img1, kp1, img2, kp2, matches, color=None, thickness = 2, mask=
 def match_images(img1_bgr, img2_bgr):
     # Feature extractor uses grayscale images
     salida = cv2.imread(img1_bgr, cv2.IMREAD_COLOR)
-    
+
     img1 = cv2.cvtColor(salida, cv2.COLOR_BGR2GRAY)
     img2 = cv2.cvtColor(img2_bgr, cv2.COLOR_BGR2GRAY)
     
@@ -184,7 +184,7 @@ def find_template(mirror=False, img=None, refFilename = "./R2-D2s.png"):
         rectFound = False
         cam.capture(rawCapture, format="bgr")
         frame = rawCapture.array  
-        # NO HACE FALTA ROTARLA
+        
         frame = cv2.flip(frame, -1) # to rotate 180
         if DEBUG > 2:
             cv2.imshow("Current view", frame)
