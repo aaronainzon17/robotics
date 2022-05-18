@@ -17,7 +17,7 @@ if PI:
     import picamera
     from picamera.array import PiRGBArray
 
-DEBUG = 1 # --> higher numbers (2 or 3) open more windows interactively to debug more intermediate steps
+DEBUG = 0 # --> higher numbers (2 or 3) open more windows interactively to debug more intermediate steps
 
 # ASCI codes to interact with windows when debug > 0
 ESC = 27
@@ -66,9 +66,7 @@ def drawMatches2(img1, kp1, img2, kp2, matches, color=None, thickness = 2, mask=
 def match_images(img1_bgr, img2_bgr):
     # Feature extractor uses grayscale images
     salida = cv2.imread(img1_bgr, cv2.IMREAD_COLOR)
-    cv2.imshow("Current target", salida)
-    cv2.waitKey(0)
-
+    
     img1 = cv2.cvtColor(salida, cv2.COLOR_BGR2GRAY)
     img2 = cv2.cvtColor(img2_bgr, cv2.COLOR_BGR2GRAY)
     
