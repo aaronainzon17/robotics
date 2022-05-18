@@ -597,8 +597,8 @@ class Robot:
                     self.y = Value('d', 2800)
                     self.th = Value('d', self.norm_pi(np.deg2rad(-90)))
                     # Se indican las imagenes a detectar
-                    self.img_salida = '../R2-D2_s.png'
-                    self.img_NO_salida = '../BB8_s.png'
+                    self.img_salida = './R2-D2_s.png'
+                    self.img_NO_salida = './BB8_s.png'
                     self.mapa = 'A'
                     return "mapaA_CARRERA.txt"
                 elif value > 2000 :
@@ -607,8 +607,8 @@ class Robot:
                     self.y = Value('d', 2800)
                     self.th = Value('d', self.norm_pi(np.deg2rad(-90)))
                     # Se indican las imagenes a detectar
-                    self.img_salida = '../BB8_s.png'
-                    self.img_NO_salida = '../R2-D2_s.png'
+                    self.img_salida = './BB8_s.png'
+                    self.img_NO_salida = './R2-D2_s.png'
                     self.mapa = 'B'
                     return "mapaB_CARRERA.txt"
                 else:
@@ -619,14 +619,8 @@ class Robot:
 
     def detectar_casilla_salida(self, frame):
         if self.casilla_salida == None: 
-            print(self.img_salida)
-            print(self.img_NO_salida)
-            salida = cv2.imread('../R2-D2_s', cv2.IMREAD_COLOR)
-            cv2.imshow("Current target", salida)
-            cv2.waitKey(0)
-            NO_salida = cv2.imread(self.img_NO_salida, cv2.IMREAD_COLOR)
-            found_salida, x_salida = match_images(salida, frame)
-            found_NO_salida, x_NO_salida = match_images(NO_salida, frame)
+            found_salida, x_salida = match_images(self.img_salida, frame)
+            found_NO_salida, x_NO_salida = match_images(self.img_NO_salida, frame)
             if found_salida and found_NO_salida and self.mapa == 'A':
                 if x_salida < x_NO_salida:
                     self.casilla_salida = [3,6]
