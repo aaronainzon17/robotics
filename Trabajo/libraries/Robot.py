@@ -413,8 +413,8 @@ class Robot:
         self.BP.set_motor_dps(self.BP.PORT_A, w)
         time.sleep(0.6) # Tiempo de apertura 
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
-        time.sleep(0.1)
-        
+        time.sleep(0.3)
+
     def uncatch(self):
         w = -44 #-42    # Velocidad angular para cerrar las pinzas 
         self.BP.set_motor_dps(self.BP.PORT_A, w)
