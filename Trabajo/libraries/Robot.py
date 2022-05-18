@@ -23,6 +23,7 @@ from multiprocessing import Process, Value, Array, Lock
 
 sys.path.append('../libraries')
 from BlobDetector import getRedBloobs, detect_red, getGreenBloobs, detect_green
+from ficheros_codigo_auxiliar.sample_matching import match_images
 
 
 class Robot:
@@ -98,7 +99,11 @@ class Robot:
         self.rows = Value('i',0)
         self.cols = Value('i',0)
 
-        # Variables de vision 
+        # Variables de vision
+        self.mapa = None
+        self.img_salida = None
+        self.img_NO_salida = None
+        self.casilla_salida = None 
         
 
     def setSpeed(self, v, w):
@@ -317,6 +322,32 @@ class Robot:
                    
         return finished
     
+    # Esta funcion busca y se acerca al objeto hasta estar en p
+    def scape(self):
+        # Si la salida no se ha encontrado
+        if self.casilla_salida is None:
+            # Se determinan puntos clave del mapa para ver los robots
+            if self.mapa == 'A':
+                imgs_center = [2000,2800]
+                center_table = [2000,2000]
+            else:
+                imgs_center = [800, 2800]
+                center_table = [800,2000]
+            
+            # Se buscan las imagenes
+            self.go(center_table[0],center_table[1])
+            self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
+        
+        # Si no lo ha encontardo yendo al centro del mapa se rota para buscar
+        while self.casilla_salida is None:
+            self.setSpeed(0,30)
+        # Una vez se ha encontrado la salida se sale
+        self.go(self.casilla_salida[0],self.casilla_salida[1])
+        self.go(self.casilla_salida[0],(self.casilla_salida[1] + 1))
+
+        
+
+
     # Funcion utilizada para decidir la velocidad y direccion del robot
     # en funcion de donde se encuenta la pelota en la imagen  
     def trackObjectSpeed(self,x_actual,cols):
@@ -427,6 +458,9 @@ class Robot:
                 self.is_blob.value = True
             else:
                 self.is_blob.value = False
+
+            # Se utiliza la camara para detectar la casilla de salida
+            self.detectar_casilla_salida(frame)
     
     def updateCamaraGreen(self):
         #Se inicia la camara del robot
@@ -460,7 +494,7 @@ class Robot:
         self.x.value = x_new
         self.y.value = y_new
         self.th.value = th_new
-        
+
     def go(self, x_goal, y_goal):
         # Aliena al robot con el siguiente punto
         self.align(x_goal, y_goal, np.deg2rad(1))
@@ -562,18 +596,42 @@ class Robot:
                     self.x = Value('d', 600)
                     self.y = Value('d', 2800)
                     self.th = Value('d', self.norm_pi(np.deg2rad(-90)))
+                    # Se indican las imagenes a detectar
+                    self.img_salida = '../R2-D2_s.png'
+                    self.img_NO_salida = '../BB8_s.png'
+                    self.mapa = 'A'
                     return "mapaA_CARRERA.txt"
                 elif value > 2000 :
                     # Se indican las coordenadas iniciales del robot 
                     self.x = Value('d', 2200)
                     self.y = Value('d', 2800)
                     self.th = Value('d', self.norm_pi(np.deg2rad(-90)))
+                    # Se indican las imagenes a detectar
+                    self.img_salida = '../BB8_s.png'
+                    self.img_NO_salida = '../R2-D2_s.png'
+                    self.mapa = 'B'
                     return "mapaB_CARRERA.txt"
                 else:
                     return None
             except brickpi3.SensorError as error:
                 print(error)
             time.sleep(0.02)
+
+    def detectar_casilla_salida(self, frame):
+        if self.casilla_salida == None: 
+            found_salida, x_salida = match_images(self.img_salida, frame)
+            found_NO_salida, x_NO_salida = match_images(self.img_NO_salida, frame)
+            if found_salida and found_NO_salida and self.mapa == 'A':
+                if x_salida < x_NO_salida:
+                    self.casilla_salida = [3,6]
+                else:
+                    self.casilla_salida = [6,6]
+            if found_salida and found_NO_salida and self.mapa == 'B':
+                if x_salida < x_NO_salida:
+                    self.casilla_salida = [0,6]
+                else:
+                    self.casilla_salida = [3,6]
+            print('He detectado la salida en:', self.casilla_salida)
 
     def relocalizarRobot(self):
         #El robot esta de frente a una pared

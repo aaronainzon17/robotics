@@ -12,7 +12,7 @@ import os
 import time
 
 # SET TO FALSE when running OUT of the raspberry to use the webcam
-PI = True
+PI = False
 if PI:
     import picamera
     from picamera.array import PiRGBArray
@@ -64,7 +64,6 @@ def drawMatches2(img1, kp1, img2, kp2, matches, color=None, thickness = 2, mask=
  
  
 def match_images(img1_bgr, img2_bgr):
- 
     # Feature extractor uses grayscale images
     img1 = cv2.cvtColor(img1_bgr, cv2.COLOR_BGR2GRAY)
     img2 = cv2.cvtColor(img2_bgr, cv2.COLOR_BGR2GRAY)
@@ -133,7 +132,7 @@ def match_images(img1_bgr, img2_bgr):
             found = False
             print("NOT enough ROBUST matches found - %d (required %d)" % 
                 (num_robust_matches, MIN_MATCH_OBJECTFOUND))
-            return found
+            return [found, None]
         h,w = img1.shape
         pts = np.float32([ [0,0],[0,h-1],[w-1,h-1],[w-1,0] ]).reshape(-1,1,2)
         dst = cv2.perspectiveTransform(pts,H_21)
@@ -159,7 +158,7 @@ def match_images(img1_bgr, img2_bgr):
         cv2.imshow("INLIERS", img3)
         #cv2.waitKey(0) # WAIT is run outside
 
-    return found
+    return [found, dst_pts[0][0][0]] # dst_pts[0][0][0] devuelve la componente x del primer match
  
    
 def find_template(mirror=False, img=None, refFilename = "./R2-D2s.png"):
@@ -178,41 +177,41 @@ def find_template(mirror=False, img=None, refFilename = "./R2-D2s.png"):
         
         # allow the camera to warmup
         time.sleep(0.2)
-
-        while True:
-            t1 = time.time()
-            rectFound = False
-            cam.capture(rawCapture, format="bgr")
-            frame = rawCapture.array  
-            
-            frame = cv2.flip(frame, -1) # to rotate 180
-            if DEBUG > 2:
-                cv2.imshow("Current view", frame)
-                cv2.imshow("Current target", imReference)
-                cv2.waitKey(0)
-            
-            t2 = time.time()
-            found = match_images(imReference, frame)
-            t3 = time.time()
-            print("time to match %.2f" %(t3-t2))
-            
-            rawCapture.truncate(0)
-                     
-            if DEBUG:
-                if found:
-                    cv2.waitKey(0)    
-                k = cv2.waitKey(1) & 0xff
-                if k == letter_s:
-                    cv2.imwrite(str(time.time())+"_image.jpg", frame)
-                if k == ESC:
-                    cam.close()
-                    break
-
+        #while True:
+        t1 = time.time()
+        rectFound = False
+        cam.capture(rawCapture, format="bgr")
+        frame = rawCapture.array  
+        # NO HACE FALTA ROTARLA
+        #frame = cv2.flip(frame, -1) # to rotate 180
+        if DEBUG > 2:
+            cv2.imshow("Current view", frame)
+            cv2.imshow("Current target", imReference)
+            cv2.waitKey(0)
+        
+        t2 = time.time()
+        found, x_pos = match_images(imReference, frame)
+        t3 = time.time()
+        print("time to match", t3-t2)
+        
+        rawCapture.truncate(0)
+                    
+        if DEBUG:
+            if found:
+                cv2.waitKey(0)    
+            k = cv2.waitKey(1) & 0xff
+            if k == letter_s:
+                cv2.imwrite(str(time.time())+"_image.jpg", frame)
+            if k == ESC:
+                cam.close()
+                #break
     else:
         if img is not None:
             print("**** processing input image file ****")
-            found = match_images(imReference, img)
+            found, x_pos = match_images(imReference, img)
             cv2.waitKey(0)
+
+            return [found, x_pos]
 
         else:
             print("**** processing from regular webcam if connected ****")
@@ -234,7 +233,7 @@ def find_template(mirror=False, img=None, refFilename = "./R2-D2s.png"):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("-i", "--image", default=None, help="path to the input image")
+    ap.add_argument("-i", "--image", default="./test2.jpg", help="path to the input image")
     ap.add_argument("-r", "--robot", default="../R2-D2_s.png", help="target template file")
     args=ap.parse_args()
     
@@ -254,9 +253,17 @@ def main():
             return
     else:
         target_robot_file = args.robot
+    found_R2 = False
+    found_BB8 = False
     
-    find_template(mirror=mirror, img=im, refFilename=target_robot_file)
-
+    while not found_R2 and not found_BB8:
+        found_R2, x_R2 = find_template(mirror=mirror, img=im, refFilename='../R2-D2_s.png')
+        found_BB8, x_BB8 = find_template(mirror=mirror, img=im, refFilename='../BB8_s.png')
+        print(x_R2, x_BB8)
+    if x_R2 < x_BB8:
+        print('R2-D2 esta a la izquierda')
+    else: 
+        print('R2-D2 esta a la dere')
 if __name__ == '__main__':
     """ 
     Match input image or current life video feed with the selected template
