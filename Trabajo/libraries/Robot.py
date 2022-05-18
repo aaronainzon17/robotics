@@ -349,10 +349,10 @@ class Robot:
     # en funcion de donde se encuenta la pelota en la imagen  
     def trackObjectSpeed(self,x_actual,cols):
         #Se divide la imagen en 8 sectores verticales y en funcion del que se encuentre la pelota se aplica una velocidad u otra
-        if self.size_b.value > 200 and (self.x_b.value - cols/2) > 50:
+        if self.size_b.value > 160 and (self.x_b.value - cols/2) > 50:
             v = 0
             w = -10
-        elif self.size_b.value > 200 and (self.x_b.value - cols/2) < -50:
+        elif self.size_b.value > 160 and (self.x_b.value - cols/2) < -50:
             v = 0
             w = 10
         elif((x_actual > (3*cols)/8) and x_actual <= cols/2) or (x_actual >= cols/2 and x_actual<= (5*cols)/8):
@@ -381,14 +381,14 @@ class Robot:
     # hacia la pelota en funcion de su tamanyo
     def speed_size(self,size):
         if (size < 100):
-            return 180
+            return 150
         else:
-            return 130   
+            return 100   
     
     # Funcion utilizada para decidir la velocidad angular de acercamiento 
     # hacia la pelota en funcion de su tamanyo
     def w_speed_size(self,v,expected_w):
-        if (v <= 130):
+        if (v < 100):
             return expected_w
         else:
             return expected_w/2 
@@ -411,7 +411,7 @@ class Robot:
         time.sleep(0.7)
         self.setSpeed(0,0)
         self.BP.set_motor_dps(self.BP.PORT_A, w)
-        time.sleep(0.45) # Bajar cesta
+        time.sleep(0.4) # Bajar cesta
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
         
 
