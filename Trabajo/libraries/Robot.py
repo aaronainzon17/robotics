@@ -570,13 +570,10 @@ class Robot:
                 
                 # Se devuelve True si hay obstaculo, False si no
                 if value < wall_o and value > 0.0:
-                    print(value)
                     return [True, True] # Hay obstaculo y esta en la pared
                 elif value > wall_o and value < center_o and value > 0.0:
-                    print(value)
                     return [True, False] # Hay obsaculo y no esta en la pared
                 elif value > 0.0:
-                    print(value)
                     return [False, False] # No hay obstaculo 
 
             except brickpi3.SensorError as error:
