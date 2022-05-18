@@ -621,7 +621,7 @@ class Robot:
         if self.casilla_salida == None: 
             print(self.img_salida)
             print(self.img_NO_salida)
-            salida = cv2.imread(self.img_salida, cv2.IMREAD_COLOR)
+            salida = cv2.imread(str(self.img_salida), cv2.IMREAD_COLOR)
             cv2.imshow("Current target", salida)
             cv2.waitKey(0)
             NO_salida = cv2.imread(self.img_NO_salida, cv2.IMREAD_COLOR)
