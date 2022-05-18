@@ -622,6 +622,8 @@ class Robot:
             print(self.img_salida)
             print(self.img_NO_salida)
             salida = cv2.imread(self.img_salida, cv2.IMREAD_COLOR)
+            cv2.imshow("Current target", salida)
+            cv2.waitKey(0)
             NO_salida = cv2.imread(self.img_NO_salida, cv2.IMREAD_COLOR)
             found_salida, x_salida = match_images(salida, frame)
             found_NO_salida, x_NO_salida = match_images(NO_salida, frame)
