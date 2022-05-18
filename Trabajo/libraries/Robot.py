@@ -613,6 +613,7 @@ class Robot:
         # Si no lo ha encontardo yendo al centro del mapa se rota para buscar
         while self.casilla_salida is None:
             self.setSpeed(0,30)
+        print('Salgo por la casilla', self.casilla_salida)
         # Una vez se ha encontrado la salida se sale
         self.go(self.casilla_salida[0],self.casilla_salida[1])
         self.go(self.casilla_salida[0],(self.casilla_salida[1] + 1))
