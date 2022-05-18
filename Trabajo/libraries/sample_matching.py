@@ -66,10 +66,8 @@ def drawMatches2(img1, kp1, img2, kp2, matches, color=None, thickness = 2, mask=
 def match_images(img1_bgr, img2_bgr):
     # Feature extractor uses grayscale images
     salida = cv2.imread(img1_bgr, cv2.IMREAD_COLOR)
-    cv2.imshow("Current target", salida)
-    cv2.waitKey(0)
-    
-    img1 = cv2.cvtColor(img1_bgr, cv2.COLOR_BGR2GRAY)
+
+    img1 = cv2.cvtColor(salida, cv2.COLOR_BGR2GRAY)
     img2 = cv2.cvtColor(img2_bgr, cv2.COLOR_BGR2GRAY)
     
     # Create a detector with the parameters
