@@ -318,32 +318,6 @@ class Robot:
                 triedCatch = True
                    
         return finished
-    
-    # Esta funcion busca y se acerca al objeto hasta estar en p
-    def scape(self):
-        # Si la salida no se ha encontrado
-        if self.casilla_salida is None:
-            # Se determinan puntos clave del mapa para ver los robots
-            if self.mapa == 'A':
-                imgs_center = [2000,2800]
-                center_table = [2000,2000]
-            else:
-                imgs_center = [800, 2800]
-                center_table = [800,2000]
-            
-            # Se buscan las imagenes
-            self.go(center_table[0],center_table[1])
-            self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
-        
-        # Si no lo ha encontardo yendo al centro del mapa se rota para buscar
-        while self.casilla_salida is None:
-            self.setSpeed(0,30)
-        # Una vez se ha encontrado la salida se sale
-        self.go(self.casilla_salida[0],self.casilla_salida[1])
-        self.go(self.casilla_salida[0],(self.casilla_salida[1] + 1))
-
-        
-
 
     # Funcion utilizada para decidir la velocidad y direccion del robot
     # en funcion de donde se encuenta la pelota en la imagen  
@@ -606,6 +580,42 @@ class Robot:
             except brickpi3.SensorError as error:
                 print(error)
             time.sleep(0.02)
+
+    # Esta funcion busca y se acerca al objeto hasta estar en p
+    def scape(self):
+        # Si la salida no se ha encontrado
+        if self.casilla_salida is None:
+            cam = picamera.PiCamera()
+
+            #cam.resolution = (320, 240)
+            cam.resolution = (640, 480)
+            cam.framerate = 10 # less frame rate, more light BUT needs to go slowly (or stop)
+            rawCapture = PiRGBArray(cam)
+            
+            # allow the camera to warmup
+            time.sleep(0.2)
+
+            # Se determinan puntos clave del mapa para ver los robots
+            if self.mapa == 'A':
+                imgs_center = [2000,2800]
+                center_table = [2000,2000]
+            else:
+                imgs_center = [800, 2800]
+                center_table = [800,2000]
+            
+            # Se buscan las imagenes
+            self.go(center_table[0],center_table[1])
+            self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
+
+            cam.capture(rawCapture, format="bgr")
+            frame = rawCapture.array 
+            self.detectar_casilla_salida(frame)
+        # Si no lo ha encontardo yendo al centro del mapa se rota para buscar
+        while self.casilla_salida is None:
+            self.setSpeed(0,30)
+        # Una vez se ha encontrado la salida se sale
+        self.go(self.casilla_salida[0],self.casilla_salida[1])
+        self.go(self.casilla_salida[0],(self.casilla_salida[1] + 1))
 
     def detectar_casilla_salida(self, frame):
         if self.casilla_salida == None: 
