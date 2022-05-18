@@ -303,9 +303,6 @@ class Robot:
                 if self.size_b.value > 200 and self.y_b.value > self.rows.value/2:
                     self.setSpeed(0,0)
                     finished = True
-                    print('LO TENGO')
-                    self.setSpeed(0,30)
-                    time.sleep(3)
                 else:
                     print('No se ve la pelota en las pinzas')
                     print('x',x_bl, ', y', y_bl)
