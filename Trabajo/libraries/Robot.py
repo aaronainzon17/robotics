@@ -616,7 +616,7 @@ class Robot:
         print('Salgo por la casilla', self.casilla_salida)
         # Una vez se ha encontrado la salida se sale
         self.go(self.casilla_salida[0],self.casilla_salida[1])
-        self.go(self.casilla_salida[0],(self.casilla_salida[1] + 1))
+        self.go(self.casilla_salida[0],(self.casilla_salida[1] + 400))
 
     def detectar_casilla_salida(self, frame):
         if self.casilla_salida == None: 
