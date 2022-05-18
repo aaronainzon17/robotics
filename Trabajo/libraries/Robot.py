@@ -381,7 +381,7 @@ class Robot:
     # hacia la pelota en funcion de su tamanyo
     def speed_size(self,size):
         if (size < 100):
-            return 150
+            return 190
         else:
             return 100   
     
@@ -405,13 +405,13 @@ class Robot:
 
     # Funcion de captura de la pelota
     def catch(self):
-        w = 150 #40   # Velocidad angular para abrir las pinzas 
+        w = 200 #40   # Velocidad angular para abrir las pinzas 
         #Que avance un poquito antes de bajar la pinza
         self.setSpeed(80,0)
         time.sleep(0.7)
         self.setSpeed(0,0)
         self.BP.set_motor_dps(self.BP.PORT_A, w)
-        time.sleep(0.6) # Tiempo de apertura 
+        time.sleep(0.5) # Bajar cesta
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
         
 
