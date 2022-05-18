@@ -405,7 +405,7 @@ class Robot:
 
     # Funcion de captura de la pelota
     def catch(self):
-        w = 120 #40   # Velocidad angular para abrir las pinzas 
+        w = 150 #40   # Velocidad angular para abrir las pinzas 
         #Que avance un poquito antes de bajar la pinza
         self.setSpeed(80,0)
         time.sleep(0.7)
