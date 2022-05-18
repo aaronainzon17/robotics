@@ -460,7 +460,7 @@ class Robot:
                 self.is_blob.value = False
 
             # Se utiliza la camara para detectar la casilla de salida
-            self.detectar_casilla_salida(frame)
+            #self.detectar_casilla_salida(frame)
     
     def updateCamaraGreen(self):
         #Se inicia la camara del robot
@@ -631,6 +631,7 @@ class Robot:
                     self.casilla_salida = [0,6]
                 else:
                     self.casilla_salida = [3,6]
+        else:
             print('He detectado la salida en:', self.casilla_salida)
 
     def relocalizarRobot(self):
