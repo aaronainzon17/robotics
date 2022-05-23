@@ -135,7 +135,6 @@ def main(args):
 
         print("X value at the beginning from main X= %.2f" % (robot.x.value))   
 
-        myMap = Map2D(mapa)
         input("Press Enter to continue...")
         
         # 1. Se incia la odometria u el proceso update odometry
