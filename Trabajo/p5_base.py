@@ -135,6 +135,7 @@ def main(args):
 
         print("X value at the beginning from main X= %.2f" % (robot.x.value))   
 
+        myMap = Map2D(mapa)
         input("Press Enter to continue...")
         
         # 1. Se incia la odometria u el proceso update odometry
@@ -150,7 +151,7 @@ def main(args):
         if mapa == "mapaA_CARRERA.txt":
             s_A(robot, 100)
             #robot.centrar_con_imagen()
-            solveMap(robot,mapa, [1,2],[3,3])
+            solveMap(robot,myMap, [1,2],[3,3])
             #[xA,yA,thA]= robot.readOdometry()
             #robot.setSpeed(0, 10)  # cuarto de circunferencia a la derecha
             #check_position(robot, xA, yA, normalizar(np.deg2rad(270)), np.Infinity, np.Infinity, np.deg2rad(2))
