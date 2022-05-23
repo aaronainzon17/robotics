@@ -76,7 +76,7 @@ def mov_debug(robot, vel):
     """ La funcion s_A realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
 
-    pos = [[2,6],[2,5],[1,4]]
+    pos = [[1,6],[2,6],[1,4]]
     for point_map in pos:
         point = [200+point_map[0]*400, 200+point_map[1]*400]
         print('Voy a ',point)
@@ -149,10 +149,10 @@ def main(args):
 
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":
-            #mov_debug(robot, 100)
-            s_A(robot, 100)
+            mov_debug(robot, 100)
+            #s_A(robot, 100)
             #robot.centrar_con_imagen()
-            solveMap(robot,myMap, [1,2],[3,3])
+            #solveMap(robot,myMap, [1,2],[3,3])
             #[xA,yA,thA]= robot.readOdometry()
             #robot.setSpeed(0, 10)  # cuarto de circunferencia a la derecha
             #check_position(robot, xA, yA, normalizar(np.deg2rad(270)), np.Infinity, np.Infinity, np.deg2rad(2))
