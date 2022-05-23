@@ -709,6 +709,7 @@ class Robot:
         self.y.value=y_actual
         self.lock_odometry.release()
         odom = self.readOdometry()
+        print("EL tamano del blob en centrar es ",tamanyo_blob)
         print(odom)
         
         
