@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from MapLib import Map2D
-from Robot import Robot
+from libraries.MapLib import Map2D
+from libraries.Robot import Robot
 import argparse
 import os
 import numpy as np
