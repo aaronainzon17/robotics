@@ -214,6 +214,7 @@ class Robot:
                 d_th = 0
             else:
                 abs_th = self.read_gyros()
+                print('acabo')
                 # El radio se calcula R = v/w
                 d_th = self.norm_pi(abs_th - self.th.value) #real_w * self.P
                 d_s = (real_v/real_w) * d_th
