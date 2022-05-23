@@ -61,7 +61,7 @@ try:
     GYRO2DEG = 30/130 # Se calcula con la mediana en 1500 iteraciones (30 dps/130gyrosen)
     acum = []
     i = 0
-    while i < 1500:
+    while True:
         # read the sensor value
         # BP.get_sensor retrieves a sensor value.
         # BP.PORT_1 specifies that we are looking for the value of sensor port 1.
