@@ -155,11 +155,10 @@ def main(args):
             #print("La odometria tras acabar la s es: x= ",xA," y= ",yA," th= ",thA)
             ##Ahora toca corregir la homografia
 
-            #robot.setNewPosition(1400,1200,np.deg2rad(90))
-            #robot.scape()
+            robot.setNewPosition(1400,1200,np.deg2rad(90))
+            robot.scape()
             # Se inicia la busqueda de la pelota 
-            #robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
-            mov_debug(robot,100)
+            robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
             
         else: # "mapaB_CARRERA.txt"
             imagenFin = cv2.imread(bb8, cv2.IMREAD_COLOR)

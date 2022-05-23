@@ -214,7 +214,7 @@ class Robot:
             else:
                 abs_th = self.norm_pi(np.deg2rad(self.BP.get_sensor(self.BP.PORT_4)[1] * -1))
                 # El radio se calcula R = v/w
-                d_th = abs_th * self.P #real_w * self.P
+                d_th = real_w * self.P # abs_th * self.P
                 d_s = (real_v/real_w) * d_th
                 d_x = d_s * np.cos(self.th.value + (d_th/2))
                 d_y = d_s * np.sin(self.th.value + (d_th/2))
@@ -614,7 +614,7 @@ class Robot:
             rawCapture.truncate(0)
         # Si no lo ha encontardo yendo al centro del mapa se rota para buscar
         self.setSpeed(0,30)
-        while self.casilla_salida is None:
+        while self.casilla_salida == None:
             cam.capture(rawCapture, format="bgr")
             frame = rawCapture.array
             self.detectar_casilla_salida(frame)
