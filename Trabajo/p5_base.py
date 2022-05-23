@@ -102,7 +102,7 @@ def s_B(robot, vel):
     """ La funcion s_B realiza la trayectoria de s del mapa B basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """  
     
-    pos = [[6,5],[5,4],[4,3],[5,2]]
+    pos = [[6,5],[5,4],[4,3],[5,1.8]]
     for point_map in pos:
         point = [200+point_map[0]*400, 200+point_map[1]*400]
         # Se mueve el robot a la siguiente celda
@@ -150,8 +150,8 @@ def main(args):
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":
             s_A(robot, 100)
-            robot.centrar_con_imagen()
-            #solveMap(robot,mapa, [1,1.8],[3,3])
+            #robot.centrar_con_imagen()
+            solveMap(robot,mapa, [1,1.8],[3,3])
             #[xA,yA,thA]= robot.readOdometry()
             #robot.setSpeed(0, 10)  # cuarto de circunferencia a la derecha
             #check_position(robot, xA, yA, normalizar(np.deg2rad(270)), np.Infinity, np.Infinity, np.deg2rad(2))
