@@ -151,7 +151,7 @@ def main(args):
         if mapa == "mapaA_CARRERA.txt":
             s_A(robot, 100)
             robot.centrar_con_imagen()
-            solveMap(robot,mapa, [1,1.8],[3,3])
+            #solveMap(robot,mapa, [1,1.8],[3,3])
             #[xA,yA,thA]= robot.readOdometry()
             #robot.setSpeed(0, 10)  # cuarto de circunferencia a la derecha
             #check_position(robot, xA, yA, normalizar(np.deg2rad(270)), np.Infinity, np.Infinity, np.deg2rad(2))
