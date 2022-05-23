@@ -71,7 +71,7 @@ class Robot:
         self.BP.set_sensor_type(self.BP.PORT_2,
                                     self.BP.SENSOR_TYPE.NXT_LIGHT_ON)  # SENSOR DE LUZ
         self.BP.set_sensor_type(self.BP.PORT_4, self.BP.SENSOR_TYPE.CUSTOM, 
-                                    [(self.BP.SENSOR_CUSTOM.PIN1_ADC)]) # GIROSCOPIO
+                                    self.BP.SENSOR_TYPE.EV3_GYRO_ABS_DPS) # GIROSCOPIO
 
         ##################################################
 
