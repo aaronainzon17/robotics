@@ -46,8 +46,9 @@ def setSpeed(v, w):
 
 BP = brickpi3.BrickPi3() # Create an instance of the BrickPi3 class. BP will be the BrickPi3 object.
 
-BP.set_sensor_type(BP.PORT_4, BP.SENSOR_TYPE.CUSTOM, 
-                            [(BP.SENSOR_CUSTOM.PIN1_ADC)]) # Configure for an analog on sensor port pin 1, and poll the analog line on pin 1.
+BP.set_sensor_type(BP.PORT_4,
+                        BP.SENSOR_TYPE.EV3_GYRO_ABS_DPS) # GIROSCOPIO
+
  # reset encoder B and C (or all the motors you are using)
 BP.offset_motor_encoder(BP.PORT_B,
                                 BP.get_motor_encoder(BP.PORT_B))  # RUEDA DERECHA
@@ -71,11 +72,12 @@ try:
         #     The fourth is the pin 6 digital value.
         
         try:
-            gyro_data = BP.get_sensor(BP.PORT_4)[0]
-            gyro_speed = (GYRO_DEFAULT - gyro_data) * GYRO2DEG
-            acum.append(gyro_speed)
-            print(gyro_speed)
-            acum+=1
+            gyro_data = BP.get_sensor(BP.PORT_4)
+            print(gyro_data)
+            #gyro_speed = (GYRO_DEFAULT - gyro_data) * GYRO2DEG
+            #acum.append(gyro_speed)
+            #print(gyro_speed)
+            #acum+=1
             #value = BP.get_sensor(BP.PORT_4)[0] - avg_gyroscppe # read the sensor port value
             #print("Raw value: %4d   Voltage: %5.3fv" % (value, (value / (4095.0 / BP.get_voltage_5v())))) # print the raw value, and calculate and print the voltage as well
         except brickpi3.SensorError as error:
