@@ -81,6 +81,7 @@ class Robot:
         self.th = Value('d', init_position[2])
         # boolean to show if odometry updates are finished
         self.finished = Value('b', 1)
+        self.finished_capture_green=Value('b',1)
 
         # if we want to block several instructions to be run together, we may want to use an explicit Lock
         self.lock_odometry = Lock()
@@ -431,6 +432,7 @@ class Robot:
             #self.detectar_casilla_salida(frame)
     
     def updateCamaraGreen(self):
+        self.finished_capture_green.value=False
         #Se inicia la camara del robot
         cam = picamera.PiCamera()
         cam.resolution = (640,480)
@@ -442,7 +444,7 @@ class Robot:
         self.rows.value = 480
         self.cols.value = 640
         #Mientras no se detengaa el robot, se siguen captando imagenes
-        while not self.finished.value:
+        while not self.finished_capture_green.value:
             cam.capture(rawCapture, format="bgr", use_video_port=True)
             # clear the stream in preparation for the next frame
             rawCapture.truncate(0)
@@ -610,15 +612,20 @@ class Robot:
 
             cam.capture(rawCapture, format="bgr")
             frame = rawCapture.array 
-            self.detectar_casilla_salida(frame)
             rawCapture.truncate(0)
+            self.detectar_casilla_salida(frame)
+        
         # Si no lo ha encontardo yendo al centro del mapa se rota para buscar
         self.setSpeed(0,30)
-        while self.casilla_salida == None:
+
+        while self.casilla_salida is None:
             cam.capture(rawCapture, format="bgr")
-            frame = rawCapture.array
+            frame = rawCapture.array  
+            
             self.detectar_casilla_salida(frame)
+            
             rawCapture.truncate(0)
+
         cam.close()
         
         print('Salgo por la casilla', self.casilla_salida)
@@ -660,69 +667,49 @@ class Robot:
         self.lock_odometry.release()
 
 
-    # def centrar_con_sonar(self):
-    #     distanciaMaxima=200000
-    #     value = self.BP.get_sensor(self.BP.PORT_1) * 10
-    #     while(value<distanciaMaxima or value==None):
-    #         self.setSpeed(0,30)
-    #         distanciaMaxima=value
-    #         value = self.BP.get_sensor(self.BP.PORT_1) * 10
-    #         print("Esta a una distancia de ",value)
-    #     self.setSpeed(0,0)
-
     def centrar_con_imagen(self):
-
-        #colocarse un poco centrado
-        #Leer del sonar para centrarse
-        #una vez centrado sabes que estas a 90 grados y ya sabran la x y la y con el blob
-        distanciaMaxima=2000000
-        distanciaActual= self.BP.get_sensor(self.BP.PORT_1) * 10
-        self.setSpeed(0,40)
-        while distanciaActual <= distanciaMaxima:
-            print("Distancia maxima es ",distanciaMaxima)
-            print("Distancia Actuak es ",distanciaActual)
-            distanciaMaxima= distanciaActual
-            distanciaActual= self.BP.get_sensor(self.BP.PORT_1) * 10
-
-        self.setSpeed(0,0)
-
-
-
-
-        #leer imagen
-        #Si no hay blob entonces giro a la izquierda
-        #Si el centro del blob es menor que la parte derecha entonces sigo girando
-        #Si supera la mitaz entonces para
-        # self.pCam = Process(target=self.updateCamaraGreen, args=())
-        # self.pCam.start()
-        # #Se deja que se inicie la camara
-        # time.sleep(1)
-
-
-        # self.setSpeed(0,20)
-        # while(not self.is_blob.value):
-        #     pass
-        # while((not self.is_blob.value) or self.x_b.value<self.cols.value/2):
-        #     #print("La x del blob es ",self.x_b.value)
-        #     #print("Las columnas entre 2 son ",self.cols.value/2)
-        #     if(self.x_b.value>=self.cols.value/2):
-        #         self.setSpeed(0,0)
-        # print("La x del blob es ",self.x_b.value)
-
-
-        # while((not self.is_blob.value) or self.x_b.value>=self.cols.value/2 -10):
-        #     self.setSpeed(0,-5)
-        #     if(self.x_b.value<=self.cols.value/2):
-        #         self.setSpeed(0,0)
-
-        # print("La x final del blob es ",self.x_b.value)
-        # print("El tamaño final del blob es ")
-
         #Idea:
         #Hacer regla de tres
         #x = (a*b)/c
         #a=tBlob=120 , b=yRobot=1000 , c=tBlob'=120 ->x=yRobot'=952.3809
-        #a=xBlob=320 , b=thRobot=-90 , c=xBlob'=300 ->x=thRobot'=-96
+        #a=xBlob=320 , b=xRobot=600 , c=xBlob'=300 ->x=xRobot'=
+        #Mejor retomar las medidas
+        t_prueba=120    #Variables para sacar la regla de 3 de y
+        y_prueba=1000   #Variables para sacar la regla de 3 de y
+        x_prueba=320
+        x_robot_prueba=600
+        maxFotos=10
+        numFotos = 0
+        tamanyo_blob=0
+        pos_blob=0
+        #Empezar proceso de la camara
+        self.pCam = Process(target=self.updateCamaraGreen, args=())
+        self.pCam.start()
+        time.sleep(2)
+        while(numFotos!=maxFotos):
+            #Tomar foto sacar el blob
+            if(self.is_blob.value):
+                numFotos+=1
+                tamanyo_blob+=self.size_b.value
+                pos_blob+=self.x_b.value
+
+        self.finished_capture_green=True
+        tamanyo_blob=tamanyo_blob/maxFotos
+        pos_blob=pos_blob/maxFotos
+        y_actual = (t_prueba*y_prueba)/tamanyo_blob     #Esta es la y actual del robot
+        x_actual = (x_prueba*x_robot_prueba)/pos_blob
+        #Ahora se resetean los motores
+        self.lock_odometry.acquire()
+        # SC
+        self.BP.offset_motor_encoder(self.BP.PORT_B,
+                                     self.BP.get_motor_encoder(self.BP.PORT_B))  # reset encoder B
+        self.BP.offset_motor_encoder(self.BP.PORT_C,
+                                     self.BP.get_motor_encoder(self.BP.PORT_C))  # reset encoder C
+        self.x.value=x_actual
+        self.y.value=y_actual
+        self.lock_odometry.release()
+        odom = self.readOdometry()
+        print(odom)
         
         
         
