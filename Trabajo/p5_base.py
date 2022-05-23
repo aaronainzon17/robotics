@@ -79,9 +79,9 @@ def mov_debug(robot, vel):
     pos = [[1,6],[2,5],[1,4]]
     for point_map in pos:
         point = [200+point_map[0]*400, 200+point_map[1]*400]
+        print('Voy a ',point)
         # Se mueve el robot a la siguiente celda
         robot.go(point[0],point[1])
-        print('Voy a ',point)
 
     robot.setSpeed(0, 0)  # Parar el robot
 
