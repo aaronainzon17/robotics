@@ -87,25 +87,26 @@ def s_A(robot, vel):
     """ La funcion s_A realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
 
-    pos = [[0,5],[1,4],[2,3],[1,1.8],[1,0]]
+    pos = [[0,5],[1,4],[2,3],[1,1.8]]
     for point_map in pos:
         point = [200+point_map[0]*400, 200+point_map[1]*400]
         # Se mueve el robot a la siguiente celda
         robot.go(point[0],point[1])
         print('Voy a ',point)
-
+    robot.align(600,0,np.deg2rad(1))
     robot.setSpeed(0, 0)  # Parar el robot
 
 def s_B(robot, vel):
     """ La funcion s_B realiza la trayectoria de s del mapa B basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """  
     
-    pos = [[6,5],[5,4],[4,3],[5,1.8],[5,0]]
+    pos = [[6,5],[5,4],[4,3],[5,1.8]]
     for point_map in pos:
         point = [200+point_map[0]*400, 200+point_map[1]*400]
         # Se mueve el robot a la siguiente celda
         robot.go(point[0],point[1])
         print('Voy a ',point)
+    robot.align(1800,0,np.deg2rad(1))
 
 
 def main(args):
