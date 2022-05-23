@@ -206,16 +206,18 @@ class Robot:
 
             # Lee los valores reales de la velocidad lineal y angular
             [real_v, real_w] = self.readSpeed()
-
+            abs_th = self.norm_pi(self.read_gyros())
+            # El radio se calcula R = v/w
+            d_th = abs_th - self.th.value# real_w * self.P # abs_th * self.P
             # Calcula los nuevos valores de la odometria
-            if real_w == 0:
+            if d_th == 0:
                 d_x = (real_v * self.P) * np.cos(self.th.value)
                 d_y = (real_v * self.P) * np.sin(self.th.value)
-                d_th = 0
+                #d_th = 0
             else:
-                abs_th = self.norm_pi(self.read_gyros())
+                #abs_th = self.norm_pi(self.read_gyros())
                 # El radio se calcula R = v/w
-                d_th = abs_th - self.th.value# real_w * self.P # abs_th * self.P
+                #d_th = abs_th - self.th.value# real_w * self.P # abs_th * self.P
                 d_s = (real_v/real_w) * d_th
                 d_x = d_s * np.cos(self.th.value + (d_th/2))
                 d_y = d_s * np.sin(self.th.value + (d_th/2))
@@ -252,7 +254,7 @@ class Robot:
     def read_gyros(self):
         arr = []
         for i in range(5):
-            arr.append(self.BP.get_sensor(self.BP.PORT_4)[0]*-1) 
+            arr.append(self.BP.get_sensor(self.BP.PORT_4)[0] * -1) 
         #print(arr)
         return np.deg2rad(np.median(arr))
 
