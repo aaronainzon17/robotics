@@ -225,8 +225,9 @@ class Robot:
             # SC
             self.x.value += d_x
             self.y.value += d_y
-            self.th.value += d_th
-            self.th.value = self.normalizar(self.th.value)
+            #self.th.value += d_th
+            self.th.value = self.norm_pi(self.read_gyros())
+            #self.th.value = self.normalizar(self.th.value)
             self.lock_odometry.release()
 
             # Escribe en el LOG los valores actualizados de la odometria
@@ -251,7 +252,7 @@ class Robot:
     def read_gyros(self):
         arr = []
         for i in range(5):
-            arr.append(self.BP.get_sensor(self.BP.PORT_4)[0]) 
+            arr.append(self.BP.get_sensor(self.BP.PORT_4)[0]*-1) 
         print(arr)
         return np.deg2rad(np.median(arr))
 
