@@ -17,7 +17,6 @@ from libraries.MapLib import Map2D
 from libraries.SolveMap import solveMap
 from libraries.BlobDetector import getRedBloobs,detect_red,getGreenBloobs,detect_green
 from ficheros_codigo_auxiliar.sample_matching import find_template
-from libraries.p4_main import solveMap
 
 """
             TRABAJO FINAL:
@@ -151,7 +150,7 @@ def main(args):
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":
             s_A(robot, 100)
-
+            robot.centrar_con_imagen()
             solveMap(robot,mapa, [1,1.8],[3,3])
             #[xA,yA,thA]= robot.readOdometry()
             #robot.setSpeed(0, 10)  # cuarto de circunferencia a la derecha

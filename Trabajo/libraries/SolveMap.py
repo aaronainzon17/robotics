@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from MapLib import Map2D
+from libraries.MapLib import Map2D
 import numpy as np
 import time
 
