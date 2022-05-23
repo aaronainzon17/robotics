@@ -7,9 +7,9 @@ import time
 import matplotlib
 #matplotlib.use("TkAgg")
 
-def solveMap(robot, map_file, point_ini, point_end, ocho=False):
+def solveMap(robot, myMap, point_ini, point_end, ocho=False):
     # 1. load map and compute costs and path
-    myMap = Map2D(map_file)
+    #myMap = Map2D(map_file)
     
     # Se calcula el camino inicial
     if not myMap.findPath(point_ini,point_end, ocho):
