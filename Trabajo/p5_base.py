@@ -142,10 +142,7 @@ def main(args):
         robot.startOdometry()
         
         # 2. perform trajectory
-        print("Start : %s" % time.ctime())
-
-        #Primero se centra hacia la pared
-        #robot.centrar_con_imagen()        
+        print("Start : %s" % time.ctime())       
 
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":
@@ -176,8 +173,7 @@ def main(args):
         print("End : %s" % time.ctime())
 
         #Se reorienta el robot
-        #robot.centrar_con_imagen()
-        time.sleep(10)
+        
 
 
         robot.lock_odometry.acquire()

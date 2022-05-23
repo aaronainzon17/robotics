@@ -213,9 +213,8 @@ class Robot:
                 d_y = (real_v * self.P) * np.sin(self.th.value)
                 d_th = 0
             else:
-                #abs_th = self.norm_pi(self.read_gyros())
                 # El radio se calcula R = v/w
-                d_th =  self.th.value # real_w * self.P # abs_th * self.P
+                d_th = real_w * self.P
                 d_s = (real_v/real_w) * d_th
                 d_x = d_s * np.cos(self.th.value + (d_th/2))
                 d_y = d_s * np.sin(self.th.value + (d_th/2))
@@ -226,7 +225,6 @@ class Robot:
             self.x.value += d_x
             self.y.value += d_y
             self.th.value += d_th
-            #self.th.value = self.norm_pi(self.read_gyros())
             self.th.value = self.normalizar(self.th.value)
             self.lock_odometry.release()
 
