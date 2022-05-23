@@ -252,6 +252,7 @@ class Robot:
         arr = []
         for i in range(5):
             arr.append(self.BP.get_sensor(self.BP.PORT_4)[0]) 
+        print(arr)
         return np.median(arr)
 
     def stopOdometry(self):
