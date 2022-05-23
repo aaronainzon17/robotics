@@ -55,12 +55,9 @@ BP.offset_motor_encoder(BP.PORT_B,
 BP.offset_motor_encoder(BP.PORT_C,
                                      BP.get_motor_encoder(BP.PORT_C))  # RUEDA IZQUIERDA
 
-setSpeed(0,80)
+#setSpeed(0,80)
 try:
-    GYRO_DEFAULT = 2451
-    GYRO2DEG = 30/130 # Se calcula con la mediana en 1500 iteraciones (30 dps/130gyrosen)
-    acum = []
-    i = 0
+    
     while True:
         # read the sensor value
         # BP.get_sensor retrieves a sensor value.
