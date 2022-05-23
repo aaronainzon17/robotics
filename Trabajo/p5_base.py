@@ -124,7 +124,7 @@ def main(args):
         mirror=False
 
         robot = Robot()
-        time.sleep(1)
+        time.sleep(4)
 
         mapa = robot.detectar_recorrido()
         
