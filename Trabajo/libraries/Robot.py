@@ -250,10 +250,14 @@ class Robot:
 
     def read_gyros(self):
         arr = []
-        for i in range(5):
-            arr.append(self.BP.get_sensor(self.BP.PORT_4)[0]) 
+        while data < 5:
+            read = self.BP.get_sensor(self.BP.PORT_4)[0]
+            arr.append(read) 
+            if read > -1:
+                data+=1
         print(arr)
         return np.median(arr)
+
     def stopOdometry(self):
         """ Stop the odometry thread. """
 
