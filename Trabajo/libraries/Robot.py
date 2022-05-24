@@ -619,8 +619,10 @@ class Robot:
 
             cam.capture(rawCapture, format="bgr")
             frame = rawCapture.array 
-            rawCapture.truncate(0)
+            
             self.detectar_casilla_salida(frame)
+
+            rawCapture.truncate(0)
         
         # Si no lo ha encontardo yendo al centro del mapa se rota para buscar
         #self.setSpeed(0,30)
