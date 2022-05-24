@@ -750,7 +750,10 @@ class Robot:
 
 
         # Medida del sensor
-        d = self.BP.get_sensor(self.BP.PORT_3)
+        d = 0
+        while d == 0: 
+            d = self.BP.get_sensor(self.BP.PORT_3)
+            print(d)
         d_ant = d
 
         # Bulce de seguimiento de la pared
