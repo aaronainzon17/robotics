@@ -199,7 +199,7 @@ class Robot:
         if os.path.exists("log_odometry.log"):
             os.remove("log_odometry.log")
         log = open("log_odometry.log", "a")
-
+        th_ini = self.th.value
         while not self.finished.value:
             # current processor time in a floating point value, in seconds
             tIni = time.clock()
@@ -213,14 +213,14 @@ class Robot:
                 d_y = (real_v * self.P) * np.sin(self.th.value)
                 d_th = 0
             else:
-                abs_th = self.norm_pi(np.deg2rad((self.BP.get_sensor(self.BP.PORT_4)[0] *-1)))#self.read_gyros()
+                abs_th = th_ini + self.norm_pi(np.deg2rad((self.BP.get_sensor(self.BP.PORT_4)[0] *-1)))#self.read_gyros()
                 
                 # El radio se calcula R = v/w
                 d_th = self.norm_pi(abs_th - self.th.value) #real_w * self.P
                 d_s = (real_v/real_w) * d_th
                 d_x = d_s * np.cos(self.th.value + (d_th/2))
                 d_y = d_s * np.sin(self.th.value + (d_th/2))
-            print(abs_th, d_th)
+
             # Actualiza la odometria con los nuevos valores en exclusion mutua
             self.lock_odometry.acquire()
             # SC
