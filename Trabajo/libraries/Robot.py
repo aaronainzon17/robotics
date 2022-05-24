@@ -16,6 +16,7 @@ import math
 import os
 import cv2
 import picamera
+import statistics
 from picamera.array import PiRGBArray
 
 # tambien se podria utilizar el paquete de threading
@@ -256,7 +257,8 @@ class Robot:
         for i in range(5):
             arr.append(self.BP.get_sensor(self.BP.PORT_4)[0] *-1) 
         #print(arr)
-        return self.norm_pi(np.deg2rad(np.median(arr)))
+        #return self.norm_pi(np.deg2rad(np.median(arr)))
+        return self.norm_pi(np.deg2rad(statistics.median(arr)))
 
     def stopOdometry(self):
         """ Stop the odometry thread. """
