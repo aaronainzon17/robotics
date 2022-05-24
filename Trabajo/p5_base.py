@@ -146,6 +146,8 @@ def main(args):
 
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":
+            pos = robot.readOdometry()
+            print('Empiezo en', pos)
             mov_debug(robot, 100)
             #s_A(robot, 100)
             #robot.centrar_con_imagen()
