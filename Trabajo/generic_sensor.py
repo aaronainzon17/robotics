@@ -46,8 +46,8 @@ def setSpeed(v, w):
 
 BP = brickpi3.BrickPi3() # Create an instance of the BrickPi3 class. BP will be the BrickPi3 object.
 
-BP.set_sensor_type(BP.PORT_4,
-                        BP.SENSOR_TYPE.EV3_GYRO_ABS_DPS) # GIROSCOPIO
+BP.set_sensor_type(BP.PORT_3,
+                        BP.SENSOR_TYPE.NXT_ULTRASONIC) # GIROSCOPIO
 
  # reset encoder B and C (or all the motors you are using)
 BP.offset_motor_encoder(BP.PORT_B,
@@ -69,7 +69,7 @@ try:
         #     The fourth is the pin 6 digital value.
         
         try:
-            gyro_data = BP.get_sensor(BP.PORT_4)
+            gyro_data = BP.get_sensor(BP.PORT_3)
             print(gyro_data)
             #gyro_speed = (GYRO_DEFAULT - gyro_data) * GYRO2DEG
             #acum.append(gyro_speed)
