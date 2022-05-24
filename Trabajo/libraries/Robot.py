@@ -72,6 +72,8 @@ class Robot:
                                     self.BP.SENSOR_TYPE.NXT_LIGHT_ON)  # SENSOR DE LUZ
         self.BP.set_sensor_type(self.BP.PORT_4,
                                     self.BP.SENSOR_TYPE.EV3_GYRO_ABS_DPS) # GIROSCOPIO
+        self.BP.set_sensor_type(self.BP.PORT_3,
+                            self.BP.SENSOR_TYPE.NXT_ULTRASONIC) #ULTRASONIDOS SEGUIMIENTO PARED
 
         ##################################################
 
@@ -734,6 +736,46 @@ class Robot:
         odom = self.readOdometry()
         print("EL tamano del blob en centrar es ",tamanyo_blob)
         print(odom)
+    
+    def seguimientoPared(self, dc, pos_ini, ang_ini):
+        # PARÁMETROS
+        k1 = 0.00015  # estabilizar
+        k2 = -0.04  # amortiguar
+
+
+        wmax = np.deg2rad(45)
+        reached = False
+        # velocidad lineal constante
+        v = 100  # mm/s
+
+
+        # Medida del sensor
+        d = self.BP.get_sensor(self.BP.PORT_3)
+        d_ant = d
+
+        # Bulce de seguimiento de la pared
+        while not reached:
+            # se calcula la velocidad angular
+            w = k1*(dc-d)+k2*(d-d_ant)
+            if w > 0:
+                wc = min(wmax, w)
+            else:
+                wc = max(-wmax, w)
+
+            self.setSpeed(self, v, wc)
+            time.sleep(0.2)
+
+            [x,_,_] = self.readOdometry(self)
+            # Se comprueba que se ha alcanzado la salida
+            if x > 2800:
+                print('Se detiene porque llega')
+                reached = True
+            d_ant = d
+
+            # Medida del sensor
+            d = self.BP.get_sensor(self.BP.PORT_3)
+
+
         
         
         
