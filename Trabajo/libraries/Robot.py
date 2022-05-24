@@ -650,8 +650,10 @@ class Robot:
             rawCapture.truncate(0)
 
         cam.close()
-        
         print('Salgo por la casilla', self.casilla_salida)
+        
+        self.trackObject()
+        
         # Una vez se ha encontrado la salida se sale
         self.go(self.casilla_salida[0],self.casilla_salida[1])
         self.go(self.casilla_salida[0],(self.casilla_salida[1] + 400))
