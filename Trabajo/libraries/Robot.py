@@ -772,9 +772,9 @@ class Robot:
             print('paso setSpeed')
             time.sleep(0.2)
 
-            [x,_,_] = self.readOdometry()
+            [_,y,_] = self.readOdometry()
             # Se comprueba que se ha alcanzado la salida
-            if x > 2800:
+            if y > 2800:
                 print('Se detiene porque llega')
                 self.setSpeed(0,0)
                 reached = True
