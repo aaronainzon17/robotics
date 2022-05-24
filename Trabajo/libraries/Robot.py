@@ -768,7 +768,7 @@ class Robot:
             else:
                 wc = max(-wmax, w)
             print(v,wc)
-            self.setSpeed(v, wc)
+            self.setSpeed(v, np.rad2deg(wc))
             print('paso setSpeed')
             time.sleep(0.2)
 
