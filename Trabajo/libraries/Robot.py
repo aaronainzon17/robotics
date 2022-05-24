@@ -781,6 +781,7 @@ class Robot:
 
             # Medida del sensor
             d = self.BP.get_sensor(self.BP.PORT_3)
+            print(d)
 
 
         
