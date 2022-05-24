@@ -754,7 +754,7 @@ class Robot:
         while d == 0: 
             try:
                 d = self.BP.get_sensor(self.BP.PORT_3) * 10
-                print(d)
+
             except brickpi3.SensorError as error:
                 print(error) 
         d_ant = d
@@ -767,7 +767,7 @@ class Robot:
                 wc = min(wmax, w)
             else:
                 wc = max(-wmax, w)
-
+            print(v,wc)
             self.setSpeed(v, wc)
             time.sleep(0.2)
 
@@ -782,7 +782,7 @@ class Robot:
             # Medida del sensor
             try:
                 d = self.BP.get_sensor(self.BP.PORT_3) * 10
-                print(d)
+
             except brickpi3.SensorError as error:
                 print(error) 
 
