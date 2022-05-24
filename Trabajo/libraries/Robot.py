@@ -739,7 +739,7 @@ class Robot:
     
     def seguimientoPared(self, dc):
         # PARÁMETROS
-        k1 = 0.00015  # estabilizar
+        k1 = 0.0015  # estabilizar
         k2 = -0.04  # amortiguar
 
 
@@ -786,7 +786,7 @@ class Robot:
 
                 except brickpi3.SensorError as error:
                     print(error)
-                    
+
             # Medida del sensor
             arr = []
             for i in range(5):
