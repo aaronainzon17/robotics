@@ -781,11 +781,14 @@ class Robot:
             d_ant = d
 
             # Medida del sensor
-            try:
-                d = self.BP.get_sensor(self.BP.PORT_3) * 10
-
-            except brickpi3.SensorError as error:
-                print(error) 
+            arr = []
+            for i in range(5):
+                try:
+                    arr.append(self.BP.get_sensor(self.BP.PORT_3) * 10)
+                    d = np.median(arr)
+                    print(d)
+                except brickpi3.SensorError as error:
+                    print(error) 
 
 
         
