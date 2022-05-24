@@ -779,7 +779,14 @@ class Robot:
                 self.setSpeed(0,0)
                 reached = True
             d_ant = d
+            while d > d_ant:
+                self.setSpeed(0,15)
+                try:
+                    d = self.BP.get_sensor(self.BP.PORT_3) * 10
 
+                except brickpi3.SensorError as error:
+                    print(error)
+                    
             # Medida del sensor
             arr = []
             for i in range(5):
