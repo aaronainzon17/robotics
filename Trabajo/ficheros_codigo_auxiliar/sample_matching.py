@@ -88,10 +88,10 @@ def match_images(img1_bgr, img2_bgr):
 
     if des1 is None or des2 is None:
         print("WARNING: empty detection?")
-        return False
+        return [False,None]
     if len(des1) < MIN_MATCH_COUNT or len(des2) < MIN_MATCH_COUNT:
         print("WARNING: not enough FEATURES (im1: %d, im2: %d)" %(len(des1), len(des2)) )
-        return False
+        return [False,None]
     print(" FEATURES extracted (im1: %d, im2: %d)" %(len(des1), len(des2)) )
         
 
