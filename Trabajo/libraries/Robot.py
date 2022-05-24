@@ -592,7 +592,7 @@ class Robot:
             time.sleep(0.02)
 
     # Esta funcion busca y se acerca al objeto hasta estar en p
-    def scape(self):
+    def detect_scape(self):
         # Si la salida no se ha encontrado
         if self.casilla_salida is None:
             cam = picamera.PiCamera()
@@ -649,14 +649,12 @@ class Robot:
 
             rawCapture.truncate(0)
 
-        cam.close()
+        #cam.close()
         print('Salgo por la casilla', self.casilla_salida)
         
-        self.trackObject()
-        
         # Una vez se ha encontrado la salida se sale
-        self.go(self.casilla_salida[0],self.casilla_salida[1])
-        self.go(self.casilla_salida[0],(self.casilla_salida[1] + 400))
+        #self.go(self.casilla_salida[0],self.casilla_salida[1])
+        #self.go(self.casilla_salida[0],(self.casilla_salida[1] + 400))
 
     def detectar_casilla_salida(self, frame):
         if self.casilla_salida == None: 
