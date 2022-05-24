@@ -739,7 +739,7 @@ class Robot:
     
     def seguimientoPared(self, dc):
         # PARÁMETROS
-        k1 = 0.02#015  # estabilizar
+        k1 = 0.00015  # estabilizar
         k2 = -0.04  # amortiguar
 
 
