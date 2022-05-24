@@ -780,8 +780,11 @@ class Robot:
             d_ant = d
 
             # Medida del sensor
-            d = self.BP.get_sensor(self.BP.PORT_3)
-            print(d)
+            try:
+                d = self.BP.get_sensor(self.BP.PORT_3)
+                print(d)
+            except brickpi3.SensorError as error:
+                print(error) 
 
 
         
