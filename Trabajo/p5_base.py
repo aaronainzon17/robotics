@@ -76,7 +76,7 @@ def mov_debug(robot, vel):
     """ La funcion s_A realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
 
-    pos = [[2,6],[3,6],[1,4]]
+    pos = [[1,6],[2,6],[1,4]]
     for point_map in pos:
         point = [200+point_map[0]*400, 200+point_map[1]*400]
         print('Voy a ',point)
