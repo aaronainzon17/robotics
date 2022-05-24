@@ -65,7 +65,9 @@ def drawMatches2(img1, kp1, img2, kp2, matches, color=None, thickness = 2, mask=
  
 def match_images(img1_bgr, img2_bgr):
     # Feature extractor uses grayscale images
-    img1 = cv2.cvtColor(img1_bgr, cv2.COLOR_BGR2GRAY)
+    salida = cv2.imread(img1_bgr, cv2.IMREAD_COLOR)
+
+    img1 = cv2.cvtColor(salida, cv2.COLOR_BGR2GRAY)
     img2 = cv2.cvtColor(img2_bgr, cv2.COLOR_BGR2GRAY)
     
     # Create a detector with the parameters
@@ -88,10 +90,10 @@ def match_images(img1_bgr, img2_bgr):
 
     if des1 is None or des2 is None:
         print("WARNING: empty detection?")
-        return [False,None]
+        return [False, None]
     if len(des1) < MIN_MATCH_COUNT or len(des2) < MIN_MATCH_COUNT:
         print("WARNING: not enough FEATURES (im1: %d, im2: %d)" %(len(des1), len(des2)) )
-        return [False,None]
+        return [False, None]
     print(" FEATURES extracted (im1: %d, im2: %d)" %(len(des1), len(des2)) )
         
 
