@@ -17,7 +17,7 @@ if PI:
     import picamera
     from picamera.array import PiRGBArray
 
-DEBUG = 1 # --> higher numbers (2 or 3) open more windows interactively to debug more intermediate steps
+DEBUG = 0 # --> higher numbers (2 or 3) open more windows interactively to debug more intermediate steps
 
 # ASCI codes to interact with windows when debug > 0
 ESC = 27
@@ -146,6 +146,7 @@ def match_images(img1_bgr, img2_bgr):
         print("Not enough initial matches are found - %d (required %d)" % (len(good), MIN_MATCH_COUNT))
         matchesMask = None
         found = False
+        return [found, None]
 
     if DEBUG:
         if int(ver[0]) < 3: # CURRENT RASPBERRY opencv version is 2.4.9
