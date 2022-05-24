@@ -625,15 +625,29 @@ class Robot:
             rawCapture.truncate(0)
         
         # Si no lo ha encontardo yendo al centro del mapa se rota para buscar
-        #self.setSpeed(0,30)
+        x_face = imgs_center[0]
+        while self.casilla_salida is None and x_face >= (imgs_center - 400):
+            x_face -= 200
+            self.align(x_face, imgs_center[1], np.deg2rad(1))
+            
+            cam.capture(rawCapture, format="bgr")
+            frame = rawCapture.array 
+            
+            self.detectar_casilla_salida(frame)
 
-        #while self.casilla_salida is None:
-        #    cam.capture(rawCapture, format="bgr")
-        #    frame = rawCapture.array  
-        #    
-        #    self.detectar_casilla_salida(frame)
-        #    
-        #    rawCapture.truncate(0)
+            rawCapture.truncate(0)
+        
+        x_face = imgs_center[0]
+        while self.casilla_salida is None and x_face < (imgs_center <= 400):
+            x_face -= 200
+            self.align(x_face, imgs_center[1], np.deg2rad(1))
+            
+            cam.capture(rawCapture, format="bgr")
+            frame = rawCapture.array 
+            
+            self.detectar_casilla_salida(frame)
+
+            rawCapture.truncate(0)
 
         cam.close()
         
