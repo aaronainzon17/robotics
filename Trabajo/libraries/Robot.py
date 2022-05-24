@@ -753,7 +753,7 @@ class Robot:
         d = 0
         while d == 0: 
             try:
-                d = self.BP.get_sensor(self.BP.PORT_3)
+                d = self.BP.get_sensor(self.BP.PORT_3) * 10
                 print(d)
             except brickpi3.SensorError as error:
                 print(error) 
@@ -781,7 +781,7 @@ class Robot:
 
             # Medida del sensor
             try:
-                d = self.BP.get_sensor(self.BP.PORT_3)
+                d = self.BP.get_sensor(self.BP.PORT_3) * 10
                 print(d)
             except brickpi3.SensorError as error:
                 print(error) 
