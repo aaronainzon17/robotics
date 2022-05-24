@@ -639,7 +639,7 @@ class Robot:
         
         x_face = imgs_center[0]
         while self.casilla_salida is None and x_face < (imgs_center <= 400):
-            x_face -= 200
+            x_face += 200
             self.align(x_face, imgs_center[1], np.deg2rad(1))
             
             cam.capture(rawCapture, format="bgr")
