@@ -737,7 +737,7 @@ class Robot:
         print("EL tamano del blob en centrar es ",tamanyo_blob)
         print(odom)
     
-    def seguimientoPared(self, dc, pos_ini, ang_ini):
+    def seguimientoPared(self, dc):
         # PARÁMETROS
         k1 = 0.00015  # estabilizar
         k2 = -0.04  # amortiguar
