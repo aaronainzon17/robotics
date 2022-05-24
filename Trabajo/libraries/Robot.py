@@ -769,6 +769,7 @@ class Robot:
                 wc = max(-wmax, w)
             print(v,wc)
             self.setSpeed(v, wc)
+            print('paso setSpeed')
             time.sleep(0.2)
 
             [x,_,_] = self.readOdometry()
