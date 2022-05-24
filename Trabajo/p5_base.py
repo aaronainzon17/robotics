@@ -148,6 +148,7 @@ def main(args):
         if mapa == "mapaA_CARRERA.txt":
             pos = robot.readOdometry()
             print('Empiezo en', pos)
+            robot.setNewPosition(2200,1800,np.deg2rad(90))
             robot.seguimientoPared(100)
             #mov_debug(robot, 100)
             #s_A(robot, 100)
