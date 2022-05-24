@@ -771,7 +771,7 @@ class Robot:
             self.setSpeed(v, wc)
             time.sleep(0.2)
 
-            [x,_,_] = self.readOdometry(self)
+            [x,_,_] = self.readOdometry()
             # Se comprueba que se ha alcanzado la salida
             if x > 2800:
                 print('Se detiene porque llega')
