@@ -213,7 +213,7 @@ class Robot:
                 d_y = (real_v * self.P) * np.sin(self.th.value)
                 d_th = 0
             else:
-                abs_th = th_ini + self.norm_pi(np.deg2rad((self.BP.get_sensor(self.BP.PORT_4)[0] *-1)))#self.read_gyros()
+                abs_th = th_ini + self.read_gyros() #self.read_gyros()
                 
                 # El radio se calcula R = v/w
                 d_th = self.norm_pi(abs_th - self.th.value) #real_w * self.P
