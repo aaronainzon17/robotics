@@ -148,10 +148,10 @@ def main(args):
         if mapa == "mapaA_CARRERA.txt":
             pos = robot.readOdometry()
             print('Empiezo en', pos)
-            mov_debug(robot, 100)
-            #s_A(robot, 100)
+            #mov_debug(robot, 100)
+            s_A(robot, 100)
             #robot.centrar_con_imagen()
-            #solveMap(robot,myMap, [1,2],[3,3])
+            solveMap(robot,myMap, [1,2],[3,3])
             #[xA,yA,thA]= robot.readOdometry()
             #robot.setSpeed(0, 10)  # cuarto de circunferencia a la derecha
             #check_position(robot, xA, yA, normalizar(np.deg2rad(270)), np.Infinity, np.Infinity, np.deg2rad(2))
@@ -161,7 +161,7 @@ def main(args):
             ##Ahora toca corregir la homografia
 
             #robot.setNewPosition(1400,1200,np.deg2rad(90))
-            #robot.scape()
+            robot.scape()
             # Se inicia la busqueda de la pelota 
             #robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
             
