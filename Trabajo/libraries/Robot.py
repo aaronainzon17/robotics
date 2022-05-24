@@ -543,7 +543,7 @@ class Robot:
                 [x_now, y_now, _] = self.readOdometry()
                 # Se va a definir ,un umbral para detectar el obsatculo en  
                 # el borde de la celda o en el centro de la celda objetivo
-                wall_o = 25 * 10 # mm
+                wall_o = 30 * 10 # mm
                 center_o = 50 * 10 # mm
                 # Se lee la distancia que recoge el sensor (*10 para pasarlo a mm)
                 value = self.BP.get_sensor(self.BP.PORT_1) * 10
