@@ -149,14 +149,14 @@ def match_images(img1_bgr, img2_bgr):
 
     if DEBUG:
         if int(ver[0]) < 3: # CURRENT RASPBERRY opencv version is 2.4.9
-            img3 = drawMatches2(img1_bgr,kp1,img2_bgr,kp2, good, color=(0, 255, 0),
+            img3 = drawMatches2(salida,kp1,img2_bgr,kp2, good, color=(0, 255, 0),
                 mask = matchesMask)
         else:
             draw_params = dict(matchColor = (0,255,0), # draw matches in green color
                            singlePointColor = None,
                            matchesMask = matchesMask, # draw only inliers
                            flags = 2)
-            img3 = cv2.drawMatches(img1_bgr,kp1,img2_bgr,kp2,good,None,**draw_params)
+            img3 = cv2.drawMatches(salida,kp1,img2_bgr,kp2,good,None,**draw_params)
         cv2.imshow("INLIERS", img3)
         #cv2.waitKey(0) # WAIT is run outside
 
