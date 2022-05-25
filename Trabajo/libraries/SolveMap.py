@@ -64,5 +64,5 @@ def solveMap(robot, myMap, point_ini, point_end, ocho=False):
             prev_point = point_map
     
     # Al acabar se muestra el recorrido realizado
-    #myMap.drawMapWithRobotLocations(
-    #    path2print, saveSnapshot=False)
+    myMap.drawMapWithRobotLocations(
+        path2print, saveSnapshot=False)
