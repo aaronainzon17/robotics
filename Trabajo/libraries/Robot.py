@@ -193,8 +193,8 @@ class Robot:
         self.p = Process(target=self.updateOdometry, args=())
         self.p.start()
         #Iniciar el giroscopio
-        self.pGiros = Process(target=self.updateGiroscopio, args=())
-        self.pGiros.start()
+        # self.pGiros = Process(target=self.updateGiroscopio, args=())
+        # self.pGiros.start()
 
     # You may want to pass additional shared variables besides the odometry values and stop flag
     def updateOdometry(self):
@@ -211,7 +211,8 @@ class Robot:
 
             # Lee los valores reales de la velocidad lineal y angular
             [real_v, real_w] = self.readSpeed()
-
+            #Ahora la w es mi w mas la w del giroscopio y sacas la media
+            real_w = (real_w + self.read_gyros)/2;
             # Calcula los nuevos valores de la odometria
             if real_w == 0:
                 d_x = (real_v * self.P) * np.cos(self.th.value)
@@ -257,17 +258,21 @@ class Robot:
     def read_gyros(self):
         arr = []
         for i in range(5):
-            arr.append(self.BP.get_sensor(self.BP.PORT_4)[0] *-1) 
+            arr.append(self.BP.get_sensor(self.BP.PORT_4)[1] *-1) 
         #print(arr)
         #return self.norm_pi(np.deg2rad(np.median(arr)))
         #return self.norm_pi(np.deg2rad(statistics.median(arr)))
-        return self.normalizar(np.deg2rad(statistics.median(arr)))
+        #return self.normalizar(np.deg2rad(statistics.median(arr)))
+        #Ahora como leemos solo la w no hace falta normalizarlo ni pasarlo a radianes
+        return np.deg2rad(statistics.median(arr))
     
+    #Leer del giroscopio la w y hacer la media con la que se lee de las ruedas
+
     #Funcion para actualizar el giroscopio
-    def updateGiroscopio(self):
-        while not self.finished.value:
-            self.th.value = self.read_gyros()
-            print("El angulo actual en updateGiroscopio es ", self.th.value)
+    # def updateGiroscopio(self):
+    #     while not self.finished.value:
+    #         self.th.value = self.read_gyros()
+    #         print("El angulo actual en updateGiroscopio es ", self.th.value)
 
     def stopOdometry(self):
         """ Stop the odometry thread. """
