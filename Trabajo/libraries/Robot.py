@@ -283,7 +283,7 @@ class Robot:
             #print(self.th_ini.value, orientacion)
             
             if abs(abs(self.th.value) - abs(orientacion)) < 3:
-                #print('Creia:', self.th.value, 'Estoy', orientacion)
+                print('Creia:', self.th.value, 'Estoy', orientacion)
                 self.th.value = orientacion
             time.sleep(self.P)            
 
