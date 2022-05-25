@@ -268,7 +268,7 @@ class Robot:
                 arr.append(self.BP.get_sensor(self.BP.PORT_4)[0] *-1) 
             except brickpi3.SensorError as error:
                 print(error) 
-        return self.norm_pi(np.deg2rad(np.median(arr)))
+        return np.deg2rad(np.median(arr))
         
     
     #Leer del giroscopio la w y hacer la media con la que se lee de las ruedas
