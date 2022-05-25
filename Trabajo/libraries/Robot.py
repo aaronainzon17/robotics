@@ -279,8 +279,9 @@ class Robot:
             #self.ang_giroscopio.value = self.read_gyros()
             #print("El angulo actual en updateGiroscopio es ", self.th.value)
             th_gyros = self.read_gyros()
-            print(self.th_ini.value)
             orientacion = self.norm_pi(self.th_ini.value + th_gyros)
+            print(self.th_ini.value, orientacion)
+            time.sleep(10)
             if abs(abs(self.th.value) - abs(orientacion)) < 3:
                 print('Creia:', self.th.value, 'Estoy', orientacion)
                 self.th.value = orientacion
@@ -611,9 +612,10 @@ class Robot:
                     return "mapaA_CARRERA.txt"
                 elif value > 2000 :
                     # Se indican las coordenadas iniciales del robot 
-                    self.x = Value('d', 2200)
-                    self.y = Value('d', 2800)
-                    self.th = Value('d', self.norm_pi(np.deg2rad(-90)))
+                    self.x.value = 2200
+                    self.y.value = 2800
+                    self.th.value = self.norm_pi(np.deg2rad(-90))
+                    self.th_ini.value = self.th.value
                     # Se indican las imagenes a detectar
                     self.img_salida = './BB8_s.png'
                     self.img_NO_salida = './R2-D2_s.png'
