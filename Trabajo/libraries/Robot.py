@@ -243,7 +243,7 @@ class Robot:
             self.th.value += d_th   #Esto es de odometria
             print("El valor de th sin la media es ", np.rad2deg(self.normalizar(self.th.value)))
             print("El valor de th del giroscopio es ",np.rad2deg(self.ang_giroscopio.value))
-            self.th.value = self.normalizar((self.normalizar(self.th.value)+self.ang_giroscopio.value)/2.0)  #Esto es de odometria
+            self.th.value = self.normalizar((self.normalizar(self.th.value)+self.normalizar(th_ini + self.ang_giroscopio.value))/2.0)  #Esto es de odometria
             print("El valor final de th  ",np.rad2deg(self.th.value))
             self.lock_odometry.release()
 
@@ -277,11 +277,12 @@ class Robot:
         #return self.norm_pi(np.deg2rad(statistics.median(arr)))
         #return self.normalizar(np.deg2rad(statistics.median(arr)))
         #Ahora como leemos solo la w no hace falta normalizarlo ni pasarlo a radianes
+
         #Como al principio el giroscopio lee datos malos pues si supera los 10 grados de diferencia entonces esta mal y se usa la propia th
-        if(self.normalizar(np.deg2rad(np.median(arrAng))) >= 0.0 and self.normalizar(np.deg2rad(np.median(arrAng))) <=1):
-            return [np.deg2rad(np.median(arr)),self.th.value]
-        else:
-            return [np.deg2rad(np.median(arr)),self.normalizar(np.deg2rad(np.median(arrAng)))]
+        # if(self.normalizar(np.deg2rad(np.median(arrAng))) >= 0.0 and self.normalizar(np.deg2rad(np.median(arrAng))) <=1):
+        #     return [np.deg2rad(np.median(arr)),self.th.value]
+        # else:
+        return [np.deg2rad(np.median(arr)),self.normalizar(np.deg2rad(np.median(arrAng)))]
         
     
     #Leer del giroscopio la w y hacer la media con la que se lee de las ruedas
@@ -291,6 +292,9 @@ class Robot:
         while not self.finished.value:
             [self.w_giroscopio.value,self.ang_giroscopio.value] = self.read_gyros()
             #print("El angulo actual en updateGiroscopio es ", self.th.value)
+            self.lock_odometry.acquire()
+            self.lock_odometry.release()
+            
 
     def stopOdometry(self):
         """ Stop the odometry thread. """
