@@ -275,17 +275,16 @@ class Robot:
 
     #Funcion para actualizar el giroscopio
     def updateGiroscopio(self):
-        while not self.finished.value:
-            #self.ang_giroscopio.value = self.read_gyros()
-            #print("El angulo actual en updateGiroscopio es ", self.th.value)
-            th_gyros = self.read_gyros()
-            orientacion = self.norm_pi(self.th_ini.value + th_gyros)
-            #print(self.th_ini.value, orientacion)
-            
-            if abs(abs(self.th.value) - abs(orientacion)) < 3:
-                print('Creia:', self.th.value, 'Estoy', orientacion)
-                self.th.value = orientacion
-            time.sleep(self.P)            
+        #self.ang_giroscopio.value = self.read_gyros()
+        #print("El angulo actual en updateGiroscopio es ", self.th.value)
+        th_gyros = self.read_gyros()
+        orientacion = self.norm_pi(self.th_ini.value + th_gyros)
+        #print(self.th_ini.value, orientacion)
+        
+        if abs(abs(self.th.value) - abs(orientacion)) < 3:
+            print('Creia:', self.th.value, 'Estoy', orientacion)
+            self.th.value = orientacion
+        time.sleep(self.P)            
 
     def stopOdometry(self):
         """ Stop the odometry thread. """
