@@ -527,7 +527,6 @@ class Robot:
                 d_th = self.norm_pi(np.arctan2(d_y, d_x) - th_now)
                 if abs(d_th) < error_ang:
                     self.setSpeed(0,0)
-                    self.updateGiroscopio()
                     aligned = True
                 else:
                     w = self.lienar_w(d_th)
