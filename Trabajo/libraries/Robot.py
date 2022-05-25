@@ -283,8 +283,7 @@ class Robot:
         
         if abs(abs(self.th.value) - abs(orientacion)) < 3:
             print('Creia:', self.th.value, 'Estoy', orientacion)
-            self.th.value = orientacion
-        time.sleep(self.P)            
+            self.th.value = orientacion          
 
     def stopOdometry(self):
         """ Stop the odometry thread. """
