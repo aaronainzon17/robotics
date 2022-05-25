@@ -507,7 +507,8 @@ class Robot:
         # Se le asigna una velocidad lienal
         self.setSpeed(120,0)
         # Se comprueba que el robot alcanza correctamente la posicion 
-        self.check_position(x_goal, y_goal, 25, 25)
+        #self.check_position(x_goal, y_goal, 25, 25)
+        self.check_position(x_goal, y_goal, 35, 35)
    
     # check_position es la funcion de control de localizacion
     # En ella se comprueba la posicion real del robot leida de los
@@ -547,10 +548,10 @@ class Robot:
         w = dth*(80/math.pi)
         if w < 0:
             #w -= 10
-            w = -40
+            w = -30
         else:
             #w+= 10
-            w = 40
+            w = 30
         return w
 
     #Funcion que normaliza el angulo entre -pi, pi
