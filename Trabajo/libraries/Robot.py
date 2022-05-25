@@ -278,7 +278,7 @@ class Robot:
         #return self.normalizar(np.deg2rad(statistics.median(arr)))
         #Ahora como leemos solo la w no hace falta normalizarlo ni pasarlo a radianes
         #Como al principio el giroscopio lee datos malos pues si supera los 10 grados de diferencia entonces esta mal y se usa la propia th
-        if(self.normalizar(np.deg2rad(np.median(arrAng))) == 0.0):
+        if(self.normalizar(np.deg2rad(np.median(arrAng))) >= 0.0 and self.normalizar(np.deg2rad(np.median(arrAng))) <=1):
             return [np.deg2rad(np.median(arr)),self.th.value]
         else:
             return [np.deg2rad(np.median(arr)),self.normalizar(np.deg2rad(np.median(arrAng)))]
