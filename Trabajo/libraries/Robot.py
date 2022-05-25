@@ -82,6 +82,7 @@ class Robot:
         self.x = Value('d', init_position[0])
         self.y = Value('d', init_position[1])
         self.th = Value('d', init_position[2])
+        self.th_ini = Value('d', init_position[2])
         self.w_giroscopio = Value('d', 0.0)
         self.ang_giroscopio = Value('d', init_position[2])
         self.ang_giroscopio.value = init_position[2]
@@ -207,20 +208,14 @@ class Robot:
         if os.path.exists("log_odometry.log"):
             os.remove("log_odometry.log")
         log = open("log_odometry.log", "a")
-        th_ini = self.th.value
+        
         while not self.finished.value:
             # current processor time in a floating point value, in seconds
             tIni = time.clock()
 
             # Lee los valores reales de la velocidad lineal y angular
             [real_v, real_w] = self.readSpeed()
-            #Ahora la w es mi w mas la w del giroscopio y sacas la media
-            #print("La w_real antes de hacer la media es ",real_w)
-            #real_w = (real_w + self.read_gyros())/2;
-            #real_w = (real_w + self.w_giroscopio.value)/2.0;
-            #real_w = self.w_giroscopio.value
-            #real_w = self.read_gyros()
-            #print("La w_real despues de hacer la media es ",real_w)
+           
             # Calcula los nuevos valores de la odometria
             if real_w == 0:
                 d_x = (real_v * self.P) * np.cos(self.th.value)
@@ -230,7 +225,7 @@ class Robot:
                 #abs_th = self.norm_pi(th_ini + self.read_gyros()) #self.read_gyros()
                 
                 # El radio se calcula R = v/w
-                d_th = real_w * self.P #self.norm_pi(abs_th - self.th.value) #
+                d_th = real_w * self.P #self.norm_pi(abs_th - self.th.value)
                 d_s = (real_v/real_w) * d_th
                 d_x = d_s * np.cos(self.th.value + (d_th/2))
                 d_y = d_s * np.sin(self.th.value + (d_th/2))
@@ -269,11 +264,12 @@ class Robot:
 
     def read_gyros(self):
         arr = []
-        arrAng = []
         for i in range(5):
-            arr.append(self.BP.get_sensor(self.BP.PORT_4)[1] *-1) 
-            #arrAng.append(self.BP.get_sensor(self.BP.PORT_4)[0] *-1) 
-        return [np.deg2rad(np.median(arr)),self.normalizar(np.deg2rad(np.median(arrAng)))]
+            try:
+                arr.append(self.BP.get_sensor(self.BP.PORT_4)[0] *-1) 
+            except brickpi3.SensorError as error:
+                print(error) 
+        return self.norm_pi(np.deg2rad(np.median(arr)))
         
     
     #Leer del giroscopio la w y hacer la media con la que se lee de las ruedas
@@ -281,9 +277,14 @@ class Robot:
     #Funcion para actualizar el giroscopio
     def updateGiroscopio(self):
         while not self.finished.value:
-            [self.w_giroscopio.value,self.ang_giroscopio.value] = self.read_gyros()
+            #self.ang_giroscopio.value = self.read_gyros()
             #print("El angulo actual en updateGiroscopio es ", self.th.value)
-            
+            th_gyros = self.read_gyros()
+            orientacion = self.norm_pi(self.th_ini.value + th_gyros)
+            if abs(abs(self.th.value) - abs(orientacion)) < 3:
+                print('Creia:', self.th.value, 'Estoy', orientacion)
+                self.th.value = orientacion
+            time.sleep(self.P)            
 
     def stopOdometry(self):
         """ Stop the odometry thread. """
