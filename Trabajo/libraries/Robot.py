@@ -83,6 +83,7 @@ class Robot:
         self.y = Value('d', init_position[1])
         self.th = Value('d', init_position[2])
         self.w_giroscopio = Value('d', 0.0)
+        self.ang_giroscopio = Value('d', 0.0)
         # boolean to show if odometry updates are finished
         self.finished = Value('b', 1)
         self.finished_capture_green=Value('b',1)
@@ -239,7 +240,7 @@ class Robot:
             self.x.value += d_x
             self.y.value += d_y
             self.th.value += d_th   #Esto es de odometria
-            self.th.value = self.normalizar(self.th.value)  #Esto es de odometria
+            self.th.value = self.normalizar(self.normalizar(self.th.value)+self.ang_giroscopio.value)/2.0  #Esto es de odometria
             self.lock_odometry.release()
 
             # Escribe en el LOG los valores actualizados de la odometria
@@ -263,21 +264,23 @@ class Robot:
 
     def read_gyros(self):
         arr = []
+        arrAng = []
         for i in range(5):
             arr.append(self.BP.get_sensor(self.BP.PORT_4)[1] *-1) 
+            arrAng.append(self.BP.get_sensor(self.BP.PORT_4)[0] *-1) 
         #print(arr)
         #return self.norm_pi(np.deg2rad(np.median(arr)))
         #return self.norm_pi(np.deg2rad(statistics.median(arr)))
         #return self.normalizar(np.deg2rad(statistics.median(arr)))
         #Ahora como leemos solo la w no hace falta normalizarlo ni pasarlo a radianes
-        return np.deg2rad(np.median(arr))
+        return [np.deg2rad(np.median(arr)),self.normalizar(np.deg2rad(np.median(arrAng)))]
     
     #Leer del giroscopio la w y hacer la media con la que se lee de las ruedas
 
     #Funcion para actualizar el giroscopio
     def updateGiroscopio(self):
         while not self.finished.value:
-            self.w_giroscopio.value = self.read_gyros()
+            [self.w_giroscopio.value,self.ang_giroscopio.value] = self.read_gyros()
             #print("El angulo actual en updateGiroscopio es ", self.th.value)
 
     def stopOdometry(self):
