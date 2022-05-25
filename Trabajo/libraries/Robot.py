@@ -240,7 +240,7 @@ class Robot:
             self.x.value += d_x
             self.y.value += d_y
             self.th.value += d_th   #Esto es de odometria
-            self.th.value = self.normalizar(self.normalizar(self.th.value)+self.ang_giroscopio.value)/2.0  #Esto es de odometria
+            self.th.value = self.normalizar((self.normalizar(self.th.value)+self.ang_giroscopio.value)/2.0)  #Esto es de odometria
             self.lock_odometry.release()
 
             # Escribe en el LOG los valores actualizados de la odometria
