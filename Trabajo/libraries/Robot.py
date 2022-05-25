@@ -212,7 +212,7 @@ class Robot:
             # Lee los valores reales de la velocidad lineal y angular
             [real_v, real_w] = self.readSpeed()
             #Ahora la w es mi w mas la w del giroscopio y sacas la media
-            real_w = (real_w + self.read_gyros)/2;
+            real_w = (real_w + self.read_gyros())/2;
             # Calcula los nuevos valores de la odometria
             if real_w == 0:
                 d_x = (real_v * self.P) * np.cos(self.th.value)
