@@ -82,7 +82,7 @@ class Robot:
         self.x = Value('d', init_position[0])
         self.y = Value('d', init_position[1])
         self.th = Value('d', init_position[2])
-        self.th_ini = Value('d', init_position[2])
+        self.th_ini = Value('d', self.th)
         self.w_giroscopio = Value('d', 0.0)
         self.ang_giroscopio = Value('d', init_position[2])
         self.ang_giroscopio.value = init_position[2]
