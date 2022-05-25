@@ -192,7 +192,9 @@ class Robot:
 
         self.p = Process(target=self.updateOdometry, args=())
         self.p.start()
-        print("PID: ", self.p.pid)
+        #Iniciar el giroscopio
+        self.pGiros = Process(target=self.updateGiroscopio, args=())
+        self.pGiros.start()
 
     # You may want to pass additional shared variables besides the odometry values and stop flag
     def updateOdometry(self):
@@ -229,8 +231,8 @@ class Robot:
             # SC
             self.x.value += d_x
             self.y.value += d_y
-            self.th.value += d_th
-            self.th.value = self.normalizar(self.th.value)
+            #self.th.value += d_th
+            #self.th.value = self.normalizar(self.th.value)
             self.lock_odometry.release()
 
             # Escribe en el LOG los valores actualizados de la odometria
@@ -258,7 +260,12 @@ class Robot:
             arr.append(self.BP.get_sensor(self.BP.PORT_4)[0] *-1) 
         #print(arr)
         #return self.norm_pi(np.deg2rad(np.median(arr)))
-        return self.norm_pi(np.deg2rad(statistics.median(arr)))
+        return self.norm_pi(np.deg2rad(statistics.median(arr) * -1))
+    
+    #Funcion para actualizar el giroscopio
+    def updateGiroscopio(self):
+        while not self.finished.value:
+            self.th.value = self.read_gyros()
 
     def stopOdometry(self):
         """ Stop the odometry thread. """
