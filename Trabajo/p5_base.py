@@ -81,7 +81,7 @@ def mov_debug(robot, vel):
         point = [200+point_map[0]*400, 200+point_map[1]*400]
         print('Voy a ',point)
         # Se mueve el robot a la siguiente celda
-        robot.go(point[0],point[1])
+        robot.go(point[0],point[1], vel)
 
     robot.setSpeed(0, 0)  # Parar el robot
 
@@ -93,7 +93,7 @@ def s_A(robot, vel):
     for point_map in pos:
         point = [200+point_map[0]*400, 200+point_map[1]*400]
         # Se mueve el robot a la siguiente celda
-        robot.go(point[0],point[1])
+        robot.go(point[0],point[1],vel)
         print('Voy a ',point)
     robot.align(600,0,np.deg2rad(1))
     robot.setSpeed(0, 0)  # Parar el robot
@@ -106,7 +106,7 @@ def s_B(robot, vel):
     for point_map in pos:
         point = [200+point_map[0]*400, 200+point_map[1]*400]
         # Se mueve el robot a la siguiente celda
-        robot.go(point[0],point[1])
+        robot.go(point[0],point[1],vel)
         print('Voy a ',point)
     robot.align(1800,0,np.deg2rad(1))
 
@@ -151,8 +151,8 @@ def main(args):
             #robot.setNewPosition(2200,1800,np.deg2rad(90))
             #robot.seguimientoPared(100)
             #mov_debug(robot, 100)
-            s_A(robot, 100)
-            time.sleep(10)
+            s_A(robot, 150)
+            #time.sleep(10)
             #robot.centrar_con_imagen()
             solveMap(robot,myMap, [1,2],[3,3])
             #[xA,yA,thA]= robot.readOdometry()

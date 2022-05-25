@@ -501,11 +501,11 @@ class Robot:
         self.y.value = y_new
         self.th.value = th_new
 
-    def go(self, x_goal, y_goal):
+    def go(self, x_goal, y_goal, speed):
         # Aliena al robot con el siguiente punto
         self.align(x_goal, y_goal, np.deg2rad(1))
         # Se le asigna una velocidad lienal
-        self.setSpeed(120,0)
+        self.setSpeed(speed,0)
         # Se comprueba que el robot alcanza correctamente la posicion 
         #self.check_position(x_goal, y_goal, 25, 25)
         self.check_position(x_goal, y_goal, 35, 35)
@@ -547,10 +547,9 @@ class Robot:
     def lienar_w(self,dth):
         w = dth*(80/math.pi)
         if w < 0:
-            #w -= 10
-            w = -30
+            w -= 10
         else:
-            #w+= 10
+            w+= 10
             w = 30
         return w
 
@@ -647,7 +646,7 @@ class Robot:
                 center_table = [800,2000]
             
             # Se buscan las imagenes
-            self.go(center_table[0],center_table[1])
+            self.go(center_table[0],center_table[1],150)
             self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
 
             cam.capture(rawCapture, format="bgr")
