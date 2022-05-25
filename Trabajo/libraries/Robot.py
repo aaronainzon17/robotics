@@ -196,8 +196,8 @@ class Robot:
         self.p = Process(target=self.updateOdometry, args=())
         self.p.start()
         #Iniciar el giroscopio
-        self.pGiros = Process(target=self.updateGiroscopio, args=())
-        self.pGiros.start()
+        #self.pGiros = Process(target=self.updateGiroscopio, args=())
+        #self.pGiros.start()
 
     # You may want to pass additional shared variables besides the odometry values and stop flag
     def updateOdometry(self):

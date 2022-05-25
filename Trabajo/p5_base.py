@@ -95,8 +95,10 @@ def s_A(robot, vel):
         # Se mueve el robot a la siguiente celda
         robot.go(point[0],point[1],vel)
         print('Voy a ',point)
+    robot.updateGiroscopio()
     robot.align(600,0,np.deg2rad(1))
     robot.setSpeed(0, 0)  # Parar el robot
+    
 
 def s_B(robot, vel):
     """ La funcion s_B realiza la trayectoria de s del mapa B basandose en
@@ -141,7 +143,7 @@ def main(args):
         robot.startOdometry()
 
         input("Press Enter to continue...")
-        
+
         # 2. perform trajectory
         print("Start : %s" % time.ctime())       
 
