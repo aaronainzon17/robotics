@@ -84,6 +84,7 @@ class Robot:
         self.th = Value('d', init_position[2])
         self.w_giroscopio = Value('d', 0.0)
         self.ang_giroscopio = Value('d', init_position[2])
+        self.ang_giroscopio = init_position[2]
         # boolean to show if odometry updates are finished
         self.finished = Value('b', 1)
         self.finished_capture_green=Value('b',1)
