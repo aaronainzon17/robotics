@@ -278,7 +278,7 @@ class Robot:
     def updateGiroscopio(self):
         while not self.finished.value:
             self.w_giroscopio.value = self.read_gyros()
-            print("El angulo actual en updateGiroscopio es ", self.th.value)
+            #print("El angulo actual en updateGiroscopio es ", self.th.value)
 
     def stopOdometry(self):
         """ Stop the odometry thread. """
