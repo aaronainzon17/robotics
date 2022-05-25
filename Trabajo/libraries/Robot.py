@@ -260,12 +260,14 @@ class Robot:
             arr.append(self.BP.get_sensor(self.BP.PORT_4)[0] *-1) 
         #print(arr)
         #return self.norm_pi(np.deg2rad(np.median(arr)))
-        return self.norm_pi(np.deg2rad(statistics.median(arr) * -1))
+        #return self.norm_pi(np.deg2rad(statistics.median(arr)))
+        return self.normalizar(np.deg2rad(statistics.median(arr)))
     
     #Funcion para actualizar el giroscopio
     def updateGiroscopio(self):
         while not self.finished.value:
             self.th.value = self.read_gyros()
+            print("El angulo actual en updateGiroscopio es ", self.th.value)
 
     def stopOdometry(self):
         """ Stop the odometry thread. """
