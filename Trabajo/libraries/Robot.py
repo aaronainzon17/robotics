@@ -281,7 +281,7 @@ class Robot:
             th_gyros = self.read_gyros()
             orientacion = self.norm_pi(self.th_ini.value + th_gyros)
             #print(self.th_ini.value, orientacion)
-            time.sleep(10)
+            
             if abs(abs(self.th.value) - abs(orientacion)) < 3:
                 #print('Creia:', self.th.value, 'Estoy', orientacion)
                 self.th.value = orientacion
