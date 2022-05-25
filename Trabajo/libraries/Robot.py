@@ -241,10 +241,10 @@ class Robot:
             self.x.value += d_x
             self.y.value += d_y
             self.th.value += d_th   #Esto es de odometria
-            print("El valor de th sin la media es ", np.rad2deg(self.normalizar(self.th.value)))
-            print("El valor de th del giroscopio es ",np.rad2deg(self.ang_giroscopio.value))
+            #print("El valor de th sin la media es ", np.rad2deg(self.normalizar(self.th.value)))
+            #print("El valor de th del giroscopio es ",np.rad2deg(self.ang_giroscopio.value))
             self.th.value = self.normalizar((self.normalizar(self.th.value)+self.normalizar(th_ini + self.ang_giroscopio.value))/2.0)  #Esto es de odometria
-            print("El valor final de th  ",np.rad2deg(self.th.value))
+            #print("El valor final de th  ",np.rad2deg(self.th.value))
             self.lock_odometry.release()
 
             # Escribe en el LOG los valores actualizados de la odometria
