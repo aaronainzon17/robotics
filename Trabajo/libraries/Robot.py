@@ -215,7 +215,8 @@ class Robot:
             #Ahora la w es mi w mas la w del giroscopio y sacas la media
             print("La w_real antes de hacer la media es ",real_w)
             #real_w = (real_w + self.read_gyros())/2;
-            real_w = (real_w + self.w_giroscopio.value)/2;
+            #real_w = (real_w + self.w_giroscopio.value)/2.0;
+            real_w = self.w_giroscopio.value
             #real_w = self.read_gyros()
             print("La w_real despues de hacer la media es ",real_w)
             # Calcula los nuevos valores de la odometria
