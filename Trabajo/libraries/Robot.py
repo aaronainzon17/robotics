@@ -528,8 +528,7 @@ class Robot:
                 d_th = self.norm_pi(np.arctan2(d_y, d_x) - th_now)
                 if abs(d_th) < error_ang:
                     self.setSpeed(0,0)
-                    [x_now, y_now, th_now] = self.readOdometry()
-                    print("Al acabar de girar estoy en ",x_now," ",y_now, " ", np.rad2deg(th_now))
+                    self.updateGiroscopio()
                     aligned = True
                 else:
                     w = self.lienar_w(d_th)
