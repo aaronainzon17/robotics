@@ -83,7 +83,7 @@ class Robot:
         self.y = Value('d', init_position[1])
         self.th = Value('d', init_position[2])
         self.w_giroscopio = Value('d', 0.0)
-        self.ang_giroscopio = Value('d', init_position[2]*-1)
+        self.ang_giroscopio = Value('d', init_position[2])
         # boolean to show if odometry updates are finished
         self.finished = Value('b', 1)
         self.finished_capture_green=Value('b',1)
@@ -277,7 +277,7 @@ class Robot:
         #return self.normalizar(np.deg2rad(statistics.median(arr)))
         #Ahora como leemos solo la w no hace falta normalizarlo ni pasarlo a radianes
         #Como al principio el giroscopio lee datos malos pues si supera los 10 grados de diferencia entonces esta mal y se usa la propia th
-        if(self.normalizar(np.deg2rad(np.median(arrAng))) == 0):
+        if(self.normalizar(np.deg2rad(np.median(arrAng))) == 0.0):
             return [np.deg2rad(np.median(arr)),self.th.value]
         else:
             return [np.deg2rad(np.median(arr)),self.normalizar(np.deg2rad(np.median(arrAng)))]
