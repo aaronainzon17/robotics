@@ -153,7 +153,9 @@ def main(args):
             #mov_debug(robot, 100)
             s_A(robot, 100)
             #robot.centrar_con_imagen()
-            solveMap(robot,myMap, [1,2],[3,3])
+
+            #solveMap(robot,myMap, [1,2],[3,3])
+            
             #[xA,yA,thA]= robot.readOdometry()
             #robot.setSpeed(0, 10)  # cuarto de circunferencia a la derecha
             #check_position(robot, xA, yA, normalizar(np.deg2rad(270)), np.Infinity, np.Infinity, np.deg2rad(2))
