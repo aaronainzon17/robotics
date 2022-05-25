@@ -82,9 +82,9 @@ class Robot:
         self.x = Value('d', init_position[0])
         self.y = Value('d', init_position[1])
         self.th = Value('d', init_position[2])
-        self.th_ini = Value('d', self.th)
+        self.th_ini = Value('d', init_position[2])
         self.w_giroscopio = Value('d', 0.0)
-        self.ang_giroscopio = Value('d', init_position[2])
+        self.ang_giroscopio = Value('d', 0.0)
         self.ang_giroscopio.value = init_position[2]
         # boolean to show if odometry updates are finished
         self.finished = Value('b', 1)
@@ -193,7 +193,6 @@ class Robot:
                                      self.BP.get_motor_encoder(self.BP.PORT_B))  # reset encoder B
         self.BP.offset_motor_encoder(self.BP.PORT_C,
                                      self.BP.get_motor_encoder(self.BP.PORT_C))  # reset encoder C
-
         self.p = Process(target=self.updateOdometry, args=())
         self.p.start()
         #Iniciar el giroscopio
@@ -601,9 +600,10 @@ class Robot:
                 #print('He leido', value)
                 if value > 2000 and value < 2750:     #Se detecta el colo blanco entonces es el A
                     # Se indican las coordenadas iniciales del robot 
-                    self.x = Value('d', 600)
-                    self.y = Value('d', 2800)
-                    self.th = Value('d', self.norm_pi(np.deg2rad(-90)))
+                    self.x.value  = 600
+                    self.y.value = 2800
+                    self.th.value = self.norm_pi(np.deg2rad(-90))
+                    self.th_ini.value = self.th.value
                     # Se indican las imagenes a detectar
                     self.img_salida = './R2-D2_s.png'
                     self.img_NO_salida = './BB8_s.png'
