@@ -237,7 +237,7 @@ class Robot:
             self.th.value += d_th   #Esto es de odometria
             #print("El valor de th sin la media es ", np.rad2deg(self.normalizar(self.th.value)))
             #print("El valor de th del giroscopio es ",np.rad2deg(self.ang_giroscopio.value))
-            self.th.value = self.normalizar(self.th.value)  #Esto es de odometria
+            self.th.value = self.norm_pi(self.th.value)  #Esto es de odometria
             #self.th.value = self.normalizar((self.normalizar(self.th.value)+self.normalizar(th_ini + self.ang_giroscopio.value))/2.0)  
             #print("El valor final de th  ",np.rad2deg(self.th.value))
             self.lock_odometry.release()
@@ -280,10 +280,10 @@ class Robot:
             #print("El angulo actual en updateGiroscopio es ", self.th.value)
             th_gyros = self.read_gyros()
             orientacion = self.norm_pi(self.th_ini.value + th_gyros)
-            print(self.th_ini.value, orientacion)
+            #print(self.th_ini.value, orientacion)
             time.sleep(10)
             if abs(abs(self.th.value) - abs(orientacion)) < 3:
-                print('Creia:', self.th.value, 'Estoy', orientacion)
+                #print('Creia:', self.th.value, 'Estoy', orientacion)
                 self.th.value = orientacion
             time.sleep(self.P)            
 
@@ -294,14 +294,6 @@ class Robot:
 
         self.BP.reset_all()
         self.setSpeed(0, 0)
-
-    def normalizar(self, th):
-        """ Funcion de normalizacion del angulo entre -pi, pi """
-        if th > math.pi:
-            th = th - 2 * math.pi
-        elif th < -math.pi:
-            th = th + 2 * math.pi
-        return th
 
     def getPeriod(self):
         """ Devuelve el periodo de actualizacion de la odometria """
