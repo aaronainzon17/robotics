@@ -280,6 +280,7 @@ class Robot:
             #self.ang_giroscopio.value = self.read_gyros()
             #print("El angulo actual en updateGiroscopio es ", self.th.value)
             th_gyros = self.read_gyros()
+            print(self.th_ini.value)
             orientacion = self.norm_pi(self.th_ini.value + th_gyros)
             if abs(abs(self.th.value) - abs(orientacion)) < 3:
                 print('Creia:', self.th.value, 'Estoy', orientacion)
