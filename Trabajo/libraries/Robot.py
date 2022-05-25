@@ -272,7 +272,7 @@ class Robot:
         arrAng = []
         for i in range(5):
             arr.append(self.BP.get_sensor(self.BP.PORT_4)[1] *-1) 
-            arrAng.append(self.BP.get_sensor(self.BP.PORT_4)[0] *-1) 
+            #arrAng.append(self.BP.get_sensor(self.BP.PORT_4)[0] *-1) 
         return [np.deg2rad(np.median(arr)),self.normalizar(np.deg2rad(np.median(arrAng)))]
         
     
@@ -283,8 +283,6 @@ class Robot:
         while not self.finished.value:
             [self.w_giroscopio.value,self.ang_giroscopio.value] = self.read_gyros()
             #print("El angulo actual en updateGiroscopio es ", self.th.value)
-            self.lock_odometry.acquire()
-            self.lock_odometry.release()
             
 
     def stopOdometry(self):
@@ -548,9 +546,11 @@ class Robot:
     def lienar_w(self,dth):
         w = dth*(80/math.pi)
         if w < 0:
-            w -= 10
+            #w -= 10
+            w = -40
         else:
-            w+= 10
+            #w+= 10
+            w = 40
         return w
 
     #Funcion que normaliza el angulo entre -pi, pi
