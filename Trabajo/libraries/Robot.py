@@ -207,14 +207,14 @@ class Robot:
         if os.path.exists("log_odometry.log"):
             os.remove("log_odometry.log")
         log = open("log_odometry.log", "a")
-        
+        prev_gyros = 0.0
         while not self.finished.value:
             # current processor time in a floating point value, in seconds
             tIni = time.clock()
 
             # Lee los valores reales de la velocidad lineal y angular
             [real_v, real_w] = self.readSpeed()
-            prev_gyros = 0.0
+            
             # Calcula los nuevos valores de la odometria
             if real_w == 0:
                 d_x = (real_v * self.P) * np.cos(self.th.value)
