@@ -89,12 +89,12 @@ def s_A(robot, vel):
     """ La funcion s_A realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
 
-    pos = [[0,5],[1,4],[2,3],[1,2]]
+    pos = [[600,2600],[300,2200],[600,1800]]#],[2,3],[1,2]]
     for point_map in pos:
-        point = [200+point_map[0]*400, 200+point_map[1]*400]
+        #point = [200+point_map[0]*400, 200+point_map[1]*400]
         # Se mueve el robot a la siguiente celda
-        robot.go(point[0],point[1],vel)
-        print('Voy a ',point)
+        robot.go(point_map[0],point_map[1],vel)
+        print('Voy a ',point_map)
     robot.updateGiroscopio()
     #robot.align(600,0,np.deg2rad(1))
     
