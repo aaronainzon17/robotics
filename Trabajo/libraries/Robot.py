@@ -225,7 +225,7 @@ class Robot:
                 
                 # El radio se calcula R = v/w
                 d_th = gyros_now - prev_gyros
-                print(d_th)
+                print("Diferencial de th ",d_th,"Grados leidos del giroscopio",gyros_now)
                 d_s = (real_v/real_w) * d_th
                 d_x = d_s * np.cos(self.th.value + (d_th/2))
                 d_y = d_s * np.sin(self.th.value + (d_th/2))
@@ -265,7 +265,7 @@ class Robot:
 
     def read_gyros(self):
         arr = []
-        for i in range(3):
+        for i in range(5):
             try:
                 arr.append(self.BP.get_sensor(self.BP.PORT_4)[0] *-1) 
             except brickpi3.SensorError as error:
