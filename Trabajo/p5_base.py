@@ -102,7 +102,7 @@ def s_B_ocho(robot, vel):
     # Se mueve al centro de la primera celda
     #robot.go(600,2600, vel)
     robot.setSpeed(vel, 0)
-    check_position(robot,2200,2600, np.deg2rad(-90)),10, 5, np.deg2rad(2)
+    check_position(robot,2200,2600, np.deg2rad(-90),10, 5, np.deg2rad(2))
     # Comienza el circulo
     r = 400
     v = vel
@@ -130,7 +130,7 @@ def s_B_(robot, vel):
     
     # Se mueve al centro de la primera celda
     robot.setSpeed(vel, 0)
-    check_position(robot,2200,2600, np.deg2rad(-90)),10, 5, np.deg2rad(2)
+    check_position(robot,2200,2600, np.deg2rad(-90),10, 5, np.deg2rad(2))
     r = 400
     v = vel
     w = np.rad2deg((float)(v/r))
