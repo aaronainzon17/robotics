@@ -214,17 +214,17 @@ class Robot:
 
             # Lee los valores reales de la velocidad lineal y angular
             [real_v, real_w] = self.readSpeed()
-           
+            prev_gyros = 0.0
             # Calcula los nuevos valores de la odometria
             if real_w == 0:
                 d_x = (real_v * self.P) * np.cos(self.th.value)
                 d_y = (real_v * self.P) * np.sin(self.th.value)
                 d_th = 0
             else:
-                #abs_th = self.norm_pi(th_ini + self.read_gyros()) #self.read_gyros()
+                gyros_now = self.read_gyros() #self.read_gyros()
                 
                 # El radio se calcula R = v/w
-                d_th = real_w * self.P #self.norm_pi(abs_th - self.th.value)
+                d_th = gyros_now - prev_gyros
                 d_s = (real_v/real_w) * d_th
                 d_x = d_s * np.cos(self.th.value + (d_th/2))
                 d_y = d_s * np.sin(self.th.value + (d_th/2))
@@ -249,7 +249,7 @@ class Robot:
             coord = str(x) + ',' + str(y) + ',' + str(th) + '\n'
             log.write(coord)
             self.lock_odometry.release()
-
+            prev_gyros = gyros_now
             tEnd = time.clock()
             time.sleep(self.P - (tEnd - tIni))
 
@@ -268,7 +268,7 @@ class Robot:
                 arr.append(self.BP.get_sensor(self.BP.PORT_4)[0] *-1) 
             except brickpi3.SensorError as error:
                 print(error) 
-        return np.deg2rad(np.median(arr))
+        return self.norm_pi(np.deg2rad(np.median(arr)))
         
     
     #Leer del giroscopio la w y hacer la media con la que se lee de las ruedas
