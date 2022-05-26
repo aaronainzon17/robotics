@@ -224,7 +224,7 @@ class Robot:
                 gyros_now = self.read_gyros() #self.read_gyros()
                 
                 # El radio se calcula R = v/w
-                d_th = gyros_now + prev_gyros
+                d_th = gyros_now - prev_gyros
                 d_s = (real_v/real_w) * d_th
                 d_x = d_s * np.cos(self.th.value + (d_th/2))
                 d_y = d_s * np.sin(self.th.value + (d_th/2))
