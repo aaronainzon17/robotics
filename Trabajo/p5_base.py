@@ -108,7 +108,7 @@ def s_A_ocho(robot, vel):
     #robot.go(600,2600, vel)
     robot.setSpeed(vel, 0)  # Giro de 45 deg a la derecha
     check_position(600 + 400 * 2600, normalizar(np.deg2rad(-90)),
-                   np.Infinity, np.Infinity, np.deg2rad(2))
+                   10, 5, np.deg2rad(2))
     # Comienza el circulo
     r = 400
     v = vel
