@@ -96,8 +96,8 @@ def s_A(robot, vel):
         robot.go(point[0],point[1],vel)
         print('Voy a ',point)
     robot.updateGiroscopio()
-    robot.align(600,0,np.deg2rad(1))
-    robot.setSpeed(0, 0)  # Parar el robot
+    #robot.align(600,0,np.deg2rad(1))
+    
     
 
 def s_B(robot, vel):
@@ -167,9 +167,9 @@ def main(args):
             ##Ahora toca corregir la homografia
 
             #robot.setNewPosition(1400,1400,np.deg2rad(90))
-            #robot.detect_scape()
+            robot.detect_scape()
             # Se inicia la busqueda de la pelota 
-            #robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
+            robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
             
         else: # "mapaB_CARRERA.txt"
             imagenFin = cv2.imread(bb8, cv2.IMREAD_COLOR)
