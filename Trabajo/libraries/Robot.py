@@ -568,6 +568,7 @@ class Robot:
                 reached = True
                 print("Se ha alcanzado el punto:[", x_now, ",", y_now, ",", th_now, "]")
                 self.setSpeed(0,0)
+                time.sleep(2)
             else:
                 [x_now, y_now, th_now] = self.readOdometry()                
     # La funcion se encarga de alienar el robot con el punto objetivo para poder
