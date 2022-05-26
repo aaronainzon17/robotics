@@ -107,7 +107,7 @@ def s_A_ocho(robot, vel):
 
     pos = [1,6]
     robot.setSpeed(0, -w)  # Giro de 45 deg a la derecha
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-135)), np.Infinity, np.Infinity, np.deg2rad(2))
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-180)), np.Infinity, np.Infinity, np.deg2rad(2))
 
     pos = [1,4]
     print('voy a', pos)
