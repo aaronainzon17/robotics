@@ -18,7 +18,7 @@ Autores:
 
 def dos_puntos_time(robot, a, d, dist):
     """ La funcion dos_puntos_time es una primera version de la trayectoria del
-        las dos semicirunferencias unidas caluclada con tiempos con velocidad
+        las dos semicirunferencias unidas calculada con tiempos con velocidad
         lineal 200 y angular 90 """
 
     r2 = math.sqrt(dist**2 + (d-a)**2)
