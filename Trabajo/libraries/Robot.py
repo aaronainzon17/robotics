@@ -94,7 +94,7 @@ class Robot:
         self.lock_odometry = Lock()
 
         # odometry update period
-        self.P = 0.07
+        self.P = 0.04
         
         # Blob values
         self.x_b= Value('d', 0)
@@ -254,7 +254,11 @@ class Robot:
             self.lock_odometry.release()
             
             tEnd = time.clock()
-            time.sleep(self.P - (tEnd - tIni))
+            elapsed = self.P - (tEnd - tIni)
+            if elapsed <= 0:
+                time.sleep(elapsed)
+            else:
+                print('No sleep')
 
         # Escribe en el LOG los valores finales de la odometria
         [x, y, th] = self.readOdometry()
