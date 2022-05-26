@@ -106,7 +106,7 @@ def s_A_ocho(robot, vel):
 
     r = 40
     v = vel
-    w = np.rad2deg((float)(v/r))
+    w = 30#np.rad2deg((float)(v/r))
 
     pos = [1,6]
     robot.setSpeed(0, -w)  # Giro de 45 deg a la derecha
