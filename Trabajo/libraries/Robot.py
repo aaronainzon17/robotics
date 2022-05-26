@@ -172,7 +172,7 @@ class Robot:
 
         self.lock_odometry.release()
 
-        return vel[0], vel[1]
+        return vel[0], vel[1], deg_right_e, deg_left_e
 
     def readOdometry(self):
         """ Returns current value of odometry estimation """
@@ -213,7 +213,7 @@ class Robot:
             tIni = time.clock()
 
             # Lee los valores reales de la velocidad lineal y angular
-            [real_v, real_w] = self.readSpeed()
+            real_v, real_w, deg_right_e, deg_left_e  = self.readSpeed()
             
             # Calcula los nuevos valores de la odometria
             if real_w == 0:
@@ -226,7 +226,8 @@ class Robot:
                 # El radio se calcula R = v/w
                 d_th = gyros_now - prev_gyros
                 #print("Diferencial de th ",d_th,"Grados leidos del giroscopio",gyros_now)
-                d_s = (real_v/real_w) * d_th
+                #d_s = (real_v/real_w) * d_th
+                d_s = (deg_right_e + deg_left_e)/2
                 d_x = d_s * np.cos(self.th.value + (d_th/2))
                 d_y = d_s * np.sin(self.th.value + (d_th/2))
                 prev_gyros = gyros_now
