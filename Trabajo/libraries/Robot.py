@@ -94,7 +94,7 @@ class Robot:
         self.lock_odometry = Lock()
 
         # odometry update period
-        self.P = 0.04
+        self.P = 0.05
         
         # Blob values
         self.x_b= Value('d', 0)
@@ -224,7 +224,7 @@ class Robot:
                 gyros_now = self.read_gyros() #self.read_gyros()
                 
                 # El radio se calcula R = v/w
-                d_th = gyros_now - prev_gyros
+                d_th = self.norm_pi(gyros_now - prev_gyros)
                 #print("Diferencial de th ",d_th,"Grados leidos del giroscopio",gyros_now)
                 #d_s = (real_v/real_w) * d_th
                 d_s = (deg_right_e + deg_left_e)/2
@@ -275,7 +275,7 @@ class Robot:
                 arr.append(self.BP.get_sensor(self.BP.PORT_4)[0] *-1) 
             except brickpi3.SensorError as error:
                 print(error) 
-        return self.norm_pi(np.deg2rad(np.median(arr)))
+        return np.deg2rad(np.median(arr))
         
     
     #Leer del giroscopio la w y hacer la media con la que se lee de las ruedas
