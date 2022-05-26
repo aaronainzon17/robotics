@@ -501,6 +501,7 @@ class Robot:
         self.th.value = th_new
 
     def go(self, x_goal, y_goal, speed):
+        print('AAAA', x_goal, y_goal)
         # Aliena al robot con el siguiente punto
         self.align(x_goal, y_goal, np.deg2rad(1))
         # Se le asigna una velocidad lienal
