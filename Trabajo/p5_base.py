@@ -188,8 +188,10 @@ def main(args):
         if mapa == "mapaA_CARRERA.txt":
             pos = robot.readOdometry()
             print('Empiezo en', pos)
-            
-            s_A_ocho(robot, 100)
+            robot.align(0,2800,np.deg2rad(1))
+            pos = robot.readOdometry()
+            print('Empiezo en', pos)
+            #s_A_ocho(robot, 100)
 
             #solveMap(robot,myMap, [1,2],[3,3])
 
