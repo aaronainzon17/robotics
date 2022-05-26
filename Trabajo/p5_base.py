@@ -107,7 +107,7 @@ def s_A_ocho(robot, vel):
     w = np.rad2deg((float)(v/r))
 
     pos = [1,6]
-    robot.setSpeed(0, -45)  # Giro de 45 deg a la derecha
+    robot.setSpeed(0, -w)  # Giro de 45 deg a la derecha
     check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-135)),
                    np.Infinity, np.Infinity, np.deg2rad(2))
 
@@ -155,7 +155,7 @@ def main(args):
         mirror=False
 
         robot = Robot()
-        time.sleep(4)
+        time.sleep(2)
 
         mapa = robot.detectar_recorrido()
         
