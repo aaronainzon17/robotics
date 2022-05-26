@@ -48,10 +48,6 @@ def check_position(robot, x, y, th, x_err, y_err, angular_err):
     reached = False
 
     while not reached:
-        # print("-------------------------------------------")
-        #print("quiero llegar a ", x, " ", y, " ", th)
-        #print("estoy en ", x_now, " ", y_now, " ", th_now)
-        # print("-------------------------------------------")
 
         # Se calcula el angulo
         error_ang = abs(th-th_now)
@@ -61,14 +57,10 @@ def check_position(robot, x, y, th, x_err, y_err, angular_err):
         # Se comprueba que la trayectoria se esta relaizando dentro del error permitido
         if (abs(x-x_now) <= x_err) and (abs(y-y_now) <= y_err) and (error_ang <= angular_err):
             reached = True
-            print("Se ha alcanzado el punto:[",
-                  x_now, ",", y_now, ",", th_now, "]")
-            robot.setSpeed(0,0)
-            time.sleep(5)
+            print("Se ha alcanzado el punto:[", x_now, ",", y_now, ",", th_now, "]")
         else:
             [x_now, y_now, th_now] = robot.readOdometry()
-            #print("La posicion actual es:", x_now, y_now)
-        # time.sleep(period)
+
 
 
 
@@ -175,7 +167,7 @@ def main(args):
         input("Press Enter to continue...")
         # 1. Se incia la odometria u el proceso update odometry
         robot.startOdometry()
-        
+
         # 2. perform trajectory
         print("Start : %s" % time.ctime())       
 
