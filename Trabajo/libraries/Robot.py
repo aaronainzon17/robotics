@@ -530,6 +530,7 @@ class Robot:
             aligned = False 
             
             while not aligned:
+                print('a')
                 [x_now, y_now, th_now] = self.readOdometry()
                 d_x = x_goal - x_now
                 d_y = y_goal - y_now
