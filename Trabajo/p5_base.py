@@ -104,9 +104,13 @@ def s_A_ocho(robot, vel):
     """ La funcion ocho realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
 
-    r = 40
+    # Se mueve al centro de la primera celda
+    robot.go(600,2600, vel)
+
+    # Comienza el circulo
+    r = 400
     v = vel
-    w = 30#np.rad2deg((float)(v/r))
+    w = np.rad2deg((float)(v/r))
 
     pos = [1,6]
     robot.setSpeed(0, -w)  # Giro de 45 deg a la derecha
