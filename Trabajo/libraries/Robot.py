@@ -501,36 +501,33 @@ class Robot:
         self.th.value = th_new
 
     def go(self, x_goal, y_goal, speed):
-        print('AAAA', x_goal, y_goal)
         # Aliena al robot con el siguiente punto
-        self.align(x_goal, y_goal, np.deg2rad(1),0)
+        self.align(x_goal, y_goal, np.deg2rad(1))
         # Se le asigna una velocidad lienal
         self.setSpeed(speed,0)
         # Se comprueba que el robot alcanza correctamente la posicion 
         #self.check_position(x_goal, y_goal, 25, 25)
-        self.check_position(x_goal, y_goal, 25, 25, speed)
+        self.check_position(x_goal, y_goal, 25, 25)
    
     # check_position es la funcion de control de localizacion
     # En ella se comprueba la posicion real del robot leida de los
     # motores y se comprueba si se encuentra en la posicion deseada
     # permitiendo un cierto error.
-    def check_position(self, x_goal, y_goal, x_err, y_err, vel):
+    def check_position(self, x_goal, y_goal, x_err, y_err):
         reached = False
         while not reached:
-            [x_now, y_now, _] = self.readOdometry()
+            [x_now, y_now, th_now] = self.readOdometry()
             # Se comprueba que la trayectoria se esta relaizando dentro del error permitido
             if (abs(x_goal-x_now) <= x_err) and (abs(y_goal-y_now) <= y_err):
                 self.setSpeed(0,0)
                 reached = True
-            self.align(x_goal, y_goal, np.deg2rad(1), vel)
                 
     # La funcion se encarga de alienar el robot con el punto objetivo para poder
     # realizar una trayectoria lienal
-    def align(self, x_goal, y_goal, error_ang, vel=0):
+    def align(self, x_goal, y_goal, error_ang):
             aligned = False 
             
             while not aligned:
-                print('a')
                 [x_now, y_now, th_now] = self.readOdometry()
                 d_x = x_goal - x_now
                 d_y = y_goal - y_now
@@ -540,7 +537,7 @@ class Robot:
                     aligned = True
                 else:
                     w = self.lienar_w(d_th)
-                    self.setSpeed(vel,w)
+                    self.setSpeed(0,w)
     
     # Funcion que define la velocidad angular en funcion de los 
     # grados restantes w = [10,90]
