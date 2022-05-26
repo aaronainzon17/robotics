@@ -739,6 +739,8 @@ class Robot:
         self.go(self.casilla_salida[0],(self.casilla_salida[1] + 400))
 
     def relocate(self):
+        self.setSpeed(0,15)
+        self.check_angle(-180,np.deg2rad(1))
         x_axis = self.read_ultrasonyc()
         self.setSpeed(0,30)
         self.check_angle(-90,np.deg2rad(1))
@@ -747,12 +749,12 @@ class Robot:
             if self.mapa == 'A':
                 self.x.value = x_axis
             else:
-                self.x.value = 28000 - x_axis
+                self.x.value = 2800 - x_axis
         else:
             if self.mapa == 'A':
                 self.x.value = x_axis
             else:
-                self.x.value = 28000 - x_axis
+                self.x.value = 2800 - x_axis
             self.y.value = y_axis 
         print('Se actualiza la odometria a:', x_axis, y_axis)       
 
