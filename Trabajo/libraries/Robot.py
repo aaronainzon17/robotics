@@ -41,7 +41,7 @@ class Robot:
 
         # Radio de la rueda y distancia entre ruedas
         self.R = 26 #28
-        self.L = 130#128
+        self.L = 129 #128
 
         # Ultimo valor leido de cada motor
         self.acum_d = 0
