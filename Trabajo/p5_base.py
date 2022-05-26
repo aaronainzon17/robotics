@@ -175,7 +175,7 @@ def main(args):
             pos = robot.readOdometry()
             print('Empiezo en', pos)
 
-            s_A_ocho(robot, 150)
+            s_A_ocho(robot, 100)
 
             #solveMap(robot,myMap, [1,2],[3,3])
 
