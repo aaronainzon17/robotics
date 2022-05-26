@@ -502,7 +502,7 @@ class Robot:
         self.setSpeed(speed,0)
         # Se comprueba que el robot alcanza correctamente la posicion 
         #self.check_position(x_goal, y_goal, 25, 25)
-        self.check_position(x_goal, y_goal, 35, 35)
+        self.check_position(x_goal, y_goal, 50, 50)
    
     # check_position es la funcion de control de localizacion
     # En ella se comprueba la posicion real del robot leida de los
