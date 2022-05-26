@@ -111,13 +111,13 @@ def s_A_ocho(robot, vel):
 
     pos = [1,4]
     robot.setSpeed(v, w)  # Primera semicircunferencia
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(0)), 10, 5, np.deg2rad(10))
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(0)), 10, np.Infinity, np.deg2rad(10))
     pos = robot.readOdopetry()
     print(pos)
     robot.setSpeed(0,0)
     pos = [1,2]
     robot.setSpeed(v, -w)  # Segunda semicircunferencia
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-135)), 20, 5, np.deg2rad(10))
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-135)), 20, np.Infinity, np.deg2rad(10))
 
     pos = [1,2]
     robot.setSpeed(0, 45)  # Giro de 45 deg a la izquierda
