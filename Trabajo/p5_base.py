@@ -154,7 +154,7 @@ def main(args):
             #robot.setNewPosition(2200,1800,np.deg2rad(90))
             #robot.seguimientoPared(100)
             #mov_debug(robot, 100)
-            s_A(robot, 150)
+            s_A(robot, 100)
             #time.sleep(10)
             #robot.centrar_con_imagen()
             solveMap(robot,myMap, [1,2],[3,3])
