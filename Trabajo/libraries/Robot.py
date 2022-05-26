@@ -767,7 +767,7 @@ class Robot:
         arr = []
         for i in range(5):
             try:
-                arr.append(self.BP.get_sensor(self.BP.PORT_3)) 
+                arr.append(self.BP.get_sensor(self.BP.PORT_1)) 
             except brickpi3.SensorError as error:
                 print(error) 
         return np.median(arr) * 10
