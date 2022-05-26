@@ -228,6 +228,7 @@ class Robot:
                 d_s = (real_v/real_w) * d_th
                 d_x = d_s * np.cos(self.th.value + (d_th/2))
                 d_y = d_s * np.sin(self.th.value + (d_th/2))
+                prev_gyros = gyros_now
 
             # Actualiza la odometria con los nuevos valores en exclusion mutua
             self.lock_odometry.acquire()
@@ -249,7 +250,7 @@ class Robot:
             coord = str(x) + ',' + str(y) + ',' + str(th) + '\n'
             log.write(coord)
             self.lock_odometry.release()
-            prev_gyros = gyros_now
+            
             tEnd = time.clock()
             time.sleep(self.P - (tEnd - tIni))
 
