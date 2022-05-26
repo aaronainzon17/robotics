@@ -507,7 +507,7 @@ class Robot:
         self.setSpeed(speed,0)
         # Se comprueba que el robot alcanza correctamente la posicion 
         #self.check_position(x_goal, y_goal, 25, 25)
-        self.check_position(x_goal, y_goal, 25, 25,speed)
+        self.check_position(x_goal, y_goal, 25, 25, speed)
    
     # check_position es la funcion de control de localizacion
     # En ella se comprueba la posicion real del robot leida de los
@@ -521,7 +521,7 @@ class Robot:
             if (abs(x_goal-x_now) <= x_err) and (abs(y_goal-y_now) <= y_err):
                 self.setSpeed(0,0)
                 reached = True
-            self.align(x_goal, y_goal, np.deg2rad(1),vel)
+            self.align(x_goal, y_goal, np.deg2rad(1), vel)
                 
     # La funcion se encarga de alienar el robot con el punto objetivo para poder
     # realizar una trayectoria lienal
