@@ -521,7 +521,54 @@ class Robot:
             if (abs(x_goal-x_now) <= x_err) and (abs(y_goal-y_now) <= y_err):
                 self.setSpeed(0,0)
                 reached = True
-                
+    
+    def check_position_3_values(self, x, y, th, x_err, y_err, angular_err):
+        """ check_position es la funcion de control de localizacion
+        En ella se comprueba la posicion real del robot leida de los
+        motores y se comprueba si se encuentra en la posicion deseada
+        permitiendo un cierto error. """
+
+        # Se lee incialmente la posicion del robot
+        [x_now, y_now, th_now] = self.readOdometry()
+        reached = False
+
+        while not reached:
+
+            # Se calcula el angulo
+            error_ang = abs(th-th_now)
+            if error_ang > math.pi:
+                error_ang = (2*math.pi) - error_ang
+
+            # Se comprueba que la trayectoria se esta relaizando dentro del error permitido
+            if (abs(x-x_now) <= x_err) and (abs(y-y_now) <= y_err) and (error_ang <= angular_err):
+                reached = True
+                print("Se ha alcanzado el punto:[", x_now, ",", y_now, ",", th_now, "]")
+            else:
+                [x_now, y_now, th_now] = self.readOdometry()
+
+    def check_angle(self,th, angular_err):
+        """ check_position es la funcion de control de localizacion
+        En ella se comprueba la posicion real del robot leida de los
+        motores y se comprueba si se encuentra en la posicion deseada
+        permitiendo un cierto error. """
+
+        # Se lee incialmente la posicion del robot
+        [x_now, y_now, th_now] = self.readOdometry()
+        reached = False
+
+        while not reached:
+
+            # Se calcula el angulo
+            error_ang = abs(th-th_now)
+            if error_ang > math.pi:
+                error_ang = (2*math.pi) - error_ang
+
+            # Se comprueba que la trayectoria se esta relaizando dentro del error permitido
+            if error_ang <= angular_err:
+                reached = True
+                print("Se ha alcanzado el punto:[", x_now, ",", y_now, ",", th_now, "]")
+            else:
+                [x_now, y_now, th_now] = self.readOdometry()                
     # La funcion se encarga de alienar el robot con el punto objetivo para poder
     # realizar una trayectoria lienal
     def align(self, x_goal, y_goal, error_ang):
@@ -690,6 +737,35 @@ class Robot:
         # Una vez se ha encontrado la salida se sale
         self.go(self.casilla_salida[0],self.casilla_salida[1])
         self.go(self.casilla_salida[0],(self.casilla_salida[1] + 400))
+
+    def relocate(self):
+        x_axis = self.read_ultrasonyc()
+        self.setSpeed(0,30)
+        self.check_angle(-90,np.deg2rad(1))
+        y_axis = self.read_ultrasonyc()
+        if y_axis < 800:
+            if self.mapa == 'A':
+                self.x.value = x_axis
+            else:
+                self.x.value = 28000 - x_axis
+        else:
+            if self.mapa == 'A':
+                self.x.value = x_axis
+            else:
+                self.x.value = 28000 - x_axis
+            self.y.value = y_axis 
+        print('Se actualiza la odometria a:', x_axis, y_axis)       
+
+        
+    
+    def read_ultrasonyc(self):
+        arr = []
+        for i in range(5):
+            try:
+                arr.append(self.BP.get_sensor(self.BP.PORT_3)) 
+            except brickpi3.SensorError as error:
+                print(error) 
+        return np.median(arr) * 10
 
     def detectar_casilla_salida(self, frame):
         if self.casilla_salida == None: 

@@ -26,30 +26,6 @@ Autores:
     - Belen Gimeno Chueca 756425
     - Pablo Gancedo Alcalde 736839 
 """
-
-def check_position(robot, x, y, th, x_err, y_err, angular_err):
-    """ check_position es la funcion de control de localizacion
-        En ella se comprueba la posicion real del robot leida de los
-        motores y se comprueba si se encuentra en la posicion deseada
-        permitiendo un cierto error. """
-
-    # Se lee incialmente la posicion del robot
-    [x_now, y_now, th_now] = robot.readOdometry()
-    reached = False
-
-    while not reached:
-
-        # Se calcula el angulo
-        error_ang = abs(th-th_now)
-        if error_ang > math.pi:
-            error_ang = (2*math.pi) - error_ang
-
-        # Se comprueba que la trayectoria se esta relaizando dentro del error permitido
-        if (abs(x-x_now) <= x_err) and (abs(y-y_now) <= y_err) and (error_ang <= angular_err):
-            reached = True
-            print("Se ha alcanzado el punto:[", x_now, ",", y_now, ",", th_now, "]")
-        else:
-            [x_now, y_now, th_now] = robot.readOdometry()
     
 def s_A_ocho(robot, vel):
     """ La funcion ocho realiza la trayectoria de s del mapa A basandose en
@@ -58,7 +34,7 @@ def s_A_ocho(robot, vel):
     # Se mueve al centro de la primera celda
     #robot.go(600,2600, vel)
     robot.setSpeed(vel, 0)  # Giro de 45 deg a la derecha
-    check_position(robot,600,2600, np.deg2rad(-90),10, 5, np.deg2rad(2))
+    robot.check_position_3_values(robot,600,2600, np.deg2rad(-90),10, 5, np.deg2rad(2))
     # Comienza el circulo
     r = 400
     v = vel
@@ -66,22 +42,23 @@ def s_A_ocho(robot, vel):
 
     pos = [1,6]
     robot.setSpeed(0, -w)  # Giro de 45 deg a la derecha
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), np.Infinity, np.Infinity, np.deg2rad(2))
+    robot.check_position_3_values(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), np.Infinity, np.Infinity, np.deg2rad(2))
 
     pos = [1,4]
     robot.setSpeed(v, w)  # Primera semicircunferencia
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), 10, np.Infinity, np.deg2rad(10))
+    robot.check_position_3_values(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), 10, np.Infinity, np.deg2rad(10))
     
     pos = [1,2]
     robot.setSpeed(v, -w)  # Segunda semicircunferencia
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), 10, 400, np.deg2rad(10))
+    robot.check_position_3_values(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), 10, 400, np.deg2rad(10))
 
     pos = [1,2]
     robot.setSpeed(0, 30)  # Giro de 45 deg a la izquierda
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-90), np.Infinity, np.Infinity, np.deg2rad(2))
+    robot.check_position_3_values(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-90), np.Infinity, np.Infinity, np.deg2rad(2))
 
 
     robot.setSpeed(0, 0)  # Parar el robot    
+    robot.relocate()
 
 def s_B(robot, vel):
     """ La funcion s_B realiza la trayectoria de s del mapa B basandose en
@@ -102,7 +79,7 @@ def s_B_ocho(robot, vel):
     # Se mueve al centro de la primera celda
     #robot.go(600,2600, vel)
     robot.setSpeed(vel, 0)
-    check_position(robot,2200,2600, np.deg2rad(-90),10, 5, np.deg2rad(2))
+    robot.check_position_3_values(robot,2200,2600, np.deg2rad(-90),10, 5, np.deg2rad(2))
     # Comienza el circulo
     r = 400
     v = vel
@@ -110,19 +87,19 @@ def s_B_ocho(robot, vel):
 
     pos = [5,6]
     robot.setSpeed(0, w)  # Giro de 45 deg a la izquierda
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), np.Infinity, np.Infinity, np.deg2rad(2))
+    robot.check_position_3_values(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), np.Infinity, np.Infinity, np.deg2rad(2))
 
     pos = [5,4]
     robot.setSpeed(v, w)  # Primera semicircunferencia
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(180), 10, np.Infinity, np.deg2rad(10))
+    robot.check_position_3_values(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(180), 10, np.Infinity, np.deg2rad(10))
     
     pos = [5,2]
     robot.setSpeed(v, -w)  # Segunda semicircunferencia
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), 10, 400, np.deg2rad(10))
+    robot.check_position_3_values(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), 10, 400, np.deg2rad(10))
 
     pos = [5,2]
     robot.setSpeed(0, -30)  # Giro de 45 deg a la derecha
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-90), np.Infinity, np.Infinity, np.deg2rad(2))
+    robot.check_position_3_values(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-90), np.Infinity, np.Infinity, np.deg2rad(2))
 
 def s_B_(robot, vel):
     """ La funcion s_B_ realiza la trayectoria de s del mapa B basandose en
@@ -130,39 +107,39 @@ def s_B_(robot, vel):
     
     # Se mueve al centro de la primera celda
     robot.setSpeed(vel, 0)
-    check_position(robot,2200,2600, np.deg2rad(-90),10, 5, np.deg2rad(2))
+    robot.check_position_3_values(robot,2200,2600, np.deg2rad(-90),10, 5, np.deg2rad(2))
     r = 400
     v = vel
     w = np.rad2deg((float)(v/r))
 
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), np.Infinity, np.Infinity, np.deg2rad(2))
+    robot.check_position_3_values(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), np.Infinity, np.Infinity, np.deg2rad(2))
 
     pos = [5,6]
     robot.setSpeed(0, w)  # Giro de 45 deg a la izquierda
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), np.Infinity, np.Infinity, np.deg2rad(2))
+    robot.check_position_3_values(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), np.Infinity, np.Infinity, np.deg2rad(2))
 
     pos = [5.5,5.5]
     robot.setSpeed(v, 0)  # Tramo recto
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(180), 10, np.Infinity, np.deg2rad(10))
+    robot.check_position_3_values(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(180), 10, np.Infinity, np.deg2rad(10))
 
     pos = [5.5,4.5]
     robot.setSpeed(v, w)  # Primera semicircunferencia
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(180), 10, np.Infinity, np.deg2rad(10))
+    robot.check_position_3_values(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(180), 10, np.Infinity, np.deg2rad(10))
 
     pos = [4.5,3.5]
     robot.setSpeed(v, 0)  # Tramo recto
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(180), 10, np.Infinity, np.deg2rad(10))
+    robot.check_position_3_values(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(180), 10, np.Infinity, np.deg2rad(10))
  
     pos = [4.5,2.5]
     robot.setSpeed(v, -w)  # Segunda semicircunferencia
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), 10, 400, np.deg2rad(10))
+    robot.check_position_3_values(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), 10, 400, np.deg2rad(10))
     
     pos = [5,2]
     robot.setSpeed(v, 0)  # Tramo recto
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(180), 10, np.Infinity, np.deg2rad(10))
+    robot.check_position_3_values(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(180), 10, np.Infinity, np.deg2rad(10))
  
     robot.setSpeed(0, -30)  # Giro de 45 deg a la derecha
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-90), np.Infinity, np.Infinity, np.deg2rad(2))
+    robot.check_position_3_values(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-90), np.Infinity, np.Infinity, np.deg2rad(2))
 
 
 
