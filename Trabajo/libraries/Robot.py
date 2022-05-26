@@ -172,7 +172,7 @@ class Robot:
 
         self.lock_odometry.release()
 
-        return vel[0], vel[1], deg_right_e, deg_left_e
+        return vel[0], vel[1], np.deg2rad(deg_right_e), np.deg2rad(deg_left_e)
 
     def readOdometry(self):
         """ Returns current value of odometry estimation """
