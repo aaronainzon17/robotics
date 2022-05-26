@@ -212,6 +212,9 @@ def main(args):
             robot.detect_scape()
             # Se inicia la busqueda de la pelota 
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
+
+            #Sale desplues de coger la pelota
+            robot.scape()
             
         else: # "mapaB_CARRERA.txt"
             imagenFin = cv2.imread(bb8, cv2.IMREAD_COLOR)
