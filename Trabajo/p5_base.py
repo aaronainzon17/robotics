@@ -63,6 +63,8 @@ def check_position(robot, x, y, th, x_err, y_err, angular_err):
             reached = True
             print("Se ha alcanzado el punto:[",
                   x_now, ",", y_now, ",", th_now, "]")
+            robot.setSpeed(0,0)
+            time.sleep(5)
         else:
             [x_now, y_now, th_now] = robot.readOdometry()
             #print("La posicion actual es:", x_now, y_now)
