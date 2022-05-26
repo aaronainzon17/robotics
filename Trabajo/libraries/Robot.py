@@ -743,9 +743,11 @@ class Robot:
         self.setSpeed(0,15)
         self.check_angle(-180,np.deg2rad(1))
         x_axis = self.read_ultrasonyc()
+        print('Leo de la X:', x_axis)
         self.setSpeed(0,30)
         self.check_angle(-90,np.deg2rad(1))
         y_axis = self.read_ultrasonyc()
+        print('Leo de la Y:', y_axis)
         if y_axis < 800:
             if self.mapa == 'A':
                 self.x.value = x_axis
