@@ -114,6 +114,7 @@ def s_A_ocho(robot, vel):
                    np.Infinity, np.Infinity, np.deg2rad(2))
 
     pos = [1,4]
+    print('voy a', pos)
     robot.setSpeed(v, w)  # Primera semicircunferencia
     check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-45)),
                    10, 5, np.deg2rad(10))
