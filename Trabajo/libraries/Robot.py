@@ -503,7 +503,7 @@ class Robot:
     def go(self, x_goal, y_goal, speed):
         print('AAAA', x_goal, y_goal)
         # Aliena al robot con el siguiente punto
-        self.align(x_goal, y_goal, np.deg2rad(1))
+        self.align(x_goal, y_goal, np.deg2rad(1),0)
         # Se le asigna una velocidad lienal
         self.setSpeed(speed,0)
         # Se comprueba que el robot alcanza correctamente la posicion 
