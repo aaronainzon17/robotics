@@ -133,7 +133,7 @@ class Robot:
 
         speedDPS_right = np.rad2deg(wd)
         speedDPS_left = np.rad2deg(wi)
-        print('Izq:',speedDPS_left,'Der:',speedDPS_right)
+
         # Establece las velocidades de los motores con los valores calculados
         self.BP.set_motor_dps(self.BP.PORT_B, speedDPS_right)
         self.BP.set_motor_dps(self.BP.PORT_C, speedDPS_left)
