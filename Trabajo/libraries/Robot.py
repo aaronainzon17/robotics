@@ -547,7 +547,6 @@ class Robot:
             w -= 10
         else:
             w+= 10
-            w = 30
         return w
 
     #Funcion que normaliza el angulo entre -pi, pi
