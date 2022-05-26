@@ -107,7 +107,7 @@ def s_A_ocho(robot, vel):
     # Se mueve al centro de la primera celda
     #robot.go(600,2600, vel)
     robot.setSpeed(vel, 0)  # Giro de 45 deg a la derecha
-    check_position(600,2600, normalizar(np.deg2rad(-90)),10, 5, np.deg2rad(2))
+    check_position(robot,600,2600, normalizar(np.deg2rad(-90)),10, 5, np.deg2rad(2))
     # Comienza el circulo
     r = 400
     v = vel
@@ -115,24 +115,20 @@ def s_A_ocho(robot, vel):
 
     pos = [1,6]
     robot.setSpeed(0, -w)  # Giro de 45 deg a la derecha
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-135)),
-                   np.Infinity, np.Infinity, np.deg2rad(2))
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-135)), np.Infinity, np.Infinity, np.deg2rad(2))
 
     pos = [1,4]
     print('voy a', pos)
     robot.setSpeed(v, w)  # Primera semicircunferencia
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-45)),
-                   10, 5, np.deg2rad(10))
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-45)), 10, 5, np.deg2rad(10))
 
     pos = [1,2]
     robot.setSpeed(v, -w)  # Segunda semicircunferencia
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-135)),
-                   20, 5, np.deg2rad(10))
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-135)), 20, 5, np.deg2rad(10))
 
     pos = [1,2]
     robot.setSpeed(0, 45)  # Giro de 45 deg a la izquierda
-    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-90)),
-                   np.Infinity, np.Infinity, np.deg2rad(2))
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-90)), np.Infinity, np.Infinity, np.deg2rad(2))
 
 
     robot.setSpeed(0, 0)  # Parar el robot    
