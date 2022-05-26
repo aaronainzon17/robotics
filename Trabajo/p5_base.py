@@ -98,7 +98,36 @@ def s_A(robot, vel):
     robot.updateGiroscopio()
     #robot.align(600,0,np.deg2rad(1))
     
-    
+def s_A_ocho(robot, vel):
+    """ La funcion ocho realiza la trayectoria de s del mapa A basandose en
+        la odometria para detener al robot y comenzar con el siguiente movimiento """
+
+    r = 40
+    v = vel
+    w = np.rad2deg((float)(v/r))
+
+    pos = [1,6]
+    robot.setSpeed(0, -45)  # Giro de 45 deg a la derecha
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-135)),
+                   np.Infinity, np.Infinity, np.deg2rad(2))
+
+    pos = [1,4]
+    robot.setSpeed(v, w)  # Primera semicircunferencia
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-45)),
+                   10, 5, np.deg2rad(10))
+
+    pos = [1,2]
+    robot.setSpeed(v, -w)  # Segunda semicircunferencia
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-135)),
+                   20, 5, np.deg2rad(10))
+
+    pos = [1,2]
+    robot.setSpeed(0, 45)  # Giro de 45 deg a la izquierda
+    check_position(robot, 200 + 400 * pos[0], 200 + 400 * pos[1], normalizar(np.deg2rad(-90)),
+                   np.Infinity, np.Infinity, np.deg2rad(2))
+
+
+    robot.setSpeed(0, 0)  # Parar el robot    
 
 def s_B(robot, vel):
     """ La funcion s_B realiza la trayectoria de s del mapa B basandose en
