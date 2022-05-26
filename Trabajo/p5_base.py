@@ -179,11 +179,11 @@ def main(args):
 
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":
-            pos = robot.readOdometry()
-            print('Empiezo en', pos)
-            robot.setNewPosition(0,0,np.deg2rad(-180))
-            robot.relocate()
-            #s_A_ocho(robot, 100)
+            # pos = robot.readOdometry()
+            # print('Empiezo en', pos)
+            # robot.setNewPosition(0,0,np.deg2rad(-180))
+            # robot.relocate()
+            s_A_ocho(robot, 100)
 
             #solveMap(robot,myMap, [1,2],[3,3])
 
