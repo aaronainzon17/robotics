@@ -91,7 +91,7 @@ def solve_relative_map(robot, myMap, point_ini, point_end, ocho=False):
         for point_map in myMap.currentPath:
             point = np.array([200+point_map[0]*400, 200+point_map[1]*400, 1.57])
             point_now = np.array(robot.readOdometry())
-            goal_point = point_now[:2] + (point - prev_point)
+            goal_point = point_now[:1] + (point - prev_point)
             
             print('Voy al punto', goal_point, 'desde', point_now)
             # Si de detecta obstaculo 
