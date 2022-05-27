@@ -199,7 +199,8 @@ class Robot:
         #self.pGiros.start()
         self.cam = picamera.PiCamera()
         self.cam.resolution = (640,480)
-        self.cam.framerate = 24
+        self.cam.framerate = 32
+        time.sleep(0.1)
         
 
     # You may want to pass additional shared variables besides the odometry values and stop flag
@@ -441,7 +442,7 @@ class Robot:
     def updateCamara(self):
         rawCapture = PiRGBArray(self.cam, size=(640, 480))
         #Se espera un tiempo para que se pueda iniciar la camara
-        time.sleep(0.1)
+        
         # Se captura una imagen inicial para obtener el tamanyo de la imagen 
         self.rows.value = 480
         self.cols.value = 640
