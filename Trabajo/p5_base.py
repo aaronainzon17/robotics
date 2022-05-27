@@ -34,7 +34,7 @@ def s_A_ocho(robot, vel):
     # Se mueve al centro de la primera celda
     #robot.go(600,2600, vel)
     robot.setSpeed(vel, 0)  # Giro de 45 deg a la derecha
-    robot.check_position_3_values(600,2600, np.deg2rad(-90),10, 5, np.deg2rad(2))
+    robot.check_position_3_values(600,2600, np.deg2rad(-90),np.Infinity, 5, np.deg2rad(2))
     # Comienza el circulo
     r = 400
     v = vel
