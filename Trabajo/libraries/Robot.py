@@ -23,7 +23,7 @@ from picamera.array import PiRGBArray
 from multiprocessing import Process, Value, Array, Lock
 
 sys.path.append('../libraries')
-from BlobDetector import getRedBloobs, detect_red, getGreenBloobs
+from BlobDetector import getRedBloobs, detect_red
 from sample_matching import match_images
 
 
@@ -295,7 +295,7 @@ class Robot:
         """ Stop the odometry thread. """
 
         self.finished.value = True
-
+        
         self.BP.reset_all()
         self.setSpeed(0, 0)
 
@@ -339,6 +339,7 @@ class Robot:
                 if self.red_pixels.value > 300:
                     self.setSpeed(0,0)
                     finished = True
+                    self.found_ball.value = True
                 else:
                     print('No se ve la pelota en las pinzas')
                     print('x',x_bl, ', y', y_bl)
@@ -462,8 +463,48 @@ class Robot:
             else:
                 self.is_blob.value = False
 
-            # Se utiliza la camara para detectar la casilla de salida
-            #self.detectar_casilla_salida(frame)
+        while not self.finished.value:
+            
+            if self.looking_for_ball.value:
+                # Se captura una imagen inicial para obtener el tamanyo de la imagen 
+                self.rows.value = 480
+                self.cols.value = 640
+                #Mientras no se detengaa el robot, se siguen captando imagenes
+                while not self.found_ball.value:
+                    cam.capture(rawCapture, format="bgr")
+                    # clear the stream in preparation for the next frame
+                    rawCapture.truncate(0)
+                    frame = rawCapture.array
+                    blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
+                    self.red_pixels.value = detect_red(frame)
+                    #Se actualizan las variables compartidas referentes a la imagen
+                    if blob is not None:
+                        self.x_b.value = blob.pt[0]
+                        self.y_b.value = blob.pt[1]
+                        self.size_b.value = blob.size 
+                        self.is_blob.value = True
+                    else:
+                        self.is_blob.value = False
+            else:
+                cam.capture(rawCapture, format="bgr")
+                rawCapture.truncate(0)
+                frame = rawCapture.array
+                if self.casilla_salida == None: 
+                    found_salida, x_salida = match_images(self.img_salida, frame)
+                    found_NO_salida, x_NO_salida = match_images(self.img_NO_salida, frame)
+                    if found_salida and found_NO_salida and self.mapa == 'A':
+                        if x_salida < x_NO_salida:
+                            self.casilla_salida = [1400,2600] # [3,6]
+                        else:
+                            self.casilla_salida = [2600,2600] # [6,6]
+                    if found_salida and found_NO_salida and self.mapa == 'B':
+                        if x_salida < x_NO_salida:
+                            self.casilla_salida = [200,2600] # [0,6]
+                        else:
+                            self.casilla_salida = [1400,2600] # [3,6]
+
+                # Se utiliza la camara para detectar la casilla de salida
+                #self.detectar_casilla_salida(frame)
     
     def setNewPosition(self,x_new, y_new, th_new):
         self.x.value = x_new
@@ -662,7 +703,7 @@ class Robot:
             rawCapture = PiRGBArray(cam)
             
             # allow the camera to warmup
-            time.sleep(0.2)
+            #time.sleep(0.2)
 
             # Se determinan puntos clave del mapa para ver los robots
             if self.mapa == 'A':
@@ -679,9 +720,9 @@ class Robot:
             cam.capture(rawCapture, format="bgr")
             frame = rawCapture.array 
             
-            self.detectar_casilla_salida(frame)
+            #self.detectar_casilla_salida(frame)
 
-            rawCapture.truncate(0)
+            #rawCapture.truncate(0)
         
         # Si no lo ha encontardo yendo al centro del mapa se rota para buscar
         x_face = imgs_center[0]
@@ -694,7 +735,7 @@ class Robot:
             
             self.detectar_casilla_salida(frame)
 
-            rawCapture.truncate(0)
+            #rawCapture.truncate(0)
         
         x_face = imgs_center[0]
         while self.casilla_salida is None and x_face < (imgs_center[0] + 400):
@@ -706,7 +747,7 @@ class Robot:
             
             self.detectar_casilla_salida(frame)
 
-            rawCapture.truncate(0)
+            #rawCapture.truncate(0)
 
         #cam.close()
         print('Salgo por la casilla', self.casilla_salida)
