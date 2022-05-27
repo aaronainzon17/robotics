@@ -32,9 +32,7 @@ def solveMap(robot, myMap, point_ini, point_end, ocho=False):
             point = [200+point_map[0]*400, 200+point_map[1]*400, 1.57]
             
             # Si de detecta obstaculo 
-            # Si de detecta obstaculo 
             if robot.detectObstacle(point[0],point[1]):
-                
                 robot.setSpeed(0,0)
                 [_,_,th] = robot.readOdometry()
                 # se anyade el obsatculo al mapa 
