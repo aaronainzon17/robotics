@@ -470,6 +470,8 @@ class Robot:
                     else:
                         self.is_blob.value = False
             else:
+                rawCapture.truncate(0)
+                frame = rawCapture.array
                 if self.casilla_salida == None: 
                     found_salida, x_salida = match_images(self.img_salida, frame)
                     found_NO_salida, x_NO_salida = match_images(self.img_NO_salida, frame)
@@ -483,7 +485,6 @@ class Robot:
                             self.casilla_salida = [200,2600] # [0,6]
                         else:
                             self.casilla_salida = [1400,2600] # [3,6]
-                rawCapture.truncate(0)
 
                 # Se utiliza la camara para detectar la casilla de salida
                 #self.detectar_casilla_salida(frame)
