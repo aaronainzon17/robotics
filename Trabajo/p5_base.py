@@ -181,12 +181,12 @@ def main(args):
             # pos = robot.readOdometry()
             # print('Empiezo en', pos)
             # robot.setNewPosition(0,0,np.deg2rad(-180))
-            # robot.relocate()
+            
             s_A_ocho(robot, 100)
-            solve_relative_map(robot,myMap, [1,2],[3,3])
-
-            #solveMap(robot,myMap, [1,2],[3,3])
-
+            #solve_relative_map(robot,myMap, [1,2],[3,3])
+            robot.relocate()
+            solveMap(robot,myMap, [1,2],[3,3])
+            
             #robot.detect_scape()
             # Se inicia la busqueda de la pelota 
             #robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
