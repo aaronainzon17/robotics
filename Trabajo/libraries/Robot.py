@@ -315,7 +315,7 @@ class Robot:
         triedCatch = False  #Variable para determinar si el robot va a iniciar la accion de coger la pelota
         targetPositionReached = False   #Variable para determinar si el robot ha iniciado el proceso de coger la pelota
         #Se inicia el proces concurrente que lee la camara
-        self.pCam = Process(target=self.updateCamara, args=())
+        self.pCam = Process(target=self.updateCamara, args=(self.cam))
         self.pCam.start()
         #Se deja que se inicie la camara
         time.sleep(1)
@@ -441,9 +441,9 @@ class Robot:
     
     #Proceso concurrente que sirve para capturar imagenes
     #Se realiza un proceso concurrente para que la captura de imagenes sea mas rapida y eficiente
-    def updateCamara(self):
+    def updateCamara(self,Cam):
         
-        rawCapture = PiRGBArray(self.cam, size=(640, 480))
+        rawCapture = PiRGBArray(Cam, size=(640, 480))
         #Se espera un tiempo para que se pueda iniciar la camara
         
         # Se captura una imagen inicial para obtener el tamanyo de la imagen 
@@ -451,7 +451,7 @@ class Robot:
         self.cols.value = 640
         #Mientras no se detengaa el robot, se siguen captando imagenes
         while not self.finished.value:
-            self.cam.capture(rawCapture, format="bgr", use_video_port=True)
+            Cam.capture(rawCapture, format="bgr", use_video_port=True)
             # clear the stream in preparation for the next frame
             rawCapture.truncate(0)
             frame = rawCapture.array
