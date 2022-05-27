@@ -443,7 +443,7 @@ class Robot:
     #Se realiza un proceso concurrente para que la captura de imagenes sea mas rapida y eficiente
     def updateCamara(self):
         
-        rawCapture = PiRGBArray(self.cam, size=(640, 480))
+        rawCapture = PiRGBArray(self.cam)
         #Se espera un tiempo para que se pueda iniciar la camara
         
         # Se captura una imagen inicial para obtener el tamanyo de la imagen 
@@ -451,7 +451,7 @@ class Robot:
         self.cols.value = 640
         #Mientras no se detengaa el robot, se siguen captando imagenes
         while not self.finished.value:
-            self.cam.capture(rawCapture, format="bgr", use_video_port=True)
+            self.cam.capture(rawCapture, format="bgr")
             # clear the stream in preparation for the next frame
             rawCapture.truncate(0)
             frame = rawCapture.array
