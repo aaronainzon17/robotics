@@ -505,11 +505,11 @@ class Robot:
         self.align(x_goal, y_goal, np.deg2rad(1))
         _,_,th = self.readOdometry()
         if abs(abs(th) - np.deg2rad(90)) < 5:
-            x_err = np.Infinity
-            y_err = 25
-        elif abs(abs(th) - np.deg2rad(180)) < 5 or abs(th) < 5:
-            x_err = 25
             y_err = np.Infinity
+            x_err = 25
+        elif abs(abs(th) - np.deg2rad(180)) < 5 or abs(th) < 5:
+            y_err = 25
+            x_err = np.Infinity
         else: 
             x_err = 50
             y_err = 50
