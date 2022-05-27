@@ -15,7 +15,7 @@ import math
 from libraries.Robot import Robot
 from libraries.MapLib import Map2D
 from libraries.SolveMap import solveMap, solve_relative_map
-from libraries.BlobDetector import getRedBloobs,detect_red,getGreenBloobs,detect_green
+from libraries.BlobDetector import getRedBloobs,detect_red
 from ficheros_codigo_auxiliar.sample_matching import find_template
 
 """
