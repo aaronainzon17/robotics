@@ -503,11 +503,21 @@ class Robot:
     def go(self, x_goal, y_goal, speed):
         # Aliena al robot con el siguiente punto
         self.align(x_goal, y_goal, np.deg2rad(1))
+        _,_,th = self.readOdometry()
+        if abs(abs(th) - np.deg2rad(90)) < 5:
+            x_err = np.Infinity
+            y_err = 25
+        elif abs(abs(th) - np.deg2rad(180)) < 5:
+            x_err = 25
+            y_err = np.Infinity
+        else: 
+            x_err = 50
+            y_err = 50
         # Se le asigna una velocidad lienal
         self.setSpeed(speed,0)
         # Se comprueba que el robot alcanza correctamente la posicion 
         #self.check_position(x_goal, y_goal, 25, 25)
-        self.check_position(x_goal, y_goal, 25, 25)
+        self.check_position(x_goal, y_goal, x_err, y_err)
    
     # check_position es la funcion de control de localizacion
     # En ella se comprueba la posicion real del robot leida de los
