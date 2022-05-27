@@ -112,7 +112,8 @@ class Robot:
         self.img_NO_salida = None
         self.casilla_salida = None 
 
-        self.cam = None
+        self.looking_for_ball = Value('b', False)
+        self.found_ball = Value('b', False)
         
 
     def setSpeed(self, v, w):
@@ -194,14 +195,8 @@ class Robot:
                                      self.BP.get_motor_encoder(self.BP.PORT_B))  # reset encoder B
         self.BP.offset_motor_encoder(self.BP.PORT_C,
                                      self.BP.get_motor_encoder(self.BP.PORT_C))  # reset encoder C
-        #self.p = Process(target=self.updateOdometry, args=())
-        #self.p.start()
-        #Iniciar el giroscopio
-        #self.pGiros = Process(target=self.updateGiroscopio, args=())
-        #self.pGiros.start()
-        self.cam = picamera.PiCamera()
-        self.cam.resolution = (640,480)
-        self.cam.framerate = 32
+        self.p = Process(target=self.updateOdometry, args=())
+        self.p.start()
         
 
     # You may want to pass additional shared variables besides the odometry values and stop flag
@@ -315,13 +310,12 @@ class Robot:
         triedCatch = False  #Variable para determinar si el robot va a iniciar la accion de coger la pelota
         targetPositionReached = False   #Variable para determinar si el robot ha iniciado el proceso de coger la pelota
         #Se inicia el proces concurrente que lee la camara
-        #self.pCam = Process(target=self.updateCamara, args=())
-        #self.pCam.start()
+        self.pCam = Process(target=self.updateCamara, args=())
+        self.pCam.start()
         #Se deja que se inicie la camara
         #time.sleep(1)
 
         while not finished:
-            self.updateCamara()
             # Si se ha detectado un blob
             if (self.is_blob.value):
                 x_actual = self.x_b.value # Se obtiene la coordenada x en la que se encuentra
@@ -347,6 +341,7 @@ class Robot:
                 if self.red_pixels.value > 300:
                     self.setSpeed(0,0)
                     finished = True
+                    self.found_ball.value = True
                 else:
                     print('No se ve la pelota en las pinzas')
                     print('x',x_bl, ', y', y_bl)
@@ -443,29 +438,52 @@ class Robot:
     #Proceso concurrente que sirve para capturar imagenes
     #Se realiza un proceso concurrente para que la captura de imagenes sea mas rapida y eficiente
     def updateCamara(self):
-        
-        rawCapture = PiRGBArray(self.cam)
+        #Se inicia la camara del robot
+        cam = picamera.PiCamera()
+        cam.resolution = (640,480)
+        cam.framerate = 32 
+        rawCapture = PiRGBArray(cam, size=(640, 480))
         #Se espera un tiempo para que se pueda iniciar la camara
-        
-        # Se captura una imagen inicial para obtener el tamanyo de la imagen 
-        self.rows.value = 480
-        self.cols.value = 640
-        #Mientras no se detengaa el robot, se siguen captando imagenes
-        #while not self.finished.value:
-        self.cam.capture(rawCapture, format="bgr")
-        # clear the stream in preparation for the next frame
-        rawCapture.truncate(0)
-        frame = rawCapture.array
-        blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
-        self.red_pixels.value = detect_red(frame)
-        #Se actualizan las variables compartidas referentes a la imagen
-        if blob is not None:
-            self.x_b.value = blob.pt[0]
-            self.y_b.value = blob.pt[1]
-            self.size_b.value = blob.size 
-            self.is_blob.value = True
+        time.sleep(0.1)
+
+        if self.looking_for_ball.value:
+
+            rawCapture = PiRGBArray(self.cam)
+            #Se espera un tiempo para que se pueda iniciar la camara
+            
+            # Se captura una imagen inicial para obtener el tamanyo de la imagen 
+            self.rows.value = 480
+            self.cols.value = 640
+            #Mientras no se detengaa el robot, se siguen captando imagenes
+            while not self.found_ball.value:
+                self.cam.capture(rawCapture, format="bgr")
+                # clear the stream in preparation for the next frame
+                rawCapture.truncate(0)
+                frame = rawCapture.array
+                blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
+                self.red_pixels.value = detect_red(frame)
+                #Se actualizan las variables compartidas referentes a la imagen
+                if blob is not None:
+                    self.x_b.value = blob.pt[0]
+                    self.y_b.value = blob.pt[1]
+                    self.size_b.value = blob.size 
+                    self.is_blob.value = True
+                else:
+                    self.is_blob.value = False
         else:
-            self.is_blob.value = False
+            if self.casilla_salida == None: 
+                found_salida, x_salida = match_images(self.img_salida, frame)
+                found_NO_salida, x_NO_salida = match_images(self.img_NO_salida, frame)
+                if found_salida and found_NO_salida and self.mapa == 'A':
+                    if x_salida < x_NO_salida:
+                        self.casilla_salida = [1400,2600] # [3,6]
+                    else:
+                        self.casilla_salida = [2600,2600] # [6,6]
+                if found_salida and found_NO_salida and self.mapa == 'B':
+                    if x_salida < x_NO_salida:
+                        self.casilla_salida = [200,2600] # [0,6]
+                    else:
+                        self.casilla_salida = [1400,2600] # [3,6]
 
             # Se utiliza la camara para detectar la casilla de salida
             #self.detectar_casilla_salida(frame)
