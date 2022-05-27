@@ -198,6 +198,12 @@ class Robot:
         self.p = Process(target=self.updateOdometry, args=())
         self.p.start()
         
+        #Se inicia el proces concurrente que lee la camara
+        self.pCam = Process(target=self.updateCamara, args=())
+        self.pCam.start()
+        #Se deja que se inicie la camara
+        time.sleep(1)
+        
 
     # You may want to pass additional shared variables besides the odometry values and stop flag
     def updateOdometry(self):
@@ -659,11 +665,6 @@ class Robot:
 
     # Esta funcion busca y se acerca al objeto hasta estar en p
     def detect_scape(self):
-        #Se inicia el proces concurrente que lee la camara
-        self.pCam = Process(target=self.updateCamara, args=())
-        self.pCam.start()
-        #Se deja que se inicie la camara
-        time.sleep(1)
         # Si la salida no se ha encontrado
         if self.casilla_salida is None:
             
