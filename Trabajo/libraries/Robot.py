@@ -23,7 +23,7 @@ from picamera.array import PiRGBArray
 from multiprocessing import Process, Value, Array, Lock
 
 sys.path.append('../libraries')
-from BlobDetector import getRedBloobs, detect_red, getGreenBloobs, detect_green
+from BlobDetector import getRedBloobs, detect_red, getGreenBloobs
 from sample_matching import match_images
 
 
@@ -88,7 +88,6 @@ class Robot:
         self.ang_giroscopio.value = init_position[2]
         # boolean to show if odometry updates are finished
         self.finished = Value('b', 1)
-        self.finished_capture_green=Value('b',1)
 
         # if we want to block several instructions to be run together, we may want to use an explicit Lock
         self.lock_odometry = Lock()
@@ -466,35 +465,6 @@ class Robot:
             # Se utiliza la camara para detectar la casilla de salida
             #self.detectar_casilla_salida(frame)
     
-    def updateCamaraGreen(self):
-        self.finished_capture_green.value=False
-        #Se inicia la camara del robot
-        cam = picamera.PiCamera()
-        cam.resolution = (640,480)
-        cam.framerate = 32 
-        rawCapture = PiRGBArray(cam, size=(640, 480))
-        #Se espera un tiempo para que se pueda iniciar la camara
-        time.sleep(0.1)
-        # Se captura una imagen inicial para obtener el tamanyo de la imagen 
-        self.rows.value = 480
-        self.cols.value = 640
-        #Mientras no se detengaa el robot, se siguen captando imagenes
-        while not self.finished_capture_green.value:
-            cam.capture(rawCapture, format="bgr", use_video_port=True)
-            # clear the stream in preparation for the next frame
-            rawCapture.truncate(0)
-            frame = rawCapture.array
-            blob = getGreenBloobs(frame)  # Se devuelve el blob mas grande
-            #self.red_pixels.value = detect_red(frame)
-            #Se actualizan las variables compartidas referentes a la imagen
-            if blob is not None:
-                self.x_b.value = blob.pt[0]
-                self.y_b.value = blob.pt[1]
-                self.size_b.value = blob.size 
-                self.is_blob.value = True
-            else:
-                self.is_blob.value = False
-    
     def setNewPosition(self,x_new, y_new, th_new):
         self.x.value = x_new
         self.y.value = y_new
@@ -815,52 +785,6 @@ class Robot:
                                      self.BP.get_motor_encoder(self.BP.PORT_C))  # reset encoder C
 
         self.lock_odometry.release()
-
-
-    def centrar_con_imagen(self):
-        #Idea:
-        #Hacer regla de tres
-        #x = (a*b)/c
-        #a=tBlob=120 , b=yRobot=1000 , c=tBlob'=120 ->x=yRobot'=952.3809
-        #a=xBlob=320 , b=xRobot=600 , c=xBlob'=300 ->x=xRobot'=
-        #Mejor retomar las medidas
-        t_prueba=120    #Variables para sacar la regla de 3 de y
-        y_prueba=1000   #Variables para sacar la regla de 3 de y
-        x_prueba=320
-        x_robot_prueba=600
-        maxFotos=10
-        numFotos = 0
-        tamanyo_blob=0
-        pos_blob=0
-        #Empezar proceso de la camara
-        self.pCam = Process(target=self.updateCamaraGreen, args=())
-        self.pCam.start()
-        time.sleep(2)
-        while(numFotos!=maxFotos):
-            #Tomar foto sacar el blob
-            if(self.is_blob.value):
-                numFotos+=1
-                tamanyo_blob+=self.size_b.value
-                pos_blob+=self.x_b.value
-
-        self.finished_capture_green=True
-        tamanyo_blob=tamanyo_blob/maxFotos
-        pos_blob=pos_blob/maxFotos
-        y_actual = (t_prueba*y_prueba)/tamanyo_blob     #Esta es la y actual del robot
-        x_actual = (x_prueba*x_robot_prueba)/pos_blob
-        #Ahora se resetean los motores
-        self.lock_odometry.acquire()
-        # SC
-        self.BP.offset_motor_encoder(self.BP.PORT_B,
-                                     self.BP.get_motor_encoder(self.BP.PORT_B))  # reset encoder B
-        self.BP.offset_motor_encoder(self.BP.PORT_C,
-                                     self.BP.get_motor_encoder(self.BP.PORT_C))  # reset encoder C
-        self.x.value=x_actual
-        self.y.value=y_actual
-        self.lock_odometry.release()
-        odom = self.readOdometry()
-        print("EL tamano del blob en centrar es ",tamanyo_blob)
-        print(odom)
     
     def seguimientoPared(self, dc):
         # PARÁMETROS
