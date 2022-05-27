@@ -184,7 +184,7 @@ def main(args):
             # print('Empiezo en', pos)
             # robot.setNewPosition(0,0,np.deg2rad(-180))
             
-            s_A_ocho(robot, 150)
+            s_A_ocho(robot, 120)
             #solve_relative_map(robot,myMap, [1,2],[3,3])
             
             solveMap(robot,myMap, [1,2],[3,3])
