@@ -197,6 +197,10 @@ class Robot:
         #Iniciar el giroscopio
         #self.pGiros = Process(target=self.updateGiroscopio, args=())
         #self.pGiros.start()
+        self.cam = picamera.PiCamera()
+        self.cam.resolution = (640,480)
+        self.cam.framerate = 24
+        
 
     # You may want to pass additional shared variables besides the odometry values and stop flag
     def updateOdometry(self):
@@ -435,11 +439,7 @@ class Robot:
     #Proceso concurrente que sirve para capturar imagenes
     #Se realiza un proceso concurrente para que la captura de imagenes sea mas rapida y eficiente
     def updateCamara(self):
-        #Se inicia la camara del robot
-        cam = picamera.PiCamera()
-        cam.resolution = (640,480)
-        cam.framerate = 32 
-        rawCapture = PiRGBArray(cam, size=(640, 480))
+        rawCapture = PiRGBArray(self.cam, size=(640, 480))
         #Se espera un tiempo para que se pueda iniciar la camara
         time.sleep(0.1)
         # Se captura una imagen inicial para obtener el tamanyo de la imagen 
@@ -447,7 +447,7 @@ class Robot:
         self.cols.value = 640
         #Mientras no se detengaa el robot, se siguen captando imagenes
         while not self.finished.value:
-            cam.capture(rawCapture, format="bgr", use_video_port=True)
+            self.cam.capture(rawCapture, format="bgr", use_video_port=True)
             # clear the stream in preparation for the next frame
             rawCapture.truncate(0)
             frame = rawCapture.array
@@ -644,12 +644,8 @@ class Robot:
     def detect_scape(self):
         # Si la salida no se ha encontrado
         if self.casilla_salida is None:
-            cam = picamera.PiCamera()
-
-            #cam.resolution = (320, 240)
-            cam.resolution = (640, 480)
-            cam.framerate = 10 # less frame rate, more light BUT needs to go slowly (or stop)
-            rawCapture = PiRGBArray(cam)
+            
+            rawCapture = PiRGBArray(self.cam)
             
             # allow the camera to warmup
             time.sleep(0.2)
@@ -670,7 +666,7 @@ class Robot:
             self.go(center_table[0],center_table[1],150)
             self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
 
-            cam.capture(rawCapture, format="bgr")
+            self.cam.capture(rawCapture, format="bgr")
             frame = rawCapture.array 
             
             self.detectar_casilla_salida(frame)
@@ -683,7 +679,7 @@ class Robot:
             x_face -= 200
             self.align(x_face, imgs_center[1], np.deg2rad(1))
             
-            cam.capture(rawCapture, format="bgr")
+            self.cam.capture(rawCapture, format="bgr")
             frame = rawCapture.array 
             
             self.detectar_casilla_salida(frame)
@@ -695,14 +691,13 @@ class Robot:
             x_face += 200
             self.align(x_face, imgs_center[1], np.deg2rad(1))
             
-            cam.capture(rawCapture, format="bgr")
+            self.cam.capture(rawCapture, format="bgr")
             frame = rawCapture.array 
             
             self.detectar_casilla_salida(frame)
 
             rawCapture.truncate(0)
 
-        cam.close()
         print('Salgo por la casilla', self.casilla_salida)
         
         # Una vez se ha encontrado la salida se sale
