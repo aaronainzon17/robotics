@@ -339,7 +339,6 @@ class Robot:
                 if self.red_pixels.value > 300:
                     self.setSpeed(0,0)
                     finished = True
-                    self.found_ball.value = True
                 else:
                     print('No se ve la pelota en las pinzas')
                     print('x',x_bl, ', y', y_bl)
