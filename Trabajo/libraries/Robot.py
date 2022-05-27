@@ -586,35 +586,23 @@ class Robot:
             th = th + 2 * math.pi
         return th
 
-    # Se evalua si el sensor ultrasonidos ha detectado un obstaculo a menos de
+    # # Se evalua si el sensor ultrasonidos ha detectado un obstaculo a menos de
     # la distancia que se va a recorrer 
     def detectObstacle(self, x_goal, y_goal):
         # Aliena al robot con el siguiente punto
         self.align(x_goal, y_goal, np.deg2rad(1))
+        value = self.read_ultrasonyc()
+        [x_now, y_now, _] = self.readOdometry()
+        # Se calcula el espacio a recorrer 
+        espacio = np.linalg.norm([x_goal - x_now, y_goal - y_now])
+        # Se lee la distancia que recoge el sensor (*10 para pasarlo a mm)
+        value = self.BP.get_sensor(self.BP.PORT_1) * 10
         
-        value = 0.0
-        # Se itera hasta que el sensor devuelve un valor distinto a 0 (le cuesta encenderse y sino da error)
-        while value <= 0.0:
-            try:
-                
-                [x_now, y_now, _] = self.readOdometry()
-                # Se va a definir ,un umbral para detectar el obsatculo en  
-                # el borde de la celda o en el centro de la celda objetivo
-                wall_o = 30 * 10 # mm
-                center_o = 50 * 10 # mm
-                # Se lee la distancia que recoge el sensor (*10 para pasarlo a mm)
-                value = self.BP.get_sensor(self.BP.PORT_1) * 10
-                
-                # Se devuelve True si hay obstaculo, False si no
-                if value < wall_o and value > 0.0:
-                    return [True, True] # Hay obstaculo y esta en la pared
-                elif value > wall_o and value < center_o and value > 0.0:
-                    return [True, False] # Hay obsaculo y no esta en la pared
-                elif value > 0.0:
-                    return [False, False] # No hay obstaculo 
-
-            except brickpi3.SensorError as error:
-                print(error) 
+        # Se devuelve True si hay obstaculo, False si no
+        if value < espacio and value > 0.0:
+            return True
+        elif value > 0.0:
+            return False
         
     def detectar_recorrido(self):
         value = 0.0
