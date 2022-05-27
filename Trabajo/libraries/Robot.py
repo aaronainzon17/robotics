@@ -317,7 +317,11 @@ class Robot:
         self.pCam = Process(target=self.updateCamara, args=())
         self.pCam.start()
         #Se deja que se inicie la camara
-        time.sleep(1)
+        self.cam = picamera.PiCamera()
+        self.cam.resolution = (640,480)
+        self.cam.framerate = 32
+        time.sleep(0.1)
+
         while not finished:
             # Si se ha detectado un blob
             if (self.is_blob.value):
