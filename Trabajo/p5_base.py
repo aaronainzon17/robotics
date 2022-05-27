@@ -186,7 +186,7 @@ def main(args):
             
             s_A_ocho(robot, 120)
             #solve_relative_map(robot,myMap, [1,2],[3,3])
-            
+            print('Hago solveMap')
             solveMap(robot,myMap, [1,2],[3,3])
             #robot.setNewPosition(1600,1400,np.deg2rad(90))
             robot.detect_scape()

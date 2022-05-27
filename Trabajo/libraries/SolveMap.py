@@ -19,7 +19,7 @@ def solveMap(robot, myMap, point_ini, point_end, ocho=False):
         time.sleep(5)
         robot.setSpeed(0,0)
         exit(1)
-    
+    print("camino calculado")
     path2print = []
     goal_reached = False
     lost = False
@@ -52,7 +52,7 @@ def solveMap(robot, myMap, point_ini, point_end, ocho=False):
                 break
             else:
                 goal_reached = True
-
+            print('Voy al go')
             # Se mueve el robot a la siguiente celda
             robot.go(point[0],point[1],100)
             path2print.append([point[0], point[1], 1.57])
