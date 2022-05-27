@@ -189,9 +189,9 @@ def main(args):
             
             #solveMap(robot,myMap, [1,2],[3,3])
             
-            #robot.detect_scape()
+            robot.detect_scape()
             # Se inicia la busqueda de la pelota 
-            robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
+            #robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
 
             #Sale desplues de coger la pelota
             #robot.scape()
