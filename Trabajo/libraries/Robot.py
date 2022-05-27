@@ -708,7 +708,7 @@ class Robot:
 
             rawCapture.truncate(0)
 
-        #cam.close()
+        cam.close()
         print('Salgo por la casilla', self.casilla_salida)
         
         # Una vez se ha encontrado la salida se sale
