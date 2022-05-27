@@ -315,7 +315,7 @@ class Robot:
         finished = False    #Variable para determinar que el robot ha cogido la pelota
         triedCatch = False  #Variable para determinar si el robot va a iniciar la accion de coger la pelota
         targetPositionReached = False   #Variable para determinar si el robot ha iniciado el proceso de coger la pelota
-
+        self.looking_for_ball.value = True
         while not finished:
             # Si se ha detectado un blob
             if (self.is_blob.value):
