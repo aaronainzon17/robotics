@@ -504,10 +504,10 @@ class Robot:
         # Aliena al robot con el siguiente punto
         self.align(x_goal, y_goal, np.deg2rad(1))
         _,_,th = self.readOdometry()
-        if abs(abs(th) - np.deg2rad(90)) < 5:
+        if abs(abs(th) - np.deg2rad(90)) < np.deg2rad(5):
             y_err = np.Infinity
             x_err = 25
-        elif abs(abs(th) - np.deg2rad(180)) < 5 or abs(th) < 5:
+        elif abs(abs(th) - np.deg2rad(180)) < np.deg2rad(5) or abs(th) < np.deg2rad(5):
             y_err = 25
             x_err = np.Infinity
         else: 
