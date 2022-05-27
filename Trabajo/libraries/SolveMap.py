@@ -59,7 +59,7 @@ def solveMap(robot, myMap, point_ini, point_end, ocho=False):
                 goal_reached = True
 
             # Se mueve el robot a la siguiente celda
-            robot.go(point[0],point[1],150)
+            robot.go(point[0],point[1],100)
             path2print.append([point[0], point[1], 1.57])
             prev_point = point_map
     
