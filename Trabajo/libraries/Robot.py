@@ -468,8 +468,10 @@ class Robot:
         self.th.value = th_new
 
     def go(self, x_goal, y_goal, speed):
+        print('Entro al go')
         # Aliena al robot con el siguiente punto
-        self.align(x_goal, y_goal, np.deg2rad(2))
+        self.align(x_goal, y_goal, np.deg2rad(1))
+        print('Salgo del align')
         _,_,th = self.readOdometry()
         if abs(abs(th) - np.deg2rad(90)) < np.deg2rad(5):
             x_err = np.Infinity
