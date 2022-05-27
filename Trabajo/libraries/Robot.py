@@ -698,7 +698,7 @@ class Robot:
             rawCapture.truncate(0)
         
         x_face = imgs_center[0]
-        while self.casilla_salida is None and x_face < (imgs_center[0] < 400):
+        while self.casilla_salida is None and x_face < (imgs_center[0] - 400):
             x_face += 200
             self.align(x_face, imgs_center[1], np.deg2rad(1))
             
