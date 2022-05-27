@@ -777,7 +777,7 @@ class Robot:
     
     def read_ultrasonyc(self):
         arr = []
-        for i in range(5):
+        for i in range(40):
             try:
                 arr.append(self.BP.get_sensor(self.BP.PORT_1)) 
             except brickpi3.SensorError as error:
