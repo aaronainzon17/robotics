@@ -185,9 +185,9 @@ def main(args):
             # robot.setNewPosition(0,0,np.deg2rad(-180))
             
             s_A_ocho(robot, 150)
-            #solve_relative_map(robot,myMap, [1,2],[3,3])
-            robot.relocate()
-            solveMap(robot,myMap, [1,2],[3,3])
+            solve_relative_map(robot,myMap, [1,2],[3,3])
+            
+            #solveMap(robot,myMap, [1,2],[3,3])
             
             #robot.detect_scape()
             # Se inicia la busqueda de la pelota 
