@@ -188,6 +188,7 @@ def main(args):
             #solve_relative_map(robot,myMap, [1,2],[3,3])
             
             #solveMap(robot,myMap, [1,2],[3,3])
+            time.sleep(2)
             robot.setNewPosition(1600,1400,np.deg2rad(90))
             robot.detect_scape()
             # Se inicia la busqueda de la pelota 
