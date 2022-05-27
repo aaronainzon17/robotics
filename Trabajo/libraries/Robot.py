@@ -507,7 +507,7 @@ class Robot:
         if abs(abs(th) - np.deg2rad(90)) < 5:
             x_err = np.Infinity
             y_err = 25
-        elif abs(abs(th) - np.deg2rad(180)) < 5:
+        elif abs(abs(th) - np.deg2rad(180)) < 5 or abs(th) < 5:
             x_err = 25
             y_err = np.Infinity
         else: 
