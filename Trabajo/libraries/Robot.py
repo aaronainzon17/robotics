@@ -455,7 +455,7 @@ class Robot:
                 self.cols.value = 640
                 #Mientras no se detengaa el robot, se siguen captando imagenes
                 while not self.found_ball.value:
-                    self.cam.capture(rawCapture, format="bgr")
+                    cam.capture(rawCapture, format="bgr")
                     # clear the stream in preparation for the next frame
                     rawCapture.truncate(0)
                     frame = rawCapture.array
@@ -470,6 +470,7 @@ class Robot:
                     else:
                         self.is_blob.value = False
             else:
+                cam.capture(rawCapture, format="bgr")
                 rawCapture.truncate(0)
                 frame = rawCapture.array
                 if self.casilla_salida == None: 
