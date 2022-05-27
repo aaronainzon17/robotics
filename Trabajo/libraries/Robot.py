@@ -433,20 +433,17 @@ class Robot:
     #Proceso concurrente que sirve para capturar imagenes
     #Se realiza un proceso concurrente para que la captura de imagenes sea mas rapida y eficiente
     def updateCamara(self):
-        while not self.finished.value:
-            #Se inicia la camara del robot
-            cam = picamera.PiCamera()
-            cam.resolution = (640,480)
-            cam.framerate = 32 
-            rawCapture = PiRGBArray(cam, size=(640, 480))
-            #Se espera un tiempo para que se pueda iniciar la camara
-            time.sleep(0.1)
-            rawCapture = PiRGBArray(cam)
-            if self.looking_for_ball.value:
+        #Se inicia la camara del robot
+        cam = picamera.PiCamera()
+        cam.resolution = (640,480)
+        cam.framerate = 32 
+        rawCapture = PiRGBArray(cam, size=(640, 480))
+        #Se espera un tiempo para que se pueda iniciar la camara
+        time.sleep(0.1)
 
-                rawCapture = PiRGBArray(cam)
-                #Se espera un tiempo para que se pueda iniciar la camara
-                
+        while not self.finished.value:
+            
+            if self.looking_for_ball.value:
                 # Se captura una imagen inicial para obtener el tamanyo de la imagen 
                 self.rows.value = 480
                 self.cols.value = 640
