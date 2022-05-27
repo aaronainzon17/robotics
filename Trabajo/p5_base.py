@@ -184,17 +184,17 @@ def main(args):
             # print('Empiezo en', pos)
             # robot.setNewPosition(0,0,np.deg2rad(-180))
             
-            s_A_ocho(robot, 120)
+            #s_A_ocho(robot, 120)
             #solve_relative_map(robot,myMap, [1,2],[3,3])
             
-            solveMap(robot,myMap, [1,2],[3,3])
+            #solveMap(robot,myMap, [1,2],[3,3])
             
-            robot.detect_scape()
+            #robot.detect_scape()
             # Se inicia la busqueda de la pelota 
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
 
             #Sale desplues de coger la pelota
-            robot.scape()
+            #robot.scape()
             
         else: # "mapaB_CARRERA.txt"
             imagenFin = cv2.imread(bb8, cv2.IMREAD_COLOR)
