@@ -296,7 +296,7 @@ class Robot:
         """ Stop the odometry thread. """
 
         self.finished.value = True
-        self.cam.close()
+        
         self.BP.reset_all()
         self.setSpeed(0, 0)
 
