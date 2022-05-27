@@ -677,38 +677,38 @@ class Robot:
         self.go(first_table[0],first_table[1],150)
         self.go(center_table[0],center_table[1],150)
         self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
-        while self.casilla_salida is None:
+       
+        cam.capture(rawCapture, format="bgr")
+        frame = rawCapture.array 
+        
+        self.detectar_casilla_salida(frame)
+
+        rawCapture.truncate(0)
+        
+        # Si no lo ha encontardo yendo al centro del mapa se rota para buscar
+        x_face = imgs_center[0]
+        while self.casilla_salida is None and x_face > (imgs_center[0] - 400):
+            x_face -= 200
+            self.align(x_face, imgs_center[1], np.deg2rad(1))
+            
             cam.capture(rawCapture, format="bgr")
             frame = rawCapture.array 
             
             self.detectar_casilla_salida(frame)
 
             rawCapture.truncate(0)
+        
+        x_face = imgs_center[0]
+        while self.casilla_salida is None and x_face < (imgs_center[0] + 400):
+            x_face += 200
+            self.align(x_face, imgs_center[1], np.deg2rad(1))
             
-            # Si no lo ha encontardo yendo al centro del mapa se rota para buscar
-            x_face = imgs_center[0]
-            while self.casilla_salida is None and x_face > (imgs_center[0] - 400):
-                x_face -= 200
-                self.align(x_face, imgs_center[1], np.deg2rad(1))
-                
-                cam.capture(rawCapture, format="bgr")
-                frame = rawCapture.array 
-                
-                self.detectar_casilla_salida(frame)
-
-                rawCapture.truncate(0)
+            cam.capture(rawCapture, format="bgr")
+            frame = rawCapture.array 
             
-            x_face = imgs_center[0]
-            while self.casilla_salida is None and x_face < (imgs_center[0] + 400):
-                x_face += 200
-                self.align(x_face, imgs_center[1], np.deg2rad(1))
-                
-                cam.capture(rawCapture, format="bgr")
-                frame = rawCapture.array 
-                
-                self.detectar_casilla_salida(frame)
+            self.detectar_casilla_salida(frame)
 
-                rawCapture.truncate(0)
+            rawCapture.truncate(0)
         
         
         cam.close()
