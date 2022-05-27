@@ -14,7 +14,7 @@ import time
 import math
 from libraries.Robot import Robot
 from libraries.MapLib import Map2D
-from libraries.SolveMap import solveMap
+from libraries.SolveMap import solveMap, solve_relative_map
 from libraries.BlobDetector import getRedBloobs,detect_red,getGreenBloobs,detect_green
 from ficheros_codigo_auxiliar.sample_matching import find_template
 
@@ -58,7 +58,6 @@ def s_A_ocho(robot, vel):
 
 
     robot.setSpeed(0, 0)  # Parar el robot    
-    robot.relocate()
 
 def s_B(robot, vel):
     """ La funcion s_B realiza la trayectoria de s del mapa B basandose en
@@ -184,6 +183,7 @@ def main(args):
             # robot.setNewPosition(0,0,np.deg2rad(-180))
             # robot.relocate()
             s_A_ocho(robot, 100)
+            solve_relative_map(robot,myMap, [1,2],[3,3])
 
             #solveMap(robot,myMap, [1,2],[3,3])
 
