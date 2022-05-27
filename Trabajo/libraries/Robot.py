@@ -656,13 +656,17 @@ class Robot:
 
             # Se determinan puntos clave del mapa para ver los robots
             if self.mapa == 'A':
+                first_table = [2000,1400]
                 imgs_center = [2000,2800]
                 center_table = [2000,2000]
+                
             else:
+                first_table = [800,1400]
                 imgs_center = [800, 2800]
                 center_table = [800,2000]
             
             # Se buscan las imagenes
+            self.go(first_table[0],first_table[1],150)
             self.go(center_table[0],center_table[1],150)
             self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
 
