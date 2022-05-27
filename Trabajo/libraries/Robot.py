@@ -23,7 +23,7 @@ from picamera.array import PiRGBArray
 from multiprocessing import Process, Value, Array, Lock
 
 sys.path.append('../libraries')
-from BlobDetector import getRedBloobs, detect_red, getGreenBloobs
+from BlobDetector import getRedBloobs, detect_red
 from sample_matching import match_images
 
 
