@@ -513,6 +513,7 @@ class Robot:
         else: 
             x_err = 50
             y_err = 50
+        print('Voy a:', x_goal, y_goal, 'con error', x_err, y_err)
         # Se le asigna una velocidad lienal
         self.setSpeed(speed,0)
         # Se comprueba que el robot alcanza correctamente la posicion 
