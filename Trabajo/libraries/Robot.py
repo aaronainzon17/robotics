@@ -659,7 +659,7 @@ class Robot:
             rawCapture = PiRGBArray(cam)
             
             # allow the camera to warmup
-            #time.sleep(0.2)
+            time.sleep(0.2)
 
             # Se determinan puntos clave del mapa para ver los robots
             if self.mapa == 'A':
@@ -676,9 +676,9 @@ class Robot:
             cam.capture(rawCapture, format="bgr")
             frame = rawCapture.array 
             
-            #self.detectar_casilla_salida(frame)
+            self.detectar_casilla_salida(frame)
 
-            #rawCapture.truncate(0)
+            rawCapture.truncate(0)
         
         # Si no lo ha encontardo yendo al centro del mapa se rota para buscar
         x_face = imgs_center[0]
@@ -691,7 +691,7 @@ class Robot:
             
             self.detectar_casilla_salida(frame)
 
-            #rawCapture.truncate(0)
+            rawCapture.truncate(0)
         
         x_face = imgs_center[0]
         while self.casilla_salida is None and x_face < (imgs_center[0] + 400):
@@ -703,9 +703,9 @@ class Robot:
             
             self.detectar_casilla_salida(frame)
 
-            #rawCapture.truncate(0)
+            rawCapture.truncate(0)
 
-        #cam.close()
+        cam.close()
         print('Salgo por la casilla', self.casilla_salida)
         
         # Una vez se ha encontrado la salida se sale
