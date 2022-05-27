@@ -17,7 +17,7 @@ if PI:
     import picamera
     from picamera.array import PiRGBArray
 
-DEBUG = 3 # --> higher numbers (2 or 3) open more windows interactively to debug more intermediate steps
+DEBUG = 1 # --> higher numbers (2 or 3) open more windows interactively to debug more intermediate steps
 
 # ASCI codes to interact with windows when debug > 0
 ESC = 27
