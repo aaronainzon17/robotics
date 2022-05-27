@@ -53,7 +53,7 @@ def s_A_ocho(robot, vel):
     robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), 10, 400, np.deg2rad(10))
     
     robot.relocate()
-    
+
     #pos = [1,2]
     #robot.setSpeed(0, 30)  # Giro de 45 deg a la izquierda
     #robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-90), np.Infinity, np.Infinity, np.deg2rad(2))
@@ -184,7 +184,7 @@ def main(args):
             # print('Empiezo en', pos)
             # robot.setNewPosition(0,0,np.deg2rad(-180))
             
-            s_A_ocho(robot, 100)
+            s_A_ocho(robot, 150)
             #solve_relative_map(robot,myMap, [1,2],[3,3])
             robot.relocate()
             solveMap(robot,myMap, [1,2],[3,3])
