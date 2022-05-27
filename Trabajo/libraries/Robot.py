@@ -651,68 +651,67 @@ class Robot:
     # Esta funcion busca y se acerca al objeto hasta estar en p
     def detect_scape(self):
         # Si la salida no se ha encontrado
-        if self.casilla_salida is None:
-            cam = picamera.PiCamera()
+        
+        cam = picamera.PiCamera()
 
-            #cam.resolution = (320, 240)
-            cam.resolution = (640, 480)
-            cam.framerate = 10 # less frame rate, more light BUT needs to go slowly (or stop)
-            rawCapture = PiRGBArray(cam)
+        #cam.resolution = (320, 240)
+        cam.resolution = (640, 480)
+        cam.framerate = 10 # less frame rate, more light BUT needs to go slowly (or stop)
+        rawCapture = PiRGBArray(cam)
+        
+        # allow the camera to warmup
+        time.sleep(0.2)
+
+        # Se determinan puntos clave del mapa para ver los robots
+        if self.mapa == 'A':
+            first_table = [2000,1400]
+            imgs_center = [2000,2800]
+            center_table = [2000,2000]
             
-            # allow the camera to warmup
-            time.sleep(0.2)
+        else:
+            first_table = [800,1400]
+            imgs_center = [800, 2800]
+            center_table = [800,2000]
+        
+        # Se buscan las imagenes
+        self.go(first_table[0],first_table[1],150)
+        self.go(center_table[0],center_table[1],150)
+        self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
+        while self.casilla_salida is None:
+            cam.capture(rawCapture, format="bgr")
+            frame = rawCapture.array 
+            
+            self.detectar_casilla_salida(frame)
 
-            # Se determinan puntos clave del mapa para ver los robots
-            if self.mapa == 'A':
-                first_table = [2000,1400]
-                imgs_center = [2000,2800]
-                center_table = [2000,2000]
+            rawCapture.truncate(0)
+            
+            # Si no lo ha encontardo yendo al centro del mapa se rota para buscar
+            x_face = imgs_center[0]
+            while self.casilla_salida is None and x_face > (imgs_center[0] - 400):
+                x_face -= 200
+                self.align(x_face, imgs_center[1], np.deg2rad(1))
                 
-            else:
-                first_table = [800,1400]
-                imgs_center = [800, 2800]
-                center_table = [800,2000]
-            
-            # Se buscan las imagenes
-            self.go(first_table[0],first_table[1],150)
-            self.go(center_table[0],center_table[1],150)
-            self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
+                cam.capture(rawCapture, format="bgr")
+                frame = rawCapture.array 
+                
+                self.detectar_casilla_salida(frame)
 
-            cam.capture(rawCapture, format="bgr")
-            frame = rawCapture.array 
+                rawCapture.truncate(0)
             
-            self.detectar_casilla_salida(frame)
+            x_face = imgs_center[0]
+            while self.casilla_salida is None and x_face < (imgs_center[0] + 400):
+                x_face += 200
+                self.align(x_face, imgs_center[1], np.deg2rad(1))
+                
+                cam.capture(rawCapture, format="bgr")
+                frame = rawCapture.array 
+                
+                self.detectar_casilla_salida(frame)
 
-            rawCapture.truncate(0)
+                rawCapture.truncate(0)
         
-        # Si no lo ha encontardo yendo al centro del mapa se rota para buscar
-        x_face = imgs_center[0]
-        while self.casilla_salida is None and x_face > (imgs_center[0] - 400):
-            x_face -= 200
-            self.align(x_face, imgs_center[1], np.deg2rad(1))
-            
-            cam.capture(rawCapture, format="bgr")
-            frame = rawCapture.array 
-            
-            self.detectar_casilla_salida(frame)
-
-            rawCapture.truncate(0)
         
-        x_face = imgs_center[0]
-        while self.casilla_salida is None and x_face < (imgs_center[0] + 400):
-            x_face += 200
-            self.align(x_face, imgs_center[1], np.deg2rad(1))
-            
-            cam.capture(rawCapture, format="bgr")
-            frame = rawCapture.array 
-            
-            self.detectar_casilla_salida(frame)
-
-            rawCapture.truncate(0)
-        
-        closed = False
-        while not closed:
-            closed = cam.close()
+        cam.close()
         print('Salgo por la casilla', self.casilla_salida)
         
         # Una vez se ha encontrado la salida se sale
