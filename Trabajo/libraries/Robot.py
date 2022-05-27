@@ -455,6 +455,7 @@ class Robot:
             # clear the stream in preparation for the next frame
             rawCapture.truncate(0)
             frame = rawCapture.array
+            cv2.imshow('Foto', frame)
             blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
             self.red_pixels.value = detect_red(frame)
             #Se actualizan las variables compartidas referentes a la imagen
