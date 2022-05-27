@@ -197,10 +197,10 @@ class Robot:
         #Iniciar el giroscopio
         #self.pGiros = Process(target=self.updateGiroscopio, args=())
         #self.pGiros.start()
-        self.cam = picamera.PiCamera()
-        self.cam.resolution = (640,480)
-        self.cam.framerate = 32
-        time.sleep(0.1)
+        #self.cam = picamera.PiCamera()
+        #self.cam.resolution = (640,480)
+        #self.cam.framerate = 32
+        #time.sleep(0.1)
         
 
     # You may want to pass additional shared variables besides the odometry values and stop flag
@@ -317,10 +317,7 @@ class Robot:
         self.pCam = Process(target=self.updateCamara, args=())
         self.pCam.start()
         #Se deja que se inicie la camara
-        self.cam = picamera.PiCamera()
-        self.cam.resolution = (640,480)
-        self.cam.framerate = 32
-        time.sleep(0.1)
+        time.sleep(1)
 
         while not finished:
             # Si se ha detectado un blob
@@ -444,6 +441,10 @@ class Robot:
     #Proceso concurrente que sirve para capturar imagenes
     #Se realiza un proceso concurrente para que la captura de imagenes sea mas rapida y eficiente
     def updateCamara(self):
+        self.cam = picamera.PiCamera()
+        self.cam.resolution = (640,480)
+        self.cam.framerate = 32
+        time.sleep(0.1)
         rawCapture = PiRGBArray(self.cam, size=(640, 480))
         #Se espera un tiempo para que se pueda iniciar la camara
         
