@@ -23,7 +23,7 @@ from picamera.array import PiRGBArray
 from multiprocessing import Process, Value, Array, Lock
 
 sys.path.append('../libraries')
-from BlobDetector import getRedBloobs, detect_red
+from BlobDetector import getRedBloobs, detect_red, getGreenBloobs
 from sample_matching import match_images
 
 
@@ -111,8 +111,6 @@ class Robot:
         self.img_salida = None
         self.img_NO_salida = None
         self.casilla_salida = None 
-
-        self.cam = None
         
 
     def setSpeed(self, v, w):
@@ -199,10 +197,6 @@ class Robot:
         #Iniciar el giroscopio
         #self.pGiros = Process(target=self.updateGiroscopio, args=())
         #self.pGiros.start()
-        self.cam = picamera.PiCamera()
-        self.cam.resolution = (640,480)
-        self.cam.framerate = 32
-        
 
     # You may want to pass additional shared variables besides the odometry values and stop flag
     def updateOdometry(self):
@@ -301,7 +295,7 @@ class Robot:
         """ Stop the odometry thread. """
 
         self.finished.value = True
-        self.cam.close()
+
         self.BP.reset_all()
         self.setSpeed(0, 0)
 
@@ -319,7 +313,6 @@ class Robot:
         self.pCam.start()
         #Se deja que se inicie la camara
         time.sleep(1)
-
         while not finished:
             # Si se ha detectado un blob
             if (self.is_blob.value):
@@ -442,16 +435,19 @@ class Robot:
     #Proceso concurrente que sirve para capturar imagenes
     #Se realiza un proceso concurrente para que la captura de imagenes sea mas rapida y eficiente
     def updateCamara(self):
-        
-        rawCapture = PiRGBArray(self.cam, size=(640, 480))
+        #Se inicia la camara del robot
+        cam = picamera.PiCamera()
+        cam.resolution = (640,480)
+        cam.framerate = 32 
+        rawCapture = PiRGBArray(cam, size=(640, 480))
         #Se espera un tiempo para que se pueda iniciar la camara
-        
+        time.sleep(0.1)
         # Se captura una imagen inicial para obtener el tamanyo de la imagen 
         self.rows.value = 480
         self.cols.value = 640
         #Mientras no se detengaa el robot, se siguen captando imagenes
         while not self.finished.value:
-            self.cam.capture(rawCapture, format="bgr", use_video_port=True)
+            cam.capture(rawCapture, format="bgr", use_video_port=True)
             # clear the stream in preparation for the next frame
             rawCapture.truncate(0)
             frame = rawCapture.array
@@ -597,18 +593,28 @@ class Robot:
         self.align(x_goal, y_goal, np.deg2rad(1))
         
         value = 0.0
+        # Se itera hasta que el sensor devuelve un valor distinto a 0 (le cuesta encenderse y sino da error)
+        while value <= 0.0:
+            try:
+                
+                [x_now, y_now, _] = self.readOdometry()
+                # Se va a definir ,un umbral para detectar el obsatculo en  
+                # el borde de la celda o en el centro de la celda objetivo
+                wall_o = 30 * 10 # mm
+                center_o = 50 * 10 # mm
+                # Se lee la distancia que recoge el sensor (*10 para pasarlo a mm)
+                value = self.BP.get_sensor(self.BP.PORT_1) * 10
+                
+                # Se devuelve True si hay obstaculo, False si no
+                if value < wall_o and value > 0.0:
+                    return [True, True] # Hay obstaculo y esta en la pared
+                elif value > wall_o and value < center_o and value > 0.0:
+                    return [True, False] # Hay obsaculo y no esta en la pared
+                elif value > 0.0:
+                    return [False, False] # No hay obstaculo 
 
-        [x_now, y_now, _] = self.readOdometry()
-        # Se calcula el espacio a recorrer 
-        espacio = np.linalg.norm([x_goal - x_now, y_goal - y_now])
-        # Se lee la distancia que recoge el sensor (*10 para pasarlo a mm)
-        value = self.read_ultrasonyc()
-        
-        # Se devuelve True si hay obstaculo, False si no
-        if value < espacio and value > 0.0:
-            return True
-        elif value > 0.0:
-            return False
+            except brickpi3.SensorError as error:
+                print(error) 
         
     def detectar_recorrido(self):
         value = 0.0
@@ -648,29 +654,29 @@ class Robot:
     def detect_scape(self):
         # Si la salida no se ha encontrado
         if self.casilla_salida is None:
-            
-            rawCapture = PiRGBArray(self.cam)
+            cam = picamera.PiCamera()
+
+            #cam.resolution = (320, 240)
+            cam.resolution = (640, 480)
+            cam.framerate = 10 # less frame rate, more light BUT needs to go slowly (or stop)
+            rawCapture = PiRGBArray(cam)
             
             # allow the camera to warmup
             time.sleep(0.2)
 
             # Se determinan puntos clave del mapa para ver los robots
             if self.mapa == 'A':
-                first_table = [2000,1400]
                 imgs_center = [2000,2800]
                 center_table = [2000,2000]
-                
             else:
-                first_table = [800,1400]
                 imgs_center = [800, 2800]
                 center_table = [800,2000]
             
             # Se buscan las imagenes
-            self.go(first_table[0],first_table[1],150)
             self.go(center_table[0],center_table[1],150)
             self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
 
-            self.cam.capture(rawCapture, format="bgr")
+            cam.capture(rawCapture, format="bgr")
             frame = rawCapture.array 
             
             self.detectar_casilla_salida(frame)
@@ -683,7 +689,7 @@ class Robot:
             x_face -= 200
             self.align(x_face, imgs_center[1], np.deg2rad(1))
             
-            self.cam.capture(rawCapture, format="bgr")
+            cam.capture(rawCapture, format="bgr")
             frame = rawCapture.array 
             
             self.detectar_casilla_salida(frame)
@@ -695,13 +701,14 @@ class Robot:
             x_face += 200
             self.align(x_face, imgs_center[1], np.deg2rad(1))
             
-            self.cam.capture(rawCapture, format="bgr")
+            cam.capture(rawCapture, format="bgr")
             frame = rawCapture.array 
             
             self.detectar_casilla_salida(frame)
 
             rawCapture.truncate(0)
 
+        #cam.close()
         print('Salgo por la casilla', self.casilla_salida)
         
         # Una vez se ha encontrado la salida se sale
@@ -863,6 +870,3 @@ class Robot:
         else:
             # Movimiento cirular
             return False
-
-    
-    
