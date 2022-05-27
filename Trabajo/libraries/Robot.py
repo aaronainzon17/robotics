@@ -670,7 +670,7 @@ class Robot:
                 center_table = [800,2000]
             
             # Se buscan las imagenes
-            self.go(center_table[0],center_table[1],150)
+            self.go(center_table[0],center_table[1])
             self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
 
             cam.capture(rawCapture, format="bgr")
@@ -694,7 +694,7 @@ class Robot:
             rawCapture.truncate(0)
         
         x_face = imgs_center[0]
-        while self.casilla_salida is None and x_face < (imgs_center[0] + 400):
+        while self.casilla_salida is None and x_face < (imgs_center[0] < 400):
             x_face += 200
             self.align(x_face, imgs_center[1], np.deg2rad(1))
             
@@ -704,8 +704,9 @@ class Robot:
             self.detectar_casilla_salida(frame)
 
             rawCapture.truncate(0)
-
-        cam.close()
+        closed = False
+        while not closed:
+            closed = cam.close()
         print('Salgo por la casilla', self.casilla_salida)
         
         # Una vez se ha encontrado la salida se sale
