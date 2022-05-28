@@ -158,15 +158,16 @@ def main(args):
 
         robot = Robot()
         time.sleep(2)
-
-        mapa = robot.detectar_recorrido()
     
         input("Press Enter to continue...")
 
         # 1. Se incia la odometria u el proceso update odometry
         robot.startOdometry() 
 
-        
+        half_semicircle(robot)
+
+        rotate_360(robot)
+
         robot.stopOdometry()
 
     except KeyboardInterrupt:
