@@ -690,7 +690,7 @@ class Robot:
         
         # define a video capture object
         #vid = cv2.VideoCapture(0,cv2.CAP_DSHOW)
-        vid = cv2.VideoCapture(1)
+        vid = cv2.VideoCapture(0)
         
         # allow the camera to warmup
         time.sleep(2)
