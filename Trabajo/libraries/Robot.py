@@ -736,6 +736,8 @@ class Robot:
 
         print('Salgo por la casilla', self.casilla_salida)
         vid.release()
+
+        cv2.destroyAllWindows()
         # Una vez se ha encontrado la salida se sale
         #self.go(self.casilla_salida[0],self.casilla_salida[1])
         #self.go(self.casilla_salida[0],(self.casilla_salida[1] + 400))

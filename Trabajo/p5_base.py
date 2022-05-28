@@ -180,6 +180,11 @@ def main(args):
 
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":
+
+            robot.detect_scape_cv2()
+            # Se inicia la busqueda de la pelota 
+            robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
+
             # pos = robot.readOdometry()
             # print('Empiezo en', pos)
             # robot.setNewPosition(0,0,np.deg2rad(-180))
@@ -189,9 +194,9 @@ def main(args):
             print('Hago solveMap')
             solveMap(robot,myMap, [1,2],[3,3])
             #robot.setNewPosition(1600,1400,np.deg2rad(90))
-            robot.detect_scape_cv2()
-            # Se inicia la busqueda de la pelota 
-            robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
+            # robot.detect_scape_cv2()
+            # # Se inicia la busqueda de la pelota 
+            # robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
 
             #Sale desplues de coger la pelota
             #robot.scape()
