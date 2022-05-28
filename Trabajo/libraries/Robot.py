@@ -109,6 +109,7 @@ class Robot:
         self.img_NO_salida = None
         self.casilla_salida = None 
 
+        self.global_frame = None
         
 
     def setSpeed(self, v, w):
@@ -432,6 +433,8 @@ class Robot:
             rawCapture.truncate(0)
             frame = rawCapture.array
             self.global_frame=rawCapture.array    #########################################CAMBIOS
+            if(self.global_frame == None):
+                print("He cuidado que en updateCamara el self.global_frame es nulo")
             print("Se ha modificado global_frame")  ###########################CAMBIOS
             blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
             self.red_pixels.value = detect_red(frame)
