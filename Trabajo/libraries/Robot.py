@@ -726,6 +726,7 @@ class Robot:
         
         #Se comprueba por si es nulo el frame
         while(self.global_frame==None):
+            time.sleep(0.5)
             print("Self.global_frame es nulo")
         
         frame = self.global_frame
