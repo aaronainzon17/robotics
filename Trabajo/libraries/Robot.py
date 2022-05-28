@@ -693,7 +693,7 @@ class Robot:
         vid = cv2.VideoCapture(1)
         
         # allow the camera to warmup
-        time.sleep(0.2)
+        time.sleep(2)
 
         # Se determinan puntos clave del mapa para ver los robots
         if self.mapa == 'A':
