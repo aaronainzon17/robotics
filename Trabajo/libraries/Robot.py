@@ -689,7 +689,8 @@ class Robot:
         # Si la salida no se ha encontrado
         
         # define a video capture object
-        vid = cv2.VideoCapture(0,cv2.CAP_DSHOW)
+        #vid = cv2.VideoCapture(0,cv2.CAP_DSHOW)
+        vid = cv2.VideoCapture(1)
         
         # allow the camera to warmup
         time.sleep(0.2)
