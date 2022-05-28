@@ -433,7 +433,7 @@ class Robot:
             rawCapture.truncate(0)
             frame = rawCapture.array
             self.global_frame=rawCapture.array    #########################################CAMBIOS
-            if(self.global_frame == None):
+            if(self.global_frame.all() == None):
                 print("He cuidado que en updateCamara el self.global_frame es nulo")
             print("Se ha modificado global_frame")  ###########################CAMBIOS
             blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
