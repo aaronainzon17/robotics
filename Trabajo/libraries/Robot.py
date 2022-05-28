@@ -58,7 +58,6 @@ class Robot:
         self.BP = brickpi3.BrickPi3()
 
         # Configure sensors, for example a touch sensor.
-        #self.BP.set_sensor_type(self.BP.PORT_1, self.BP.SENSOR_TYPE.TOUCH)
 
         # reset encoder B and C (or all the motors you are using)
         self.BP.offset_motor_encoder(self.BP.PORT_B,
@@ -83,9 +82,7 @@ class Robot:
         self.y = Value('d', init_position[1])
         self.th = Value('d', init_position[2])
         self.th_ini = Value('d', init_position[2])
-        self.w_giroscopio = Value('d', 0.0)
-        self.ang_giroscopio = Value('d', 0.0)
-        self.ang_giroscopio.value = init_position[2]
+        
         # boolean to show if odometry updates are finished
         self.finished = Value('b', 1)
 
@@ -96,17 +93,17 @@ class Robot:
         self.P = 0.04
         
         # Blob values
-        self.x_b= Value('d', 0)
+        self.x_b = Value('d', 0)
         self.y_b = Value('d', 0)
         self.size_b = Value('d', 0)
         self.is_blob = Value('b', False)
         self.red_pixels = Value('i', 0)
 
-
+        #Image size shared data
         self.rows = Value('i',0)
         self.cols = Value('i',0)
 
-        # Variables de vision
+        # Variables de recorrido
         self.mapa = None
         self.img_salida = None
         self.img_NO_salida = None
@@ -117,16 +114,15 @@ class Robot:
         """ Funcion que establece la velocidad lineal del robot a v y la velocidad
             angular del robot a w """
 
-        #print("setting speed to %.2f %.2f" % (v, w))
 
         # Calculo de la velocidad a establecer para cada motor
         # segun las velocidades lineal y angular deseadas
         im0 = np.array([[1/self.R, self.L/(2*self.R)],
                         [1/self.R, (-self.L)/(2*self.R)]])
-        #print("im0", im0)
+        
         im1 = np.array([v, np.deg2rad(w)])
         inverse_model = np.dot(im0, im1)
-        #print("inverse_model", inverse_model)
+        
         wd = inverse_model[0]
         wi = inverse_model[1]
 
@@ -194,9 +190,6 @@ class Robot:
                                      self.BP.get_motor_encoder(self.BP.PORT_C))  # reset encoder C
         self.p = Process(target=self.updateOdometry, args=())
         self.p.start()
-        #Iniciar el giroscopio
-        #self.pGiros = Process(target=self.updateGiroscopio, args=())
-        #self.pGiros.start()
 
     # You may want to pass additional shared variables besides the odometry values and stop flag
     def updateOdometry(self):
@@ -207,6 +200,7 @@ class Robot:
             os.remove("log_odometry.log")
         log = open("log_odometry.log", "a")
         prev_gyros = 0.0
+
         while not self.finished.value:
             # current processor time in a floating point value, in seconds
             tIni = time.clock()
@@ -233,25 +227,17 @@ class Robot:
 
             # Actualiza la odometria con los nuevos valores en exclusion mutua
             self.lock_odometry.acquire()
-            # SC
+            
             self.x.value += d_x
             self.y.value += d_y
-            self.th.value += d_th   #Esto es de odometria
-            #print("El valor de th sin la media es ", np.rad2deg(self.normalizar(self.th.value)))
-            #print("El valor de th del giroscopio es ",np.rad2deg(self.ang_giroscopio.value))
-            self.th.value = self.norm_pi(self.th.value)  #Esto es de odometria
-            #self.th.value = self.normalizar((self.normalizar(self.th.value)+self.normalizar(th_ini + self.ang_giroscopio.value))/2.0)  
-            #print("El valor final de th  ",np.rad2deg(self.th.value))
-            self.lock_odometry.release()
-
-            # Escribe en el LOG los valores actualizados de la odometria
-            [x, y, th] = self.readOdometry()
-            self.lock_odometry.acquire()
-            # SC
-            coord = str(x) + ',' + str(y) + ',' + str(th) + '\n'
-            log.write(coord)
+            self.th.value += d_th   
+            self.th.value = self.norm_pi(self.th.value)  
+            
             self.lock_odometry.release()
             
+            #Se escribe la odometria
+            self.write_log(log)
+
             tEnd = time.clock()
             elapsed = self.P - (tEnd - tIni)
             if elapsed >= 0:
@@ -260,6 +246,11 @@ class Robot:
                 print('No sleep')
 
         # Escribe en el LOG los valores finales de la odometria
+        self.write_log(log)
+
+
+    def write_log(self,log):
+        """Funcion que escribe la odometria actual en el fichero de log"""
         [x, y, th] = self.readOdometry()
         self.lock_odometry.acquire()
         # SC
@@ -268,6 +259,7 @@ class Robot:
         self.lock_odometry.release()
 
     def read_gyros(self):
+        """Se leen los datos del giroscopo"""
         arr = []
         for i in range(5):
             try:
@@ -275,21 +267,6 @@ class Robot:
             except brickpi3.SensorError as error:
                 print(error) 
         return np.deg2rad(np.median(arr))
-        
-    
-    #Leer del giroscopio la w y hacer la media con la que se lee de las ruedas
-
-    #Funcion para actualizar el giroscopio
-    def updateGiroscopio(self):
-        #self.ang_giroscopio.value = self.read_gyros()
-        #print("El angulo actual en updateGiroscopio es ", self.th.value)
-        th_gyros = self.read_gyros()
-        orientacion = self.norm_pi(self.th_ini.value + th_gyros)
-        #print(self.th_ini.value, orientacion)
-        
-        if abs(abs(self.th.value) - abs(orientacion)) < 3:
-            print('Creia:', self.th.value, 'Estoy', orientacion)
-            self.th.value = orientacion          
 
     def stopOdometry(self):
         """ Stop the odometry thread. """
@@ -463,15 +440,14 @@ class Robot:
                 self.is_blob.value = False
     
     def setNewPosition(self,x_new, y_new, th_new):
+        """Permite actualizar la posicion del la odometria por si es necesario relocalizarse"""
         self.x.value = x_new
         self.y.value = y_new
         self.th.value = th_new
 
     def go(self, x_goal, y_goal, speed):
-        print('Entro al go')
-        # Aliena al robot con el siguiente punto
+        # Alinea al robot con el siguiente punto
         self.align(x_goal, y_goal, np.deg2rad(1))
-        print('Salgo del align')
         _,_,th = self.readOdometry()
         if abs(abs(th) - np.deg2rad(90)) < np.deg2rad(5):
             x_err = np.Infinity
@@ -483,11 +459,10 @@ class Robot:
             x_err = 50
             y_err = 50
         
-        print('Voy a:', x_goal, y_goal, 'con error', x_err, y_err)
         # Se le asigna una velocidad lienal
         self.setSpeed(speed,0)
+
         # Se comprueba que el robot alcanza correctamente la posicion 
-        #self.check_position(x_goal, y_goal, 25, 25)
         self.check_position(x_goal, y_goal, x_err, y_err)
    
     # check_position es la funcion de control de localizacion
@@ -528,10 +503,7 @@ class Robot:
                 [x_now, y_now, th_now] = self.readOdometry()
 
     def check_angle(self,th, angular_err):
-        """ check_position es la funcion de control de localizacion
-        En ella se comprueba la posicion real del robot leida de los
-        motores y se comprueba si se encuentra en la posicion deseada
-        permitiendo un cierto error. """
+        """ check_angle comprueba que la orientacion del robot es la correcta """
 
         # Se lee incialmente la posicion del robot
         [x_now, y_now, th_now] = self.readOdometry()
@@ -551,22 +523,25 @@ class Robot:
                 self.setSpeed(0,0)
             else:
                 [x_now, y_now, th_now] = self.readOdometry()                
-    # La funcion se encarga de alienar el robot con el punto objetivo para poder
-    # realizar una trayectoria lienal
+    
+   
     def align(self, x_goal, y_goal, error_ang):
-            aligned = False 
-            
-            while not aligned:
-                [x_now, y_now, th_now] = self.readOdometry()
-                d_x = x_goal - x_now
-                d_y = y_goal - y_now
-                d_th = self.norm_pi(np.arctan2(d_y, d_x) - th_now)
-                if abs(d_th) < error_ang:
-                    self.setSpeed(0,0)
-                    aligned = True
-                else:
-                    w = self.lienar_w(d_th)
-                    self.setSpeed(0,w)
+        """ La funcion se encarga de alienar el robot con el punto 
+        objetivo para poder realizar una trayectoria lienal"""
+
+        aligned = False 
+        
+        while not aligned:
+            [x_now, y_now, th_now] = self.readOdometry()
+            d_x = x_goal - x_now
+            d_y = y_goal - y_now
+            d_th = self.norm_pi(np.arctan2(d_y, d_x) - th_now)
+            if abs(d_th) < error_ang:
+                self.setSpeed(0,0)
+                aligned = True
+            else:
+                w = self.lienar_w(d_th)
+                self.setSpeed(0,w)
     
     # Funcion que define la velocidad angular en funcion de los 
     # grados restantes w = [10,90]
@@ -738,8 +713,6 @@ class Robot:
         
         self.detectar_casilla_salida(frame)
 
-        
-        
         # Si no lo ha encontardo yendo al centro del mapa se rota para buscar
         x_face = imgs_center[0]
         while self.casilla_salida is None and x_face > (imgs_center[0] - 400):
@@ -797,8 +770,10 @@ class Robot:
         
     
     def read_ultrasonyc(self):
+        """read_ultrasonyc toma 40 muestras del sensor del ultrasonidos y calcula la mediana
+        para evitar datos espureos"""
         arr = []
-        for i in range(40):
+        for i in range(20):
             try:
                 arr.append(self.BP.get_sensor(self.BP.PORT_1)) 
             except brickpi3.SensorError as error:
@@ -806,6 +781,8 @@ class Robot:
         return np.median(arr) * 10
 
     def detectar_casilla_salida(self, frame):
+        """detectar_casilla_salida utiliza el sensor de lumniosidad para detectar 
+        si se encuentra sobre la salida A o B (blanco y negro respectivamente)"""
         if self.casilla_salida == None: 
             found_salida, x_salida = match_images(self.img_salida, frame)
             found_NO_salida, x_NO_salida = match_images(self.img_NO_salida, frame)
@@ -821,28 +798,12 @@ class Robot:
                     self.casilla_salida = [1400,2600] # [3,6]
         else:
             print('He detectado la salida en:', self.casilla_salida)
-
-    def relocalizarRobot(self):
-        #El robot esta de frente a una pared
-        #Toma una imagen
-        #saca la nueva x,y,th
-        #Resetea los encoders
-        self.lock_odometry.acquire()
-        #Se usa el sonar para centrarse
-        
-        
-        self.BP.offset_motor_encoder(self.BP.PORT_B,
-                                     self.BP.get_motor_encoder(self.BP.PORT_B))  # reset encoder B
-        self.BP.offset_motor_encoder(self.BP.PORT_C,
-                                     self.BP.get_motor_encoder(self.BP.PORT_C))  # reset encoder C
-
-        self.lock_odometry.release()
     
     def seguimientoPared(self, dc):
+        """seguimientoPared realiza uns eguimiento de pared derecha"""
         # PARÁMETROS
         k1 = 0.0006#15  # estabilizar
         k2 = -0.025  # amortiguar
-
 
         wmax = np.deg2rad(45)
         reached = False
@@ -880,13 +841,6 @@ class Robot:
                 self.setSpeed(0,0)
                 reached = True
             d_ant = d
-            #while d > d_ant:
-            #    self.setSpeed(0,15)
-            #    try:
-            #        d = self.BP.get_sensor(self.BP.PORT_3) * 10
-
-            #    except brickpi3.SensorError as error:
-            #        print(error)
 
             # Medida del sensor
             arr = []
@@ -894,7 +848,6 @@ class Robot:
                 try:
                     arr.append(self.BP.get_sensor(self.BP.PORT_3) * 10)
                     d = np.median(arr)
-                    print(d)
                 except brickpi3.SensorError as error:
                     print(error) 
 
