@@ -109,8 +109,6 @@ class Robot:
         self.img_NO_salida = None
         self.casilla_salida = None 
 
-        #Variable que guarda la foto
-        self.global_frame = None
         
 
     def setSpeed(self, v, w):
@@ -725,7 +723,7 @@ class Robot:
         #_, frame = vid.read()  ###########################CAMBIOS
         
         #Se comprueba por si es nulo el frame
-        while(self.global_frame==None):
+        while(not bool(self.global_frame)):
             time.sleep(0.5)
             print("Self.global_frame es nulo")
         
