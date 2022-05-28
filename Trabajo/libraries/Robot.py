@@ -726,7 +726,7 @@ class Robot:
         #_, frame = vid.read()  ###########################CAMBIOS
         
         #Se comprueba por si es nulo el frame
-        while(not ('self.global_frame' in locals())):
+        while(not ('self.global_frame' in globals())):
             time.sleep(0.5)
             print("Self.global_frame es nulo")
         
