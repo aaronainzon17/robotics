@@ -109,7 +109,6 @@ class Robot:
         self.img_NO_salida = None
         self.casilla_salida = None 
 
-        #self.global_frame = None
         
 
     def setSpeed(self, v, w):
