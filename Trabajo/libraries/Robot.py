@@ -110,7 +110,7 @@ class Robot:
         self.casilla_salida = None 
 
         #Variable que guarda la foto
-        self.gloabl_frame = None
+        self.global_frame = None
         
 
     def setSpeed(self, v, w):
@@ -433,7 +433,7 @@ class Robot:
             # clear the stream in preparation for the next frame
             rawCapture.truncate(0)
             frame = rawCapture.array
-            self.gloabl_frame=frame#########################################CAMBIOS
+            self.global_frame=frame#########################################CAMBIOS
             blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
             self.red_pixels.value = detect_red(frame)
             #Se actualizan las variables compartidas referentes a la imagen
@@ -724,10 +724,10 @@ class Robot:
         #_, frame = vid.read()  ###########################CAMBIOS
         
         #Se comprueba por si es nulo el frame
-        while(self.gloabl_frame==None):
+        while(self.global_frame==None):
             print("Self.global_frame es nulo")
         
-        frame = self.gloabl_frame
+        frame = self.global_frame
 
         self.detectar_casilla_salida(frame)
 
@@ -738,7 +738,7 @@ class Robot:
             self.align(x_face, imgs_center[1], np.deg2rad(1))
             
             #_, frame = vid.read()#################################CAMBIOS
-            frame=self.gloabl_frame
+            frame=self.global_frame
             
             self.detectar_casilla_salida(frame)
 
