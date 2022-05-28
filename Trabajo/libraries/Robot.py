@@ -725,7 +725,7 @@ class Robot:
         
         #Se comprueba por si es nulo el frame
         while(self.gloabl_frame==None):
-            pass
+            print("Self.global_frame es nulo")
         
         frame = self.gloabl_frame
 
