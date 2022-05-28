@@ -153,8 +153,8 @@ class Robot:
                                      self.BP.get_motor_encoder(self.BP.PORT_C)]
 
         # Se obtiene lo que ha girado cada rueda en esta iteracion (recorrido hasta ahora - recorrido anterior)
-        deg_right_e = (rightEngine - self.acum_d) / self.P
-        deg_left_e = (leftEngine - self.acum_i) / self.P
+        deg_right_e = rightEngine - self.acum_d
+        deg_left_e = leftEngine - self.acum_i
 
         # Actualizacion del anterior giro acumulado por las ruedas
         self.acum_d = rightEngine
@@ -226,7 +226,7 @@ class Robot:
                 d_th = self.norm_pi(gyros_now - prev_gyros)
                 #print("Diferencial de th ",d_th,"Grados leidos del giroscopio",gyros_now)
                 #d_s = (real_v/real_w) * d_th
-                d_s = (deg_right_e + deg_left_e)/2 
+                d_s = (deg_right_e * self.R + deg_left_e * self.R)/2 
                 d_x = d_s * np.cos(self.th.value + (d_th/2))
                 d_y = d_s * np.sin(self.th.value + (d_th/2))
                 prev_gyros = gyros_now
