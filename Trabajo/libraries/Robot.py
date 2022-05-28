@@ -289,8 +289,8 @@ class Robot:
         targetPositionReached = False   #Variable para determinar si el robot ha iniciado el proceso de coger la pelota
         #Se inicia el proces concurrente que lee la camara
 
-        # self.pCam = Process(target=self.updateCamara, args=())######################################CAMBIOS
-        # self.pCam.start()
+        self.pCam = Process(target=self.updateCamara, args=())
+        self.pCam.start()
 
         #Se deja que se inicie la camara
         time.sleep(1)
@@ -432,10 +432,6 @@ class Robot:
             # clear the stream in preparation for the next frame
             rawCapture.truncate(0)
             frame = rawCapture.array
-            self.global_frame=rawCapture.array    #########################################CAMBIOS
-            if(self.global_frame.all() == None):
-                print("He cuidado que en updateCamara el self.global_frame es nulo")
-            print("Se ha modificado global_frame")  ###########################CAMBIOS
             blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
             self.red_pixels.value = detect_red(frame)
             #Se actualizan las variables compartidas referentes a la imagen
@@ -695,13 +691,11 @@ class Robot:
     # Esta funcion busca y se acerca al objeto hasta estar en p
     def detect_scape_cv2(self):
         # Si la salida no se ha encontrado
-        ####################################CAMBIOS
-        self.pCam = Process(target=self.updateCamara, args=())
-        self.pCam.start()
+        
         #time.sleep(2)
         # define a video capture object
         #vid = cv2.VideoCapture(0,cv2.CAP_DSHOW)
-        #vid = cv2.VideoCapture(0)############################CAMBIOS
+        vid = cv2.VideoCapture(0)
         
         # allow the camera to warmup
         time.sleep(2)
@@ -723,14 +717,8 @@ class Robot:
         # self.go(center_table[0],center_table[1],150)
         # self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
        
-        #_, frame = vid.read()  ###########################CAMBIOS
+        _, frame = vid.read()
         
-        #Se comprueba por si es nulo el frame
-        while(not ('self.global_frame' in globals())):
-            time.sleep(0.5)
-            print("Self.global_frame es nulo")
-        
-        frame = self.global_frame
 
         self.detectar_casilla_salida(frame)
 
@@ -740,8 +728,7 @@ class Robot:
             x_face -= 200
             self.align(x_face, imgs_center[1], np.deg2rad(1))
             
-            #_, frame = vid.read()#################################CAMBIOS
-            frame=self.global_frame
+            _, frame = vid.read()
             
             self.detectar_casilla_salida(frame)
 
@@ -757,7 +744,7 @@ class Robot:
             self.detectar_casilla_salida(frame)
 
         print('Salgo por la casilla', self.casilla_salida)
-        #vid.release()###############################################CAMBIOS
+        vid.release()
 
         cv2.destroyAllWindows()
         time.sleep(1)
