@@ -108,6 +108,9 @@ class Robot:
         self.img_salida = None
         self.img_NO_salida = None
         self.casilla_salida = None 
+
+        #Variable que guarda la foto
+        self.gloabl_frame = None
         
 
     def setSpeed(self, v, w):
@@ -286,8 +289,10 @@ class Robot:
         triedCatch = False  #Variable para determinar si el robot va a iniciar la accion de coger la pelota
         targetPositionReached = False   #Variable para determinar si el robot ha iniciado el proceso de coger la pelota
         #Se inicia el proces concurrente que lee la camara
-        self.pCam = Process(target=self.updateCamara, args=())
-        self.pCam.start()
+
+        # self.pCam = Process(target=self.updateCamara, args=())######################################CAMBIOS
+        # self.pCam.start()
+
         #Se deja que se inicie la camara
         time.sleep(1)
         while not finished:
@@ -428,6 +433,7 @@ class Robot:
             # clear the stream in preparation for the next frame
             rawCapture.truncate(0)
             frame = rawCapture.array
+            self.gloabl_frame=frame#########################################CAMBIOS
             blob = getRedBloobs(frame)  # Se devuelve el blob mas grande
             self.red_pixels.value = detect_red(frame)
             #Se actualizan las variables compartidas referentes a la imagen
@@ -687,10 +693,13 @@ class Robot:
     # Esta funcion busca y se acerca al objeto hasta estar en p
     def detect_scape_cv2(self):
         # Si la salida no se ha encontrado
-        
+        ####################################CAMBIOS
+        self.pCam = Process(target=self.updateCamara, args=())
+        self.pCam.start()
+        #time.sleep(2)
         # define a video capture object
         #vid = cv2.VideoCapture(0,cv2.CAP_DSHOW)
-        vid = cv2.VideoCapture(0)
+        #vid = cv2.VideoCapture(0)############################CAMBIOS
         
         # allow the camera to warmup
         time.sleep(2)
@@ -712,8 +721,14 @@ class Robot:
         # self.go(center_table[0],center_table[1],150)
         # self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
        
-        _, frame = vid.read()
+        #_, frame = vid.read()  ###########################CAMBIOS
         
+        #Se comprueba por si es nulo el frame
+        while(self.gloabl_frame==None):
+            pass
+        
+        frame = self.gloabl_frame
+
         self.detectar_casilla_salida(frame)
 
         # Si no lo ha encontardo yendo al centro del mapa se rota para buscar
@@ -722,7 +737,8 @@ class Robot:
             x_face -= 200
             self.align(x_face, imgs_center[1], np.deg2rad(1))
             
-            _, frame = vid.read()
+            #_, frame = vid.read()#################################CAMBIOS
+            frame=self.gloabl_frame
             
             self.detectar_casilla_salida(frame)
 
@@ -738,7 +754,7 @@ class Robot:
             self.detectar_casilla_salida(frame)
 
         print('Salgo por la casilla', self.casilla_salida)
-        vid.release()
+        #vid.release()###############################################CAMBIOS
 
         cv2.destroyAllWindows()
         time.sleep(1)
