@@ -638,11 +638,10 @@ class Robot:
             imgs_center = [800, 2800]
             center_table = [800,2000]
         
-        #ESTO LO COMENTO AHORA PORQUE SOLO QUIERO PROBAR LA CAMARA
         # Se buscan las imagenes
-        # self.go(first_table[0],first_table[1],150)
-        # self.go(center_table[0],center_table[1],150)
-        # self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
+        self.go(first_table[0],first_table[1],150)
+        self.go(center_table[0],center_table[1],150)
+        self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
        
         cam.capture(rawCapture, format="bgr")
         frame = rawCapture.array 
@@ -705,10 +704,11 @@ class Robot:
             imgs_center = [800, 2800]
             center_table = [800,2000]
         
+        #ESTO LO COMENTO AHORA PORQUE SOLO QUIERO PROBAR LA CAMARA
         # Se buscan las imagenes
-        self.go(first_table[0],first_table[1],150)
-        self.go(center_table[0],center_table[1],150)
-        self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
+        # self.go(first_table[0],first_table[1],150)
+        # self.go(center_table[0],center_table[1],150)
+        # self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
        
         _, frame = vid.read()
         
@@ -760,7 +760,7 @@ class Robot:
         if y_axis < 800:
             if self.mapa == 'A':
                 self.x.value = x_axis
-            else:
+            else:detectar_casilla_salida
                 self.x.value = 2800 - x_axis
         else:
             if self.mapa == 'A':
