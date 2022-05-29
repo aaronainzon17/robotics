@@ -164,9 +164,9 @@ def main(args):
         # 1. Se incia la odometria u el proceso update odometry
         robot.startOdometry() 
 
-        #half_semicircle(robot)
+        half_semicircle(robot)
 
-        rotate_360(robot)
+        #rotate_360(robot)
 
         robot.stopOdometry()
 
