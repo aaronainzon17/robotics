@@ -202,6 +202,8 @@ def main(args):
             #robot.scape()
             
         else: # "mapaB_CARRERA.txt"
+            robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
+
             imagenFin = cv2.imread(bb8, cv2.IMREAD_COLOR)
             imagenOtro = cv2.imread(r2d2, cv2.IMREAD_COLOR)
             target_robot_file = bb8
