@@ -587,7 +587,7 @@ class Robot:
         while value <= 2000:
             try:
                 value = self.BP.get_sensor(self.BP.PORT_2)
-                #print('He leido', value)
+                print('He leido', value)
                 if value > 2000 and value < 2750:     #Se detecta el colo blanco entonces es el A
                     # Se indican las coordenadas iniciales del robot 
                     self.x.value  = 600

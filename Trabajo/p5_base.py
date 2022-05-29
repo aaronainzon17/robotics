@@ -52,7 +52,7 @@ def s_A_ocho(robot, vel):
     robot.setSpeed(v, -w)  # Segunda semicircunferencia
     robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), 10, 400, np.deg2rad(10))
     
-    robot.relocate()
+    #robot.relocate()
 
     #pos = [1,2]
     #robot.setSpeed(0, 30)  # Giro de 45 deg a la izquierda
@@ -180,19 +180,19 @@ def main(args):
 
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":
-            robot.detect_scape_cv2()
+            #robot.detect_scape_cv2()
             # Se inicia la busqueda de la pelota 
-            print("Acaba el detect_scape")
-            robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
-            print("Acaba el track object")
+            #print("Acaba el detect_scape")
+            #robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
+            #print("Acaba el track object")
             # pos = robot.readOdometry()
             # print('Empiezo en', pos)
             # robot.setNewPosition(0,0,np.deg2rad(-180))
             
             s_A_ocho(robot, 120)
-            #solve_relative_map(robot,myMap, [1,2],[3,3])
-            print('Hago solveMap')
-            solveMap(robot,myMap, [1,2],[3,3])
+            solve_relative_map(robot,myMap, [1,2],[3,3])
+            #print('Hago solveMap')
+            #solveMap(robot,myMap, [1,2],[3,3])
             #robot.setNewPosition(1600,1400,np.deg2rad(90))
             # robot.detect_scape_cv2()
             # # Se inicia la busqueda de la pelota 
