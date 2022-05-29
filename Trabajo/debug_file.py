@@ -172,8 +172,9 @@ def main(args):
         robot.startOdometry() 
 
         #half_semicircle(robot)
-        straight_line(robot)
+        #straight_line(robot)
         #rotate_360(robot)
+        s_A_ocho(robot,120)
 
         robot.stopOdometry()
 
