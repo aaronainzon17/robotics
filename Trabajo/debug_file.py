@@ -150,7 +150,7 @@ def straight_line(robot):
     v = 100
     pos = [0,400]
     robot.setSpeed(v, 0)  # Primera semicircunferencia
-    robot.check_position_3_values(pos[0], pos[1], np.deg2rad(90), np.Infinity, 10, np.deg2rad(1))
+    robot.check_position_3_values(pos[0], pos[1], np.deg2rad(90), np.Infinity, 10, np.deg2rad(90))
 
 def rotate_360(robot):
     robot.setNewPosition(0, 0, np.deg2rad(90))
