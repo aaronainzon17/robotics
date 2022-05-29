@@ -52,31 +52,31 @@ def getBlobs(frame, HSV_min=(5, 50, 50) , HSV_max=(15, 255, 255)):
 	#Se utilizan 2 inRange porque el rojo en HSV se encuentra entre 0-10 y 160-180 
 	
 	# Limites inferiores (0-10) Para Rojo
-	# red_0 = np.array([0, 80, 80])
-	# red_10 = np.array([10, 255, 255])
+	red_0 = np.array([0, 80, 80])
+	red_10 = np.array([10, 255, 255])
 
 	# Limites inferiores (0-10) Para Najarnja
-	red_0 = np.array([54,100,100])
-	red_10 = np.array([80,255,255])
+	#red_0 = np.array([54,100,100])
+	#red_10 = np.array([80,255,255])
 	
 	# Limites superiores (160-180) Para rojo
-	# red_160 = np.array([160,80,80])
-	# red_180 = np.array([179,255,255])
+	red_160 = np.array([160,80,80])
+	red_180 = np.array([179,255,255])
 
 	# Limites superiores (160-180) Para Naranja
 	#red_160 = np.array([130,110, 110])
 	#red_180 = np.array([140,120,120])
 
 	mask0_10 = cv2.inRange(img_hsv, red_0, red_10)
-	#mask_160_180 = cv2.inRange(img_hsv, red_160, red_180)
+	mask_160_180 = cv2.inRange(img_hsv, red_160, red_180)
 
-	#mask = mask0_10 + mask_160_180
+	mask = mask0_10 + mask_160_180
 
 	# Se pueden eliminar los blobs de ruido con erode y dilate
 
-	frame = cv2.bitwise_and(frame, frame, mask=mask0_10)
+	frame = cv2.bitwise_and(frame, frame, mask=mask)
 	
-	keypoints_red = detector.detect(mask0_10)
+	keypoints_red = detector.detect(mask)
 	
 	# documentation of SimpleBlobDetector is not clear on what kp.size is exactly, but it looks like the diameter of the blob.
 	if (len(keypoints_red) != 0):
