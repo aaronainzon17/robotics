@@ -148,7 +148,7 @@ def half_semicircle(robot):
 def straight_line(robot):
     robot.setNewPosition(0, 0, np.deg2rad(90))
     v = 100
-    pos = [0,400]
+    pos = [0,1000]
     robot.setSpeed(v, 0)  # Primera semicircunferencia
     robot.check_position_3_values(pos[0], pos[1], np.deg2rad(90), np.Infinity, 10, np.deg2rad(90))
 
@@ -172,7 +172,7 @@ def main(args):
         robot.startOdometry() 
 
         #half_semicircle(robot)
-        #straight_line(robot)
+        straight_line(robot)
         #rotate_360(robot)
         s_A_ocho(robot,120)
 
