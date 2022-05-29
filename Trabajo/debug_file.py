@@ -142,8 +142,8 @@ def half_semicircle(robot):
     w = np.rad2deg((float)(v/r))
 
     pos = [400,400]
-    robot.setSpeed(v, w)  # Primera semicircunferencia
-    robot.check_position_3_values(pos[0], pos[1], np.deg2rad(180), 10, 10, np.deg2rad(1))
+    robot.setSpeed(v, -w)  # Primera semicircunferencia
+    robot.check_position_3_values(pos[0], pos[1], np.deg2rad(0), 10, 10, np.deg2rad(1))
 
 def straight_line(robot):
     robot.setNewPosition(0, 0, np.deg2rad(90))
