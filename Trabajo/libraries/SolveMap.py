@@ -82,7 +82,7 @@ def solve_relative_map(robot, myMap, point_ini, point_end, ocho=False):
     # por los obstaculos no registrados 
     while not goal_reached and not lost:
 
-        prev_point = np.array([point_ini])
+        prev_point = np.array(point_ini)
         for point_map in myMap.currentPath:
             point = np.array([200+point_map[0]*400, 200+point_map[1]*400])
             point_prev = np.array([200+prev_point[0]*400, 200+prev_point[1]*400])
