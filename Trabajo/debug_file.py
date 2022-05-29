@@ -139,7 +139,7 @@ def half_semicircle(robot):
     # Comienza el circulo
     r = 400
     v = 100
-    w = np.rad2deg((float)(v/r))
+    w = robot.norm_pi(np.rad2deg((float)(v/r)))
 
     pos = [400,400]
     robot.setSpeed(v, -w)  # Primera semicircunferencia
