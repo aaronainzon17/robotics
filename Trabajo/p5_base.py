@@ -183,7 +183,7 @@ def main(args):
             #robot.detect_scape_cv2()
             # Se inicia la busqueda de la pelota 
             #print("Acaba el detect_scape")
-            #robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
+            robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
             #print("Acaba el track object")
             # pos = robot.readOdometry()
             # print('Empiezo en', pos)
