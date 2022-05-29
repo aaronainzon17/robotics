@@ -591,7 +591,7 @@ class Robot:
                 arr.append(self.BP.get_sensor(self.BP.PORT_2)) 
             except brickpi3.SensorError as error:
                 print(error) 
-        value = np.median(arr) * 10
+        value = np.median(arr)
         
         print('He leido', value)
         if  value < 2750:     #Se detecta el colo blanco entonces es el A
