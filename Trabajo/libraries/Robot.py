@@ -210,21 +210,21 @@ class Robot:
             real_v, real_w, deg_right_e, deg_left_e  = self.readSpeed()
             
             # Calcula los nuevos valores de la odometria
-            if real_w == 0:
-                d_x = (real_v * self.P) * np.cos(self.th.value)
-                d_y = (real_v * self.P) * np.sin(self.th.value)
-                d_th = 0
-            else:
-                gyros_now = self.read_gyros() #self.read_gyros()
-                
-                # El radio se calcula R = v/w
-                d_th = self.norm_pi(gyros_now - prev_gyros)
-                #print("Diferencial de th ",d_th,"Grados leidos del giroscopio",gyros_now)
-                #d_s = (real_v/real_w) * d_th
-                d_s = (deg_right_e * self.R + deg_left_e * self.R)/2 
-                d_x = d_s * np.cos(self.th.value + (d_th/2))
-                d_y = d_s * np.sin(self.th.value + (d_th/2))
-                prev_gyros = gyros_now
+            #if real_w == 0:
+            #    d_x = (real_v * self.P) * np.cos(self.th.value)
+            #    d_y = (real_v * self.P) * np.sin(self.th.value)
+            #    d_th = 0
+            #else:
+            gyros_now = self.read_gyros() #self.read_gyros()
+            
+            # El radio se calcula R = v/w
+            d_th = self.norm_pi(gyros_now - prev_gyros)
+            #print("Diferencial de th ",d_th,"Grados leidos del giroscopio",gyros_now)
+            #d_s = (real_v/real_w) * d_th
+            d_s = (deg_right_e * self.R + deg_left_e * self.R)/2 
+            d_x = d_s * np.cos(self.th.value + (d_th/2))
+            d_y = d_s * np.sin(self.th.value + (d_th/2))
+            prev_gyros = gyros_now
 
             # Actualiza la odometria con los nuevos valores en exclusion mutua
             self.lock_odometry.acquire()
