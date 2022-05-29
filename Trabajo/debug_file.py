@@ -21,7 +21,7 @@ from ficheros_codigo_auxiliar.sample_matching import find_template
 def s_A_ocho(robot, vel):
     """ La funcion ocho realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
-
+    robot.setNewPosition(600, 2800, np.deg2rad(-90))
     # Se mueve al centro de la primera celda
     #robot.go(600,2600, vel)
     robot.setSpeed(vel, 0)  # Giro de 45 deg a la derecha
