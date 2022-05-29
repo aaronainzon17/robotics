@@ -90,16 +90,12 @@ def solve_relative_map(robot, myMap, point_ini, point_end, ocho=False):
             
             print('Voy al punto', goal_point, 'desde', point_now)
             # Si de detecta obstaculo 
-            [obstaculo, en_pared] = robot.detectObstacle(point[0],point[1])
-            if obstaculo:
-                
+            # Si de detecta obstaculo 
+            if robot.detectObstacle(point[0],point[1]):
                 robot.setSpeed(0,0)
                 [_,_,th] = robot.readOdometry()
-                if en_pared:
-                    # se anyade el obsatculo al mapa en la pared 
-                    ocho = myMap.setNewObstacleWall(prev_point, th, ocho)
-                else: 
-                    ocho = myMap.setNewObstacleCenter(point_map, th, ocho)
+                # se anyade el obsatculo al mapa 
+                ocho = myMap.setNewObstacle(prev_point, th, ocho)
                 
                 # Se recalcula el camino con el nuevo obstaculo 
                 if not myMap.replanPath(prev_point[0],prev_point[1],point_end[0], point_end[1],ocho):
