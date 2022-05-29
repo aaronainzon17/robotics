@@ -144,7 +144,7 @@ class Robot:
     def readSpeed(self):
         """ Devuelve la velocidad lineal y angular actual del robot """
 
-        self.lock_odometry.acquire()
+        #self.lock_odometry.acquire()
         # SC
         [rightEngine, leftEngine] = [self.BP.get_motor_encoder(self.BP.PORT_B),
                                      self.BP.get_motor_encoder(self.BP.PORT_C)]
@@ -166,7 +166,7 @@ class Robot:
         # Calculo de las velocidades lineal y angular
         vel = np.dot(trac, grados_ruedas)
 
-        self.lock_odometry.release()
+        #self.lock_odometry.release()
 
         return vel[0], vel[1], np.deg2rad(deg_right_e), np.deg2rad(deg_left_e)
 
