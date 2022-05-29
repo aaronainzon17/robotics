@@ -643,9 +643,9 @@ class Robot:
             center_table = [800,2000]
         
         # Se buscan las imagenes
-        self.go(first_table[0],first_table[1],150)
-        self.go(center_table[0],center_table[1],150)
-        self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
+        #self.go(first_table[0],first_table[1],150)
+        #self.go(center_table[0],center_table[1],150)
+        #self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
        
         cam.capture(rawCapture, format="bgr")
         frame = rawCapture.array 
@@ -682,6 +682,7 @@ class Robot:
         
         cam.close()
         print('Salgo por la casilla', self.casilla_salida)
+        time.sleep(1)
         
         # Una vez se ha encontrado la salida se sale
         #self.go(self.casilla_salida[0],self.casilla_salida[1])
