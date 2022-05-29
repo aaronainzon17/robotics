@@ -180,7 +180,8 @@ def main(args):
 
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":
-            robot.detect_scape_cv2()
+            #robot.detect_scape_cv2()
+            robot.detect_scape()
             # Se inicia la busqueda de la pelota 
             #print("Acaba el detect_scape")
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
