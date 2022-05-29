@@ -143,7 +143,14 @@ def half_semicircle(robot):
 
     pos = [400,400]
     robot.setSpeed(v, w)  # Primera semicircunferencia
-    robot.check_position_3_values(pos[0], pos[1], np.deg2rad(0), 10, 10, np.deg2rad(1))
+    robot.check_position_3_values(pos[0], pos[1], np.deg2rad(180), 10, 10, np.deg2rad(1))
+
+def straight_line(robot):
+    robot.setNewPosition(0, 0, np.deg2rad(90))
+    v = 100
+    pos = [0,400]
+    robot.setSpeed(v, 0)  # Primera semicircunferencia
+    robot.check_position_3_values(pos[0], pos[1], np.deg2rad(90), 10, 10, np.deg2rad(1))
 
 def rotate_360(robot):
     robot.setNewPosition(0, 0, np.deg2rad(90))
@@ -164,8 +171,8 @@ def main(args):
         # 1. Se incia la odometria u el proceso update odometry
         robot.startOdometry() 
 
-        half_semicircle(robot)
-
+        #half_semicircle(robot)
+        straight_line(robot)
         #rotate_360(robot)
 
         robot.stopOdometry()
