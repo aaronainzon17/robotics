@@ -96,13 +96,6 @@ def getBlobs(frame, HSV_min=(5, 50, 50) , HSV_max=(15, 255, 255)):
 
 	return biggest
 
-cam = picamera.PiCamera()
-cam.resolution = (640,480)
-cam.framerate = 32 
-rawCapture = PiRGBArray(cam, size=(640, 480))
-
-time.sleep(0.1)
-
 def detect_red(frame):
 	img_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 	#Se utilizan 2 inRange porque el rojo en HSV se encuentra entre 0-10 y 160-180 
@@ -125,6 +118,13 @@ def detect_red(frame):
 			red_pixels+=1
 	print(red_pixels)
 	return red_pixels
+
+cam = picamera.PiCamera()
+cam.resolution = (640,480)
+cam.framerate = 32 
+rawCapture = PiRGBArray(cam, size=(640, 480))
+
+time.sleep(0.1)
 
 while(True):
 	cam.capture(rawCapture, format="bgr", use_video_port=True)
