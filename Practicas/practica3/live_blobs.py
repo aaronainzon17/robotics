@@ -136,6 +136,7 @@ while(True):
 	#cv2.imshow("Capture", frame)
 	#cv2.waitKey(0)
 	blob = getBlobs(frame)  # Se devuelve el blob mas grande
+	detect_red(frame)
 	#if blob is not None:
 	#	print('EL bloob esta en', blob.pt[0], blob.pt[1])
 	#	print('El tamanyo del blob es', blob.size)
