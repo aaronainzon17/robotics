@@ -584,37 +584,38 @@ class Robot:
         
     def detectar_recorrido(self):
         value = 0.0
-        while value <= 2000:
+            
+        arr = []
+        for i in range(20):
             try:
-                value = self.BP.get_sensor(self.BP.PORT_2)
-                print('He leido', value)
-                if value > 2000 and value < 2750:     #Se detecta el colo blanco entonces es el A
-                    # Se indican las coordenadas iniciales del robot 
-                    self.x.value  = 600
-                    self.y.value = 2800
-                    self.th.value = self.norm_pi(np.deg2rad(-90))
-                    self.th_ini.value = self.th.value
-                    # Se indican las imagenes a detectar
-                    self.img_salida = './R2-D2_s.png'
-                    self.img_NO_salida = './BB8_s.png'
-                    self.mapa = 'A'
-                    return "mapaA_CARRERA.txt"
-                elif value > 2000 :
-                    # Se indican las coordenadas iniciales del robot 
-                    self.x.value = 2200
-                    self.y.value = 2800
-                    self.th.value = self.norm_pi(np.deg2rad(-90))
-                    self.th_ini.value = self.th.value
-                    # Se indican las imagenes a detectar
-                    self.img_salida = './BB8_s.png'
-                    self.img_NO_salida = './R2-D2_s.png'
-                    self.mapa = 'B'
-                    return "mapaB_CARRERA.txt"
-                else:
-                    return None
+                arr.append(self.BP.get_sensor(self.BP.PORT_2)) 
             except brickpi3.SensorError as error:
-                print(error)
-            time.sleep(0.02)
+                print(error) 
+        value = np.median(arr) * 10
+        
+        print('He leido', value)
+        if  value < 2750:     #Se detecta el colo blanco entonces es el A
+            # Se indican las coordenadas iniciales del robot 
+            self.x.value  = 600
+            self.y.value = 2800
+            self.th.value = self.norm_pi(np.deg2rad(-90))
+            self.th_ini.value = self.th.value
+            # Se indican las imagenes a detectar
+            self.img_salida = './R2-D2_s.png'
+            self.img_NO_salida = './BB8_s.png'
+            self.mapa = 'A'
+            return "mapaA_CARRERA.txt"
+        else:
+            # Se indican las coordenadas iniciales del robot 
+            self.x.value = 2200
+            self.y.value = 2800
+            self.th.value = self.norm_pi(np.deg2rad(-90))
+            self.th_ini.value = self.th.value
+            # Se indican las imagenes a detectar
+            self.img_salida = './BB8_s.png'
+            self.img_NO_salida = './R2-D2_s.png'
+            self.mapa = 'B'
+            return "mapaB_CARRERA.txt"
 
     # Esta funcion busca y se acerca al objeto hasta estar en p
     def detect_scape(self):
