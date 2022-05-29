@@ -82,16 +82,16 @@ def solve_relative_map(robot, myMap, point_ini, point_end, ocho=False):
     # por los obstaculos no registrados 
     while not goal_reached and not lost:
 
-        prev_point = np.array([200+point_ini[0]*400, 200+point_ini[1]*400])
+        prev_point = np.array([point_ini])
         for point_map in myMap.currentPath:
             point = np.array([200+point_map[0]*400, 200+point_map[1]*400])
+            point_prev = np.array([200+prev_point[0]*400, 200+prev_point[1]*400])
             point_now = np.array(robot.readOdometry())
-            goal_point = point_now[:1] + (point - prev_point)
+            goal_point = point_now[:1] + (point - point_prev)
             
             print('Voy al punto', goal_point, 'desde', point_now)
             # Si de detecta obstaculo 
-            # Si de detecta obstaculo 
-            if robot.detectObstacle(point[0],point[1]):
+            if robot.detectObstacle(goal_point[0],goal_point[1]):
                 robot.setSpeed(0,0)
                 [_,_,th] = robot.readOdometry()
                 # se anyade el obsatculo al mapa 
@@ -113,7 +113,7 @@ def solve_relative_map(robot, myMap, point_ini, point_end, ocho=False):
                 goal_reached = True
 
             # Se mueve el robot a la siguiente celda
-            robot.go(goal_point[0],goal_point[1],150)
+            robot.go(goal_point[0],goal_point[1],120)
             path2print.append([goal_point[0],goal_point[1], 1.57])
             prev_point = point_map
     
