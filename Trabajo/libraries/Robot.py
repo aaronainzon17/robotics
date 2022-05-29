@@ -316,7 +316,7 @@ class Robot:
                 y_bl = self.y_b.value
 
                 # Si el centro del blob esta en la parte inferior centrada de la imagen se considera que esta cogido
-                if self.red_pixels.value > 300:
+                if self.red_pixels.value > 170:
                     self.setSpeed(0,0)
                     finished = True
                 else:
