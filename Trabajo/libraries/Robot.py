@@ -763,7 +763,7 @@ class Robot:
         v = vel
         w = np.rad2deg((float)(v/r))
         self.setSpeed(0,30)
-        self.check_angle(self.norm_pi(np.deg2rad(-180)), np.deg2rad(1))
+        self.check_angle(np.deg2rad(180), np.deg2rad(1))
         self.setSpeed(v, -w)  # Primera semicircunferencia
         self.check_position_3_values(2200, self.casilla_salida[1], np.deg2rad(90), np.Infinity, 10, np.deg2rad(10))
         self.setSpeed(0,0)
