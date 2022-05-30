@@ -578,11 +578,10 @@ class Robot:
         # Se calcula el espacio a recorrer 
         #espacio = np.linalg.norm([x_goal - x_now, y_goal - y_now])
         espacio = 300
-        # Se lee la distancia que recoge el sensor (*10 para pasarlo a mm)
-        value = self.BP.get_sensor(self.BP.PORT_1) * 10
         
         # Se devuelve True si hay obstaculo, False si no
         if value < espacio:
+            print('Obstaculo detectado a', value)
             return True
         elif value > 0.0:
             return False
