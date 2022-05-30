@@ -203,13 +203,11 @@ def main(args):
             robot.scape(120)
             
         else: # "mapaB_CARRERA.txt"
-            robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
 
-            imagenFin = cv2.imread(bb8, cv2.IMREAD_COLOR)
-            imagenOtro = cv2.imread(r2d2, cv2.IMREAD_COLOR)
-            target_robot_file = bb8
             s_B_ocho(robot, 150)
-            solveMap(robot,myMap, [5,2],[3,3])
+            solve_relative_map(robot,myMap, [5,2],[3,3])
+            robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
+            robot.detect_scape_cv2()
 
             #Ahora toca corregir la homografia
 
