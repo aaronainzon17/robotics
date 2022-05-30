@@ -759,14 +759,14 @@ class Robot:
 
     def scape(self, vel):
         # Una vez se ha encontrado la salida se sale
-        r = 500
+        r = 550
         v = vel
         w = np.rad2deg((float)(v/r))
         self.setSpeed(0,30)
         self.check_angle(np.deg2rad(180), np.deg2rad(1))
         self.setSpeed(v, -w)  # Primera semicircunferencia
-        self.check_position_3_values(2200, self.casilla_salida[1], np.deg2rad(90), np.Infinity, 10, np.deg2rad(10))
-        self.setSpeed(0,0)
+        self.check_position_3_values(self.casilla_salida[0], 2200, np.deg2rad(90), np.Infinity, 10, np.deg2rad(10))
+        self.setSpeed(100,0)
 
     def relocate(self):
         self.setSpeed(0,15)
