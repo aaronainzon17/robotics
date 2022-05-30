@@ -789,7 +789,7 @@ class Robot:
         self.check_angle(np.deg2rad(0), np.deg2rad(1))
         self.setSpeed(v, w)  # Primera semicircunferencia
         self.check_position_3_values(self.casilla_salida[0], 2400, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
-        self.setSpeed(0,-15)
+        self.setSpeed(0,15)
         self.check_position_3_values(self.casilla_salida[0], 3000, np.deg2rad(90), np.Infinity,  np.Infinity, np.deg2rad(1))
         self.setSpeed(100,0)
         self.check_position_3_values(self.casilla_salida[0], 3000, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
