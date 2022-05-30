@@ -765,7 +765,7 @@ class Robot:
         self.setSpeed(0,30)
         self.check_angle(np.deg2rad(180), np.deg2rad(1))
         self.setSpeed(v, -w)  # Primera semicircunferencia
-        self.check_position_3_values(self.casilla_salida[0], 2200, np.deg2rad(90), np.Infinity, 10, np.deg2rad(10))
+        self.check_position_3_values(self.casilla_salida[0], 2400, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
         self.setSpeed(100,0)
 
     def relocate(self):
