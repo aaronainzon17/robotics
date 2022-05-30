@@ -335,7 +335,7 @@ class Robot:
                 targetPositionReached = False
                 triedCatch = True
 
-        time.sleep(1)           
+        #time.sleep(1)           
         return finished
 
     # Funcion utilizada para decidir la velocidad y direccion del robot
