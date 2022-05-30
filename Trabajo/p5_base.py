@@ -80,15 +80,16 @@ def s_B_ocho(robot, vel):
     # Se mueve al centro de la primera celda
     #robot.go(600,2600, vel)
     robot.setSpeed(vel, 0)
-    robot.check_position_3_values(2200,2600, np.deg2rad(-90),10, 5, np.deg2rad(2))
+    robot.check_position_3_values(2200,2600, np.deg2rad(-90),np.Infinity, 5, np.deg2rad(10))
+
     # Comienza el circulo
     r = 400
     v = vel
     w = np.rad2deg((float)(v/r))
 
     pos = [5,6]
-    robot.setSpeed(0, w)  # Giro de 45 deg a la izquierda
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), np.Infinity, np.Infinity, np.deg2rad(2))
+    robot.setSpeed(0, 30)  # Giro de 45 deg a la izquierda
+    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), np.Infinity, np.Infinity, np.deg2rad(1))
 
     pos = [5,4]
     robot.setSpeed(v, w)  # Primera semicircunferencia
@@ -98,9 +99,9 @@ def s_B_ocho(robot, vel):
     robot.setSpeed(v, -w)  # Segunda semicircunferencia
     robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), 10, 400, np.deg2rad(10))
 
-    pos = [5,2]
-    robot.setSpeed(0, -30)  # Giro de 45 deg a la derecha
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-90), np.Infinity, np.Infinity, np.deg2rad(2))
+    #pos = [5,2]
+    #robot.setSpeed(0, -30)  # Giro de 45 deg a la derecha
+    #robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-90), np.Infinity, np.Infinity, np.deg2rad(2))
 
 def s_B_(robot, vel):
     """ La funcion s_B_ realiza la trayectoria de s del mapa B basandose en
@@ -179,27 +180,14 @@ def main(args):
         print("Start : %s" % time.ctime())       
 
         # Trayectoria en s
-        if mapa == "mapaA_CARRERA.txt":
-            #robot.detect_scape_cv2()
-            #robot.detect_scape()
-            # Se inicia la busqueda de la pelota 
-            #print("Acaba el detect_scape")
-            #robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
-            #print("Acaba el track object")
-            # pos = robot.readOdometry()
-            # print('Empiezo en', pos)
-            # robot.setNewPosition(0,0,np.deg2rad(-180))
-            
+        if mapa == "mapaA_CARRERA.txt":  
             s_A_ocho(robot, 120)
             solve_relative_map(robot,myMap, [1,2],[3,3])
-            #print('Hago solveMap')
-            #solveMap(robot,myMap, [1,2],[3,3])
-            #robot.setNewPosition(1600,1400,np.deg2rad(90))
         
             # # Se inicia la busqueda de la pelota 
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
             robot.detect_scape_cv2()
-            #Sale desplues de coger la pelota
+            #Sale despues de coger la pelota
             robot.scape(120)
             
         else: # "mapaB_CARRERA.txt"
@@ -208,6 +196,8 @@ def main(args):
             solve_relative_map(robot,myMap, [5,2],[3,3])
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
             robot.detect_scape_cv2()
+            #Sale despues de coger la pelota
+            robot.scape(120)
 
 
         print("End : %s" % time.ctime())
