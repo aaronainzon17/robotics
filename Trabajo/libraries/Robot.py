@@ -757,10 +757,14 @@ class Robot:
         #self.go(self.casilla_salida[0],self.casilla_salida[1])
         #self.go(self.casilla_salida[0],(self.casilla_salida[1] + 400))
 
-    def scape(self):
+    def scape(self, vel):
         # Una vez se ha encontrado la salida se sale
-        self.go(self.casilla_salida[0],self.casilla_salida[1],100)
-        self.go(self.casilla_salida[0],(self.casilla_salida[1] + 400),100)
+        r = 600
+        v = vel
+        w = np.rad2deg((float)(v/r))
+        self.setSpeed(v, -w)  # Primera semicircunferencia
+        self.check_position_3_values(self.casilla_salida[0], self.casilla_salida[1], np.deg2rad(90), 10, np.Infinity, np.deg2rad(10))
+        self.setSpeed(0,0)
 
     def relocate(self):
         self.setSpeed(0,15)
