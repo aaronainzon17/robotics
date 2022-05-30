@@ -192,7 +192,7 @@ def main(args):
             
         else: # "mapaB_CARRERA.txt"
 
-            s_B_ocho(robot, 150)
+            s_B_ocho(robot, 120)
             solve_relative_map(robot,myMap, [5,2],[3,3])
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
             robot.detect_scape_cv2()
