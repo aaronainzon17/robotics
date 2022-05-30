@@ -85,7 +85,7 @@ class Robot:
         
         # boolean to show if odometry updates are finished
         self.finished = Value('b', 1)
-        self.finished = Value('b', False)
+        self.parar_camara = Value('b', False)
 
         # if we want to block several instructions to be run together, we may want to use an explicit Lock
         self.lock_odometry = Lock()
