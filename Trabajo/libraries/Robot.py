@@ -766,13 +766,13 @@ class Robot:
         v = vel
         w = np.rad2deg((float)(v/r))
         if self.mapa == 'A' and self.casilla_salida == [1400,2600]:
-            self.salir_izquierda()
+            self.salir_izquierda(v,w)
         elif self.mapa == 'A' and self.casilla_salida == [2600,2600]:
-            self.salir_derecha()
+            self.salir_derecha(v,w)
         elif self.mapa == 'B' and self.casilla_salida == [200,2600]:
-            self.salir_izquierda()
+            self.salir_izquierda(v,w)
         elif self.mapa == 'B' and self.casilla_salida == [1400,2600]:          
-            self.salir_derecha()
+            self.salir_derecha(v,w)
 
     def salir_izquierda(self,v,w):
         self.setSpeed(0,30)
