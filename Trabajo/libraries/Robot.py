@@ -577,7 +577,7 @@ class Robot:
         [x_now, y_now, _] = self.readOdometry()
         # Se calcula el espacio a recorrer 
         #espacio = np.linalg.norm([x_goal - x_now, y_goal - y_now])
-        espacio = 30
+        espacio = 300
         # Se lee la distancia que recoge el sensor (*10 para pasarlo a mm)
         value = self.BP.get_sensor(self.BP.PORT_1) * 10
         
