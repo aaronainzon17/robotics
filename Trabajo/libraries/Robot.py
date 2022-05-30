@@ -577,7 +577,7 @@ class Robot:
         [x_now, y_now, _] = self.readOdometry()
         # Se calcula el espacio a recorrer 
         #espacio = np.linalg.norm([x_goal - x_now, y_goal - y_now])
-        espacio = 300
+        espacio = 250
         
         # Se devuelve True si hay obstaculo, False si no
         if value < espacio:
