@@ -93,7 +93,7 @@ def s_B_ocho(robot, vel):
 
     pos = [5,4]
     robot.setSpeed(v, -w)  # Primera semicircunferencia
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(180), 10, np.Infinity, np.deg2rad(10))
+    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), 10, np.Infinity, np.deg2rad(10))
     
     pos = [5,2]
     robot.setSpeed(v, w)  # Segunda semicircunferencia
