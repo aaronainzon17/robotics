@@ -85,6 +85,7 @@ class Robot:
         
         # boolean to show if odometry updates are finished
         self.finished = Value('b', 1)
+        self.finished = Value('b', False)
 
         # if we want to block several instructions to be run together, we may want to use an explicit Lock
         self.lock_odometry = Lock()
@@ -319,6 +320,7 @@ class Robot:
                 if self.red_pixels.value > 170:
                     self.setSpeed(0,0)
                     finished = True
+                    self.parar_camara.value = True
                 else:
                     print('No se ve la pelota en las pinzas')
                     print('x',x_bl, ', y', y_bl)
@@ -332,7 +334,8 @@ class Robot:
                 self.catch() # Se inicia el proceso de captura 
                 targetPositionReached = False
                 triedCatch = True
-                   
+
+        time.sleep(1)           
         return finished
 
     # Funcion utilizada para decidir la velocidad y direccion del robot
@@ -426,7 +429,7 @@ class Robot:
         self.rows.value = 480
         self.cols.value = 640
         #Mientras no se detengaa el robot, se siguen captando imagenes
-        while not self.finished.value:
+        while not self.parar_camara.value:
             cam.capture(rawCapture, format="bgr", use_video_port=True)
             # clear the stream in preparation for the next frame
             rawCapture.truncate(0)
@@ -441,6 +444,7 @@ class Robot:
                 self.is_blob.value = True
             else:
                 self.is_blob.value = False
+        cam.close()
     
     def setNewPosition(self,x_new, y_new, th_new):
         """Permite actualizar la posicion del la odometria por si es necesario relocalizarse"""
@@ -714,8 +718,9 @@ class Robot:
         #ESTO LO COMENTO PORQUE SOLO QUIERO COMPROBAR LA CAMARA
         # Se buscan las imagenes
         # self.go(first_table[0],first_table[1],150)
-        # self.go(center_table[0],center_table[1],150)
-        # self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
+        self.go(center_table[0],center_table[1],150)
+        #self.align()
+        self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
        
         _, frame = vid.read()
         
