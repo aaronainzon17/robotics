@@ -109,6 +109,7 @@ def solve_relative_map(robot, myMap, point_ini, point_end, ocho=False):
                     lost = True
                 
                 goal_reached = False
+                prev_point = point_map
                 break
             else:
                 goal_reached = True
