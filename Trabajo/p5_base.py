@@ -200,7 +200,7 @@ def main(args):
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
             robot.detect_scape_cv2()
             #Sale desplues de coger la pelota
-            robot.scape()
+            robot.scape(120)
             
         else: # "mapaB_CARRERA.txt"
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
