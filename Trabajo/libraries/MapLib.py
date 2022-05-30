@@ -489,7 +489,7 @@ class Map2D:
                 # Si no existe camino posibe 
                 existePath = False
         #REVISAR
-        self.currentPath = self.currentPath#[1:]
+        self.currentPath = self.currentPath[1:]
         if existePath:
             return pathFound
         else:
