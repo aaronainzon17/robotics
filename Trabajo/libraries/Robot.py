@@ -576,12 +576,13 @@ class Robot:
         value = self.read_ultrasonyc()
         [x_now, y_now, _] = self.readOdometry()
         # Se calcula el espacio a recorrer 
-        espacio = np.linalg.norm([x_goal - x_now, y_goal - y_now])
+        #espacio = np.linalg.norm([x_goal - x_now, y_goal - y_now])
+        espacio = 30
         # Se lee la distancia que recoge el sensor (*10 para pasarlo a mm)
         value = self.BP.get_sensor(self.BP.PORT_1) * 10
         
         # Se devuelve True si hay obstaculo, False si no
-        if value < espacio and value > 0.0:
+        if value < espacio:
             return True
         elif value > 0.0:
             return False
