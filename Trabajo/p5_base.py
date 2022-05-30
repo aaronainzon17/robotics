@@ -184,20 +184,20 @@ def main(args):
             #robot.detect_scape()
             # Se inicia la busqueda de la pelota 
             #print("Acaba el detect_scape")
-            robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
+            #robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
             #print("Acaba el track object")
             # pos = robot.readOdometry()
             # print('Empiezo en', pos)
             # robot.setNewPosition(0,0,np.deg2rad(-180))
             
-            #s_A_ocho(robot, 120)
-            #solve_relative_map(robot,myMap, [1,2],[3,3])
+            s_A_ocho(robot, 120)
+            solve_relative_map(robot,myMap, [1,2],[3,3])
             #print('Hago solveMap')
             #solveMap(robot,myMap, [1,2],[3,3])
             #robot.setNewPosition(1600,1400,np.deg2rad(90))
             # robot.detect_scape_cv2()
             # # Se inicia la busqueda de la pelota 
-            # robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
+            robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
 
             #Sale desplues de coger la pelota
             #robot.scape()
