@@ -208,8 +208,7 @@ def main(args):
             solve_relative_map(robot,myMap, [5,2],[3,3])
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
             robot.detect_scape_cv2()
-
-            #Ahora toca corregir la homografia
+            
 
         print("End : %s" % time.ctime())
 
