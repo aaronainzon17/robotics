@@ -762,10 +762,32 @@ class Robot:
         r = 550
         v = vel
         w = np.rad2deg((float)(v/r))
+        if self.mapa == 'A' and self.casilla_salida == [1400,2600]:
+            self.salir_izquierda()
+        elif self.mapa == 'A' and self.casilla_salida == [2600,2600]:
+            self.salir_derecha()
+        elif self.mapa == 'B' and self.casilla_salida == [200,2600]:
+            self.salir_izquierda()
+        elif self.mapa == 'B' and self.casilla_salida == [1400,2600]:          
+            self.salir_derecha()
+
+    def salir_izquierda(self,v,w):
         self.setSpeed(0,30)
         self.check_angle(np.deg2rad(180), np.deg2rad(1))
         self.setSpeed(v, -w)  # Primera semicircunferencia
         self.check_position_3_values(self.casilla_salida[0], 2400, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
+        self.setSpeed(0,-15)
+        self.check_position_3_values(self.casilla_salida[0], 3000, np.deg2rad(90), np.Infinity,  np.Infinity, np.deg2rad(1))
+        self.setSpeed(100,0)
+        self.check_position_3_values(self.casilla_salida[0], 3000, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
+
+    def salir_derecha(self,v,w):
+        self.setSpeed(0,-30)
+        self.check_angle(np.deg2rad(0), np.deg2rad(1))
+        self.setSpeed(v, w)  # Primera semicircunferencia
+        self.check_position_3_values(self.casilla_salida[0], 2400, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
+        self.setSpeed(0,15)
+        self.check_position_3_values(self.casilla_salida[0], 3000, np.deg2rad(90), np.Infinity,  np.Infinity, np.deg2rad(1))
         self.setSpeed(100,0)
         self.check_position_3_values(self.casilla_salida[0], 3000, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
 
