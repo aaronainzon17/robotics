@@ -80,9 +80,9 @@ def solve_relative_map(robot, myMap, point_ini, point_end, ocho=False):
     lost = False
     # Se intenta resolver el camino hasta que se consiga o no haya camino disponible 
     # por los obstaculos no registrados 
+    prev_point = np.array(point_ini)
     while not goal_reached and not lost:
 
-        prev_point = np.array(point_ini)
         for point_map in myMap.currentPath:
             print('Me manda a:', point_map, 'desde:', prev_point)
             point = np.array([200+point_map[0]*400, 200+point_map[1]*400])
@@ -109,7 +109,7 @@ def solve_relative_map(robot, myMap, point_ini, point_end, ocho=False):
                     lost = True
                 
                 goal_reached = False
-                prev_point = point_map
+                #prev_point = point_map
                 break
             else:
                 goal_reached = True
