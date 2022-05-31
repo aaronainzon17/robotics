@@ -74,7 +74,7 @@ def s_B_ocho(robot, vel):
 
     pos = [5,6]
     robot.setSpeed(0, 30)  # Giro de 45 deg a la izquierda
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), np.Infinity, np.Infinity, np.deg2rad(1))
+    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), np.Infinity, np.Infinity, np.deg2rad(2))
     robot.write_log()
 
     pos = [5,4]
