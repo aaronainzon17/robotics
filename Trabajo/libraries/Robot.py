@@ -764,7 +764,7 @@ class Robot:
         print('Salgo por la casilla', self.casilla_salida)
         vid.release()
 
-        #cv2.destroyAllWindows()
+        cv2.destroyAllWindows()
         #time.sleep(1)
 
     def scape(self, vel):
