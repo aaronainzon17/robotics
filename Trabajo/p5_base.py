@@ -131,6 +131,7 @@ def main(args):
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
             robot.detect_scape_cv2()
             #Sale despues de coger la pelota
+            print('sale detectScape')
             robot.scape(120)
             
         else: # "mapaB_CARRERA.txt"
