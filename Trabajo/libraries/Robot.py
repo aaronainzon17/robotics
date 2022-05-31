@@ -764,17 +764,13 @@ class Robot:
         print('Salgo por la casilla', self.casilla_salida)
         vid.release()
 
-        cv2.destroyAllWindows()
-        time.sleep(1)
-        # Una vez se ha encontrado la salida se sale
-        #self.go(self.casilla_salida[0],self.casilla_salida[1])
-        #self.go(self.casilla_salida[0],(self.casilla_salida[1] + 400))
+        #cv2.destroyAllWindows()
+        #time.sleep(1)
 
     def scape(self, vel):
         self.write_log()
         # Una vez se ha encontrado la salida se sale
-        r = 550
-        
+       
         if self.mapa == 'A' and self.casilla_salida == [1400,2800]:
             self.salir_izquierda(vel)
         elif self.mapa == 'A' and self.casilla_salida == [2600,2800]:
