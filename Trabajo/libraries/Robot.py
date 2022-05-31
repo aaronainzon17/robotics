@@ -782,6 +782,7 @@ class Robot:
         self.write_log()
 
     def salir_izquierda(self,vel):
+        print('salgo Izquierda')
         self.setSpeed(0,30)
         self.check_angle(np.deg2rad(180), np.deg2rad(1))
         # se lee la distancia a la pared 
@@ -797,6 +798,7 @@ class Robot:
         self.check_position_3_values(self.casilla_salida[0], 3000, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
 
     def salir_derecha(self,vel):
+        print('Salgo derecha')
         self.setSpeed(0,-30)
         self.check_angle(np.deg2rad(0), np.deg2rad(1))
         # se lee la distancia a la pared 
