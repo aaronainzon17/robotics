@@ -774,33 +774,42 @@ class Robot:
         self.write_log()
         # Una vez se ha encontrado la salida se sale
         r = 550
-        v = vel
-        w = np.rad2deg((float)(v/r))
-        if self.mapa == 'A' and self.casilla_salida == [1400,2600]:
-            self.salir_izquierda(v,w)
-        elif self.mapa == 'A' and self.casilla_salida == [2600,2600]:
-            self.salir_derecha(v,w)
-        elif self.mapa == 'B' and self.casilla_salida == [200,2600]:
-            self.salir_izquierda(v,w)
-        elif self.mapa == 'B' and self.casilla_salida == [1400,2600]:          
-            self.salir_derecha(v,w)
+        
+        if self.mapa == 'A' and self.casilla_salida == [1400,2800]:
+            self.salir_izquierda(vel)
+        elif self.mapa == 'A' and self.casilla_salida == [2600,2800]:
+            self.salir_derecha(vel)
+        elif self.mapa == 'B' and self.casilla_salida == [200,2800]:
+            self.salir_izquierda(vel)
+        elif self.mapa == 'B' and self.casilla_salida == [1400,2800]:          
+            self.salir_derecha(vel)
         self.write_log()
 
-    def salir_izquierda(self,v,w):
+    def salir_izquierda(self,vel):
         self.setSpeed(0,30)
         self.check_angle(np.deg2rad(180), np.deg2rad(1))
+        # se lee la distancia a la pared 
+        r = self.read_ultrasonyc() - 50
+        v = vel
+        w = np.rad2deg((float)(v/r))
+        _, y, _ = self.readOdometry()
         self.setSpeed(v, -w)  # Primera semicircunferencia
-        self.check_position_3_values(self.casilla_salida[0], 2400, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
+        self.check_position_3_values(self.casilla_salida[0], y + r, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
         self.setSpeed(0,-15)
         self.check_position_3_values(self.casilla_salida[0], 3000, np.deg2rad(90), np.Infinity,  np.Infinity, np.deg2rad(1))
         self.setSpeed(100,0)
         self.check_position_3_values(self.casilla_salida[0], 3000, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
 
-    def salir_derecha(self,v,w):
+    def salir_derecha(self,vel):
         self.setSpeed(0,-30)
         self.check_angle(np.deg2rad(0), np.deg2rad(1))
+        # se lee la distancia a la pared 
+        r = self.read_ultrasonyc() - 50
+        v = vel
+        w = np.rad2deg((float)(v/r))
+        _, y, _ = self.readOdometry()
         self.setSpeed(v, w)  # Primera semicircunferencia
-        self.check_position_3_values(self.casilla_salida[0], 2400, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
+        self.check_position_3_values(self.casilla_salida[0], y + r, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
         self.setSpeed(0,15)
         self.check_position_3_values(self.casilla_salida[0], 3000, np.deg2rad(90), np.Infinity,  np.Infinity, np.deg2rad(1))
         self.setSpeed(100,0)
