@@ -110,6 +110,9 @@ class Robot:
         self.img_NO_salida = None
         self.casilla_salida = None 
 
+        # Fichero de log odometria
+        self.log = None
+
         
 
     def setSpeed(self, v, w):
@@ -200,7 +203,7 @@ class Robot:
         # Fichero de log
         if os.path.exists("log_odometry.log"):
             os.remove("log_odometry.log")
-        log = open("log_odometry.log", "a")
+        self.log = open("log_odometry.log", "a")
         prev_gyros = 0.0
 
         while not self.finished.value:
@@ -238,7 +241,7 @@ class Robot:
             self.lock_odometry.release()
             
             #Se escribe la odometria
-            self.write_log(log)
+            #self.write_log()
 
             tEnd = time.clock()
             elapsed = self.P - (tEnd - tIni)
@@ -248,16 +251,16 @@ class Robot:
                 print('No sleep')
 
         # Escribe en el LOG los valores finales de la odometria
-        self.write_log(log)
+        self.write_log()
 
 
-    def write_log(self,log):
+    def write_log(self):
         """Funcion que escribe la odometria actual en el fichero de log"""
         [x, y, th] = self.readOdometry()
         self.lock_odometry.acquire()
         # SC
         coord = str(x) + ',' + str(y) + ',' + str(th) + '\n'
-        log.write(coord)
+        self.log.write(coord)
         self.lock_odometry.release()
 
     def read_gyros(self):
@@ -321,6 +324,7 @@ class Robot:
                     self.setSpeed(0,0)
                     finished = True
                     self.parar_camara.value = True
+                    self.write_log()
                 else:
                     print('No se ve la pelota en las pinzas')
                     print('x',x_bl, ', y', y_bl)
@@ -455,6 +459,7 @@ class Robot:
     def go(self, x_goal, y_goal, speed):
         # Alinea al robot con el siguiente punto
         self.align(x_goal, y_goal, np.deg2rad(1))
+        self.write_log()
         _,_,th = self.readOdometry()
         if abs(abs(th) - np.deg2rad(90)) < np.deg2rad(5):
             x_err = np.Infinity
@@ -695,7 +700,7 @@ class Robot:
     # Esta funcion busca y se acerca al objeto hasta estar en p
     def detect_scape_cv2(self):
         # Si la salida no se ha encontrado
-        
+        self.write_log()
         #time.sleep(2)
         # define a video capture object
         #vid = cv2.VideoCapture(0,cv2.CAP_DSHOW)
@@ -761,6 +766,7 @@ class Robot:
         #self.go(self.casilla_salida[0],(self.casilla_salida[1] + 400))
 
     def scape(self, vel):
+        self.write_log()
         # Una vez se ha encontrado la salida se sale
         r = 550
         v = vel
@@ -773,6 +779,7 @@ class Robot:
             self.salir_izquierda(v,w)
         elif self.mapa == 'B' and self.casilla_salida == [1400,2600]:          
             self.salir_derecha(v,w)
+        self.write_log()
 
     def salir_izquierda(self,v,w):
         self.setSpeed(0,30)
