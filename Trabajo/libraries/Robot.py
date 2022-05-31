@@ -111,7 +111,7 @@ class Robot:
         self.casilla_salida = None 
 
         # Fichero de log odometria
-        self.log = None
+        self.log = []
 
         
 
@@ -199,11 +199,7 @@ class Robot:
     # You may want to pass additional shared variables besides the odometry values and stop flag
     def updateOdometry(self):
         """ Actualiza la odometria con una frecuencia establecidad por el perido P """
-
-        # Fichero de log
-        if os.path.exists("log_odometry.log"):
-            os.remove("log_odometry.log")
-        self.log = open("log_odometry.log", "a")
+        
         prev_gyros = 0.0
 
         while not self.finished.value:
@@ -260,8 +256,17 @@ class Robot:
         self.lock_odometry.acquire()
         # SC
         coord = str(x) + ',' + str(y) + ',' + str(th) + '\n'
-        self.log.write(coord)
+        self.log.append(coord)
         self.lock_odometry.release()
+
+    def save_log(self):
+        # Fichero de log
+        if os.path.exists("log_odometry.log"):
+            os.remove("log_odometry.log")
+        log = open("log_odometry.log", "a")
+
+        for pos in self.log:
+            log.write(pos)
 
     def read_gyros(self):
         """Se leen los datos del giroscopo"""
@@ -277,7 +282,7 @@ class Robot:
         """ Stop the odometry thread. """
 
         self.finished.value = True
-        
+        self.save_log()
         self.BP.reset_all()
         self.setSpeed(0, 0)
 
@@ -931,3 +936,65 @@ class Robot:
         else:
             # Movimiento cirular
             return False
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
