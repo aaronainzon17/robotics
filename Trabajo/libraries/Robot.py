@@ -844,7 +844,9 @@ class Robot:
                 arr.append(self.BP.get_sensor(self.BP.PORT_1)) 
             except brickpi3.SensorError as error:
                 print(error) 
-        return np.median(arr) * 10
+        dist = np.median(arr) * 10
+        print("ULTRASONIDOS:", dist)
+        return dist
 
     def detectar_casilla_salida(self, frame):
         """detectar_casilla_salida utiliza el sensor de lumniosidad para detectar 
