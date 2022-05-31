@@ -116,9 +116,9 @@ def solve_relative_map(robot, myMap, point_ini, point_end, ocho=False):
 
             # Se mueve el robot a la siguiente celda
             robot.go(goal_point[0],goal_point[1],120)
-            path2print.append([goal_point[0],goal_point[1], 1.57])
+            #path2print.append([goal_point[0],goal_point[1], 1.57])
             prev_point = point_map
     
     # Al acabar se muestra el recorrido realizado
-    myMap.drawMapWithRobotLocations(
-        path2print, saveSnapshot=False)
+    #myMap.drawMapWithRobotLocations(
+    #    path2print, saveSnapshot=False)
