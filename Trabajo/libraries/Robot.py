@@ -731,7 +731,7 @@ class Robot:
         #self.go(center_table[0],center_table[1],150)
         self.align(center_table[0], center_table[1], np.deg2rad(1))
         self.setSpeed(100,0)
-        self.check_position_3_values(center_table[0], center_table[1], np.deg2rad(90), 20, np.Infinity, np.deg2rad(180))
+        self.check_position_3_values(center_table[0], center_table[1], np.deg2rad(90), 10, np.Infinity, np.deg2rad(180))
         #self.align()
         self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))
        
