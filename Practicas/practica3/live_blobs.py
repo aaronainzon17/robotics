@@ -90,9 +90,9 @@ def getBlobs(frame, HSV_min=(5, 50, 50) , HSV_max=(15, 255, 255)):
 	im_with_keypoints = cv2.drawKeypoints(frame, keypoints_red, np.array([]),
 		(255,255,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
-	#cv2.startWindowThread()
-	#cv2.namedWindow("Capture")
-	#cv2.imshow("Capture", im_with_keypoints)
+	cv2.startWindowThread()
+	cv2.namedWindow("Capture")
+	cv2.imshow("Capture", im_with_keypoints)
 
 	return biggest
 
