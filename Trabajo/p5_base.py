@@ -125,55 +125,31 @@ def main(args):
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":  
             s_A_ocho(robot, 120)
-            solve_relative_map(robot,myMap, [1,2],[3,3])
+            solve_relative_map(robot,myMap, [1,2],[3,3], 120)
         
             # # Se inicia la busqueda de la pelota 
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
-            robot.detect_scape_cv2()
+            robot.detect_scape_cv2(100)
             #Sale despues de coger la pelota
             robot.scape(120)
             
         else: # "mapaB_CARRERA.txt"
 
             s_B_ocho(robot, 120)
-            solve_relative_map(robot,myMap, [5,2],[3,3])
+            solve_relative_map(robot,myMap, [5,2],[3,3],120)
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
-            robot.detect_scape_cv2()
+            robot.detect_scape_cv2(100)
             #Sale despues de coger la pelota
             robot.scape(120)
 
 
-        print("End : %s" % time.ctime())
-
-        #Se reorienta el robot
-        
+        print("End : %s" % time.ctime())        
 
 
         robot.lock_odometry.acquire()
         print("Odom values at main at the END: %.2f, %.2f, %.2f " %
               (robot.x.value, robot.y.value, robot.th.value))
         robot.lock_odometry.release()
-
-        # 3. Labyrinth
-
-        # 4. Play catch
-
-        # 5. Where is Wall-e?
-        # Dejadme hacer magia a mi ritmo FUS FUS
-        #match_images(imagenFin, self.capture_image())
-        # ÑOFeature extractor uses grayscale images
-        # Ñ img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        # O cap = cv2.cvtColor(capture, cv2.COLOR_BGR2GRAY)
-        #foundFin = robot.detectImage(imagenFin)
-        # Gira derecha para buscar el otro robot
-        # Si está, girar a izquierda para ir a salida
-        # Si no está, es la salida
-        #foundOtro = robot.detectImage(imagenOtro)
-
-
-        # 6. wrap up and close stuff ...
-        # This currently unconfigure the sensors, disable the motors,
-        # and restore the LED to the control of the BrickPi3 firmware.
         
         robot.stopOdometry()
 

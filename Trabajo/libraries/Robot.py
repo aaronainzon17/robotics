@@ -704,7 +704,7 @@ class Robot:
         #self.go(self.casilla_salida[0],(self.casilla_salida[1] + 400))
     
     # Esta funcion busca y se acerca al objeto hasta estar en p
-    def detect_scape_cv2(self):
+    def detect_scape_cv2(self, vel):
         # Si la salida no se ha encontrado
         self.write_log()
         #time.sleep(2)
@@ -731,7 +731,7 @@ class Robot:
         # self.go(first_table[0],first_table[1],150)
         #self.go(center_table[0],center_table[1],150)
         self.align(center_table[0], center_table[1], np.deg2rad(1))
-        self.setSpeed(100,0)
+        self.setSpeed(vel,0)
         self.check_position_3_values(center_table[0], center_table[1], np.deg2rad(90), 10, np.Infinity, np.deg2rad(180))
         #self.align()
         self.align(imgs_center[0], imgs_center[1], np.deg2rad(1))

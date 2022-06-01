@@ -62,7 +62,7 @@ def solveMap(robot, myMap, point_ini, point_end, ocho=False):
     #myMap.drawMapWithRobotLocations(
     #    path2print, saveSnapshot=False)
 
-def solve_relative_map(robot, myMap, point_ini, point_end, ocho=False):
+def solve_relative_map(robot, myMap, point_ini, point_end, vel, ocho=False):
     # 1. load map and compute costs and path
     #myMap = Map2D(map_file)
     
@@ -113,7 +113,7 @@ def solve_relative_map(robot, myMap, point_ini, point_end, ocho=False):
                 goal_reached = True
 
             # Se mueve el robot a la siguiente celda
-            robot.go(goal_point[0],goal_point[1],120)
+            robot.go(goal_point[0],goal_point[1],vel)
             #path2print.append([goal_point[0],goal_point[1], 1.57])
             prev_point = point_map
     
