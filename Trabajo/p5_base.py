@@ -99,7 +99,6 @@ def main(args):
         if not os.path.isfile(bb8):
             print("test image %s does not exist" % bb8)
             return
-        mirror=False
 
         robot = Robot()
         time.sleep(2)

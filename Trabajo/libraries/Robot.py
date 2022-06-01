@@ -316,7 +316,6 @@ class Robot:
                     self.trackObjectSpeed(x_actual,self.cols.value)  
             else:
                 # En caso en el que la pelota desaparezca de la imagen se inicia busqueda
-                #print('Pierdo el blob')
                 self.find_ball(80)
                 
             # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
