@@ -117,7 +117,7 @@ def main(args):
         if str(args.race_mode) == 'no':
             vel = 120
         else:
-            vel = 160
+            vel = 180
 
         input("Press Enter to continue...")
         # 1. Se incia la odometria u el proceso update odometry
