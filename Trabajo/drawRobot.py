@@ -16,5 +16,5 @@ for x in f:
     coords = x.split(",")
     b = coords[2].split('\n')
     a = np.array([float(coords[0]),float(coords[1]),float(b[0])])
-    dibrobot(a,'purple','s')
+    dibrobot(a,'purple','g')
 plt.show()
