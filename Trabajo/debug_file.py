@@ -158,9 +158,9 @@ def rotate_360(robot):
     time.sleep(0.5)
     robot.check_angle(np.deg2rad(90),np.deg2rad(1))
 
-def seguimiento_pared(robot):
+def seguimiento_pared(robot, dc):
     robot.setNewPosition(2200,1800,np.deg2rad(90))
-    robot.seguimientoPared(100)
+    robot.seguimientoPared(dc)
     robot.check_position_3_values(1800, 3000, np.deg2rad(0), np.Infinity, 20, np.deg2rad(2))
 
 def main(args):
@@ -175,9 +175,10 @@ def main(args):
         robot.startOdometry() 
 
         #half_semicircle(robot)
-        straight_line(robot)
+        #straight_line(robot)
         #rotate_360(robot)
         #s_A_ocho(robot,120)
+        seguimiento_pared(100)
 
         robot.stopOdometry()
 
