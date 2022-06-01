@@ -399,11 +399,17 @@ class Robot:
     # por defecto rotacion hacia la derecha 
     def find_ball(self, vel):
         mid_img = self.cols.value/2
-        if self.x_b.value < mid_img:
+        if self.x_b.value < mid_img and self.x_b.value != 0:
+            self.setSpeed(0, vel)
+        elif self.x_b.value > mid_img and self.x_b.value != 0:
+            self.setSpeed(0, -vel)
+        elif self.mapa == 'A' and self.x_b.value == 0:
+            self.setSpeed(0, -vel)
+        elif self.mapa == 'B' and self.x_b.value == 0: 
             self.setSpeed(0, vel)
         else:
-            self.setSpeed(0,-vel)
-
+            self.setSpeed(0, -vel)
+            
     # Funcion de captura de la pelota
     def catch(self):
         w = 150 #40   # Velocidad angular para abrir las pinzas 
