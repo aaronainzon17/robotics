@@ -550,7 +550,7 @@ class Robot:
    
     def align(self, x_goal, y_goal, error_ang):
         """ La funcion se encarga de alienar el robot con el punto 
-        objetivo para poder realizar una trayectoria lienal"""
+        objetivo para poder realizar una trayectoria lineal"""
 
         aligned = False 
         
