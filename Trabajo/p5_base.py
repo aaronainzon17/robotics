@@ -130,7 +130,7 @@ def main(args):
 
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":  
-            s_A_ocho(robot, vel)
+            s_A_ocho(robot, vel, err)
             solve_relative_map(robot,myMap, [1,2],[3,3], vel)
         
             # # Se inicia la busqueda de la pelota 
@@ -140,7 +140,7 @@ def main(args):
             robot.scape(vel)
             
         else: # "mapaB_CARRERA.txt"
-            s_B_ocho(robot, vel)
+            s_B_ocho(robot, vel, err)
             solve_relative_map(robot,myMap, [5,2],[3,3],vel)
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
             robot.detect_scape_cv2(vel) # vel -20?
