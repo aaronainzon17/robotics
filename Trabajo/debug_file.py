@@ -178,7 +178,7 @@ def main(args):
         #straight_line(robot)
         #rotate_360(robot)
         #s_A_ocho(robot,120)
-        seguimiento_pared(100)
+        seguimiento_pared(robot,100)
 
         robot.stopOdometry()
 
