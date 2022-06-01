@@ -793,7 +793,7 @@ class Robot:
         _, y, th = self.readOdometry()
         self.setSpeed(v, -w)  # Primera semicircunferencia
         self.check_position_3_values(self.casilla_salida[0], y + r, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
-        self.rotate_to_90(th)
+        self.rotate_to_90()
         self.setSpeed(100,0)
         self.check_position_3_values(self.casilla_salida[0], 3100, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
 
@@ -805,14 +805,15 @@ class Robot:
         r = self.read_ultrasonyc() - 250
         v = vel
         w = np.rad2deg((float)(v/r))
-        _, y, th = self.readOdometry()
+        _, y, _ = self.readOdometry()
         self.setSpeed(v, w)  # Primera semicircunferencia
         self.check_position_3_values(self.casilla_salida[0], y + r, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
-        self.rotate_to_90(th)
+        self.rotate_to_90()
         self.setSpeed(100,0)
         self.check_position_3_values(self.casilla_salida[0], 3100, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
     
-    def rotate_to_90(self, th):
+    def rotate_to_90(self):
+        _, _, th = self.readOdometry()
         if th > np.deg2rad(90):
             self.setSpeed(0,-15)
         else:
