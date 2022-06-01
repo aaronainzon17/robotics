@@ -27,7 +27,7 @@ Autores:
     - Pablo Gancedo Alcalde 736839 
 """
     
-def s_A_ocho(robot, vel):
+def s_A_ocho(robot, vel, err):
     """ La funcion ocho realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
     robot.write_log()
@@ -49,16 +49,16 @@ def s_A_ocho(robot, vel):
 
     pos = [1,4]
     robot.setSpeed(v, w)  # Primera semicircunferencia
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), 10, np.Infinity, np.deg2rad(10))
+    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), err, np.Infinity, np.deg2rad(10))
     robot.write_log()
 
     pos = [1,2]
     robot.setSpeed(v, -w)  # Segunda semicircunferencia
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), 10, 400, np.deg2rad(10))
+    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), err, 400, np.deg2rad(10))
     robot.write_log()
 
 
-def s_B_ocho(robot, vel):
+def s_B_ocho(robot, vel, err):
     """ La funcion ocho realiza la trayectoria de s del mapa B basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
     robot.write_log()
@@ -79,12 +79,12 @@ def s_B_ocho(robot, vel):
 
     pos = [5,4]
     robot.setSpeed(v, -w)  # Primera semicircunferencia
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), 10, np.Infinity, np.deg2rad(10))
+    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), err, np.Infinity, np.deg2rad(10))
     robot.write_log()
 
     pos = [5,2]
     robot.setSpeed(v, w)  # Segunda semicircunferencia
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), 10, 400, np.deg2rad(10))
+    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), err, 400, np.deg2rad(10))
     robot.write_log()
 
 
@@ -116,8 +116,10 @@ def main(args):
 
         if str(args.race_mode) == 'no':
             vel = 120
+            err = 10
         else:
             vel = 180
+            err = 20
 
         input("Press Enter to continue...")
         # 1. Se incia la odometria u el proceso update odometry
