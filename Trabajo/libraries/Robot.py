@@ -793,7 +793,7 @@ class Robot:
         self.setSpeed(v, -w)  # Primera semicircunferencia
         self.check_position_3_values(self.casilla_salida[0], y + r, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
         self.rotate_to_90()
-        self.setSpeed(100,0)
+        self.setSpeed(vel,0)
         self.check_position_3_values(self.casilla_salida[0], 3100, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
 
     def salir_derecha(self,vel):
@@ -808,7 +808,7 @@ class Robot:
         self.setSpeed(v, w)  # Primera semicircunferencia
         self.check_position_3_values(self.casilla_salida[0], y + r, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
         self.rotate_to_90()
-        self.setSpeed(100,0)
+        self.setSpeed(vel,0)
         self.check_position_3_values(self.casilla_salida[0], 3100, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
     
     def rotate_to_90(self):
