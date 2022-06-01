@@ -115,9 +115,9 @@ def main(args):
         myMap = Map2D(mapa)
 
         if str(args.race_mode) == 'no':
-            vel = 180
-        else:
             vel = 120
+        else:
+            vel = 180
 
         input("Press Enter to continue...")
         # 1. Se incia la odometria u el proceso update odometry
