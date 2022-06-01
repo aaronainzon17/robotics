@@ -115,6 +115,11 @@ def main(args):
 
         myMap = Map2D(mapa)
 
+        if str(args.race_mode) == 'no':
+            vel = 180
+        else:
+            vel = 120
+
         input("Press Enter to continue...")
         # 1. Se incia la odometria u el proceso update odometry
         robot.startOdometry()
@@ -124,23 +129,22 @@ def main(args):
 
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":  
-            s_A_ocho(robot, 120)
-            solve_relative_map(robot,myMap, [1,2],[3,3], 120)
+            s_A_ocho(robot, vel)
+            solve_relative_map(robot,myMap, [1,2],[3,3], vel)
         
             # # Se inicia la busqueda de la pelota 
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
-            robot.detect_scape_cv2(100)
+            robot.detect_scape_cv2(vel)
             #Sale despues de coger la pelota
-            robot.scape(120)
+            robot.scape(vel)
             
         else: # "mapaB_CARRERA.txt"
-
-            s_B_ocho(robot, 120)
-            solve_relative_map(robot,myMap, [5,2],[3,3],120)
+            s_B_ocho(robot, vel)
+            solve_relative_map(robot,myMap, [5,2],[3,3],vel)
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
-            robot.detect_scape_cv2(100)
+            robot.detect_scape_cv2(vel) # vel -20?
             #Sale despues de coger la pelota
-            robot.scape(120)
+            robot.scape(vel)
 
 
         print("End : %s" % time.ctime())        
@@ -164,7 +168,7 @@ if __name__ == "__main__":
     # get and parse arguments passed to main
     # Add as many args as you need ...
     parser = argparse.ArgumentParser()
-    parser.add_argument("-m", "--mapa", help="Mapa seleccionado (A o B)", type=str, default="A")
+    parser.add_argument("-r", "--race_mode", help="Es carrera", type=str, default="no")
     args = parser.parse_args()
 
     main(args)
