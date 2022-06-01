@@ -796,7 +796,7 @@ class Robot:
         self.setSpeed(0,-15)
         self.check_position_3_values(self.casilla_salida[0], 3000, np.deg2rad(90), np.Infinity,  np.Infinity, np.deg2rad(1))
         self.setSpeed(100,0)
-        self.check_position_3_values(self.casilla_salida[0], 3000, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
+        self.check_position_3_values(self.casilla_salida[0], 3100, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
 
     def salir_derecha(self,vel):
         print('Salgo derecha')
@@ -812,7 +812,7 @@ class Robot:
         self.setSpeed(0,-15)
         self.check_position_3_values(self.casilla_salida[0], 3000, np.deg2rad(90), np.Infinity,  np.Infinity, np.deg2rad(1))
         self.setSpeed(100,0)
-        self.check_position_3_values(self.casilla_salida[0], 3000, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
+        self.check_position_3_values(self.casilla_salida[0], 3100, np.deg2rad(90), np.Infinity, 10, np.deg2rad(180))
 
     def relocate(self):
         self.setSpeed(0,15)
