@@ -236,7 +236,7 @@ def find_template(mirror=False, img=None, refFilename = "./R2-D2s.png"):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("-i", "--image", default="./test2.jpg", help="path to the input image")
+    ap.add_argument("-i", "--image", default=None, help="path to the input image")
     ap.add_argument("-r", "--robot", default="../R2-D2_s.png", help="target template file")
     args=ap.parse_args()
     
