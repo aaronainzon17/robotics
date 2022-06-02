@@ -49,12 +49,12 @@ def s_A_ocho(robot, vel, err):
 
     pos = [1,4]
     robot.setSpeed(v, w)  # Primera semicircunferencia
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), err, np.Infinity, np.deg2rad(10))
+    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), err, np.Infinity, np.deg2rad(40))
     robot.write_log()
 
     pos = [1,2]
     robot.setSpeed(v, -w)  # Segunda semicircunferencia
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), err, 400, np.deg2rad(10))
+    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), err, 400, np.deg2rad(40))
     robot.write_log()
 
 
@@ -79,12 +79,12 @@ def s_B_ocho(robot, vel, err):
 
     pos = [5,4]
     robot.setSpeed(v, -w)  # Primera semicircunferencia
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), err, np.Infinity, np.deg2rad(10))
+    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), err, np.Infinity, np.deg2rad(40))
     robot.write_log()
 
     pos = [5,2]
     robot.setSpeed(v, w)  # Segunda semicircunferencia
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), err, 400, np.deg2rad(10))
+    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), err, 400, np.deg2rad(40))
     robot.write_log()
 
 
