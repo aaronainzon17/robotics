@@ -27,7 +27,7 @@ Autores:
     - Pablo Gancedo Alcalde 736839 
 """
     
-def s_A_ocho(robot, vel, radio, err):
+def s_A_ocho(robot, vel, err):
     """ La funcion ocho realiza la trayectoria de s del mapa A basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
     robot.write_log()
@@ -38,7 +38,7 @@ def s_A_ocho(robot, vel, radio, err):
     robot.write_log()
 
     # Comienza el circulo
-    r = radio
+    r = 400
     v = vel
     w = np.rad2deg((float)(v/r))
 
@@ -58,7 +58,7 @@ def s_A_ocho(robot, vel, radio, err):
     robot.write_log()
 
 
-def s_B_ocho(robot, vel, radio, err):
+def s_B_ocho(robot, vel, err):
     """ La funcion ocho realiza la trayectoria de s del mapa B basandose en
         la odometria para detener al robot y comenzar con el siguiente movimiento """
     robot.write_log()
@@ -68,7 +68,7 @@ def s_B_ocho(robot, vel, radio, err):
     robot.check_position_3_values(2200,2600, np.deg2rad(-90),np.Infinity, 5, np.deg2rad(10))
     robot.write_log()
     # Comienza el circulo
-    r = radio
+    r = 400
     v = vel
     w = np.rad2deg((float)(v/r))
 
@@ -116,12 +116,10 @@ def main(args):
 
         if str(args.race_mode) == 'no':
             vel = 120
-            radio = 400
             err = 10
         else:
             vel = 250
-            radio = 380
-            err = 80
+            err = 100
 
         input("Press Enter to continue...")
         # 1. Se incia la odometria u el proceso update odometry
@@ -132,7 +130,7 @@ def main(args):
 
         # Trayectoria en s
         if mapa == "mapaA_CARRERA.txt":  
-            s_A_ocho(robot, vel, radio, err)
+            s_A_ocho(robot, vel, err)
             solve_relative_map(robot,myMap, [1,2],[3,3], vel)
         
             # # Se inicia la busqueda de la pelota 
@@ -142,7 +140,7 @@ def main(args):
             robot.scape(vel)
             
         else: # "mapaB_CARRERA.txt"
-            s_B_ocho(robot, vel, radio, err)
+            s_B_ocho(robot, vel, err)
             solve_relative_map(robot,myMap, [5,2],[3,3],vel)
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
             robot.detect_scape_cv2(vel) 
