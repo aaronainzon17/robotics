@@ -43,7 +43,7 @@ def s_A_ocho(robot, vel, err):
     w = np.rad2deg((float)(v/r))
 
     pos = [1,6]
-    robot.setSpeed(0, -30)  # Giro de 45 deg a la derecha
+    robot.setSpeed(0, -50)  # Giro de 45 deg a la derecha a 30 (modo normal)
     robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), np.Infinity, np.Infinity, np.deg2rad(2))
     robot.write_log()
 
@@ -73,7 +73,7 @@ def s_B_ocho(robot, vel, err):
     w = np.rad2deg((float)(v/r))
 
     pos = [5,6]
-    robot.setSpeed(0, 30)  # Giro de 45 deg a la izquierda
+    robot.setSpeed(0, 50)  # Giro de 45 deg a la izquierda a 30 en modo normal
     robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), np.Infinity, np.Infinity, np.deg2rad(2))
     robot.write_log()
 
@@ -143,7 +143,7 @@ def main(args):
             s_B_ocho(robot, vel, err)
             solve_relative_map(robot,myMap, [5,2],[3,3],vel)
             robot.trackObject(colorRangeMin=[0,0,0], colorRangeMax=[255,255,255])
-            robot.detect_scape_cv2(vel) # vel -20?
+            robot.detect_scape_cv2(vel) 
             #Sale despues de coger la pelota
             robot.scape(vel)
 
