@@ -565,6 +565,9 @@ class Robot:
             else:
                 w = self.linear_w(d_th)
                 self.setSpeed(0,w)
+        self.setSpeed(10,0)
+        time.sleep(0.1)
+        self.setSpeed(0,0)
     
     # Funcion que define la velocidad angular en funcion de los 
     # grados restantes w = [10,90]
