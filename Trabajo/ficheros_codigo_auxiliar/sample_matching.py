@@ -258,7 +258,7 @@ def main():
     
     #while not found_R2 and not found_BB8:
     #found_R2, x_R2 = find_template(mirror=mirror, img=None, refFilename='../R2-D2_s.png')
-    found_BB8, x_BB8 = find_template(mirror=mirror, img=im, refFilename='../BB8_s.png')
+    found_BB8, x_BB8 = find_template(mirror=mirror, img=None, refFilename='../BB8_s.png')
         #print(x_R2, x_BB8)
     #if x_R2 < x_BB8:
     #    print('R2-D2 esta a la izquierda')
