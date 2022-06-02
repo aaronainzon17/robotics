@@ -163,7 +163,6 @@ def match_images(img1_bgr, img2_bgr):
 
     return [found, dst_pts[0][0][0]] # dst_pts[0][0][0] devuelve la componente x del primer match
  
-   
 def find_template(mirror=False, img=None, refFilename = "./R2-D2s.png"):
  
     print("Looking for reference image : ", refFilename)

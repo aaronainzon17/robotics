@@ -316,7 +316,7 @@ class Robot:
                     self.trackObjectSpeed(x_actual,self.cols.value)  
             else:
                 # En caso en el que la pelota desaparezca de la imagen se inicia busqueda
-                self.find_ball(80)
+                self.find_ball(100) #antes a 80
                 
             # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
             if self.is_blob.value and triedCatch:
@@ -563,17 +563,27 @@ class Robot:
                 self.setSpeed(0,0)
                 aligned = True
             else:
-                w = self.lienar_w(d_th)
+                w = self.linear_w(d_th)
                 self.setSpeed(0,w)
     
     # Funcion que define la velocidad angular en funcion de los 
     # grados restantes w = [10,90]
-    def lienar_w(self,dth):
+    def linear_w(self,dth):
         w = dth*(80/math.pi)
         if w < 0:
             w -= 10
         else:
             w+= 10
+        return w
+
+    # Funcion que define la velocidad angular en funcion de los 
+    # grados restantes w = [10,90]
+    def linear_w_race(self,dth):
+        w = dth*(80/math.pi)
+        if w < 0:
+            w = -45
+        else:
+            w = 45
         return w
 
     #Funcion que normaliza el angulo entre -pi, pi
