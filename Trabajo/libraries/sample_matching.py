@@ -6,7 +6,6 @@ http://www.learnopencv.com/image-alignment-feature-based-using-opencv-c-python/
 from __future__ import print_function
 
 import argparse
-from socket import INADDR_MAX_LOCAL_GROUP
 import cv2
 import numpy as np
 import os
@@ -66,8 +65,8 @@ def drawMatches2(img1, kp1, img2, kp2, matches, color=None, thickness = 2, mask=
  
 def match_images(img1_bgr, img2_bgr):
     # Feature extractor uses grayscale images
-    #salida = cv2.imread(img1_bgr, cv2.IMREAD_COLOR)
-    salida = img1_bgr
+    salida = cv2.imread(img1_bgr, cv2.IMREAD_COLOR)
+
     img1 = cv2.cvtColor(salida, cv2.COLOR_BGR2GRAY)
     img2 = cv2.cvtColor(img2_bgr, cv2.COLOR_BGR2GRAY)
     
@@ -237,7 +236,7 @@ def find_template(mirror=False, img=None, refFilename = "./R2-D2s.png"):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("-i", "--image", default=None, help="path to the input image")
+    ap.add_argument("-i", "--image", default="./test2.jpg", help="path to the input image")
     ap.add_argument("-r", "--robot", default="../R2-D2_s.png", help="target template file")
     args=ap.parse_args()
     
@@ -261,13 +260,13 @@ def main():
     found_BB8 = False
     
     while not found_R2 and not found_BB8:
-        found_R2, x_R2 = find_template(mirror=mirror, img=  None, refFilename='../R2-D2_s.png')
-        #found_BB8, x_BB8 = find_template(mirror=mirror, img=im, refFilename='../BB8_s.png')
-        #print(x_R2, x_BB8)
-    #if x_R2 < x_BB8:
-    #    print('R2-D2 esta a la izquierda')
-    #else: 
-    #    print('R2-D2 esta a la dere')
+        found_R2, x_R2 = find_template(mirror=mirror, img=im, refFilename='../R2-D2_s.png')
+        found_BB8, x_BB8 = find_template(mirror=mirror, img=im, refFilename='../BB8_s.png')
+        print(x_R2, x_BB8)
+    if x_R2 < x_BB8:
+        print('R2-D2 esta a la izquierda')
+    else: 
+        print('R2-D2 esta a la dere')
 if __name__ == '__main__':
     """ 
     Match input image or current life video feed with the selected template
