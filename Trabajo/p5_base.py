@@ -118,8 +118,8 @@ def main(args):
             vel = 120
             err = 10
         else:
-            vel = 220
-            err = 70
+            vel = 210
+            err = 60
 
         input("Press Enter to continue...")
         # 1. Se incia la odometria u el proceso update odometry
