@@ -470,9 +470,9 @@ class Robot:
         _,_,th = self.readOdometry()
         if abs(abs(th) - np.deg2rad(90)) < np.deg2rad(5):
             x_err = np.Infinity
-            y_err = 25
+            y_err = 15
         elif abs(abs(th) - np.deg2rad(180)) < np.deg2rad(5) or abs(th) < np.deg2rad(5):
-            x_err = 25
+            x_err = 15
             y_err = np.Infinity
         else: 
             x_err = 50
