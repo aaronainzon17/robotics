@@ -772,6 +772,10 @@ class Robot:
 
             self.detectar_casilla_salida(frame)
 
+        if self.casilla_salida is None and self.mapa == 'A':
+            self.casilla_salida = [1400,2600]
+        elif self.casilla_salida is None and self.mapa == 'B':
+            self.casilla_salida = [1400,2600]
         print('Salgo por la casilla', self.casilla_salida)
         vid.release()
 
