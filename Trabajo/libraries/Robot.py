@@ -414,7 +414,7 @@ class Robot:
         time.sleep(0.5)
         self.setSpeed(0,0)
         self.BP.set_motor_dps(self.BP.PORT_A, w)
-        time.sleep(0.25) # Bajar cesta
+        time.sleep(0.3) # Bajar cesta
         self.BP.set_motor_dps(self.BP.PORT_A, 0)
         time.sleep(0.2)
         
@@ -809,7 +809,7 @@ class Robot:
         self.setSpeed(0,-45)
         self.check_angle(np.deg2rad(0), np.deg2rad(5))
         # se lee la distancia a la pared 
-        r = self.read_ultrasonyc() - 250
+        r = self.read_ultrasonyc() - 280
         v = vel
         w = np.rad2deg((float)(v/r))
         _, y, _ = self.readOdometry()
