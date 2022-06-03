@@ -483,6 +483,8 @@ class Robot:
             y_err = 50
         
         # Se le asigna una velocidad lienal
+        self.setSpeed(120,0)
+        time.sleep(0.3)
         self.setSpeed(speed,0)
 
         # Se comprueba que el robot alcanza correctamente la posicion 

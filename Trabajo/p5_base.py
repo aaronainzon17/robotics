@@ -118,7 +118,7 @@ def main(args):
             vel = 120
             err = 10
         else:
-            vel = 200
+            vel = 220
             err = 40
 
         input("Press Enter to continue...")
