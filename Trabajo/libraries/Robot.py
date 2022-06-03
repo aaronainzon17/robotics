@@ -465,7 +465,7 @@ class Robot:
 
     def go(self, x_goal, y_goal, speed):
         # Alinea al robot con el siguiente punto
-        self.align(x_goal, y_goal, np.deg2rad(3))
+        self.align(x_goal, y_goal, np.deg2rad(1))
         self.write_log()
         _,_,th = self.readOdometry()
         if abs(abs(th) - np.deg2rad(90)) < np.deg2rad(5):
@@ -561,7 +561,7 @@ class Robot:
                 self.setSpeed(0,0)
                 aligned = True
             else:
-                w = self.linear_w_race(d_th)
+                w = self.linear_w(d_th)
                 self.setSpeed(0,w)
     
     # Funcion que define la velocidad angular en funcion de los 
@@ -569,9 +569,9 @@ class Robot:
     def linear_w(self,dth):
         w = dth*(80/math.pi)
         if w < 0:
-            w -= 10
+            w -= 20
         else:
-            w+= 10
+            w+= 20
         return w
 
     # Funcion que define la velocidad angular en funcion de los 
