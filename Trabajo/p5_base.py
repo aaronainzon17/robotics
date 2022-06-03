@@ -49,7 +49,7 @@ def s_A_ocho(robot, vel, err):
 
     pos = [1,4]
     robot.setSpeed(v, w)  # Primera semicircunferencia
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), 50, np.Infinity, np.deg2rad(40))
+    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), 60, np.Infinity, np.deg2rad(40))
     robot.write_log()
 
     pos = [1,2]
