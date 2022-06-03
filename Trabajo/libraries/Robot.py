@@ -801,7 +801,7 @@ class Robot:
     def salir_izquierda(self,vel):
         print('salgo Izquierda')
         self.setSpeed(0,45)
-        self.check_angle(np.deg2rad(180), np.deg2rad(1))
+        self.check_angle(np.deg2rad(180), np.deg2rad(3))
         # se lee la distancia a la pared 
         r = self.read_ultrasonyc() - 250
         v = vel
@@ -816,7 +816,7 @@ class Robot:
     def salir_derecha(self,vel):
         print('Salgo derecha')
         self.setSpeed(0,-45)
-        self.check_angle(np.deg2rad(0), np.deg2rad(1))
+        self.check_angle(np.deg2rad(0), np.deg2rad(3))
         # se lee la distancia a la pared 
         r = self.read_ultrasonyc() - 250
         v = vel
