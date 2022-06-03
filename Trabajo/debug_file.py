@@ -154,7 +154,7 @@ def straight_line(robot):
 
 def rotate_360(robot):
     robot.setNewPosition(0, 0, np.deg2rad(90))
-    robot.setSpeed(0,40)
+    robot.setSpeed(0,15)
     time.sleep(0.5)
     robot.check_angle(np.deg2rad(90),np.deg2rad(1))
 
