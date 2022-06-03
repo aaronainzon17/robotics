@@ -44,7 +44,7 @@ def s_A_ocho(robot, vel, err):
 
     pos = [1,6]
     robot.setSpeed(0, -80)  # Giro de 45 deg a la derecha a 30 (modo normal)
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), np.Infinity, np.Infinity, np.deg2rad(13))
+    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), np.Infinity, np.Infinity, np.deg2rad(10))
     robot.write_log()
 
     pos = [1,4]
@@ -74,7 +74,7 @@ def s_B_ocho(robot, vel, err):
 
     pos = [5,6]
     robot.setSpeed(0, 80)  # Giro de 45 deg a la izquierda a 30 en modo normal
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), np.Infinity, np.Infinity, np.deg2rad(10))
+    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), np.Infinity, np.Infinity, np.deg2rad(13))
     robot.write_log()
 
     pos = [5,4]
