@@ -316,7 +316,7 @@ class Robot:
                     self.trackObjectSpeed(x_actual,self.cols.value)  
             else:
                 # En caso en el que la pelota desaparezca de la imagen se inicia busqueda
-                self.find_ball(100) #antes a 80
+                self.find_ball(80)
                 
             # Si previamente se ha realizado un intento de coger se comprueba si la pelota esta en las pinzas
             if self.is_blob.value and triedCatch:
@@ -342,8 +342,7 @@ class Robot:
                 self.catch() # Se inicia el proceso de captura 
                 targetPositionReached = False
                 triedCatch = True
-
-        #time.sleep(1)           
+         
         return finished
 
     # Funcion utilizada para decidir la velocidad y direccion del robot
@@ -382,9 +381,9 @@ class Robot:
     # hacia la pelota en funcion de su tamanyo
     def speed_size(self,size):
         if (size < 100):
-            return 150
+            return 200
         else:
-            return 100   
+            return 150   
     
     # Funcion utilizada para decidir la velocidad angular de acercamiento 
     # hacia la pelota en funcion de su tamanyo
