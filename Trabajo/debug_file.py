@@ -176,7 +176,7 @@ def main(args):
 
         #half_semicircle(robot)
         #straight_line(robot)
-        #rotate_360(robot)
+        rotate_360(robot)
         #s_A_ocho(robot,120)
         seguimiento_pared(robot,100)
 
