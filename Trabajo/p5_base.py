@@ -43,18 +43,18 @@ def s_A_ocho(robot, vel, err):
     w = np.rad2deg((float)(v/r))
 
     pos = [1,6]
-    robot.setSpeed(0, -30)  # Giro de 45 deg a la derecha a 30 (modo normal)
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), np.Infinity, np.Infinity, np.deg2rad(2))
+    robot.setSpeed(0, -45)  # Giro de 45 deg a la derecha a 30 (modo normal)
+    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), np.Infinity, np.Infinity, np.deg2rad(3))
     robot.write_log()
 
     pos = [1,4]
     robot.setSpeed(v, w)  # Primera semicircunferencia
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), err, np.Infinity, np.deg2rad(40))
+    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(0), 50, np.Infinity, np.deg2rad(40))
     robot.write_log()
 
     pos = [1,2]
     robot.setSpeed(v, -w)  # Segunda semicircunferencia
-    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), err, 400, np.deg2rad(40))
+    robot.check_position_3_values(200 + 400 * pos[0], 200 + 400 * pos[1], np.deg2rad(-180), 25, 400, np.deg2rad(40))
     robot.write_log()
 
 
