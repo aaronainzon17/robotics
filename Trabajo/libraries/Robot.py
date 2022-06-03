@@ -300,8 +300,6 @@ class Robot:
         self.pCam = Process(target=self.updateCamara, args=())
         self.pCam.start()
 
-        #Se deja que se inicie la camara
-        time.sleep(1)
         while not finished:
             # Si se ha detectado un blob
             if (self.is_blob.value):
@@ -338,7 +336,6 @@ class Robot:
 
             # Si se ha alcanzado la pelota y no se ha capturado previamente
             if targetPositionReached and not finished and not triedCatch: 
-                print('Entro a catch')
                 self.catch() # Se inicia el proceso de captura 
                 targetPositionReached = False
                 triedCatch = True
@@ -713,7 +710,6 @@ class Robot:
         
         cam.close()
         print('Salgo por la casilla', self.casilla_salida)
-        time.sleep(1)
         
         # Una vez se ha encontrado la salida se sale
         #self.go(self.casilla_salida[0],self.casilla_salida[1])
@@ -723,13 +719,11 @@ class Robot:
     def detect_scape_cv2(self, vel):
         # Si la salida no se ha encontrado
         self.write_log()
-        #time.sleep(2)
-        # define a video capture object
-        #vid = cv2.VideoCapture(0,cv2.CAP_DSHOW)
+
         vid = cv2.VideoCapture(0)
         
         # allow the camera to warmup
-        time.sleep(2)
+        time.sleep(0.1)
 
         # Se determinan puntos clave del mapa para ver los robots
         if self.mapa == 'A':
@@ -780,9 +774,6 @@ class Robot:
 
         print('Salgo por la casilla', self.casilla_salida)
         vid.release()
-
-        #cv2.destroyAllWindows()
-        #time.sleep(1)
 
     def scape(self, vel):
         self.write_log()
