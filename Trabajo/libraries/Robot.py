@@ -794,7 +794,7 @@ class Robot:
         self.setSpeed(0,45)
         self.check_angle(np.deg2rad(180), np.deg2rad(5))
         # se lee la distancia a la pared 
-        r = self.read_ultrasonyc() - 250
+        r = self.read_ultrasonyc() - 280
         v = vel
         w = np.rad2deg((float)(v/r))
         _, y, th = self.readOdometry()
@@ -809,7 +809,7 @@ class Robot:
         self.setSpeed(0,-45)
         self.check_angle(np.deg2rad(0), np.deg2rad(5))
         # se lee la distancia a la pared 
-        r = self.read_ultrasonyc() - 280
+        r = self.read_ultrasonyc() - 250
         v = vel
         w = np.rad2deg((float)(v/r))
         _, y, _ = self.readOdometry()
